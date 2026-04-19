@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
@@ -143,7 +143,7 @@ export function Navbar() {
           </Link>
 
           <div className="ml-2">
-            <LanguageSwitcher />
+            <LanguageSwitcher isDark={!isHeroScrolled} />
           </div>
         </div>
       </div>
