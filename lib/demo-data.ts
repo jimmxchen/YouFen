@@ -1,4 +1,4 @@
-import { type Member, type Contribution, type Proposal, type PublicRecord, type DashboardStats } from '@/types/admin'
+import { type Member, type Contribution, type Proposal, type PublicRecord, type DashboardStats, type Task, type Activity } from '@/types/admin'
 
 export const demoMembers: Member[] = [
   { id: 'm1', name: 'Dan', email: 'dan@example.com', role: 'owner', voicePower: 800, contributionCount: 5, tags: ['Organizer'], joinedAt: '2026-07-01', lastActiveAt: '2026-07-23' },
@@ -76,6 +76,21 @@ export const demoRecords: PublicRecord[] = [
   },
 ]
 
+export const demoTasks: Task[] = [
+  { id: 't1', title: 'Prepare onboarding guide for new members', description: 'Write a step-by-step guide covering wallet setup, contribution submission, and voting.', status: 'inProgress', assigneeId: 'm3', assigneeName: 'Carol', priority: 'high', dueDate: '2026-07-28', createdAt: '2026-07-20' },
+  { id: 't2', title: 'Review July contribution submissions', description: 'Go through pending contributions and approve or reject with AI-assisted reasoning.', status: 'pending', assigneeId: 'm1', assigneeName: 'Dan', priority: 'high', dueDate: '2026-07-26', createdAt: '2026-07-22' },
+  { id: 't3', title: 'Update community rules v3 draft', description: 'Incorporate feedback from the latest vote on token policy changes.', status: 'inProgress', assigneeId: 'm8', assigneeName: 'Henry', priority: 'medium', dueDate: '2026-08-01', createdAt: '2026-07-21' },
+  { id: 't4', title: 'Organize weekly office hour', description: 'Schedule and promote a weekly office hour session for members to ask questions.', status: 'completed', assigneeId: 'm2', assigneeName: 'Eve', priority: 'low', dueDate: '2026-07-24', createdAt: '2026-07-18', completedAt: '2026-07-24' },
+  { id: 't5', title: 'Set up community Discord channels', description: 'Create dedicated channels for announcements, contributions, and off-topic discussion.', status: 'cancelled', assigneeId: 'm4', assigneeName: 'Bob', priority: 'low', dueDate: '2026-07-30', createdAt: '2026-07-19' },
+]
+
+export const demoActivities: Activity[] = [
+  { id: 'a1', title: 'Weekly Sync', description: 'Regular weekly sync to review progress and align on priorities.', status: 'ongoing', type: 'meetup', participantCount: 12, startTime: '2026-07-24T14:00:00Z', endTime: '2026-07-24T15:00:00Z', location: 'Discord Voice', createdAt: '2026-07-22' },
+  { id: 'a2', title: 'Smart Contract Workshop', description: 'Hands-on workshop covering Injective smart contract basics and deployment.', status: 'upcoming', type: 'workshop', participantCount: 25, startTime: '2026-07-28T10:00:00Z', endTime: '2026-07-28T12:00:00Z', location: 'Zoom', createdAt: '2026-07-20' },
+  { id: 'a3', title: 'Hackathon Kickoff', description: 'Kickoff event for the summer hackathon with team formation and theme reveal.', status: 'upcoming', type: 'hackathon', participantCount: 40, startTime: '2026-08-01T09:00:00Z', endTime: '2026-08-03T18:00:00Z', location: 'Community Hub', createdAt: '2026-07-21' },
+  { id: 'a4', title: 'Mid-Month Social', description: 'Casual social gathering to connect and share wins from the first half of the month.', status: 'completed', type: 'social', participantCount: 18, startTime: '2026-07-15T18:00:00Z', endTime: '2026-07-15T20:00:00Z', location: 'Local Cafe', createdAt: '2026-07-10' },
+]
+
 export const demoStats: DashboardStats = {
-  members: 8, totalVoicePower: 5280, activeProposals: 1, todayContributions: 1, trustedRecords: 4,
+  members: 8, totalVoicePower: 5280, activeProposals: 1, todayContributions: 1, trustedRecords: 4, activeTasks: 2, upcomingActivities: 2,
 }
