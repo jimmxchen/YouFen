@@ -180,7 +180,8 @@ function GradualBlur(props: GradualBlurProps) {
     const isHorizontal = ['left', 'right'].includes(config.position);
     const isPageTarget = config.target === 'page';
 
-    const baseStyle: React.CSSProperties = {
+    // 索引签名允许下面按 config.position 动态写入 top/bottom/left/right
+    const baseStyle: React.CSSProperties & Record<string, string | number | undefined> = {
       position: isPageTarget ? 'fixed' : 'absolute',
       pointerEvents: config.hoverIntensity ? 'auto' : 'none',
       opacity: isVisible ? 1 : 0,
