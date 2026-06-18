@@ -50,6 +50,8 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
           addImage: t('chat.addImage'),
           addReaction: t('chat.addReaction'),
           settings: t('chat.settings'),
+          imageShared: t('chat.imageShared'),
+          reactionSuffix: t('chat.reactionSuffix'),
         }}
       />
 

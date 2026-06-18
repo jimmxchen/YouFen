@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { YouFenLogo } from '@/components/brand/youfen-logo'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
 interface NavbarProps {
@@ -64,13 +65,11 @@ export function Navbar({ forceLight = false }: NavbarProps) {
         <div className="flex items-center space-x-1">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 mr-4">
-            <motion.div
-              animate={{ color: isLight ? '#131517' : '#ffffff' }}
-              transition={{ duration: 0.5 }}
-              className="text-xl font-semibold"
-            >
-              {t('logo')}
-            </motion.div>
+            <YouFenLogo
+              variant={isLight ? 'black' : 'white'}
+              markClassName="h-9 w-9"
+              textClassName={`text-xl transition-colors duration-500 ${isLight ? 'text-[#131517]' : 'text-white'}`}
+            />
             <motion.div
               animate={{ color: isLight ? '#939597' : '#cccccc' }}
               transition={{ duration: 0.5 }}
