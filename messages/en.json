@@ -248,7 +248,14 @@
     "markComplete": "Mark Complete",
     "cancelItem": "Cancel",
     "activeTasks": "Active Tasks",
-    "upcomingActivities": "Upcoming Activities"
+    "upcomingActivities": "Upcoming Activities",
+    "chat": "Chat",
+    "chatSubtitle": "Message members directly",
+    "conversations": "Conversations",
+    "typeMessage": "Type a message...",
+    "send": "Send",
+    "noConversationSelected": "Select a conversation to start chatting",
+    "online": "Online"
   },
   "records": {
     "back": "Back to home",

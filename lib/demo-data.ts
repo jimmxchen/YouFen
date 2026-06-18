@@ -1,4 +1,4 @@
-import { type Member, type Contribution, type Proposal, type PublicRecord, type DashboardStats, type Task, type Activity } from '@/types/admin'
+import { type Member, type Contribution, type Proposal, type PublicRecord, type DashboardStats, type Task, type Activity, type ChatConversation, type ChatMessage } from '@/types/admin'
 
 export const demoMembers: Member[] = [
   { id: 'm1', name: 'Dan', email: 'dan@example.com', role: 'owner', voicePower: 800, contributionCount: 5, tags: ['Organizer'], joinedAt: '2026-07-01', lastActiveAt: '2026-07-23' },
@@ -94,3 +94,23 @@ export const demoActivities: Activity[] = [
 export const demoStats: DashboardStats = {
   members: 8, totalVoicePower: 5280, activeProposals: 1, todayContributions: 1, trustedRecords: 4, activeTasks: 2, upcomingActivities: 2,
 }
+
+export const demoConversations: ChatConversation[] = [
+  { id: 'conv1', memberId: 'm3', memberName: 'Carol', lastMessage: 'Sounds good, I\'ll have the guide ready by Friday.', lastMessageAt: '2026-07-23T16:40:00Z', unreadCount: 2 },
+  { id: 'conv2', memberId: 'm2', memberName: 'Eve', lastMessage: 'Can you confirm the sponsorship VP was recorded?', lastMessageAt: '2026-07-23T14:10:00Z', unreadCount: 0 },
+  { id: 'conv3', memberId: 'm8', memberName: 'Henry', lastMessage: 'I\'ll send the updated rules draft tonight.', lastMessageAt: '2026-07-22T20:05:00Z', unreadCount: 1 },
+  { id: 'conv4', memberId: 'm5', memberName: 'Alice', lastMessage: 'Thanks for approving my contribution!', lastMessageAt: '2026-07-20T09:30:00Z', unreadCount: 0 },
+]
+
+export const demoChatMessages: ChatMessage[] = [
+  { id: 'msg1', conversationId: 'conv1', senderId: 'm3', senderName: 'Carol', isAdmin: false, content: 'Hey, quick question about the onboarding guide task.', createdAt: '2026-07-23T16:30:00Z' },
+  { id: 'msg2', conversationId: 'conv1', senderId: 'm1', senderName: 'Dan', isAdmin: true, content: 'Sure, what\'s up?', createdAt: '2026-07-23T16:32:00Z' },
+  { id: 'msg3', conversationId: 'conv1', senderId: 'm3', senderName: 'Carol', isAdmin: false, content: 'Should it cover wallet setup for both Keplr and MetaMask?', createdAt: '2026-07-23T16:35:00Z' },
+  { id: 'msg4', conversationId: 'conv1', senderId: 'm1', senderName: 'Dan', isAdmin: true, content: 'Yes, cover both — most new members use MetaMask.', createdAt: '2026-07-23T16:38:00Z' },
+  { id: 'msg5', conversationId: 'conv1', senderId: 'm3', senderName: 'Carol', isAdmin: false, content: 'Sounds good, I\'ll have the guide ready by Friday.', createdAt: '2026-07-23T16:40:00Z' },
+  { id: 'msg6', conversationId: 'conv2', senderId: 'm2', senderName: 'Eve', isAdmin: false, content: 'Can you confirm the sponsorship VP was recorded?', createdAt: '2026-07-23T14:10:00Z' },
+  { id: 'msg7', conversationId: 'conv3', senderId: 'm8', senderName: 'Henry', isAdmin: false, content: 'Working on the community rules v3 draft now.', createdAt: '2026-07-22T19:50:00Z' },
+  { id: 'msg8', conversationId: 'conv3', senderId: 'm8', senderName: 'Henry', isAdmin: false, content: 'I\'ll send the updated rules draft tonight.', createdAt: '2026-07-22T20:05:00Z' },
+  { id: 'msg9', conversationId: 'conv4', senderId: 'm1', senderName: 'Dan', isAdmin: true, content: 'Approved your AI governance tool submission — great work!', createdAt: '2026-07-20T09:25:00Z' },
+  { id: 'msg10', conversationId: 'conv4', senderId: 'm5', senderName: 'Alice', isAdmin: false, content: 'Thanks for approving my contribution!', createdAt: '2026-07-20T09:30:00Z' },
+]
