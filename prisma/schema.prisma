@@ -387,3 +387,243 @@ model IdempotencyKey {
 
   @@unique([endpoint, key])
 }
+
+// ==========================================================================
+// v0.7 protocol-enforcement models (docs/BLOCKCHAIN-DESIGN-v0.7.md §5).
+// Chain = authority; these models orchestrate signing/relay/indexing and
+// hold projections rebuildable from ChainEvent. uint256 amounts are
+// Decimal(78,0); uint256 nonces are decimal strings; JSON boundary is always
+// a decimal string (never a JS number).
+// ==========================================================================
+
+enum ChainActionKind {
+  execute_mint
+  execute_reversal
+  create_proposal
+  cast_vote
+  relay_votes
+  finalize_proposal
+  execute_proposal
+  roll_epoch
+  enroll_member
+  rotate_key
+}
+
+enum ChainActionStatus {
+  awaiting_signatures
+  ready_to_submit
+  submitting
+  submitted
+  confirming
+  verified
+  reverted
+  expired
+  superseded
+}
+
+enum SignatureRole {
+  approver
+  member
+}
+
+// A client-held member vote key bound on-chain (memberIdHash -> address).
+model MemberSigner {
+  id            String    @id @default(cuid())
+  communityId   String
+  memberId      String
+  memberIdHash  String
+  signerAddress String
+  status        String    @default("active") // active | rotated
+  enrolledAt    DateTime?
+  txHash        String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([communityId, memberIdHash])
+  @@index([communityId, memberId])
+}
+
+// A one-time challenge the member signs to prove key possession (enroll/rotate).
+model SignerChallenge {
+  id            String    @id @default(cuid())
+  communityId   String
+  memberId      String
+  memberIdHash  String
+  signerAddress String
+  purpose       String // enroll | rotate
+  nonce         String // decimal string (uint256)
+  deadline      BigInt
+  consumedAt    DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([communityId, memberIdHash])
+}
+
+// Community controller (2-of-3 target). MVP records owner + optional guardians.
+model CommunityController {
+  id           String   @id @default(cuid())
+  communityId  String   @unique
+  ownerAddress String
+  threshold    Int      @default(1)
+  guardians    String[] @default([])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// An approver authorized to sign mint/reversal authorizations for a community.
+model CommunityApprover {
+  id          String   @id @default(cuid())
+  communityId String
+  address     String
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@unique([communityId, address])
+}
+
+// An assembled EIP-712 authorization awaiting the required signatures.
+model SignatureRequest {
+  id             String          @id @default(cuid())
+  communityId    String
+  kind           ChainActionKind
+  requiredRole   SignatureRole
+  requiredCount  Int             @default(1)
+  typedData      Json // frozen domain+types+message the client signs
+  digest         String          @unique
+  recordHash     String?
+  contributionId String?
+  proposalId     String?
+  memberIdHash   String?
+  nonce          String // decimal string
+  deadline       BigInt
+  status         String          @default("collecting") // collecting | ready | submitted | expired | canceled
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  signatures     Signature[]
+
+  @@index([communityId, status])
+}
+
+// One collected signature over a SignatureRequest.
+model Signature {
+  id                 String           @id @default(cuid())
+  signatureRequestId String
+  request            SignatureRequest @relation(fields: [signatureRequestId], references: [id])
+  signerAddress      String
+  signature          String
+  role               SignatureRole
+  createdAt          DateTime         @default(now())
+
+  @@unique([signatureRequestId, signerAddress])
+}
+
+// A chain-bound action driven through the ChainAction state machine (§7).
+// Only the indexer, on a `verified` transition, mutates confirmed balances.
+model ChainAction {
+  id                 String             @id @default(cuid())
+  communityId        String
+  kind               ChainActionKind
+  status             ChainActionStatus  @default(awaiting_signatures)
+  signatureRequestId String?
+  callData           Json // struct + sigs the submitter rebuilds the tx from
+  recordHash         String?            @unique
+  contributionId     String?
+  proposalId         String?
+  memberIdHash       String?
+  amount             Decimal?           @db.Decimal(78, 0)
+  idempotencyKey     String?            @unique
+  attemptEpoch       Int                @default(1)
+  lastError          String?
+  supersededById     String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  transactions       ChainTransaction[]
+
+  @@index([status, updatedAt])
+  @@index([communityId])
+}
+
+// A broadcast attempt for a ChainAction (nonce persisted before broadcast).
+model ChainTransaction {
+  id            String      @id @default(cuid())
+  chainActionId String
+  action        ChainAction @relation(fields: [chainActionId], references: [id])
+  txHash        String?     @unique
+  assignedNonce Int?
+  gasWei        Decimal?    @db.Decimal(78, 0)
+  blockNumber   Int?
+  blockHash     String?
+  status        String      @default("pending") // pending | mined | reverted
+  revertReason  String?
+  broadcastAt   DateTime?
+  confirmedAt   DateTime?
+  createdAt     DateTime    @default(now())
+
+  @@index([chainActionId])
+}
+
+// A decoded on-chain event — the authoritative source for projection rebuild.
+model ChainEvent {
+  id           String    @id @default(cuid())
+  communityId  String
+  eventName    String
+  blockNumber  Int
+  logIndex     Int
+  txHash       String
+  recordHash   String?
+  memberIdHash String?
+  proposalId   String?
+  ledgerSeq    BigInt?
+  args         Json
+  appliedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@unique([txHash, logIndex])
+  @@index([communityId, blockNumber, logIndex])
+  @@index([recordHash])
+}
+
+// Forward getLogs cursor per community (indexer checkpoint).
+model SyncCheckpoint {
+  id           String   @id @default(cuid())
+  communityId  String   @unique
+  lastBlock    Int      @default(0)
+  lastLogIndex Int      @default(0)
+  updatedAt    DateTime @updatedAt
+}
+
+// Append-only on-chain token rule version (numeric ceiling registry).
+model TokenRuleVersion {
+  id          String   @id @default(cuid())
+  communityId String
+  ruleVersion Int
+  contentHash String
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@unique([communityId, ruleVersion])
+}
+
+// Per-member per-epoch regular-mint accumulator (projection of on-chain cap counter).
+model MemberEpochMintCounter {
+  id            String   @id @default(cuid())
+  communityId   String
+  memberIdHash  String
+  epochNumber   Int
+  regularMinted Decimal  @default(0) @db.Decimal(78, 0)
+  updatedAt     DateTime @updatedAt
+
+  @@unique([communityId, memberIdHash, epochNumber])
+}
+
+// Record of a proposal's on-chain execution (policy staging / authorization consumption).
+model ProposalExecution {
+  id          String    @id @default(cuid())
+  communityId String
+  proposalId  String    @unique
+  kind        String
+  approved    Boolean
+  executedAt  DateTime?
+  txHash      String?
+  createdAt   DateTime  @default(now())
+}

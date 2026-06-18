@@ -1,5 +1,7 @@
 # YouFen Injective 后端接口层设计（权威版）
 
+> ⚠️ **v0.7 升级中**：合约 / 授权 / 签名模型已升级为协议执行型，权威见 **`docs/BLOCKCHAIN-DESIGN-v0.7.md`**（`YouFenGovernance` 合约 + EIP-712 + 冻结 revert）。本文档（v0.6）关于 canonical JSON / keccak256 recordHash / BullMQ 队列 / Injective RPC 事实的部分仍然有效并被 v0.7 复用；其存证合约 `YouFenRecords` 被 v0.7 的 `YouFenGovernance` 取代。
+
 > 本文档取代 ARCHITECTURE.md 第 6 节（旧版与 PRD 冲突已审计确认）。以 PRD.md §10/§24/§26/§27/§28 为需求权威，本文档为实现权威。
 
 > 范围：全量实现，不做黑客松降级（风险清单中的 MVP 降级路径仅作参考，不执行）。
