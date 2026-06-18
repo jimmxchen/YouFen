@@ -10,7 +10,20 @@ const config: Config = {
     extend: {
       fontFamily: {
         serif: ['var(--font-playfair)', 'serif'],
-        sans: ['var(--font-inter)', 'sans-serif'],
+        // --font-custom 是 layout 实际加载的字体；后接 UIUX_Rules §3.1 的系统回退栈
+        // （此前引用从未加载的 --font-inter，CSS 变量无效导致英文回退为浏览器衬线默认字体）
+        sans: [
+          'var(--font-custom)',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'PingFang SC',
+          'Hiragino Sans GB',
+          'Microsoft YaHei',
+          'Segoe UI',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
       },
       colors: {
         border: 'hsl(var(--border))',

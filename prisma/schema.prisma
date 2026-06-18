@@ -1,0 +1,645 @@
+// YouFen Prisma schema — PublicRecord ledger + trimmed source models (PRD §24).
+// Amounts are always BigInt. Enum identifiers are lowercase to match the TS
+// unions in lib/blockchain/types.ts (no @map).
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum VerificationStatus {
+  pending
+  submitting
+  confirming
+  verified
+  failed
+  superseded
+  // DB-only records terminal state (never queued, never reconciled).
+  recorded
+}
+
+enum PublicRecordType {
+  token_mint
+  advance_mint
+  token_reversal
+  epoch_summary
+  policy_version
+  proposal_snapshot
+  proposal_result
+  // DB-only record types (chainEligible=false; created straight to 'recorded').
+  epoch_budget_created
+  budget_advance
+  advance_debt_repayment
+  inflation_rate_change
+  proposal_created
+}
+
+// The single on-chain record ledger. DB is the source of truth; the chain is a
+// verifiable mirror. envelopeJson holds the canonical hash preimage.
+model PublicRecord {
+  id                   String             @id @default(cuid())
+  communityId          String
+  recordType           PublicRecordType
+  status               VerificationStatus @default(pending)
+  envelopeJson         String
+  recordHash           String             @unique
+  sourceTable          String
+  sourceId             String
+  txHash               String?
+  assignedNonce        Int?
+  blockNumber          Int?
+  blockHash            String?
+  submittedAt          DateTime?
+  confirmedAt          DateTime?
+  attemptEpoch         Int                @default(1)
+  lastError            String?
+  supersededByRecordId String?
+  // DB-only records (epoch_budget_created / budget_advance / advance_debt_repayment
+  // / inflation_rate_change / proposal_created) set this false: never enqueued,
+  // never scanned by the reconciler. Chain-mirrored records keep the default.
+  chainEligible        Boolean            @default(true)
+  // Community-scoped, strictly increasing ledger sequence assigned inside the
+  // business transaction. Feeds the on-chain ledgerSeq guard so a late/retried
+  // record can never overwrite a fresher balance snapshot (BLOCKCHAIN-DESIGN §2
+  // invariant 6). Nullable for non-breaking migration; REQUIRED in practice for
+  // token_mint / advance_mint / token_reversal records (the only chain writes
+  // that mirror balances), left null for DB-only / non-balance record types.
+  ledgerSeq            BigInt?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@index([status, updatedAt])
+  @@index([sourceTable, sourceId])
+  @@index([communityId])
+}
+
+// ---- Source models (PRD §24, trimmed; Proposal result fields are an approved
+// plan deviation carrying PRD §21 vote-result needs). ----
+
+model Community {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  type        String?
+  description String?
+  goal        String?
+  isPublic    Boolean   @default(true)
+  ownerId     String?
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model Member {
+  id                String   @id @default(cuid())
+  communityId       String
+  displayName       String
+  userId            String?
+  role              String   @default("member")
+  contributionCount Int      @default(0)
+  tags              String[] @default([])
+  lastActiveAt      DateTime @default(now())
+  createdAt         DateTime @default(now())
+}
+
+model CommunityTokenPolicy {
+  id                          String   @id @default(cuid())
+  communityId                 String
+  tokenName                   String
+  tokenSymbol                 String
+  initialSupply               BigInt
+  currentTotalSupply          BigInt
+  epochDurationDays           Int
+  monthlyInflationRateBps     Int
+  maxAdvanceRateBps           Int
+  memberMintCapRateBps        Int
+  policyVersion               Int
+  effectiveEpoch              Int
+  rules                       Json     @default("[]")
+  isTransferable              Boolean  @default(false)
+  pendingPolicyVersionId      String?
+  pendingPolicyEffectiveEpoch Int?
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+
+  @@unique([communityId])
+}
+
+model TokenEpoch {
+  id                           String    @id @default(cuid())
+  communityId                  String
+  epochNumber                  Int
+  openingSupply                BigInt
+  inflationRateBps             Int
+  baseMintBudget               BigInt
+  advanceDebtFromPreviousEpoch BigInt
+  regularMintedAmount          BigInt
+  advancedMintedAmount         BigInt
+  status                       String
+  startTime                    DateTime?
+  endTime                      DateTime?
+  effectiveRegularBudget       BigInt    @default(0)
+  maxAdvanceAmount             BigInt    @default(0)
+  unusedRegularBudget          BigInt    @default(0)
+  closedAt                     DateTime?
+  publicRecordId               String?
+  createdAt                    DateTime  @default(now())
+
+  @@unique([communityId, epochNumber])
+  @@index([communityId, status])
+}
+
+model TokenMintEvent {
+  id                        String   @id @default(cuid())
+  communityId               String
+  memberId                  String
+  epochId                   String
+  epochNumber               Int
+  mintType                  String
+  budgetSource              String
+  amount                    BigInt
+  governanceActivationEpoch Int?
+  memberBalanceBefore       BigInt
+  memberBalanceAfter        BigInt
+  totalSupplyBefore         BigInt
+  totalSupplyAfter          BigInt
+  tokenPolicyVersion        Int
+  reason                    String
+  approvedBy                String
+  publicRecordId            String?
+  governanceStatus          String   @default("active")
+  activeGovernanceBefore    BigInt?
+  activeGovernanceAfter     BigInt?
+  ownershipPercentageBefore Float?
+  ownershipPercentageAfter  Float?
+  contributionId            String?
+  ruleId                    String?
+  proposalId                String?
+  // 预支溯源与幂等回查通路：预支请求↔铸造事件的关联键，重放时按此回查已铸。
+  advanceRequestId          String?
+  secondApprovedBy          String?
+  relatedParty              Boolean  @default(false)
+  evidenceUrls              String[] @default([])
+  // 业务事务内分配的社区级单调账本序号；提交时 mapMint 从源行读取并进入
+  // payload/chainArgs（合约 recordMint 第 9 参守卫）。Int 保证 Prisma 返回
+  // number，与 builder 的 ledgerSeq?: number 类型一致。
+  ledgerSeq                 Int?
+  createdAt                 DateTime @default(now())
+
+  // Postgres 多 NULL 不冲突：同一 contribution 的两个 budgetSource 各一行铸造，
+  // 手工/初始分配 contributionId 为 NULL 不受唯一约束限制。
+  @@unique([contributionId, budgetSource])
+  @@index([advanceRequestId])
+}
+
+model TokenReversalEvent {
+  id                            String   @id @default(cuid())
+  communityId                   String
+  memberId                      String
+  originalMintEventId           String   @unique
+  amount                        BigInt
+  reason                        String
+  totalBalanceAfter             BigInt
+  totalSupplyAfter              BigInt
+  approvedBy                    String
+  publicRecordId                String?
+  activeGovernanceBalanceAfter  BigInt?
+  pendingGovernanceBalanceAfter BigInt?
+  proposalId                    String?
+  // 同 TokenMintEvent.ledgerSeq：合约 recordReversal 序号守卫的源数据
+  ledgerSeq                     Int?
+  createdAt                     DateTime @default(now())
+}
+
+model Proposal {
+  id                             String    @id @default(cuid())
+  communityId                    String
+  title                          String
+  status                         String
+  epochNumberSnapshot            Int?
+  totalSupplySnapshot            BigInt?
+  activeGovernanceSupplySnapshot BigInt?
+  tokenPolicyVersionSnapshot     Int?
+  snapshotAt                     DateTime?
+  endedAt                        DateTime?
+  winningOptionId                String?
+  voterCount                     Int?
+  totalVoteWeight                BigInt?
+  snapshotPublicRecordId         String?
+  // 快照/结果的 Merkle 根必须持久化到源行：链上提交时信封由源行重建，
+  // 缺列 → RECORD_HASH_MISMATCH 永久失败（真链集成实测教训）。
+  weightsMerkleRoot              String?
+  votesMerkleRoot                String?
+  resultPublicRecordId           String?
+  type                           String?
+  description                    String?
+  options                        Json?
+  startTime                      DateTime?
+  endTime                        DateTime?
+  snapshotBlock                  Int?
+  epochIdSnapshot                String?
+  minimumVoterCount              Int       @default(3)
+  advanceAmount                  BigInt?
+  specialMintRecipientId         String?
+  specialMintAmount              BigInt?
+  policyChangePayload            Json?
+  relatedPartyNote               String?
+  createdBy                      String?
+  createdAt                      DateTime  @default(now())
+
+  @@index([communityId, status])
+}
+
+// ---- New business models (W1-A). No relation fields by design; joins are done
+// explicitly in application code. All amounts/supplies/balances are BigInt. ----
+
+// Per-community token supply + monotonic ledger sequence source of truth.
+model CommunityTokenState {
+  id                 String   @id @default(cuid())
+  communityId        String   @unique
+  currentTotalSupply BigInt   @default(0)
+  ledgerSeq          BigInt   @default(0)
+  updatedAt          DateTime @updatedAt
+}
+
+// Per-member balance snapshot maintained by the engine transactions.
+model MemberTokenBalance {
+  id                       String    @id @default(cuid())
+  communityId              String
+  memberId                 String
+  totalBalance             BigInt    @default(0)
+  activeGovernanceBalance  BigInt    @default(0)
+  pendingGovernanceBalance BigInt    @default(0)
+  tokensEarnedCurrentEpoch BigInt    @default(0)
+  tokensEarnedLifetime     BigInt    @default(0)
+  tokensReversedLifetime   BigInt    @default(0)
+  lastContributionAt       DateTime?
+  lastMintAt               DateTime?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  @@unique([communityId, memberId])
+  @@index([communityId])
+}
+
+model Contribution {
+  id                   String    @id @default(cuid())
+  communityId          String
+  memberId             String
+  description          String
+  type                 String?
+  ruleId               String?
+  suggestedTokenAmount BigInt
+  approvedTokenAmount  BigInt?
+  status               String    @default("pending")
+  aiReason             String?
+  evidence             String[]  @default([])
+  submittedBy          String
+  reviewedBy           String?
+  reviewedAt           DateTime?
+  createdAt            DateTime  @default(now())
+
+  @@index([communityId, status])
+  @@index([memberId])
+}
+
+model TokenAdvanceRequest {
+  id               String    @id @default(cuid())
+  communityId      String
+  epochId          String
+  memberId         String
+  requestedAmount  BigInt
+  approvedAmount   BigInt?
+  advanceRateBps   Int
+  reason           String
+  contributionIds  String[]  @default([])
+  status           String    @default("draft")
+  relatedParty     Boolean   @default(false)
+  requestedBy      String
+  secondApprovedBy String?
+  proposalId       String?
+  approvedAt       DateTime?
+  executedAt       DateTime?
+  publicRecordId   String?
+  createdAt        DateTime  @default(now())
+
+  @@index([communityId, status])
+  @@index([epochId])
+}
+
+// Append-only policy version ledger.
+model TokenPolicyVersion {
+  id                      String   @id @default(cuid())
+  policyId                String
+  version                 Int
+  effectiveEpoch          Int
+  monthlyInflationRateBps Int
+  maxAdvanceRateBps       Int
+  memberMintCapRateBps    Int
+  rules                   Json
+  proposalId              String?
+  publicRecordId          String?
+  createdAt               DateTime @default(now())
+
+  @@unique([policyId, version])
+}
+
+// Append-only vote ledger.
+model Vote {
+  id                              String   @id @default(cuid())
+  proposalId                      String
+  memberId                        String
+  optionId                        String
+  totalTokenBalanceSnapshot       BigInt
+  activeGovernanceBalanceSnapshot BigInt
+  totalSupplySnapshot             BigInt
+  governancePercentageSnapshot    Float
+  createdAt                       DateTime @default(now())
+
+  @@unique([proposalId, memberId])
+  @@index([proposalId])
+}
+
+// Append-only per-proposal member governance snapshot.
+model ProposalMemberSnapshot {
+  id                    String   @id @default(cuid())
+  proposalId            String
+  memberId              String
+  activeGovernanceToken BigInt
+  createdAt             DateTime @default(now())
+
+  @@unique([proposalId, memberId])
+  @@index([proposalId])
+}
+
+// Idempotency store for write endpoints (three-state matrix owned by W1-C).
+model IdempotencyKey {
+  id             String   @id @default(cuid())
+  endpoint       String
+  key            String
+  requestHash    String
+  responseStatus Int
+  responseBody   String
+  createdAt      DateTime @default(now())
+
+  @@unique([endpoint, key])
+}
+
+// ==========================================================================
+// v0.7 protocol-enforcement models (docs/BLOCKCHAIN-DESIGN-v0.7.md §5).
+// Chain = authority; these models orchestrate signing/relay/indexing and
+// hold projections rebuildable from ChainEvent. uint256 amounts are
+// Decimal(78,0); uint256 nonces are decimal strings; JSON boundary is always
+// a decimal string (never a JS number).
+// ==========================================================================
+
+enum ChainActionKind {
+  execute_mint
+  execute_reversal
+  create_proposal
+  cast_vote
+  relay_votes
+  finalize_proposal
+  execute_proposal
+  roll_epoch
+  enroll_member
+  rotate_key
+}
+
+enum ChainActionStatus {
+  awaiting_signatures
+  ready_to_submit
+  submitting
+  submitted
+  confirming
+  verified
+  reverted
+  expired
+  superseded
+}
+
+enum SignatureRole {
+  approver
+  member
+}
+
+// A client-held member vote key bound on-chain (memberIdHash -> address).
+model MemberSigner {
+  id            String    @id @default(cuid())
+  communityId   String
+  memberId      String
+  memberIdHash  String
+  signerAddress String
+  status        String    @default("active") // active | rotated
+  enrolledAt    DateTime?
+  txHash        String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([communityId, memberIdHash])
+  @@index([communityId, memberId])
+}
+
+// A one-time challenge the member signs to prove key possession (enroll/rotate).
+model SignerChallenge {
+  id            String    @id @default(cuid())
+  communityId   String
+  memberId      String
+  memberIdHash  String
+  signerAddress String
+  purpose       String // enroll | rotate
+  nonce         String // decimal string (uint256)
+  deadline      BigInt
+  consumedAt    DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([communityId, memberIdHash])
+}
+
+// Community controller (2-of-3 target). MVP records owner + optional guardians.
+model CommunityController {
+  id           String   @id @default(cuid())
+  communityId  String   @unique
+  ownerAddress String
+  threshold    Int      @default(1)
+  guardians    String[] @default([])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// An approver authorized to sign mint/reversal authorizations for a community.
+model CommunityApprover {
+  id          String   @id @default(cuid())
+  communityId String
+  address     String
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@unique([communityId, address])
+}
+
+// An assembled EIP-712 authorization awaiting the required signatures.
+model SignatureRequest {
+  id             String          @id @default(cuid())
+  communityId    String
+  kind           ChainActionKind
+  requiredRole   SignatureRole
+  requiredCount  Int             @default(1)
+  typedData      Json // frozen domain+types+message the client signs
+  digest         String          @unique
+  recordHash     String?
+  contributionId String?
+  proposalId     String?
+  memberIdHash   String?
+  nonce          String // decimal string
+  deadline       BigInt
+  status         String          @default("collecting") // collecting | ready | submitted | expired | canceled
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  signatures     Signature[]
+
+  @@index([communityId, status])
+}
+
+// One collected signature over a SignatureRequest.
+model Signature {
+  id                 String           @id @default(cuid())
+  signatureRequestId String
+  request            SignatureRequest @relation(fields: [signatureRequestId], references: [id])
+  signerAddress      String
+  signature          String
+  role               SignatureRole
+  createdAt          DateTime         @default(now())
+
+  @@unique([signatureRequestId, signerAddress])
+}
+
+// A chain-bound action driven through the ChainAction state machine (§7).
+// Only the indexer, on a `verified` transition, mutates confirmed balances.
+model ChainAction {
+  id                 String             @id @default(cuid())
+  communityId        String
+  kind               ChainActionKind
+  status             ChainActionStatus  @default(awaiting_signatures)
+  signatureRequestId String?
+  callData           Json // struct + sigs the submitter rebuilds the tx from
+  recordHash         String?            @unique
+  contributionId     String?
+  proposalId         String?
+  memberIdHash       String?
+  amount             Decimal?           @db.Decimal(78, 0)
+  idempotencyKey     String?            @unique
+  attemptEpoch       Int                @default(1)
+  lastError          String?
+  supersededById     String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  transactions       ChainTransaction[]
+
+  @@index([status, updatedAt])
+  @@index([communityId])
+}
+
+// A broadcast attempt for a ChainAction (nonce persisted before broadcast).
+model ChainTransaction {
+  id            String      @id @default(cuid())
+  chainActionId String
+  action        ChainAction @relation(fields: [chainActionId], references: [id])
+  txHash        String?     @unique
+  assignedNonce Int?
+  gasWei        Decimal?    @db.Decimal(78, 0)
+  blockNumber   Int?
+  blockHash     String?
+  status        String      @default("pending") // pending | mined | reverted
+  revertReason  String?
+  broadcastAt   DateTime?
+  confirmedAt   DateTime?
+  createdAt     DateTime    @default(now())
+
+  @@index([chainActionId])
+}
+
+// A decoded on-chain event — the authoritative source for projection rebuild.
+model ChainEvent {
+  id           String    @id @default(cuid())
+  communityId  String
+  eventName    String
+  blockNumber  Int
+  logIndex     Int
+  txHash       String
+  recordHash   String?
+  memberIdHash String?
+  proposalId   String?
+  ledgerSeq    BigInt?
+  args         Json
+  appliedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@unique([txHash, logIndex])
+  @@index([communityId, blockNumber, logIndex])
+  @@index([recordHash])
+}
+
+// Forward getLogs cursor per community (indexer checkpoint).
+model SyncCheckpoint {
+  id           String   @id @default(cuid())
+  communityId  String   @unique
+  lastBlock    Int      @default(0)
+  lastLogIndex Int      @default(0)
+  updatedAt    DateTime @updatedAt
+}
+
+// Append-only on-chain token rule version (numeric ceiling registry).
+model TokenRuleVersion {
+  id          String   @id @default(cuid())
+  communityId String
+  ruleVersion Int
+  contentHash String
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@unique([communityId, ruleVersion])
+}
+
+// Per-member per-epoch regular-mint accumulator (projection of on-chain cap counter).
+model MemberEpochMintCounter {
+  id            String   @id @default(cuid())
+  communityId   String
+  memberIdHash  String
+  epochNumber   Int
+  regularMinted Decimal  @default(0) @db.Decimal(78, 0)
+  updatedAt     DateTime @updatedAt
+
+  @@unique([communityId, memberIdHash, epochNumber])
+}
+
+// Confirmed per-member balance keyed by the on-chain memberIdHash (projection of
+// MintExecuted/ReversalExecuted). `ledgerSeq` mirrors the event's monotonic
+// govSeqAfter so a late/retried event can never overwrite a fresher balance
+// (fresher-wins guard). Only the indexer writes this, only on a `verified` event.
+model MemberChainBalance {
+  id           String   @id @default(cuid())
+  communityId  String
+  memberIdHash String
+  balance      Decimal  @default(0) @db.Decimal(78, 0)
+  ledgerSeq    BigInt   @default(0)
+  updatedAt    DateTime @updatedAt
+
+  @@unique([communityId, memberIdHash])
+  @@index([communityId])
+}
+
+// Record of a proposal's on-chain execution (policy staging / authorization consumption).
+model ProposalExecution {
+  id          String    @id @default(cuid())
+  communityId String
+  proposalId  String    @unique
+  kind        String
+  approved    Boolean
+  executedAt  DateTime?
+  txHash      String?
+  createdAt   DateTime  @default(now())
+}

@@ -1,7 +1,7 @@
 'use client'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link, useRouter, usePathname } from '@/i18n/navigation'
-import { LayoutDashboard, Users, ClipboardCheck, Vote, ShieldCheck, ChevronRight, Languages } from 'lucide-react'
+import { LayoutDashboard, Users, ClipboardCheck, Vote, ShieldCheck, ChevronRight, Languages, ClipboardList, MessageCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { type AdminView } from '@/types/admin'
 
@@ -11,9 +11,11 @@ const VIEW_LABELS: Record<AdminView, string> = {
   contributions: 'contributions',
   proposals: 'proposals',
   records: 'trustedRecords',
+  management: 'management',
+  chat: 'chat',
 }
 
-const ADMIN_VIEWS: AdminView[] = ['dashboard', 'members', 'contributions', 'proposals', 'records']
+const ADMIN_VIEWS: AdminView[] = ['dashboard', 'members', 'contributions', 'proposals', 'records', 'management', 'chat']
 
 function ViewIcon({ view }: { view: AdminView }) {
   switch (view) {
@@ -22,6 +24,8 @@ function ViewIcon({ view }: { view: AdminView }) {
     case 'contributions': return <ClipboardCheck className="w-[18px] h-[18px]" />
     case 'proposals': return <Vote className="w-[18px] h-[18px]" />
     case 'records': return <ShieldCheck className="w-[18px] h-[18px]" />
+    case 'management': return <ClipboardList className="w-[18px] h-[18px]" />
+    case 'chat': return <MessageCircle className="w-[18px] h-[18px]" />
   }
 }
 

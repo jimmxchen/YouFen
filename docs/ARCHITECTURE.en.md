@@ -358,6 +358,29 @@ import Link from 'next/link'
 - Image: 200x200px, under 32KB
 - Link: Supports direct open
 
+### 2.5 Records Explorer — v0.7 Protocol-Enforcement Narrative
+
+A public provenance page for humanities-background community managers with no web3 experience. Route `/[locale]/records`, components under `components/records/`:
+
+| File | Responsibility |
+|---|---|
+| `records-explorer.tsx` | Page shell: header, explainer, rule-guardian, section search, timeline, ledger status |
+| `provenance-journey.tsx` | Per-record 4-step journey + on-chain archive card (incl. v0.7 authorization row) + self-verify |
+| `rule-guardian.tsx` | **New in v0.7**: rule-guardian section that narrates "overreach refused by the contract" |
+| `chain-status.tsx` | Injective public-ledger live status (Blockscout `/api/v2/stats` polling) |
+| `demo-data.ts` | PRD §29 AdventureX demo data (incl. v0.7 `authorization` field) |
+
+**Two trust layers, both required.**
+
+1. **Notary layer (v0.6)** — "what happened can't be changed": record → digital fingerprint (recordHash/keccak256) → sealed on-chain → anyone can recompute and verify.
+2. **Rule-guardian layer (v0.7)** — "what's non-compliant can't happen": before releasing, the contract enforces budget, per-member cap, advance limit, and governance gating; overreach reverts on the spot. `RuleGuardian` shows four humanities-readable "attempt → ledger response" examples (over cap, changing rules without a vote, post-snapshot vote-stuffing, platform voting for you), mapping to the overreach-revert demos in threat model §13.2–13.6.
+
+**Trust-copy discipline (PRD §12.2).** The guardian section explicitly states what the ledger **does and does not** guarantee: it guarantees power can't be over-issued (budget/cap/voting rules are unbypassable), but it does not judge for the community whether a contribution is real — that stays the community's call. It also stresses **exitability**: balances and governance history live on-chain and can be read back even if YouFen shuts down, with no dependence on our database.
+
+**Client-held keys.** "YouFen cannot vote for members" is stated as **fact**, which holds only because member private keys are client-held (the server never sees them) — see BLOCKCHAIN-DESIGN v0.7 and HANDOFF.
+
+> `RuleGuardian`'s four scenarios are currently educational examples; once the v0.7 contract is deployed they become real overreach-revert demos (see HANDOFF). Copy lives under `records.guardian` / `records.archive.auth*` in `messages/{zh,en}.json`, with matched keys across both languages.
+
 ---
 
 

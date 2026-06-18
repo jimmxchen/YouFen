@@ -1,4 +1,4 @@
-import { type Member, type Contribution, type Proposal, type PublicRecord, type DashboardStats } from '@/types/admin'
+import { type Member, type Contribution, type Proposal, type PublicRecord, type DashboardStats, type Task, type Activity, type ChatConversation, type ChatMessage } from '@/types/admin'
 
 export const demoMembers: Member[] = [
   { id: 'm1', name: 'Dan', email: 'dan@example.com', role: 'owner', voicePower: 800, contributionCount: 5, tags: ['Organizer'], joinedAt: '2026-07-01', lastActiveAt: '2026-07-23' },
@@ -76,6 +76,41 @@ export const demoRecords: PublicRecord[] = [
   },
 ]
 
+export const demoTasks: Task[] = [
+  { id: 't1', title: 'Prepare onboarding guide for new members', description: 'Write a step-by-step guide covering wallet setup, contribution submission, and voting.', status: 'inProgress', assigneeId: 'm3', assigneeName: 'Carol', priority: 'high', dueDate: '2026-07-28', createdAt: '2026-07-20' },
+  { id: 't2', title: 'Review July contribution submissions', description: 'Go through pending contributions and approve or reject with AI-assisted reasoning.', status: 'pending', assigneeId: 'm1', assigneeName: 'Dan', priority: 'high', dueDate: '2026-07-26', createdAt: '2026-07-22' },
+  { id: 't3', title: 'Update community rules v3 draft', description: 'Incorporate feedback from the latest vote on token policy changes.', status: 'inProgress', assigneeId: 'm8', assigneeName: 'Henry', priority: 'medium', dueDate: '2026-08-01', createdAt: '2026-07-21' },
+  { id: 't4', title: 'Organize weekly office hour', description: 'Schedule and promote a weekly office hour session for members to ask questions.', status: 'completed', assigneeId: 'm2', assigneeName: 'Eve', priority: 'low', dueDate: '2026-07-24', createdAt: '2026-07-18', completedAt: '2026-07-24' },
+  { id: 't5', title: 'Set up community Discord channels', description: 'Create dedicated channels for announcements, contributions, and off-topic discussion.', status: 'cancelled', assigneeId: 'm4', assigneeName: 'Bob', priority: 'low', dueDate: '2026-07-30', createdAt: '2026-07-19' },
+]
+
+export const demoActivities: Activity[] = [
+  { id: 'a1', title: 'Weekly Sync', description: 'Regular weekly sync to review progress and align on priorities.', status: 'ongoing', type: 'meetup', participantCount: 12, startTime: '2026-07-24T14:00:00Z', endTime: '2026-07-24T15:00:00Z', location: 'Discord Voice', createdAt: '2026-07-22' },
+  { id: 'a2', title: 'Smart Contract Workshop', description: 'Hands-on workshop covering Injective smart contract basics and deployment.', status: 'upcoming', type: 'workshop', participantCount: 25, startTime: '2026-07-28T10:00:00Z', endTime: '2026-07-28T12:00:00Z', location: 'Zoom', createdAt: '2026-07-20' },
+  { id: 'a3', title: 'Hackathon Kickoff', description: 'Kickoff event for the summer hackathon with team formation and theme reveal.', status: 'upcoming', type: 'hackathon', participantCount: 40, startTime: '2026-08-01T09:00:00Z', endTime: '2026-08-03T18:00:00Z', location: 'Community Hub', createdAt: '2026-07-21' },
+  { id: 'a4', title: 'Mid-Month Social', description: 'Casual social gathering to connect and share wins from the first half of the month.', status: 'completed', type: 'social', participantCount: 18, startTime: '2026-07-15T18:00:00Z', endTime: '2026-07-15T20:00:00Z', location: 'Local Cafe', createdAt: '2026-07-10' },
+]
+
 export const demoStats: DashboardStats = {
-  members: 8, totalVoicePower: 5280, activeProposals: 1, todayContributions: 1, trustedRecords: 4,
+  members: 8, totalVoicePower: 5280, activeProposals: 1, todayContributions: 1, trustedRecords: 4, activeTasks: 2, upcomingActivities: 2,
 }
+
+export const demoConversations: ChatConversation[] = [
+  { id: 'conv1', memberId: 'm3', memberName: 'Carol', lastMessage: 'Sounds good, I\'ll have the guide ready by Friday.', lastMessageAt: '2026-07-23T16:40:00Z', unreadCount: 2 },
+  { id: 'conv2', memberId: 'm2', memberName: 'Eve', lastMessage: 'Can you confirm the sponsorship VP was recorded?', lastMessageAt: '2026-07-23T14:10:00Z', unreadCount: 0 },
+  { id: 'conv3', memberId: 'm8', memberName: 'Henry', lastMessage: 'I\'ll send the updated rules draft tonight.', lastMessageAt: '2026-07-22T20:05:00Z', unreadCount: 1 },
+  { id: 'conv4', memberId: 'm5', memberName: 'Alice', lastMessage: 'Thanks for approving my contribution!', lastMessageAt: '2026-07-20T09:30:00Z', unreadCount: 0 },
+]
+
+export const demoChatMessages: ChatMessage[] = [
+  { id: 'msg1', conversationId: 'conv1', senderId: 'm3', senderName: 'Carol', isAdmin: false, content: 'Hey, quick question about the onboarding guide task.', createdAt: '2026-07-23T16:30:00Z' },
+  { id: 'msg2', conversationId: 'conv1', senderId: 'm1', senderName: 'Dan', isAdmin: true, content: 'Sure, what\'s up?', createdAt: '2026-07-23T16:32:00Z' },
+  { id: 'msg3', conversationId: 'conv1', senderId: 'm3', senderName: 'Carol', isAdmin: false, content: 'Should it cover wallet setup for both Keplr and MetaMask?', createdAt: '2026-07-23T16:35:00Z' },
+  { id: 'msg4', conversationId: 'conv1', senderId: 'm1', senderName: 'Dan', isAdmin: true, content: 'Yes, cover both — most new members use MetaMask.', createdAt: '2026-07-23T16:38:00Z' },
+  { id: 'msg5', conversationId: 'conv1', senderId: 'm3', senderName: 'Carol', isAdmin: false, content: 'Sounds good, I\'ll have the guide ready by Friday.', createdAt: '2026-07-23T16:40:00Z' },
+  { id: 'msg6', conversationId: 'conv2', senderId: 'm2', senderName: 'Eve', isAdmin: false, content: 'Can you confirm the sponsorship VP was recorded?', createdAt: '2026-07-23T14:10:00Z' },
+  { id: 'msg7', conversationId: 'conv3', senderId: 'm8', senderName: 'Henry', isAdmin: false, content: 'Working on the community rules v3 draft now.', createdAt: '2026-07-22T19:50:00Z' },
+  { id: 'msg8', conversationId: 'conv3', senderId: 'm8', senderName: 'Henry', isAdmin: false, content: 'I\'ll send the updated rules draft tonight.', createdAt: '2026-07-22T20:05:00Z' },
+  { id: 'msg9', conversationId: 'conv4', senderId: 'm1', senderName: 'Dan', isAdmin: true, content: 'Approved your AI governance tool submission — great work!', createdAt: '2026-07-20T09:25:00Z' },
+  { id: 'msg10', conversationId: 'conv4', senderId: 'm5', senderName: 'Alice', isAdmin: false, content: 'Thanks for approving my contribution!', createdAt: '2026-07-20T09:30:00Z' },
+]
