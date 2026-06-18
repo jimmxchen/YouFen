@@ -176,8 +176,9 @@ function GradualBlur(props: GradualBlurProps) {
   }, [config, isHovered]);
 
   const containerStyle: React.CSSProperties = useMemo(() => {
-    const isVertical = ['top', 'bottom'].includes(config.position);
-    const isHorizontal = ['left', 'right'].includes(config.position);
+    const position = config.position as Position;
+    const isVertical = ['top', 'bottom'].includes(position);
+    const isHorizontal = ['left', 'right'].includes(position);
     const isPageTarget = config.target === 'page';
 
     // 索引签名允许下面按 config.position 动态写入 top/bottom/left/right
@@ -193,13 +194,13 @@ function GradualBlur(props: GradualBlurProps) {
     if (isVertical) {
       baseStyle.height = responsiveHeight;
       baseStyle.width = responsiveWidth || '100%';
-      baseStyle[config.position] = 0;
+      baseStyle[position] = 0;
       baseStyle.left = 0;
       baseStyle.right = 0;
     } else if (isHorizontal) {
       baseStyle.width = responsiveWidth || responsiveHeight;
       baseStyle.height = '100%';
-      baseStyle[config.position] = 0;
+      baseStyle[position] = 0;
       baseStyle.top = 0;
       baseStyle.bottom = 0;
     }
