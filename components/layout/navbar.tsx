@@ -18,7 +18,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
   const [isMounted, setIsMounted] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   // forceLight 恒为亮色态；否则跟随滚动
-  const isHeroScrolled = forceLight || scrolledPastHero
+  const isLight = forceLight || scrolledPastHero
 
   useEffect(() => {
     setIsMounted(true)
