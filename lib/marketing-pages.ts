@@ -65,7 +65,7 @@ const pageContent: MarketingPageMap = {
       title: 'Start a contribution-driven community',
       description:
         'Create a YouFen workspace for a community where contribution evidence, voice power, and decision records stay connected.',
-      primaryAction: { href: '/sign-up', label: 'Create account' },
+      primaryAction: { href: '/admin', label: 'Create account' },
       secondaryAction: { href: '/admin/management', label: 'Preview setup tools' },
       sections: [
         {
@@ -83,7 +83,7 @@ const pageContent: MarketingPageMap = {
       title: '创建一个由贡献驱动的社群',
       description:
         '用有份儿搭建社群空间，把贡献凭证、发言权和决策记录连在一起。',
-      primaryAction: { href: '/sign-up', label: '创建账号' },
+      primaryAction: { href: '/admin', label: '创建账号' },
       secondaryAction: { href: '/admin/management', label: '预览配置工具' },
       sections: [
         {
