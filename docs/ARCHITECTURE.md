@@ -1,4 +1,4 @@
-# 有份儿 YouFen.xyz - 技术架构设计
+# 有份儿 YouFen.io - 技术架构设计
 
 **版本**: v0.1 Hackathon MVP  
 **更新日期**: 2026-07-23  
