@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useTranslations } from 'next-intl'
 
 interface TestimonialCardProps {
   avatar: string;
@@ -212,6 +213,8 @@ const testimonials: TestimonialCardProps[] = [
 
 // Main component with masonry layout
 export function Testimonials() {
+  const t = useTranslations('testimonials')
+
   // Split testimonials into five columns for masonry layout
   const columns = [
     testimonials.filter((_, index) => index % 5 === 0),
@@ -224,8 +227,8 @@ export function Testimonials() {
   return (
     <div className="w-full py-20 px-6 bg-gray-100">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-4 text-black">用户评价</h2>
-        <p className="text-center text-gray-600 mb-12">看看用户怎么说</p>
+        <h2 className="text-4xl font-bold text-center mb-4 text-black">{t('title')}</h2>
+        <p className="text-center text-gray-600 mb-12">{t('subtitle')}</p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {columns.map((columnItems, colIndex) => (
