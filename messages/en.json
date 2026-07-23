@@ -104,14 +104,6 @@
         "emptyTitle": "No pending tokens",
         "emptyBody": "Everything you have earned is already active for voting."
       },
-      "history": {
-        "eyebrow": "Recent history",
-        "title": "Where your tokens came from",
-        "viewHistory": "View full history",
-        "emptyTitle": "No contribution records yet",
-        "emptyBody": "When the community approves your contributions, they will appear here.",
-        "approvedBy": "Approved by"
-      },
       "votes": {
         "title": "Available votes",
         "snapshotWeight": "Your voting weight",

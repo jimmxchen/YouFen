@@ -104,14 +104,6 @@
         "emptyTitle": "没有待生效份额",
         "emptyBody": "你当前获得的份额都已经可以参与投票。"
       },
-      "history": {
-        "eyebrow": "最近记录",
-        "title": "你的份额从哪里来",
-        "viewHistory": "查看完整历史",
-        "emptyTitle": "还没有贡献记录",
-        "emptyBody": "社群确认你的贡献后，记录会出现在这里。",
-        "approvedBy": "确认人"
-      },
       "votes": {
         "title": "可参与投票",
         "snapshotWeight": "你的投票权重",
