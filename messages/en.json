@@ -114,14 +114,6 @@
           "upcoming": "Upcoming",
           "ended": "Ended"
         }
-      },
-      "receipts": {
-        "eyebrow": "Public receipts",
-        "title": "Proof records",
-        "viewAll": "View all",
-        "description": "These receipts prove important community records were not quietly changed.",
-        "emptyTitle": "No public receipts yet",
-        "emptyBody": "Receipts will appear here after important community records are saved."
       }
     },
     "history": {

@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { AvailableVotes } from '@/components/member/available-votes'
 import { MemberShell } from '@/components/member/member-shell'
@@ -16,12 +14,6 @@ interface MemberPageProps {
   }
 }
 
-function receiptStatusLabel(status: string, labels: Record<string, string>) {
-  if (status === 'verified') return labels.verified
-  if (status === 'failed') return labels.failed
-  return labels.pending
-}
-
 function formatToken(value: number, symbol: string, locale: string) {
   return `${new Intl.NumberFormat(locale).format(value)} ${symbol}`
 }
@@ -35,14 +27,6 @@ function formatPercent(value: number, locale: string) {
 export default async function MemberCommunityPage({ params }: MemberPageProps) {
   const t = await getTranslations('member')
   const member = getDemoMember(params.communityId)
-  const homeHref = `/${params.locale}/member/${params.communityId}`
-  const recordsHref = `${homeHref}/records`
-
-  const receiptLabels = {
-    verified: t('status.verified'),
-    failed: t('status.failed'),
-    pending: t('status.pending'),
-  }
 
   return (
     <MemberShell>
@@ -122,57 +106,6 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
             },
           }}
         />
-
-        <section className="rounded-[24px] bg-white p-5 shadow-sm">
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm text-[#6f7174]">{t('dashboard.receipts.eyebrow')}</p>
-              <h2 className="text-lg font-semibold">{t('dashboard.receipts.title')}</h2>
-            </div>
-            <Link
-              href={recordsHref}
-              className="flex items-center gap-1 text-sm font-medium text-[#de475e]"
-            >
-              {t('dashboard.receipts.viewAll')}
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <p className="mb-4 text-sm leading-6 text-[#6f7174]">
-            {t('dashboard.receipts.description')}
-          </p>
-
-          {member.receipts.length === 0 ? (
-            <div className="rounded-2xl bg-[#f8f7f4] p-4">
-              <h3 className="text-sm font-semibold">{t('dashboard.receipts.emptyTitle')}</h3>
-              <p className="mt-1 text-sm leading-6 text-[#6f7174]">
-                {t('dashboard.receipts.emptyBody')}
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {member.receipts.slice(0, 2).map((receipt) => (
-                <article key={receipt.id} className="rounded-2xl bg-[#f8f7f4] p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <h3 className="text-sm font-semibold">{receipt.title}</h3>
-                      <p className="mt-1 text-xs text-[#6f7174]">
-                        {receipt.network} · {receipt.createdAt}
-                      </p>
-                    </div>
-                    <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-[#333537]">
-                      {receiptStatusLabel(receipt.status, receiptLabels)}
-                    </span>
-                  </div>
-                  {receipt.txHash ? (
-                    <p className="mt-3 truncate rounded-xl bg-white px-3 py-2 text-xs text-[#6f7174]">
-                      {receipt.txHash}
-                    </p>
-                  ) : null}
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
       </div>
 
       <MobileBottomNav
