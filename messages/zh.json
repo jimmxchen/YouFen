@@ -72,5 +72,87 @@
       "hybrid": "混合模式",
       "anonymous": "匿名投票"
     }
+  },
+  "member": {
+    "nav": {
+      "home": "首页",
+      "history": "历史",
+      "records": "凭证"
+    },
+    "status": {
+      "verified": "已验证",
+      "failed": "需重试",
+      "pending": "等待中"
+    },
+    "dashboard": {
+      "greeting": "你好，{name}",
+      "token": {
+        "title": "你的社群份额",
+        "active": "可参与投票",
+        "pending": "下月生效",
+        "ownershipShare": "社群份额",
+        "ownershipHint": "你在全部社群份额中的占比。",
+        "voteShare": "当前投票占比"
+      },
+      "ownershipTrend": {
+        "title": "份额变化",
+        "description": "你本月获得了 {earned}。社群新增了 {minted}，所以你的占比从 {from} 变为 {to}。"
+      },
+      "pending": {
+        "eyebrow": "待生效份额",
+        "activates": "生效时间",
+        "emptyTitle": "没有待生效份额",
+        "emptyBody": "你当前获得的份额都已经可以参与投票。"
+      },
+      "history": {
+        "eyebrow": "最近记录",
+        "title": "你的份额从哪里来",
+        "viewHistory": "查看完整历史",
+        "emptyTitle": "还没有贡献记录",
+        "emptyBody": "社群确认你的贡献后，记录会出现在这里。",
+        "approvedBy": "确认人"
+      },
+      "votes": {
+        "title": "可参与投票",
+        "snapshotWeight": "你的投票权重",
+        "emptyTitle": "暂无开放投票",
+        "emptyBody": "新的社群决策准备好后，会显示在这里。",
+        "status": {
+          "active": "进行中",
+          "upcoming": "即将开始",
+          "ended": "已结束"
+        }
+      },
+      "receipts": {
+        "eyebrow": "公开凭证",
+        "title": "可信记录",
+        "viewAll": "查看全部",
+        "description": "这些凭证可以证明重要社群记录没有被悄悄改动。",
+        "emptyTitle": "还没有公开凭证",
+        "emptyBody": "重要社群记录保存后，凭证会显示在这里。"
+      }
+    },
+    "history": {
+      "title": "份额历史",
+      "description": "每一份份额都应该有清楚来源。这里会展示发生了什么、谁确认了它，以及是否有公开凭证。",
+      "approvedBy": "确认人",
+      "tokenStatus": "份额状态",
+      "activeNow": "已生效",
+      "pending": "等待中",
+      "receiptVerified": "公开凭证已验证",
+      "noReceipt": "暂未绑定公开凭证。",
+      "emptyTitle": "还没有份额历史",
+      "emptyBody": "已确认的贡献会带着份额来源显示在这里。"
+    },
+    "records": {
+      "title": "公开凭证",
+      "description": "这些凭证可以证明重要社群记录没有被悄悄改动。成员不需要钱包也能理解和查看。",
+      "blockHeight": "记录高度",
+      "receiptHash": "凭证哈希",
+      "waiting": "这个凭证正在等待确认。",
+      "viewExplorer": "查看浏览器",
+      "emptyTitle": "还没有凭证",
+      "emptyBody": "重要记录保存后会显示在这里。"
+    }
   }
 }
