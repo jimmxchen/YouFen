@@ -114,14 +114,6 @@
           "upcoming": "即将开始",
           "ended": "已结束"
         }
-      },
-      "receipts": {
-        "eyebrow": "公开凭证",
-        "title": "可信记录",
-        "viewAll": "查看全部",
-        "description": "这些凭证可以证明重要社群记录没有被悄悄改动。",
-        "emptyTitle": "还没有公开凭证",
-        "emptyBody": "重要社群记录保存后，凭证会显示在这里。"
       }
     },
     "history": {
