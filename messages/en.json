@@ -72,5 +72,87 @@
       "hybrid": "Hybrid Mode",
       "anonymous": "Anonymous Voting"
     }
+  },
+  "member": {
+    "nav": {
+      "home": "Home",
+      "history": "History",
+      "records": "Receipts"
+    },
+    "status": {
+      "verified": "Verified",
+      "failed": "Needs retry",
+      "pending": "Pending"
+    },
+    "dashboard": {
+      "greeting": "Hi, {name}",
+      "token": {
+        "title": "Your community ownership",
+        "active": "Active for votes",
+        "pending": "Pending until next month",
+        "ownershipShare": "Ownership share",
+        "ownershipHint": "Your share of all community tokens.",
+        "voteShare": "Current vote share"
+      },
+      "ownershipTrend": {
+        "title": "Ownership trend",
+        "description": "You earned {earned} this month. The community created {minted}, so your share moved from {from} to {to}."
+      },
+      "pending": {
+        "eyebrow": "Pending tokens",
+        "activates": "Activates",
+        "emptyTitle": "No pending tokens",
+        "emptyBody": "Everything you have earned is already active for voting."
+      },
+      "history": {
+        "eyebrow": "Recent history",
+        "title": "Where your tokens came from",
+        "viewHistory": "View full history",
+        "emptyTitle": "No contribution records yet",
+        "emptyBody": "When the community approves your contributions, they will appear here.",
+        "approvedBy": "Approved by"
+      },
+      "votes": {
+        "title": "Available votes",
+        "snapshotWeight": "Your voting weight",
+        "emptyTitle": "No open votes",
+        "emptyBody": "New community decisions will show up here when they are ready.",
+        "status": {
+          "active": "Active",
+          "upcoming": "Upcoming",
+          "ended": "Ended"
+        }
+      },
+      "receipts": {
+        "eyebrow": "Public receipts",
+        "title": "Proof records",
+        "viewAll": "View all",
+        "description": "These receipts prove important community records were not quietly changed.",
+        "emptyTitle": "No public receipts yet",
+        "emptyBody": "Receipts will appear here after important community records are saved."
+      }
+    },
+    "history": {
+      "title": "Token history",
+      "description": "Every token should have a clear source. This page shows what changed, who approved it, and whether a public receipt exists.",
+      "approvedBy": "Approved by",
+      "tokenStatus": "Token status",
+      "activeNow": "Active now",
+      "pending": "Pending",
+      "receiptVerified": "Public receipt verified",
+      "noReceipt": "No public receipt attached yet.",
+      "emptyTitle": "No token history yet",
+      "emptyBody": "Approved contributions will appear here with their token source."
+    },
+    "records": {
+      "title": "Public receipts",
+      "description": "These receipts prove important community records were not quietly changed. Members do not need a wallet to verify them.",
+      "blockHeight": "Block height",
+      "receiptHash": "Receipt hash",
+      "waiting": "This receipt is waiting for confirmation.",
+      "viewExplorer": "View explorer",
+      "emptyTitle": "No receipts yet",
+      "emptyBody": "Important records will appear here after they are saved."
+    }
   }
 }

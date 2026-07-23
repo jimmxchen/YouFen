@@ -94,7 +94,7 @@ export function StaggerTestimonials() {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                "{testimonial.content}"
+                &ldquo;{testimonial.content}&rdquo;
               </p>
             </motion.div>
           ))}
