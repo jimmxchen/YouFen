@@ -1,4 +1,4 @@
-# 有份儿 YouFen.xyz
+# 有份儿 YouFen.io
 
 > 让每个参与者，在社区里真的有份儿。
 
@@ -114,7 +114,7 @@ pnpm dev
 ## 📱 页面结构
 
 ```
-有份儿 YouFen.xyz
+有份儿 YouFen.io
 ├── 首页 (/)
 ├── 创建社群 (/create)
 ├── 社群后台 (/admin/:id) - 桌面端优先

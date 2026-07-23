@@ -1,4 +1,4 @@
-# 有份儿 YouFen.xyz — 产品需求文档
+# 有份儿 YouFen.io — 产品需求文档
 
 **版本**：v0.6 Inflationary Ownership Protocol
 **更新日期**：2026-07-23
@@ -793,7 +793,7 @@ type VerificationStatus =
 # 11. 信息架构
 
 ```text
-YouFen.xyz
+YouFen.io
 ├── /                          首页
 ├── /demo                      AdventureX Demo
 ├── /create                    创建社区
