@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "logo": "YouFen",
+    "logoSub": "有份儿",
+    "features": "Features",
+    "resources": "Resources",
+    "demo": "Demo",
+    "bip": "Build in Public",
+    "create": "Create Community",
+    "dropdown": {
+      "aiRules": "AI-Generated Rules",
+      "aiRulesDesc": "Smart generation of community participation rules",
+      "votingPower": "Voting Power Management",
+      "votingPowerDesc": "Contribution equals power",
+      "voting": "Voting & Decisions",
+      "votingDesc": "Fair and transparent voting system",
+      "contribution": "Contribution Tracking",
+      "contributionDesc": "Record every contribution",
+      "docs": "Documentation",
+      "docsDesc": "Quick start guide",
+      "bestPractices": "Best Practices",
+      "bestPracticesDesc": "Community governance cases",
+      "videos": "Video Tutorials",
+      "videosDesc": "Video learning resources",
+      "api": "API Documentation",
+      "apiDesc": "Developer documentation"
+    }
+  },
+  "hero": {
+    "title": "YouFen",
+    "subtitle": "Everyone truly has a stake",
+    "mainTitle": "No-Code Community Governance",
+    "description": "Turn member contributions into voting power\nLet everyone decide the community's future together"
+  },
+  "features": {
+    "title": "Core Features",
+    "subtitle": "Making community management simple and efficient",
+    "aiRules": "AI-Generated Rules",
+    "aiRulesDesc": "AI automatically generates reasonable participation rules based on community type and goals, no manual configuration needed.",
+    "votingPower": "Voting Power Management",
+    "votingPowerDesc": "Gain voting power through contributions, making every member's participation visible and recognized.",
+    "voting": "Voting & Decision-Making",
+    "votingDesc": "Weighted voting based on voting power makes community decisions fairer and more transparent.",
+    "simplify": "Simplify community management"
+  },
+  "valueCards": {
+    "title": "Why Choose YouFen?",
+    "subtitle": "Making community governance simple, transparent, and trustworthy",
+    "visible": "Contributions Visible",
+    "visibleDesc": "Volunteers, mentors, and active members are no longer overlooked",
+    "power": "Voice Matters",
+    "powerDesc": "Members gain community voice through participation",
+    "trusted": "Results Trustworthy",
+    "trustedDesc": "Important votes generate publicly verifiable records",
+    "using": "Already used by communities like AdventureX Community"
+  },
+  "advancedFeatures": {
+    "aiRecommend": {
+      "title": "AI Smart Recommendations",
+      "description": "Automatically generate the most suitable participation rules based on community characteristics",
+      "alt": "AI recommendation example"
+    },
+    "timeline": {
+      "title": "Contribution Timeline",
+      "description": "Clearly display each member's contribution history",
+      "alt": "Timeline example"
+    },
+    "votingModes": {
+      "title": "Multiple voting modes to meet different community governance needs",
+      "weighted": "Weighted",
+      "onePersonOneVote": "One Person One Vote",
+      "hybrid": "Hybrid Mode",
+      "anonymous": "Anonymous Voting"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "logo": "有份儿",
+    "logoSub": "YouFen",
+    "features": "功能",
+    "resources": "资源",
+    "demo": "Demo",
+    "bip": "Build in Public",
+    "create": "创建社群",
+    "dropdown": {
+      "aiRules": "AI 生成规则",
+      "aiRulesDesc": "智能生成社群参与规则",
+      "votingPower": "发言权管理",
+      "votingPowerDesc": "贡献即权力",
+      "voting": "投票决策",
+      "votingDesc": "公平透明的投票系统",
+      "contribution": "贡献追踪",
+      "contributionDesc": "记录每一份贡献",
+      "docs": "使用文档",
+      "docsDesc": "快速上手指南",
+      "bestPractices": "最佳实践",
+      "bestPracticesDesc": "社群治理案例",
+      "videos": "视频教程",
+      "videosDesc": "视频学习资源",
+      "api": "API 文档",
+      "apiDesc": "开发者文档"
+    }
+  },
+  "hero": {
+    "title": "有份儿",
+    "subtitle": "让每个参与者真正有份儿",
+    "mainTitle": "无代码社群共治",
+    "description": "把成员贡献变成发言权\n让大家一起决定社区未来"
+  },
+  "features": {
+    "title": "核心功能",
+    "subtitle": "让社群管理变得简单、高效",
+    "aiRules": "AI 生成参与规则",
+    "aiRulesDesc": "根据社群类型和目标，AI 自动生成合理的参与规则，无需手动配置。",
+    "votingPower": "发言权管理",
+    "votingPowerDesc": "通过贡献获得发言权，让每个成员的参与都被看见和认可。",
+    "voting": "投票与决策",
+    "votingDesc": "基于发言权的加权投票，让社区决策更加公平和透明。",
+    "simplify": "简化社群管理流程"
+  },
+  "valueCards": {
+    "title": "为什么选择有份儿？",
+    "subtitle": "让社群治理变得简单、透明、可信",
+    "visible": "贡献可见",
+    "visibleDesc": "志愿者、mentor、活跃成员不再被忽略",
+    "power": "发言有权",
+    "powerDesc": "成员通过参与获得社区发言权",
+    "trusted": "结果可信",
+    "trustedDesc": "重要投票可生成公开可信记录",
+    "using": "已有 AdventureX Community 等社群正在使用"
+  },
+  "advancedFeatures": {
+    "aiRecommend": {
+      "title": "AI 智能推荐",
+      "description": "根据社群特征，自动生成最适合的参与规则",
+      "alt": "AI 推荐示例"
+    },
+    "timeline": {
+      "title": "贡献时间线",
+      "description": "清晰展示每个成员的贡献历程",
+      "alt": "时间线示例"
+    },
+    "votingModes": {
+      "title": "多种投票模式，满足不同社群的治理需求",
+      "weighted": "按权重",
+      "onePersonOneVote": "一人一票",
+      "hybrid": "混合模式",
+      "anonymous": "匿名投票"
+    }
+  }
+}
