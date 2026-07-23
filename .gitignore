@@ -57,3 +57,7 @@ next-env.d.ts
 
 # Claude
 CLAUDE.md 
+
+# YAML Files
+pnpm-lock.yaml
+pnpm-workspace.yaml
