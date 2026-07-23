@@ -4,7 +4,11 @@ import { locales, defaultLocale } from './i18n';
 export default createMiddleware({
   locales,
   defaultLocale,
-  localePrefix: 'always'
+  localePrefix: 'always',
+  localeCookie: {
+    name: 'NEXT_LOCALE',
+    maxAge: 31536000,
+  }
 });
 
 // Match all routes except Next.js internals and static files
