@@ -69,7 +69,7 @@ export function Features() {
                   {feature.description}
                 </p>
                 <p className="text-sm text-[#939597]">
-                  简化社群管理流程
+                  {t('simplify')}
                 </p>
               </div>
             </div>

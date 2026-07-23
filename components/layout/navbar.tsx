@@ -143,7 +143,7 @@ export function Navbar() {
           </Link>
 
           <div className="ml-2">
-            <LanguageSwitcher />
+            <LanguageSwitcher isDark={!isHeroScrolled} />
           </div>
         </div>
       </div>
