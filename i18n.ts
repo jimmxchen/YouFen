@@ -7,11 +7,8 @@ export type Locale = (typeof locales)[number];
 // 默认语言
 export const defaultLocale: Locale = 'zh';
 
-export default getRequestConfig(async ({ locale }) => {
-  // 如果 locale 未定义，使用默认语言
-  const validLocale = locale || defaultLocale;
-
-  console.log('i18n.ts - Received locale:', locale, 'Using:', validLocale);
+export default getRequestConfig(async ({ locale, requestLocale }) => {
+  const validLocale = locale || (await requestLocale) || defaultLocale;
 
   return {
     locale: validLocale,

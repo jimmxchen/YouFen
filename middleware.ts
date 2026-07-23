@@ -7,6 +7,8 @@ export default createMiddleware({
   localePrefix: 'always'
 });
 
+// Match all routes except Next.js internals and static files
+// This ensures every request gets locale-prefixed (e.g. /admin → /zh/admin)
 export const config = {
-  matcher: ['/', '/(zh|en)/:path*']
+  matcher: ['/((?!_next|api|.*\\..*).*)']
 };
