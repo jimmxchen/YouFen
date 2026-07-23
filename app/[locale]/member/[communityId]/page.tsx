@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { AvailableVotes } from '@/components/member/available-votes'
-import { MemberImpactCard } from '@/components/member/member-impact-card'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { OwnershipTrendCard } from '@/components/member/ownership-trend-card'
@@ -23,19 +22,20 @@ function receiptStatusLabel(status: string, labels: Record<string, string>) {
   return labels.pending
 }
 
-function formatToken(value: number, symbol: string) {
-  return `${new Intl.NumberFormat('en-US').format(value)} ${symbol}`
+function formatToken(value: number, symbol: string, locale: string) {
+  return `${new Intl.NumberFormat(locale).format(value)} ${symbol}`
 }
 
-function formatPercent(value: number) {
-  return `${value.toFixed(value % 1 === 0 ? 0 : 2)}%`
+function formatPercent(value: number, locale: string) {
+  return new Intl.NumberFormat(locale, {
+    maximumFractionDigits: value % 1 === 0 ? 0 : 2,
+  }).format(value) + '%'
 }
 
 export default async function MemberCommunityPage({ params }: MemberPageProps) {
   const t = await getTranslations('member')
   const member = getDemoMember(params.communityId)
   const homeHref = `/${params.locale}/member/${params.communityId}`
-  const historyHref = `${homeHref}/history`
   const recordsHref = `${homeHref}/records`
 
   const receiptLabels = {
@@ -80,10 +80,18 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
         <OwnershipTrendCard
           title={t('dashboard.ownershipTrend.title')}
           description={t('dashboard.ownershipTrend.description', {
-            earned: formatToken(member.token.earnedThisMonth, member.token.symbol),
-            minted: formatToken(member.token.communityMintedThisMonth, member.token.symbol),
-            from: formatPercent(member.token.ownershipChange.from),
-            to: formatPercent(member.token.ownershipChange.to),
+            earned: formatToken(
+              member.token.earnedThisMonth,
+              member.token.symbol,
+              params.locale
+            ),
+            minted: formatToken(
+              member.token.communityMintedThisMonth,
+              member.token.symbol,
+              params.locale
+            ),
+            from: formatPercent(member.token.ownershipChange.from, params.locale),
+            to: formatPercent(member.token.ownershipChange.to, params.locale),
           })}
         />
 
@@ -95,19 +103,6 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
             activates: t('dashboard.pending.activates'),
             emptyTitle: t('dashboard.pending.emptyTitle'),
             emptyBody: t('dashboard.pending.emptyBody'),
-          }}
-        />
-
-        <MemberImpactCard
-          member={member}
-          historyHref={historyHref}
-          labels={{
-            eyebrow: t('dashboard.history.eyebrow'),
-            title: t('dashboard.history.title'),
-            viewHistory: t('dashboard.history.viewHistory'),
-            emptyTitle: t('dashboard.history.emptyTitle'),
-            emptyBody: t('dashboard.history.emptyBody'),
-            approvedBy: t('dashboard.history.approvedBy'),
           }}
         />
 
