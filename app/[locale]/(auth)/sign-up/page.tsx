@@ -55,7 +55,7 @@ export default function SignUpPage() {
 
     setLoading(true)
     setLoading(false)
-    router.push("/admin")
+    router.push("/choose-role")
   }
 
   return (

@@ -71,7 +71,7 @@ export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
               priority
             />
             <Image
-              src="/YouFen_Logo_Black.png"
+              src="/brand/youfen-logo-black.png"
               alt="YouFen"
               width={100}
               height={32}
