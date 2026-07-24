@@ -5,16 +5,12 @@ import {
   ArrowLeft,
   Bell,
   BellOff,
-  Copy,
   Image as ImageIcon,
-  Link as LinkIcon,
-  Search,
-  UserPlus,
   Users,
 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { ChatRoom } from '@/types/member'
-import { memberMuted, memberPrimaryButton, memberSubtle } from '@/components/member/ui'
+import { memberMuted, memberSubtle } from '@/components/member/ui'
 
 interface ChatSettingsViewProps {
   room: ChatRoom
@@ -27,18 +23,8 @@ interface ChatSettingsViewProps {
     online: string
     mute: string
     muted: string
-    invite: string
-    inviteLink: string
-    copyInvite: string
-    search: string
-    searchPlaceholder: string
-    searchEmpty: string
     membersTitle: string
     sharedMedia: string
-    publicInviteNote: string
-    invitePanelTitle: string
-    invitePanelBody: string
-    copied: string
     operator: string
     participantStatusById: Record<string, string>
   }
@@ -46,19 +32,6 @@ interface ChatSettingsViewProps {
 
 export function ChatSettingsView({ room, locale, communityId, labels }: ChatSettingsViewProps) {
   const [isMuted, setIsMuted] = useState(room.muted)
-  const [showInvite, setShowInvite] = useState(false)
-  const [copied, setCopied] = useState(false)
-  const [query, setQuery] = useState('')
-  const normalizedQuery = query.trim().toLowerCase()
-  const searchMatches = useMemo(() => {
-    if (!normalizedQuery) return room.messages.slice(0, 3)
-
-    return room.messages.filter((message) =>
-      [message.author, message.role, message.body].some((value) =>
-        value.toLowerCase().includes(normalizedQuery)
-      )
-    )
-  }, [normalizedQuery, room.messages])
 
   return (
     <div className="mx-auto w-full max-w-3xl px-5 pb-28 pt-5 lg:px-0 lg:pt-0">
@@ -92,7 +65,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
         </div>
       </section>
 
-      <div className="mt-4 grid gap-3 lg:grid-cols-3">
+      <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <button
           type="button"
           onClick={() => setIsMuted((current) => !current)}
@@ -105,25 +78,10 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
             <span className="block text-sm font-semibold text-[#131517]">
               {isMuted ? labels.muted : labels.mute}
             </span>
-            <span className={`block truncate text-xs ${memberSubtle}`}>{labels.mute}</span>
           </span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => setShowInvite((current) => !current)}
-          className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
-        >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-            <UserPlus className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-[#131517]">{labels.invite}</span>
-            <span className={`block truncate text-xs ${memberSubtle}`}>{labels.publicInviteNote}</span>
-          </span>
-        </button>
-
-        <div className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4">
+        <div className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
             <ImageIcon className="h-5 w-5" aria-hidden="true" />
           </span>
@@ -133,71 +91,6 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
           </span>
         </div>
       </div>
-
-      <section className="mt-4 rounded-xl border border-[#F0F0F0] bg-white p-4">
-        <div className="flex items-center gap-2">
-          <LinkIcon className="h-4 w-4 text-[#525252]" aria-hidden="true" />
-          <h2 className="text-sm font-semibold text-[#131517]">{labels.inviteLink}</h2>
-        </div>
-        {showInvite ? (
-          <div className="mt-3 rounded-xl border border-emerald-100 bg-emerald-50 p-3">
-            <p className="text-sm font-semibold text-emerald-950">{labels.invitePanelTitle}</p>
-            <p className="mt-1 text-sm leading-6 text-emerald-800">{labels.invitePanelBody}</p>
-          </div>
-        ) : null}
-        <div className="mt-3 flex gap-2">
-          <div className="flex min-h-11 min-w-0 flex-1 items-center rounded-xl bg-[#FAFAFA] px-3 font-mono text-xs text-[#525252]">
-            <span className="truncate">{room.inviteCode}</span>
-          </div>
-          <button
-            type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] hover:shadow-md active:translate-y-0"
-            aria-label={labels.copyInvite}
-            onClick={async () => {
-              try {
-                await navigator.clipboard?.writeText(room.inviteCode)
-                setCopied(true)
-              } catch {
-                setCopied(false)
-              }
-            }}
-          >
-            <Copy className="h-4 w-4" aria-hidden="true" />
-          </button>
-        </div>
-        {copied ? <p className="mt-2 text-xs font-medium text-emerald-700">{labels.copied}</p> : null}
-      </section>
-
-      <section className="mt-4 rounded-xl border border-[#F0F0F0] bg-white p-4">
-        <label htmlFor="settings-search" className="text-sm font-semibold text-[#131517]">
-          {labels.search}
-        </label>
-        <div className="mt-3 flex min-h-11 items-center gap-2 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
-          <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
-          <input
-            id="settings-search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={labels.searchPlaceholder}
-            className="min-w-0 flex-1 bg-transparent text-sm text-[#131517] outline-none placeholder:text-[#939597]"
-          />
-        </div>
-        <div className="mt-4 space-y-3">
-          {searchMatches.length > 0 ? (
-            searchMatches.map((message) => (
-              <div key={message.id} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="truncate text-sm font-semibold text-[#131517]">{message.author}</p>
-                  <span className={`shrink-0 text-xs ${memberSubtle}`}>{message.createdAt}</span>
-                </div>
-                <p className={`mt-1 line-clamp-2 text-sm leading-6 ${memberMuted}`}>{message.body}</p>
-              </div>
-            ))
-          ) : (
-            <p className={`text-sm ${memberMuted}`}>{labels.searchEmpty}</p>
-          )}
-        </div>
-      </section>
 
       <section className="mt-4 overflow-hidden rounded-xl border border-[#F0F0F0] bg-white">
         <div className="flex items-center justify-between gap-3 px-4 py-3">
@@ -229,10 +122,6 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
           </div>
         ))}
       </section>
-
-      <Link href={`/${locale}/member/${communityId}/chat/${room.id}`} className={`mt-4 ${memberPrimaryButton}`}>
-        {labels.back}
-      </Link>
     </div>
   )
 }

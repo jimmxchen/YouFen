@@ -48,8 +48,6 @@ export function ChatRoomList({ rooms, baseHref, labels }: ChatRoomListProps) {
             </p>
             <div className={`mt-1 flex items-center gap-2 text-xs ${memberSubtle}`}>
               <span>{labels.members(room.participants.length)}</span>
-              <span aria-hidden="true">·</span>
-              <span>{room.category}</span>
               {room.muted ? (
                 <>
                   <span aria-hidden="true">·</span>
@@ -63,11 +61,6 @@ export function ChatRoomList({ rooms, baseHref, labels }: ChatRoomListProps) {
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
-            {room.unreadCount > 0 ? (
-              <span className="flex min-h-6 min-w-6 items-center justify-center rounded-full bg-emerald-500 px-2 text-xs font-semibold text-white">
-                {room.unreadCount}
-              </span>
-            ) : null}
             <ChevronRight className="h-4 w-4 text-[#939597]" aria-hidden="true" />
           </div>
         </Link>

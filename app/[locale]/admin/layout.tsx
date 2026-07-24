@@ -53,7 +53,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <AdminHeader
           communityName={communityName}
           currentUser={currentUser}
-          memberships={data.memberships}
         />
         <main className="px-5 py-10 lg:px-8 lg:py-12">
           {children}
