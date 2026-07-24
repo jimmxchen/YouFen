@@ -7,3 +7,6 @@ typechain-types
 coverage
 .next
 dist
+
+# Local redis dump
+dump.rdb
