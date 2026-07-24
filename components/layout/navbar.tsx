@@ -129,6 +129,17 @@ export function Navbar({ forceLight = false }: NavbarProps) {
           </Link>
 
           <Link
+            href="/admin"
+            className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
+              isHeroScrolled
+                ? 'text-amber-700 hover:text-amber-900 hover:bg-amber-50'
+                : 'text-amber-300 hover:text-amber-100 hover:bg-white/10'
+            }`}
+          >
+            Admin
+          </Link>
+
+          <Link
             href="/bip"
             className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
               isHeroScrolled
