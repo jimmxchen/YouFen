@@ -1,10 +1,16 @@
+import Link from 'next/link'
+import { ArrowRight, CalendarDays, Megaphone, Mic2, Vote } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
-import { AvailableVotes } from '@/components/member/available-votes'
+import { ActivityFeed } from '@/components/member/activity-feed'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { OwnershipTrendCard } from '@/components/member/ownership-trend-card'
-import { PendingTokenCard } from '@/components/member/pending-token-card'
-import { TokenSummaryCard } from '@/components/member/token-summary-card'
+import {
+  memberCard,
+  memberIconWell,
+  memberMuted,
+  memberPrimaryButton,
+  memberSubtle,
+} from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberPageProps {
@@ -14,98 +20,141 @@ interface MemberPageProps {
   }
 }
 
-function formatToken(value: number, symbol: string, locale: string) {
-  return `${new Intl.NumberFormat(locale).format(value)} ${symbol}`
-}
-
-function formatPercent(value: number, locale: string) {
-  return new Intl.NumberFormat(locale, {
-    maximumFractionDigits: value % 1 === 0 ? 0 : 2,
-  }).format(value) + '%'
+function formatNumber(value: number, locale: string) {
+  return new Intl.NumberFormat(locale).format(value)
 }
 
 export default async function MemberCommunityPage({ params }: MemberPageProps) {
   const t = await getTranslations('member')
   const member = getDemoMember(params.communityId)
+  const activeVote = member.availableProposals.find((proposal) => proposal.status === 'active')
+  const baseHref = `/${params.locale}/member/${params.communityId}`
+  const recentActivity = member.activity.filter(
+    (item) => !['update', 'event', 'vote'].includes(item.type)
+  )
 
   return (
     <MemberShell>
-      <header className="px-5 pb-4 pt-5">
+      <header className="px-5 pb-5 pt-6 lg:px-6 lg:pb-8 lg:pt-8">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="truncate text-sm text-[#6f7174]">{member.communityName}</p>
-            <h1 className="mt-1 truncate text-2xl font-semibold tracking-normal">
+            <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
+            <h1 className="mt-1 truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-4xl">
               {t('dashboard.greeting', { name: member.name })}
             </h1>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-sm font-semibold shadow-sm">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#131517]">
             {member.avatarInitials}
           </div>
         </div>
-        <p className="mt-3 text-sm leading-6 text-[#6f7174]">
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-[#525252] lg:text-base">
           {member.communityDescription}
         </p>
       </header>
 
-      <div className="space-y-5 px-5">
-        <TokenSummaryCard
-          token={member.token}
-          locale={params.locale}
-          labels={{
-            title: t('dashboard.token.title'),
-            active: t('dashboard.token.active'),
-            pending: t('dashboard.token.pending'),
-            ownershipShare: t('dashboard.token.ownershipShare'),
-            ownershipHint: t('dashboard.token.ownershipHint'),
-            voteShare: t('dashboard.token.voteShare'),
-          }}
-        />
+      <div className="grid gap-5 px-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] lg:items-start lg:px-6">
+        <div>
+          <section className={memberCard}>
+            <h2 className="text-xl font-semibold text-[#131517]">{t('dashboard.today')}</h2>
+            <div className="mt-4 space-y-3 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
+              <div className="flex gap-3 lg:col-span-2">
+                <div className={`${memberIconWell} bg-emerald-50 text-emerald-600`}>
+                  <Megaphone className="h-5 w-5" aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <p className={`text-sm ${memberSubtle}`}>{t('dashboard.latestUpdate')}</p>
+                  <h3 className="mt-1 text-lg font-semibold leading-6 text-[#131517]">
+                    {member.announcement.title}
+                  </h3>
+                  <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
+                    {member.announcement.body}
+                  </p>
+                </div>
+              </div>
 
-        <OwnershipTrendCard
-          title={t('dashboard.ownershipTrend.title')}
-          description={t('dashboard.ownershipTrend.description', {
-            earned: formatToken(
-              member.token.earnedThisMonth,
-              member.token.symbol,
-              params.locale
-            ),
-            minted: formatToken(
-              member.token.communityMintedThisMonth,
-              member.token.symbol,
-              params.locale
-            ),
-            from: formatPercent(member.token.ownershipChange.from, params.locale),
-            to: formatPercent(member.token.ownershipChange.to, params.locale),
-          })}
-        />
+              <div className="border-t border-gray-100 pt-3 lg:rounded-xl lg:border lg:border-gray-100 lg:bg-[#FAFAFA] lg:p-4">
+                <div className="flex gap-3">
+                  <CalendarDays
+                    className="mt-0.5 h-5 w-5 shrink-0 text-blue-600"
+                    aria-hidden="true"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className={`text-sm ${memberSubtle}`}>{t('dashboard.nextEvent')}</p>
+                    <h3 className="mt-1 text-base font-semibold leading-6 text-[#131517]">
+                      {member.nextEvent.title}
+                    </h3>
+                    <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
+                      {member.nextEvent.startsAt} · {member.nextEvent.location}
+                    </p>
+                    <button type="button" className={`mt-3 ${memberPrimaryButton}`}>
+                      {t('dashboard.joinEvent')}
+                    </button>
+                  </div>
+                </div>
+              </div>
 
-        <PendingTokenCard
-          member={member}
-          locale={params.locale}
-          labels={{
-            eyebrow: t('dashboard.pending.eyebrow'),
-            activates: t('dashboard.pending.activates'),
-            emptyTitle: t('dashboard.pending.emptyTitle'),
-            emptyBody: t('dashboard.pending.emptyBody'),
-          }}
-        />
+              {activeVote ? (
+                <div className="border-t border-gray-100 pt-3 lg:rounded-xl lg:border lg:border-gray-100 lg:bg-[#FAFAFA] lg:p-4">
+                  <div className="flex gap-3">
+                    <Vote className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
+                    <div className="min-w-0 flex-1">
+                      <p className={`text-sm ${memberSubtle}`}>{t('dashboard.activeVote')}</p>
+                      <h3 className="mt-1 text-base font-semibold leading-6 text-[#131517]">
+                        {activeVote.title}
+                      </h3>
+                      <Link
+                        href={`${baseHref}/vote`}
+                        className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-lg bg-[#131517] px-4 text-sm font-medium text-white"
+                      >
+                        {t('dashboard.voteNow')}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </section>
+        </div>
 
-        <AvailableVotes
-          proposals={member.availableProposals}
-          locale={params.locale}
-          tokenSymbol={member.token.symbol}
-          labels={{
-            title: t('dashboard.votes.title'),
-            snapshotWeight: t('dashboard.votes.snapshotWeight'),
-            emptyTitle: t('dashboard.votes.emptyTitle'),
-            emptyBody: t('dashboard.votes.emptyBody'),
-            status: {
-              active: t('dashboard.votes.status.active'),
-              upcoming: t('dashboard.votes.status.upcoming'),
-              ended: t('dashboard.votes.status.ended'),
-            },
-          }}
-        />
+        <aside className="space-y-5">
+          <section className={memberCard}>
+            <div className="flex items-start gap-3">
+              <div className={`${memberIconWell} bg-black text-white`}>
+                <Mic2 className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className={`text-sm ${memberSubtle}`}>{t('dashboard.myVoice')}</p>
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <Metric
+                    label={t('voicePower.active')}
+                    value={formatNumber(member.voicePower.active, params.locale)}
+                  />
+                  <Metric
+                    label={t('voicePower.pending')}
+                    value={formatNumber(member.voicePower.pending, params.locale)}
+                  />
+                </div>
+                <Link
+                  href={`${baseHref}/me`}
+                  className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#131517]"
+                >
+                  {t('dashboard.viewMyRecord')}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-semibold text-[#131517]">
+              {t('dashboard.recentActivity')}
+            </h2>
+            <div className="mt-4">
+              <ActivityFeed items={recentActivity} />
+            </div>
+          </section>
+        </aside>
       </div>
 
       <MobileBottomNav
@@ -114,10 +163,20 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
         active="home"
         labels={{
           home: t('nav.home'),
-          history: t('nav.history'),
-          records: t('nav.records'),
+          chat: t('nav.chat'),
+          vote: t('nav.vote'),
+          me: t('nav.me'),
         }}
       />
     </MemberShell>
+  )
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-2xl font-semibold text-[#131517]">{value}</p>
+      <p className="mt-1 text-xs text-[#939597]">{label}</p>
+    </div>
   )
 }
