@@ -1,17 +1,22 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
-export function Navbar() {
+interface NavbarProps {
+  forceLight?: boolean
+}
+
+export function Navbar({ forceLight = false }: NavbarProps) {
   const t = useTranslations('nav');
   const [isHeroScrolled, setIsHeroScrolled] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const isLight = forceLight || isHeroScrolled
 
   useEffect(() => {
     setIsMounted(true)
@@ -44,7 +49,7 @@ export function Navbar() {
     <motion.nav
       initial={false}
       animate={{
-        backgroundColor: isHeroScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 1)',
+        backgroundColor: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 1)',
       }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
       className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-[20px]"
@@ -57,14 +62,14 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 mr-4">
             <motion.div
-              animate={{ color: isHeroScrolled ? '#131517' : '#ffffff' }}
+              animate={{ color: isLight ? '#131517' : '#ffffff' }}
               transition={{ duration: 0.5 }}
               className="text-xl font-semibold"
             >
               {t('logo')}
             </motion.div>
             <motion.div
-              animate={{ color: isHeroScrolled ? '#939597' : '#cccccc' }}
+              animate={{ color: isLight ? '#939597' : '#cccccc' }}
               transition={{ duration: 0.5 }}
               className="text-sm hidden sm:block"
             >
@@ -79,7 +84,7 @@ export function Navbar() {
           >
             <button
               className={`px-4 py-2 text-sm font-normal rounded-lg transition-all flex items-center gap-1 ${
-                isHeroScrolled
+                isLight
                   ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
@@ -96,7 +101,7 @@ export function Navbar() {
           >
             <button
               className={`px-4 py-2 text-sm font-normal rounded-lg transition-all flex items-center gap-1 ${
-                isHeroScrolled
+                isLight
                   ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
@@ -112,7 +117,7 @@ export function Navbar() {
           <Link
             href="/demo"
             className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
-              isHeroScrolled
+              isLight
                 ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
                 : 'text-gray-300 hover:text-white hover:bg-white/10'
             }`}
@@ -121,9 +126,20 @@ export function Navbar() {
           </Link>
 
           <Link
+            href="/admin"
+            className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
+              isLight
+                ? 'text-amber-700 hover:text-amber-900 hover:bg-amber-50'
+                : 'text-amber-300 hover:text-amber-100 hover:bg-white/10'
+            }`}
+          >
+            Admin
+          </Link>
+
+          <Link
             href="/bip"
             className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
-              isHeroScrolled
+              isLight
                 ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
                 : 'text-gray-300 hover:text-white hover:bg-white/10'
             }`}
@@ -134,7 +150,7 @@ export function Navbar() {
           <Link
             href="/create"
             className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all hover:-translate-y-0.5 hover:shadow-lg ${
-              isHeroScrolled
+              isLight
                 ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
                 : 'text-black bg-white hover:bg-gray-100'
             }`}
@@ -143,7 +159,7 @@ export function Navbar() {
           </Link>
 
           <div className="ml-2">
-            <LanguageSwitcher />
+            <LanguageSwitcher isDark={!isLight} />
           </div>
         </div>
       </div>
@@ -151,7 +167,7 @@ export function Navbar() {
       {/* 底部分割线 */}
       <motion.div
         animate={{
-          backgroundColor: isHeroScrolled ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
+          backgroundColor: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
         }}
         transition={{ duration: 0.5 }}
         className="absolute bottom-0 left-0 right-0 h-[0.5px]"
@@ -167,7 +183,7 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="absolute top-16 left-0 right-0 backdrop-blur-[20px]"
             style={{
-              backgroundColor: isHeroScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)',
+              backgroundColor: isLight ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)',
             }}
           >
             <div className="max-w-7xl mx-auto px-6 py-8">
@@ -177,21 +193,21 @@ export function Navbar() {
                     key={item.href}
                     href={item.href}
                     className={`p-4 rounded-lg transition-all hover:scale-105 ${
-                      isHeroScrolled
+                      isLight
                         ? 'hover:bg-black/5'
                         : 'hover:bg-white/10'
                     }`}
                   >
                     <div
                       className={`font-medium mb-1 ${
-                        isHeroScrolled ? 'text-[#131517]' : 'text-white'
+                        isLight ? 'text-[#131517]' : 'text-white'
                       }`}
                     >
                       {item.label}
                     </div>
                     <div
                       className={`text-sm ${
-                        isHeroScrolled ? 'text-[#939597]' : 'text-gray-400'
+                        isLight ? 'text-[#939597]' : 'text-gray-400'
                       }`}
                     >
                       {item.description}
@@ -205,7 +221,7 @@ export function Navbar() {
             <div
               className="h-[0.5px]"
               style={{
-                backgroundColor: isHeroScrolled ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
+                backgroundColor: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
               }}
             />
           </motion.div>

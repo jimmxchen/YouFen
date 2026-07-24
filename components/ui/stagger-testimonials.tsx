@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from 'next-intl'
 
 const testimonials = [
   {
@@ -48,6 +49,8 @@ const testimonials = [
 ];
 
 export function StaggerTestimonials() {
+  const t = useTranslations('testimonials')
+
   return (
     <div className="w-full overflow-hidden py-12">
       <div className="max-w-7xl mx-auto px-6">
@@ -59,10 +62,10 @@ export function StaggerTestimonials() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-semibold text-gray-900 mb-4">
-            他们都在使用有份儿
+            {t('title')}
           </h2>
           <p className="text-lg text-gray-600">
-            来自真实用户的反馈与评价
+            {t('subtitle')}
           </p>
         </motion.div>
 

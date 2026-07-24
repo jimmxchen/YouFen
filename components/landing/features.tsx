@@ -25,7 +25,7 @@ export function Features() {
   ]
 
   return (
-    <section className="relative py-32 px-6 bg-white">
+    <section className="relative py-32 px-6 bg-white rounded-t-[2rem]">
       <div className="max-w-6xl mx-auto">
         {/* 标题 */}
         <div className="text-center mb-20">
@@ -69,7 +69,7 @@ export function Features() {
                   {feature.description}
                 </p>
                 <p className="text-sm text-[#939597]">
-                  简化社群管理流程
+                  {t('simplify')}
                 </p>
               </div>
             </div>
