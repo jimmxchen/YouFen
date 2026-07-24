@@ -14,10 +14,10 @@ import {
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 function formatNumber(value: number, locale: string) {
@@ -25,10 +25,11 @@ function formatNumber(value: number, locale: string) {
 }
 
 export default async function MemberCommunityPage({ params }: MemberPageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
+  const member = getDemoMember(communityId)
   const activeVote = member.availableProposals.find((proposal) => proposal.status === 'active')
-  const baseHref = `/${params.locale}/member/${params.communityId}`
+  const baseHref = `/${locale}/member/${communityId}`
   const recentActivity = member.activity.filter(
     (item) => !['update', 'event', 'vote'].includes(item.type)
   )
@@ -43,7 +44,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
               {t('dashboard.greeting', { name: member.name })}
             </h1>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
             {member.avatarInitials}
           </div>
         </div>
@@ -72,7 +73,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                 </div>
               </div>
 
-              <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-lg lg:border lg:bg-[#FAFAFA] lg:p-4">
+              <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-xl lg:border lg:bg-[#FAFAFA] lg:p-4">
                 <div className="flex gap-3">
                   <CalendarDays
                     className="mt-0.5 h-5 w-5 shrink-0 text-blue-600"
@@ -86,15 +87,15 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                     <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
                       {member.nextEvent.startsAt} · {member.nextEvent.location}
                     </p>
-                    <button type="button" className={`mt-3 ${memberPrimaryButton}`}>
+                    <Link href={`${baseHref}/event`} className={`mt-3 ${memberPrimaryButton}`}>
                       {t('dashboard.joinEvent')}
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
 
               {activeVote ? (
-                <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-lg lg:border lg:bg-[#FAFAFA] lg:p-4">
+                <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-xl lg:border lg:bg-[#FAFAFA] lg:p-4">
                   <div className="flex gap-3">
                     <Vote className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
                     <div className="min-w-0 flex-1">
@@ -104,7 +105,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                       </h3>
                       <Link
                         href={`${baseHref}/vote`}
-                        className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-lg bg-[#131517] px-4 text-sm font-medium text-white"
+                        className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#131517] px-4 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] hover:shadow-md active:translate-y-0"
                       >
                         {t('dashboard.voteNow')}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -128,11 +129,11 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                 <div className="mt-3 grid grid-cols-2 gap-3">
                   <Metric
                     label={t('voicePower.active')}
-                    value={formatNumber(member.voicePower.active, params.locale)}
+                    value={formatNumber(member.voicePower.active, locale)}
                   />
                   <Metric
                     label={t('voicePower.pending')}
-                    value={formatNumber(member.voicePower.pending, params.locale)}
+                    value={formatNumber(member.voicePower.pending, locale)}
                   />
                 </div>
                 <Link
@@ -158,8 +159,8 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="home"
         labels={{
           home: t('nav.home'),

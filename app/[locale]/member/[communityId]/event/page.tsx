@@ -1,47 +1,54 @@
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import { EventJoinPanel } from '@/components/member/event-join-panel'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { ProposalList } from '@/components/member/proposal-list'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
-interface MemberVotePageProps {
+interface MemberEventPageProps {
   params: Promise<{
     locale: string
     communityId: string
   }>
 }
 
-export default async function MemberVotePage({ params }: MemberVotePageProps) {
+export default async function MemberEventPage({ params }: MemberEventPageProps) {
   const { locale, communityId } = await params
   const t = await getTranslations('member')
   const member = getDemoMember(communityId)
+  const homeHref = `/${locale}/member/${communityId}`
 
   return (
     <MemberShell>
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
+        <Link
+          href={homeHref}
+          className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
+          aria-label={t('event.backHome')}
+        >
+          <ArrowLeft className="h-5 w-5" aria-hidden="true" />
+        </Link>
         <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
         <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
-          {t('vote.title')}
+          {t('event.title')}
         </h1>
         <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>
-          {t('vote.description')}
+          {t('event.description')}
         </p>
       </header>
 
       <div className="px-5 lg:px-0">
-        <ProposalList
-          proposals={member.availableProposals}
-          locale={locale}
-          voicePower={member.voicePower.active}
+        <EventJoinPanel
+          communityId={communityId}
+          event={member.nextEvent}
           labels={{
-            active: t('vote.active'),
-            upcoming: t('vote.upcoming'),
-            ended: t('vote.ended'),
-            yourVoicePower: t('vote.yourVoicePower'),
-            voters: (count) => t('vote.voters', { count }),
-            trustedRecord: t('vote.trustedRecord'),
-            openVote: t('vote.openVote'),
+            startsAt: t('event.startsAt'),
+            location: t('event.location'),
+            join: t('event.join'),
+            joined: t('event.joined'),
+            joinedBody: t('event.joinedBody'),
           }}
         />
       </div>
@@ -49,7 +56,7 @@ export default async function MemberVotePage({ params }: MemberVotePageProps) {
       <MobileBottomNav
         locale={locale}
         communityId={communityId}
-        active="vote"
+        active="home"
         labels={{
           home: t('nav.home'),
           chat: t('nav.chat'),

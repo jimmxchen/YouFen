@@ -8,16 +8,17 @@ import { memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberContributePageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 export default async function MemberContributePage({ params }: MemberContributePageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
-  const meHref = `/${params.locale}/member/${params.communityId}/me`
+  const member = getDemoMember(communityId)
+  const meHref = `/${locale}/member/${communityId}/me`
 
   const types = [
     { id: 'social-post', label: t('contribute.types.socialPost') },
@@ -33,7 +34,7 @@ export default async function MemberContributePage({ params }: MemberContributeP
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <Link
           href={meHref}
-          className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white transition hover:border-[#E5E5E5]"
+          className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
           aria-label={t('contribute.backToMe')}
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
@@ -49,6 +50,7 @@ export default async function MemberContributePage({ params }: MemberContributeP
 
       <div className="px-5 lg:px-0">
         <ContributionSubmitForm
+          communityId={communityId}
           meHref={meHref}
           types={types}
           labels={{
@@ -74,8 +76,8 @@ export default async function MemberContributePage({ params }: MemberContributeP
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="me"
         labels={{
           home: t('nav.home'),
