@@ -56,7 +56,7 @@ export function Features() {
                   />
                   {/* 标题叠加在渐变中间 */}
                   <div className="absolute inset-0 flex items-center justify-center z-10">
-                    <h3 className="text-4xl font-semibold text-white drop-shadow-lg">
+                    <h3 className="text-4xl font-semibold text-white drop-shadow-lg bg-white/10 backdrop-blur-md rounded-2xl px-8 py-4 border border-white/20">
                       {feature.title}
                     </h3>
                   </div>
