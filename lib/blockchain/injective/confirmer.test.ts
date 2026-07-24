@@ -111,6 +111,176 @@ describe('waitForConfirmation', () => {
   });
 });
 
+describe('waitForConfirmation — null-receipt fast path (W2-B)', () => {
+  const ZERO_BLOCK_HASH = '0x' + '0'.repeat(64);
+
+  it('confirms after 5 consecutive null receipts when the record exists on chain', async () => {
+    vi.useFakeTimers();
+    const provider = fakeProvider();
+    provider.getTransactionReceipt.mockResolvedValue(null);
+    provider.getBlockNumber.mockResolvedValue(100);
+    provider.getLogs.mockResolvedValue([{ transactionHash: TX_HASH, blockNumber: 90 }]);
+    const readRecord = vi.fn().mockResolvedValue({ exists: true });
+    const confirmer = createTxConfirmer({
+      provider,
+      contractAddress: CONTRACT_ADDRESS,
+      deployBlock: 1,
+      confirmations: 2,
+      pollIntervalMs: 2000,
+      readRecord,
+    });
+
+    const pending = confirmer.waitForConfirmation(TX_HASH, { recordHash: RECORD_HASH });
+    await vi.advanceTimersByTimeAsync(2000 * 6);
+    const result = await pending;
+
+    expect(result.status).toBe('confirmed');
+    expect(result.blockNumber).toBe(90);
+    // blockHash is unobtainable via getLogs; the mirror layer tolerates a zero
+    // placeholder (verify never relies on blockHash).
+    expect(result.blockHash).toBe(ZERO_BLOCK_HASH);
+    expect(readRecord).toHaveBeenCalledWith(RECORD_HASH);
+  });
+
+  it('does not consult readRecord when a receipt arrives before the threshold', async () => {
+    vi.useFakeTimers();
+    const provider = fakeProvider();
+    provider.getTransactionReceipt
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValue({ status: 1, blockNumber: 100, blockHash: BLOCK_HASH });
+    provider.getBlockNumber.mockResolvedValue(101);
+    const readRecord = vi.fn().mockResolvedValue({ exists: true });
+    const confirmer = createTxConfirmer({
+      provider,
+      contractAddress: CONTRACT_ADDRESS,
+      deployBlock: 1,
+      confirmations: 2,
+      pollIntervalMs: 2000,
+      readRecord,
+    });
+
+    const pending = confirmer.waitForConfirmation(TX_HASH, { recordHash: RECORD_HASH });
+    await vi.advanceTimersByTimeAsync(2000 * 6);
+    const result = await pending;
+
+    expect(result.status).toBe('confirmed');
+    expect(result.blockNumber).toBe(100);
+    expect(readRecord).not.toHaveBeenCalled();
+  });
+
+  it('resets the null counter when the record is not yet on chain, then confirms normally', async () => {
+    vi.useFakeTimers();
+    const provider = fakeProvider();
+    provider.getTransactionReceipt
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValue({ status: 1, blockNumber: 100, blockHash: BLOCK_HASH });
+    provider.getBlockNumber.mockResolvedValue(101);
+    const readRecord = vi.fn().mockResolvedValue({ exists: false });
+    const confirmer = createTxConfirmer({
+      provider,
+      contractAddress: CONTRACT_ADDRESS,
+      deployBlock: 1,
+      confirmations: 2,
+      pollIntervalMs: 2000,
+      readRecord,
+    });
+
+    const pending = confirmer.waitForConfirmation(TX_HASH, { recordHash: RECORD_HASH });
+    await vi.advanceTimersByTimeAsync(2000 * 8);
+    const result = await pending;
+
+    expect(result.status).toBe('confirmed');
+    expect(result.blockNumber).toBe(100);
+    expect(readRecord).toHaveBeenCalled();
+    // exists=false must never trigger the getLogs backfill.
+    expect(provider.getLogs).not.toHaveBeenCalled();
+  });
+
+  it('swallows a readRecord error and keeps polling (fast path never degrades the normal path)', async () => {
+    vi.useFakeTimers();
+    const provider = fakeProvider();
+    provider.getTransactionReceipt
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValue({ status: 1, blockNumber: 100, blockHash: BLOCK_HASH });
+    provider.getBlockNumber.mockResolvedValue(101);
+    const readRecord = vi.fn().mockRejectedValue(new Error('rpc down'));
+    const confirmer = createTxConfirmer({
+      provider,
+      contractAddress: CONTRACT_ADDRESS,
+      deployBlock: 1,
+      confirmations: 2,
+      pollIntervalMs: 2000,
+      readRecord,
+    });
+
+    const pending = confirmer.waitForConfirmation(TX_HASH, { recordHash: RECORD_HASH });
+    await vi.advanceTimersByTimeAsync(2000 * 8);
+    const result = await pending;
+
+    expect(result.status).toBe('confirmed');
+    expect(result.blockNumber).toBe(100);
+    expect(readRecord).toHaveBeenCalled();
+  });
+
+  it('behaves exactly like the legacy path when no recordHash is supplied (no fast path)', async () => {
+    vi.useFakeTimers();
+    const provider = fakeProvider();
+    provider.getTransactionReceipt.mockResolvedValue(null);
+    const readRecord = vi.fn().mockResolvedValue({ exists: true });
+    const confirmer = createTxConfirmer({
+      provider,
+      contractAddress: CONTRACT_ADDRESS,
+      deployBlock: 1,
+      confirmations: 2,
+      pollIntervalMs: 2000,
+      readRecord,
+    });
+
+    const pending = confirmer.waitForConfirmation(TX_HASH);
+    const assertion = expect(pending).rejects.toThrowError(RetryableError);
+    await vi.advanceTimersByTimeAsync(130000);
+    await assertion;
+    expect(readRecord).not.toHaveBeenCalled();
+  });
+
+  it('honors a configurable nullReceiptFastPathThreshold of 2', async () => {
+    vi.useFakeTimers();
+    const provider = fakeProvider();
+    provider.getTransactionReceipt.mockResolvedValue(null);
+    provider.getBlockNumber.mockResolvedValue(100);
+    provider.getLogs.mockResolvedValue([{ transactionHash: TX_HASH, blockNumber: 42 }]);
+    const readRecord = vi.fn().mockResolvedValue({ exists: true });
+    const confirmer = createTxConfirmer({
+      provider,
+      contractAddress: CONTRACT_ADDRESS,
+      deployBlock: 1,
+      confirmations: 2,
+      pollIntervalMs: 2000,
+      nullReceiptFastPathThreshold: 2,
+      readRecord,
+    });
+
+    const pending = confirmer.waitForConfirmation(TX_HASH, { recordHash: RECORD_HASH });
+    await vi.advanceTimersByTimeAsync(2000 * 3);
+    const result = await pending;
+
+    expect(result.status).toBe('confirmed');
+    expect(result.blockNumber).toBe(42);
+    expect(readRecord).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('getTransactionStatus', () => {
   const confirmer = createTxConfirmer({
     provider: fakeProvider(),

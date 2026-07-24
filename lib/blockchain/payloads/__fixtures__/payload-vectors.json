@@ -1,0 +1,350 @@
+{
+  "pepper": "test-pepper-0123456789ab",
+  "idHashes": {
+    "communityAlpha": "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+    "memberAlice": "0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a",
+    "memberBob": "0xa67571d816a58b3de0a9fdcbce4d9e01e56e16f1b7d41fec06a7e4cd1329d481",
+    "proposal01": "0xe671e6a0f859daf07473d38074ec24cfd4cf75926efe7276d7e3a1ff105a12d4",
+    "optionYes": "0x1b96c31fa137c7b4de1a4b92c3f02c3e8c730f5c1f22eccb58c06efba7ceb145"
+  },
+  "vectors": [
+    {
+      "name": "token_mint",
+      "kind": "token_mint",
+      "expectedType": "token_mint",
+      "source": {
+        "id": "cme_mint01",
+        "communityId": "comm_alpha",
+        "memberId": "mem_alice",
+        "epochNumber": 3,
+        "mintType": "contribution",
+        "budgetSource": "current_epoch",
+        "amount": "500",
+        "memberBalanceBefore": "10000",
+        "memberBalanceAfter": "10500",
+        "totalSupplyBefore": "115763",
+        "totalSupplyAfter": "116263",
+        "governanceActivationEpoch": null,
+        "tokenPolicyVersion": 2,
+        "createdAt": 1753228800000
+      },
+      "canonicalJson": "{\"payload\":{\"amount\":500,\"budgetSource\":\"current_epoch\",\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"createdAt\":1753228800,\"epochNumber\":3,\"memberBalanceAfter\":10500,\"memberBalanceBefore\":10000,\"memberIdHash\":\"0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a\",\"mintEventId\":\"cme_mint01\",\"mintType\":\"contribution\",\"tokenPolicyVersion\":2,\"totalSupplyAfter\":116263,\"totalSupplyBefore\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_mint\"}",
+      "recordHash": "0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a",
+        { "$bigint": "500" },
+        { "$bigint": "10500" },
+        { "$bigint": "116263" },
+        0,
+        0,
+        "0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7"
+      ]
+    },
+    {
+      "name": "advance_mint",
+      "kind": "advance_mint",
+      "expectedType": "advance_mint",
+      "source": {
+        "id": "cme_adv01",
+        "communityId": "comm_alpha",
+        "memberId": "mem_bob",
+        "epochNumber": 4,
+        "mintType": "advance",
+        "budgetSource": "next_epoch_advance",
+        "amount": "800",
+        "memberBalanceBefore": "10500",
+        "memberBalanceAfter": "11300",
+        "totalSupplyBefore": "116263",
+        "totalSupplyAfter": "117063",
+        "governanceActivationEpoch": 5,
+        "tokenPolicyVersion": 2,
+        "createdAt": 1753315200000
+      },
+      "canonicalJson": "{\"payload\":{\"activationEpoch\":5,\"amount\":800,\"budgetSource\":\"next_epoch_advance\",\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"createdAt\":1753315200,\"epochNumber\":4,\"memberBalanceAfter\":11300,\"memberBalanceBefore\":10500,\"memberIdHash\":\"0xa67571d816a58b3de0a9fdcbce4d9e01e56e16f1b7d41fec06a7e4cd1329d481\",\"mintEventId\":\"cme_adv01\",\"mintType\":\"advance\",\"tokenPolicyVersion\":2,\"totalSupplyAfter\":117063,\"totalSupplyBefore\":116263},\"schema\":\"youfen.record.v1\",\"type\":\"advance_mint\"}",
+      "recordHash": "0x68336840a965a0fcc1c22ad571f2b606cb1612abdba66147c2741ca49f28fffd",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xa67571d816a58b3de0a9fdcbce4d9e01e56e16f1b7d41fec06a7e4cd1329d481",
+        { "$bigint": "800" },
+        { "$bigint": "11300" },
+        { "$bigint": "117063" },
+        1,
+        5,
+        "0x68336840a965a0fcc1c22ad571f2b606cb1612abdba66147c2741ca49f28fffd"
+      ]
+    },
+    {
+      "name": "token_reversal",
+      "kind": "token_reversal",
+      "expectedType": "token_reversal",
+      "source": {
+        "id": "crev_01",
+        "communityId": "comm_alpha",
+        "memberId": "mem_alice",
+        "originalMintEventId": "cme_mint01",
+        "amount": "500",
+        "totalBalanceAfter": "10000",
+        "totalSupplyAfter": "115763",
+        "createdAt": 1753401600000
+      },
+      "originalRecordHash": "0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7",
+      "canonicalJson": "{\"payload\":{\"amount\":500,\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"createdAt\":1753401600,\"memberBalanceAfter\":10000,\"memberIdHash\":\"0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a\",\"originalRecordHash\":\"0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7\",\"reversalEventId\":\"crev_01\",\"totalSupplyAfter\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_reversal\"}",
+      "recordHash": "0x7fd87004b0c2834966ba1c0a71bcdeb3129528b28b7d638a47c62625225f35ce",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a",
+        { "$bigint": "500" },
+        { "$bigint": "10000" },
+        { "$bigint": "115763" },
+        "0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7",
+        "0x7fd87004b0c2834966ba1c0a71bcdeb3129528b28b7d638a47c62625225f35ce"
+      ]
+    },
+    {
+      "name": "epoch_summary",
+      "kind": "epoch_summary",
+      "expectedType": "epoch_summary",
+      "source": {
+        "id": "ep_03",
+        "communityId": "comm_alpha",
+        "epochNumber": 3,
+        "openingSupply": "115763",
+        "baseMintBudget": "1200",
+        "regularMintedAmount": "500",
+        "advancedMintedAmount": "800",
+        "advanceDebtFromPreviousEpoch": "200",
+        "closedAt": 1753488000000,
+        "createdAt": 1753480000000
+      },
+      "canonicalJson": "{\"payload\":{\"advanceDebt\":200,\"advancedMinted\":800,\"baseBudget\":1200,\"closedAt\":1753488000,\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"epochId\":\"ep_03\",\"epochNumber\":3,\"openingSupply\":115763,\"regularMinted\":500},\"schema\":\"youfen.record.v1\",\"type\":\"epoch_summary\"}",
+      "recordHash": "0x2e1493353bcaee972ee8cfcf515210d63ac93b2bfb9b6b0a87e0ea2d02be2a34",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        3,
+        { "$bigint": "115763" },
+        { "$bigint": "1200" },
+        { "$bigint": "500" },
+        { "$bigint": "800" },
+        { "$bigint": "200" },
+        "0x2e1493353bcaee972ee8cfcf515210d63ac93b2bfb9b6b0a87e0ea2d02be2a34"
+      ]
+    },
+    {
+      "name": "policy_version",
+      "kind": "policy_version",
+      "expectedType": "policy_version",
+      "source": {
+        "id": "pol_02",
+        "communityId": "comm_alpha",
+        "policyVersion": 2,
+        "monthlyInflationRateBps": 300,
+        "maxAdvanceRateBps": 5000,
+        "memberMintCapRateBps": 1000,
+        "effectiveEpoch": 4,
+        "createdAt": 1753574400000
+      },
+      "canonicalJson": "{\"payload\":{\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"createdAt\":1753574400,\"effectiveEpoch\":4,\"inflationRateBps\":300,\"maxAdvanceRateBps\":5000,\"memberMintCapRateBps\":1000,\"policyId\":\"pol_02\",\"policyVersion\":2},\"schema\":\"youfen.record.v1\",\"type\":\"policy_version\"}",
+      "recordHash": "0x0cf858b715060093f42b6f02cc5a685c058fd752486afe36a382ab7fc712760a",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        2,
+        300,
+        5000,
+        1000,
+        4,
+        "0x0cf858b715060093f42b6f02cc5a685c058fd752486afe36a382ab7fc712760a"
+      ]
+    },
+    {
+      "name": "proposal_snapshot",
+      "kind": "proposal_snapshot",
+      "expectedType": "proposal_snapshot",
+      "source": {
+        "id": "prop_01",
+        "communityId": "comm_alpha",
+        "epochNumberSnapshot": 4,
+        "totalSupplySnapshot": "117063",
+        "activeGovernanceSupplySnapshot": "90000",
+        "tokenPolicyVersionSnapshot": 2,
+        "snapshotAt": 1753660800000,
+        "endedAt": null,
+        "winningOptionId": null,
+        "voterCount": null,
+        "totalVoteWeight": null,
+        "createdAt": 1753650000000
+      },
+      "canonicalJson": "{\"payload\":{\"activeGovernanceSupplySnapshot\":90000,\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"epochNumber\":4,\"policyVersion\":2,\"proposalId\":\"prop_01\",\"snapshotAt\":1753660800,\"totalSupplySnapshot\":117063},\"schema\":\"youfen.record.v1\",\"type\":\"proposal_snapshot\"}",
+      "recordHash": "0x409bd460bc85ee5294446e67600441b1f2d32c37a8ab390313c4bfb4ecc893e0",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xe671e6a0f859daf07473d38074ec24cfd4cf75926efe7276d7e3a1ff105a12d4",
+        4,
+        { "$bigint": "117063" },
+        { "$bigint": "90000" },
+        2,
+        "0x409bd460bc85ee5294446e67600441b1f2d32c37a8ab390313c4bfb4ecc893e0"
+      ]
+    },
+    {
+      "name": "proposal_result",
+      "kind": "proposal_result",
+      "expectedType": "proposal_result",
+      "source": {
+        "id": "prop_01",
+        "communityId": "comm_alpha",
+        "epochNumberSnapshot": null,
+        "totalSupplySnapshot": null,
+        "activeGovernanceSupplySnapshot": null,
+        "tokenPolicyVersionSnapshot": null,
+        "snapshotAt": null,
+        "endedAt": 1753747200000,
+        "winningOptionId": "opt_yes",
+        "voterCount": 42,
+        "totalVoteWeight": "85000",
+        "createdAt": 1753740000000
+      },
+      "canonicalJson": "{\"payload\":{\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"endedAt\":1753747200,\"proposalId\":\"prop_01\",\"totalVoteWeight\":85000,\"voterCount\":42,\"winningOptionIdHash\":\"0x1b96c31fa137c7b4de1a4b92c3f02c3e8c730f5c1f22eccb58c06efba7ceb145\"},\"schema\":\"youfen.record.v1\",\"type\":\"proposal_result\"}",
+      "recordHash": "0x03cce3441600ec843fab7b4431c9265b9fd3cecff624db6a42be12314f8ac20e",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xe671e6a0f859daf07473d38074ec24cfd4cf75926efe7276d7e3a1ff105a12d4",
+        "0x1b96c31fa137c7b4de1a4b92c3f02c3e8c730f5c1f22eccb58c06efba7ceb145",
+        42,
+        { "$bigint": "85000" },
+        "0x03cce3441600ec843fab7b4431c9265b9fd3cecff624db6a42be12314f8ac20e"
+      ]
+    },
+    {
+      "name": "token_mint_v2_ledger_seq",
+      "kind": "token_mint",
+      "expectedType": "token_mint",
+      "note": "v2: additive ledgerSeq guard. Same source as token_mint plus ledgerSeq; enters the canonical payload and lands as the last chainArg before recordHash. Original token_mint vector is left byte-identical (additive rule).",
+      "source": {
+        "id": "cme_mint01",
+        "communityId": "comm_alpha",
+        "memberId": "mem_alice",
+        "epochNumber": 3,
+        "mintType": "contribution",
+        "budgetSource": "current_epoch",
+        "amount": "500",
+        "memberBalanceBefore": "10000",
+        "memberBalanceAfter": "10500",
+        "totalSupplyBefore": "115763",
+        "totalSupplyAfter": "116263",
+        "governanceActivationEpoch": null,
+        "tokenPolicyVersion": 2,
+        "ledgerSeq": 7,
+        "createdAt": 1753228800000
+      },
+      "canonicalJson": "{\"payload\":{\"amount\":500,\"budgetSource\":\"current_epoch\",\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"createdAt\":1753228800,\"epochNumber\":3,\"ledgerSeq\":7,\"memberBalanceAfter\":10500,\"memberBalanceBefore\":10000,\"memberIdHash\":\"0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a\",\"mintEventId\":\"cme_mint01\",\"mintType\":\"contribution\",\"tokenPolicyVersion\":2,\"totalSupplyAfter\":116263,\"totalSupplyBefore\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_mint\"}",
+      "recordHash": "0x86013211d19be5387d90d0d55bff14845610ac173d05d5dc5672a00c3fd77b88",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a",
+        { "$bigint": "500" },
+        { "$bigint": "10500" },
+        { "$bigint": "116263" },
+        0,
+        0,
+        7,
+        "0x86013211d19be5387d90d0d55bff14845610ac173d05d5dc5672a00c3fd77b88"
+      ]
+    },
+    {
+      "name": "token_reversal_v2_ledger_seq",
+      "kind": "token_reversal",
+      "expectedType": "token_reversal",
+      "note": "v2: additive ledgerSeq guard. Same source as token_reversal plus ledgerSeq; enters the canonical payload and lands as the last chainArg before recordHash. Original token_reversal vector is left byte-identical (additive rule).",
+      "source": {
+        "id": "crev_01",
+        "communityId": "comm_alpha",
+        "memberId": "mem_alice",
+        "originalMintEventId": "cme_mint01",
+        "amount": "500",
+        "totalBalanceAfter": "10000",
+        "totalSupplyAfter": "115763",
+        "ledgerSeq": 9,
+        "createdAt": 1753401600000
+      },
+      "originalRecordHash": "0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7",
+      "canonicalJson": "{\"payload\":{\"amount\":500,\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"createdAt\":1753401600,\"ledgerSeq\":9,\"memberBalanceAfter\":10000,\"memberIdHash\":\"0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a\",\"originalRecordHash\":\"0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7\",\"reversalEventId\":\"crev_01\",\"totalSupplyAfter\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_reversal\"}",
+      "recordHash": "0xae1507578953665f74dc5b602f0dfd9e7a8dede2697da70439f0c0116551466b",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xb5eb58084bf47317953b513d98b2c3221ed646935a8ebae615daa2aeacf55c5a",
+        { "$bigint": "500" },
+        { "$bigint": "10000" },
+        { "$bigint": "115763" },
+        "0xb4bca464f4428db2f6ea7929acecff6c5cc4a785348fdba7f60c6c1227708fe7",
+        9,
+        "0xae1507578953665f74dc5b602f0dfd9e7a8dede2697da70439f0c0116551466b"
+      ]
+    },
+    {
+      "name": "proposal_snapshot_v2_weights_root",
+      "kind": "proposal_snapshot",
+      "expectedType": "proposal_snapshot",
+      "note": "v2 (T3): additive weightsMerkleRoot. Same source as proposal_snapshot plus weightsMerkleRoot; enters the canonical payload and lands as the last chainArg before recordHash. Original proposal_snapshot vector is left byte-identical (additive rule). Root computed by hashing/merkle.ts over {alice:10500, bob:11300, carol:500} snapshot leaves.",
+      "source": {
+        "id": "prop_01",
+        "communityId": "comm_alpha",
+        "epochNumberSnapshot": 4,
+        "totalSupplySnapshot": "117063",
+        "activeGovernanceSupplySnapshot": "90000",
+        "tokenPolicyVersionSnapshot": 2,
+        "snapshotAt": 1753660800000,
+        "endedAt": null,
+        "winningOptionId": null,
+        "voterCount": null,
+        "totalVoteWeight": null,
+        "weightsMerkleRoot": "0x4bfd8a02159ce7877e662c8a709fc20f3d89899b769ecb4d19a089ae35ac797f",
+        "createdAt": 1753650000000
+      },
+      "canonicalJson": "{\"payload\":{\"activeGovernanceSupplySnapshot\":90000,\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"epochNumber\":4,\"policyVersion\":2,\"proposalId\":\"prop_01\",\"snapshotAt\":1753660800,\"totalSupplySnapshot\":117063,\"weightsMerkleRoot\":\"0x4bfd8a02159ce7877e662c8a709fc20f3d89899b769ecb4d19a089ae35ac797f\"},\"schema\":\"youfen.record.v1\",\"type\":\"proposal_snapshot\"}",
+      "recordHash": "0x6bc3e4b57b23e94975dc17373cf0dd3fdc463bcb8b1e5a5f469a25d74736c0f6",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xe671e6a0f859daf07473d38074ec24cfd4cf75926efe7276d7e3a1ff105a12d4",
+        4,
+        { "$bigint": "117063" },
+        { "$bigint": "90000" },
+        2,
+        "0x4bfd8a02159ce7877e662c8a709fc20f3d89899b769ecb4d19a089ae35ac797f",
+        "0x6bc3e4b57b23e94975dc17373cf0dd3fdc463bcb8b1e5a5f469a25d74736c0f6"
+      ]
+    },
+    {
+      "name": "proposal_result_v2_votes_root",
+      "kind": "proposal_result",
+      "expectedType": "proposal_result",
+      "note": "v2 (T3): additive votesMerkleRoot. Same source as proposal_result plus votesMerkleRoot; enters the canonical payload and lands as the last chainArg before recordHash. Original proposal_result vector is left byte-identical (additive rule). Root computed by hashing/merkle.ts over 4 vote leaves.",
+      "source": {
+        "id": "prop_01",
+        "communityId": "comm_alpha",
+        "epochNumberSnapshot": null,
+        "totalSupplySnapshot": null,
+        "activeGovernanceSupplySnapshot": null,
+        "tokenPolicyVersionSnapshot": null,
+        "snapshotAt": null,
+        "endedAt": 1753747200000,
+        "winningOptionId": "opt_yes",
+        "voterCount": 42,
+        "totalVoteWeight": "85000",
+        "votesMerkleRoot": "0x7b0f98647c21c206661fa92f7b0325276d015e112ae238072a0cc8d3349435f6",
+        "createdAt": 1753740000000
+      },
+      "canonicalJson": "{\"payload\":{\"communityIdHash\":\"0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013\",\"endedAt\":1753747200,\"proposalId\":\"prop_01\",\"totalVoteWeight\":85000,\"voterCount\":42,\"votesMerkleRoot\":\"0x7b0f98647c21c206661fa92f7b0325276d015e112ae238072a0cc8d3349435f6\",\"winningOptionIdHash\":\"0x1b96c31fa137c7b4de1a4b92c3f02c3e8c730f5c1f22eccb58c06efba7ceb145\"},\"schema\":\"youfen.record.v1\",\"type\":\"proposal_result\"}",
+      "recordHash": "0xf091b8f11b6407657f2a022b1d8b3d291030333b9c0a7ccf3172e6bf408d92a7",
+      "chainArgs": [
+        "0x74d34cecbf805cd93492f061ae58f0b0f07803c74287cdf3e5f923ff70756013",
+        "0xe671e6a0f859daf07473d38074ec24cfd4cf75926efe7276d7e3a1ff105a12d4",
+        "0x1b96c31fa137c7b4de1a4b92c3f02c3e8c730f5c1f22eccb58c06efba7ceb145",
+        42,
+        { "$bigint": "85000" },
+        "0x7b0f98647c21c206661fa92f7b0325276d015e112ae238072a0cc8d3349435f6",
+        "0xf091b8f11b6407657f2a022b1d8b3d291030333b9c0a7ccf3172e6bf408d92a7"
+      ]
+    }
+  ]
+}

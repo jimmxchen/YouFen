@@ -1,0 +1,196 @@
+{
+  "keccakEmptyStringAnchor": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+  "envelopeVectors": [
+    {
+      "name": "token_mint",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "token_mint",
+        "payload": {
+          "activationEpoch": 0,
+          "amount": 500,
+          "budgetSource": "current_epoch",
+          "communityIdHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+          "createdAt": 1753228800,
+          "epochNumber": 3,
+          "memberBalanceAfter": 10500,
+          "memberBalanceBefore": 10000,
+          "memberIdHash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+          "mintEventId": "cme_2rXk9pQ",
+          "mintType": "contribution",
+          "tokenPolicyVersion": 2,
+          "totalSupplyAfter": 116263,
+          "totalSupplyBefore": 115763
+        }
+      },
+      "canonical": "{\"payload\":{\"activationEpoch\":0,\"amount\":500,\"budgetSource\":\"current_epoch\",\"communityIdHash\":\"0x1111111111111111111111111111111111111111111111111111111111111111\",\"createdAt\":1753228800,\"epochNumber\":3,\"memberBalanceAfter\":10500,\"memberBalanceBefore\":10000,\"memberIdHash\":\"0x2222222222222222222222222222222222222222222222222222222222222222\",\"mintEventId\":\"cme_2rXk9pQ\",\"mintType\":\"contribution\",\"tokenPolicyVersion\":2,\"totalSupplyAfter\":116263,\"totalSupplyBefore\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_mint\"}",
+      "hash": "0x8f17c5df219cf6157b56b5d21b7e5335679b5810b03a48744af64d19250f5142"
+    },
+    {
+      "name": "advance_mint",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "advance_mint",
+        "payload": {
+          "activationEpoch": 5,
+          "amount": 800,
+          "budgetSource": "next_epoch_advance",
+          "communityIdHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+          "createdAt": 1753315200,
+          "epochNumber": 4,
+          "memberBalanceAfter": 11300,
+          "memberBalanceBefore": 10500,
+          "memberIdHash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+          "mintEventId": "cme_3aYm2wR",
+          "mintType": "advance",
+          "tokenPolicyVersion": 2,
+          "totalSupplyAfter": 117063,
+          "totalSupplyBefore": 116263
+        }
+      },
+      "canonical": "{\"payload\":{\"activationEpoch\":5,\"amount\":800,\"budgetSource\":\"next_epoch_advance\",\"communityIdHash\":\"0x1111111111111111111111111111111111111111111111111111111111111111\",\"createdAt\":1753315200,\"epochNumber\":4,\"memberBalanceAfter\":11300,\"memberBalanceBefore\":10500,\"memberIdHash\":\"0x2222222222222222222222222222222222222222222222222222222222222222\",\"mintEventId\":\"cme_3aYm2wR\",\"mintType\":\"advance\",\"tokenPolicyVersion\":2,\"totalSupplyAfter\":117063,\"totalSupplyBefore\":116263},\"schema\":\"youfen.record.v1\",\"type\":\"advance_mint\"}",
+      "hash": "0x786e308836bf101a6574c2faf866c530cfab69a5aef7589fbbbd1922d86afde6"
+    },
+    {
+      "name": "token_reversal",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "token_reversal",
+        "payload": {
+          "amount": 500,
+          "communityIdHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+          "createdAt": 1753401600,
+          "memberIdHash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+          "originalRecordHash": "0x3333333333333333333333333333333333333333333333333333333333333333",
+          "reversalEventId": "crv_5bZn7tK",
+          "totalBalanceAfter": 10000,
+          "totalSupplyAfter": 115763
+        }
+      },
+      "canonical": "{\"payload\":{\"amount\":500,\"communityIdHash\":\"0x1111111111111111111111111111111111111111111111111111111111111111\",\"createdAt\":1753401600,\"memberIdHash\":\"0x2222222222222222222222222222222222222222222222222222222222222222\",\"originalRecordHash\":\"0x3333333333333333333333333333333333333333333333333333333333333333\",\"reversalEventId\":\"crv_5bZn7tK\",\"totalBalanceAfter\":10000,\"totalSupplyAfter\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_reversal\"}",
+      "hash": "0x808340ed5e9a76574e3aa1e79a0ebd8b159d9b87812a483f98c3b6efea563b92"
+    },
+    {
+      "name": "proposal_result",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "proposal_result",
+        "payload": {
+          "communityIdHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+          "endedAt": 1753488000,
+          "epochNumberSnapshot": 4,
+          "proposalIdHash": "0x4444444444444444444444444444444444444444444444444444444444444444",
+          "tokenPolicyVersionSnapshot": 2,
+          "totalSupplySnapshot": 117063,
+          "totalVoteWeight": 45200,
+          "voterCount": 37,
+          "winningOptionIdHash": "0x5555555555555555555555555555555555555555555555555555555555555555"
+        }
+      },
+      "canonical": "{\"payload\":{\"communityIdHash\":\"0x1111111111111111111111111111111111111111111111111111111111111111\",\"endedAt\":1753488000,\"epochNumberSnapshot\":4,\"proposalIdHash\":\"0x4444444444444444444444444444444444444444444444444444444444444444\",\"tokenPolicyVersionSnapshot\":2,\"totalSupplySnapshot\":117063,\"totalVoteWeight\":45200,\"voterCount\":37,\"winningOptionIdHash\":\"0x5555555555555555555555555555555555555555555555555555555555555555\"},\"schema\":\"youfen.record.v1\",\"type\":\"proposal_result\"}",
+      "hash": "0xfb61ed3c51b8f010e405f044d420300d10797e69703cbf17858722187f1d2007"
+    },
+    {
+      "name": "unicode-string-escaping",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "policy_version",
+        "payload": {
+          "displayName": "测试🌟社区",
+          "policyVersion": 1
+        }
+      },
+      "canonical": "{\"payload\":{\"displayName\":\"测试🌟社区\",\"policyVersion\":1},\"schema\":\"youfen.record.v1\",\"type\":\"policy_version\"}",
+      "hash": "0x08e73fa94f256526b66d58dfd593b377580745c28391556aa2804fd407d5d6c2"
+    }
+  ],
+  "keyShuffleVectors": [
+    {
+      "name": "token_mint-shuffled-keys",
+      "sameAs": "token_mint",
+      "envelope": {
+        "type": "token_mint",
+        "payload": {
+          "totalSupplyBefore": 115763,
+          "totalSupplyAfter": 116263,
+          "tokenPolicyVersion": 2,
+          "mintType": "contribution",
+          "mintEventId": "cme_2rXk9pQ",
+          "memberIdHash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+          "memberBalanceBefore": 10000,
+          "memberBalanceAfter": 10500,
+          "epochNumber": 3,
+          "createdAt": 1753228800,
+          "communityIdHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+          "budgetSource": "current_epoch",
+          "amount": 500,
+          "activationEpoch": 0
+        },
+        "schema": "youfen.record.v1"
+      },
+      "canonical": "{\"payload\":{\"activationEpoch\":0,\"amount\":500,\"budgetSource\":\"current_epoch\",\"communityIdHash\":\"0x1111111111111111111111111111111111111111111111111111111111111111\",\"createdAt\":1753228800,\"epochNumber\":3,\"memberBalanceAfter\":10500,\"memberBalanceBefore\":10000,\"memberIdHash\":\"0x2222222222222222222222222222222222222222222222222222222222222222\",\"mintEventId\":\"cme_2rXk9pQ\",\"mintType\":\"contribution\",\"tokenPolicyVersion\":2,\"totalSupplyAfter\":116263,\"totalSupplyBefore\":115763},\"schema\":\"youfen.record.v1\",\"type\":\"token_mint\"}",
+      "hash": "0x8f17c5df219cf6157b56b5d21b7e5335679b5810b03a48744af64d19250f5142"
+    }
+  ],
+  "rejectionVectors": [
+    {
+      "name": "null-payload-value",
+      "reason": "null is forbidden; optional fields must be omitted, never written as null",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "token_mint",
+        "payload": { "amount": null }
+      }
+    },
+    {
+      "name": "float-payload-value",
+      "reason": "numbers must be integers; floats are hash poison",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "token_mint",
+        "payload": { "amount": 1.5 }
+      }
+    },
+    {
+      "name": "unsafe-integer-two-pow-53",
+      "reason": "2^53 exceeds Number.isSafeInteger; amounts beyond the safe range must be string fields",
+      "envelope": {
+        "schema": "youfen.record.v1",
+        "type": "token_mint",
+        "payload": { "amount": 9007199254740992 }
+      }
+    }
+  ],
+  "idHashVectors": {
+    "community": {
+      "input": "cmm_alpha",
+      "preimage": "youfen:community:v1:cmm_alpha",
+      "hash": "0x57369cf73f060f2d56333978b079a67416aba3e005d9f4b59c8d3f08275c7779"
+    },
+    "member": {
+      "communityId": "cmm_alpha",
+      "memberId": "mbr_bob",
+      "pepper": "pepper_test_secret_123456",
+      "preimage": "youfen:member:v1:cmm_alpha:mbr_bob:pepper_test_secret_123456",
+      "hash": "0x8d41ba3b4af349c6462b184f3ffed7cdb662f244efb094a67b57ff654f5d92bc"
+    },
+    "memberDifferentPepper": {
+      "communityId": "cmm_alpha",
+      "memberId": "mbr_bob",
+      "pepper": "other_pepper_secret_999999",
+      "preimage": "youfen:member:v1:cmm_alpha:mbr_bob:other_pepper_secret_999999",
+      "hash": "0xe31fd299077128ee07dbe333ee0b42ac34db3fbbbf743c91b30224f80ef4a6a0"
+    },
+    "proposal": {
+      "input": "prp_x",
+      "preimage": "youfen:proposal:v1:prp_x",
+      "hash": "0x7a2cce1339b22d37d7ce642638b1a9d68a90527aee09118d40697bc4dfb12bdd"
+    },
+    "option": {
+      "proposalId": "prp_x",
+      "optionId": "opt_1",
+      "preimage": "youfen:option:v1:prp_x:opt_1",
+      "hash": "0x8acd9c41e3cc2a9f78cd44b30a0b2102fda7612fb3809b752fb05140a04725f3"
+    }
+  }
+}

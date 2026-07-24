@@ -435,14 +435,23 @@ Token 总余额：1,500 AXO
 
 ## 6.6 预支审批权限
 
-| 预支情况             | 审批方式            |
-| ---------------- | --------------- |
-| 未使用预支，只使用本月正常额度  | 按现有贡献规则审批       |
-| 预支不超过基础额度的10%    | 至少两名管理员批准       |
-| 预支超过10%，但不超过25%  | 必须通过社区 Proposal |
-| 给 Steward 或审批人增发 | 必须通过社区 Proposal |
-| 无对应贡献的特殊奖励       | 必须通过社区 Proposal |
-| 超过25%            | 系统禁止            |
+阈值一律按**本 Epoch 累计**判定，而非单笔判定，防止连续多笔各 9% 绕过治理：
+
+```text
+判定口径 = 本期已预支累计 + 本次申请
+
+当 (本期已预支累计 + 本次申请) > 基础预算 × 10%  →  触发 Proposal 要求
+当 (本期已预支累计 + 本次申请) > 基础预算 × 25%  →  系统禁止
+```
+
+| 预支情况                          | 审批方式            |
+| ----------------------------- | --------------- |
+| 未使用预支，只使用本月正常额度               | 按现有贡献规则审批       |
+| 本期累计预支不超过基础额度的10%             | 至少两名管理员批准       |
+| 本期累计预支超过10%，但不超过25%           | 必须通过社区 Proposal |
+| 给 Steward 或审批人增发              | 必须通过社区 Proposal |
+| 无对应贡献的特殊奖励                    | 必须通过社区 Proposal |
+| 本期累计预支超过25%                   | 系统禁止            |
 
 ## 6.7 预支前端警告
 
@@ -637,7 +646,7 @@ MVP 默认：
 
 防御方式：
 
-* 预支超过10%必须投票
+* 预支超过10%必须投票——阈值按本 Epoch 累计判定：`(本期已预支累计 + 本次申请) > 基础预算 × 10%` 即触发 Proposal，防止连续多笔各 9% 绕过治理
 * 预支 Token 下一 Epoch 才激活治理权
 * 已开始 Proposal 使用固定快照
 * 预支记录公开展示
@@ -1423,7 +1432,9 @@ interface CommunityTokenPolicy {
   tokenSymbol: string;
 
   initialSupply: number;
-  currentTotalSupply: number;
+  // 注意：currentTotalSupply 不属于 Policy（规则）。
+  // 总供应量是独立的社区 Token 状态（独立状态行 / 账本投影），
+  // 由 TokenMintEvent、TokenReversalEvent 累加得出，不写入 Policy 版本行。
 
   epochDurationDays: number;
 
@@ -1446,6 +1457,12 @@ interface CommunityTokenPolicy {
   updatedAt: Date;
 }
 ```
+
+> **规则与状态分离 / 版本不可变。**
+> Policy 版本行一经写入即不可变，永不 Update：每次规则变更都新增一行新版本，历史版本永久保留、永不覆盖。
+> 上面结构中的 `updatedAt` 只存在于可变的“当前生效指针”行（指向当前生效的 Policy 版本），
+> 用于记录指针最近一次切换的时间；具体的历史版本行只有 `createdAt`，没有可变的 `updatedAt` 语义。
+> `currentTotalSupply` 已从 Policy 移除，见上方注释：它属于独立的社区 Token 状态，而非规则。
 
 ## 24.2 TokenEpoch
 
@@ -1494,8 +1511,10 @@ interface MemberTokenBalance {
   activeGovernanceBalance: number;
   pendingGovernanceBalance: number;
 
-  ownershipPercentage: number;
-  governancePercentage: number;
+  // 所有权与治理权百分比是派生值，不作为权威字段存储：
+  //   ownershipPercentage  = totalBalance / currentTotalSupply
+  //   governancePercentage = activeGovernanceBalance / activeGovernanceTotalSupply
+  // 一律在查询时按“余额 ÷ 总供应量”实时计算，避免与账本产生漂移。
 
   tokensEarnedCurrentEpoch: number;
   tokensEarnedLifetime: number;
@@ -1573,6 +1592,16 @@ enum TokenBudgetSource {
   NEXT_EPOCH_ADVANCE = 'next_epoch_advance',
 }
 ```
+
+> **跨额度奖励必须拆分为两条 MintEvent。**
+> `budgetSource` 保持单值枚举，链上事件 schema 不变。
+> 当一笔奖励同时动用正常额度与预支额度时，不得写入混合来源，
+> 而是拆成两条 `TokenMintEvent`，共享同一个 `contributionId`：
+>
+> * 一条 `budgetSource = CURRENT_EPOCH`，`governanceStatus = 'active'`（治理立即生效）；
+> * 一条 `budgetSource = NEXT_EPOCH_ADVANCE`，`governanceStatus = 'pending'`（治理待下一 Epoch 激活）。
+>
+> 两条记录金额之和等于本次奖励总额；正常额度部分用满后剩余部分才计入预支。
 
 ## 24.5 TokenAdvanceRequest
 
@@ -1704,7 +1733,7 @@ function calculateBaseMintBudget(
 }
 ```
 
-## 25.2 实际基础可用预算
+## 25.2 实际基础可用预算与债务滚存
 
 ```typescript
 function calculateEffectiveRegularBudget(
@@ -1716,7 +1745,25 @@ function calculateEffectiveRegularBudget(
     baseMintBudget - advanceDebtFromPreviousEpoch
   );
 }
+
+// 当本期基础预算不足以偿清上期预支债务时，
+// 未清偿的剩余债务必须滚存到后续 Epoch 继续锁定预算，
+// 超额部分不得静默免除。
+function calculateCarriedOverDebt(
+  baseMintBudget: number,
+  advanceDebtFromPreviousEpoch: number
+): number {
+  return Math.max(
+    0,
+    advanceDebtFromPreviousEpoch - baseMintBudget
+  );
+}
 ```
+
+> **债务滚存规则：**
+> `effectiveRegularBudget = max(0, 基础预算 − 未清债务)`。
+> 若 `未清债务 > 基础预算`，本期有效基础预算为 0，且 `未清债务 − 基础预算` 作为剩余债务滚存至下一 Epoch，继续锁定其预算，直至清零——超额债务不得静默免除。
+> **债务未清零期间，禁止任何新的预支。**
 
 ## 25.3 最大预支额度
 
@@ -1778,10 +1825,12 @@ function calculateOwnershipPercentage(
 12. 创建待验证 PublicRecord；
 13. 提交事务。
 
+> 若一笔奖励在正常额度用满后仍有剩余，需要跨额度：本步骤只铸造落在正常额度内的部分（`budgetSource = CURRENT_EPOCH`），剩余部分按 §26.2 另铸一条预支 MintEvent，二者共享同一 `contributionId`，在同一事务内完成。
+
 ## 26.2 预支增发事务
 
 1. 验证正常额度不足；
-2. 验证预支上限；
+2. 验证预支上限（按本 Epoch 累计判定：`本期已预支累计 + 本次申请 ≤ 基础预算 × 25%`，同时用同一累计口径判断是否触及 10% 治理阈值）；
 3. 验证不存在未偿还的滚动预支；
 4. 验证审批权限；
 5. 验证 Proposal 或第二审核人；
@@ -1795,6 +1844,8 @@ function calculateOwnershipPercentage(
 13. 创建 PublicRecord；
 14. 提交事务。
 
+> 当同一笔奖励跨额度时，本事务只铸造预支部分（`budgetSource = NEXT_EPOCH_ADVANCE`，`governanceStatus = 'pending'`），正常额度部分按 §26.1 铸造；两条 MintEvent 共享同一 `contributionId`，在同一事务内原子完成。
+
 ## 26.3 Epoch 切换事务
 
 1. 锁定当前 Epoch；
@@ -1802,7 +1853,7 @@ function calculateOwnershipPercentage(
 3. 关闭当前 Epoch；
 4. 读取当前总供应量；
 5. 计算下期基础预算；
-6. 扣除当前预支债务；
+6. 结算预支债务：`effectiveRegularBudget = max(0, 下期基础预算 − 未清债务)`；若未清债务超过下期基础预算，剩余债务（`未清债务 − 下期基础预算`）滚存至再下一 Epoch 继续锁定预算，超额部分不得静默免除；债务未清零期间禁止任何新预支；
 7. 激活所有到期 Pending Governance Token；
 8. 创建下一 Epoch；
 9. 更新 Token Policy 当前周期；
@@ -1814,6 +1865,11 @@ function calculateOwnershipPercentage(
 ---
 
 # 27. API 需求
+
+> **幂等要求。**
+> 仅以下三个创建类写端点要求客户端携带 `Idempotency-Key` 请求头，服务端据此去重（重复键返回首次结果，不重复创建）：
+> `POST /api/contributions`、`POST /api/proposals`、`POST /api/token-advances`。
+> 资金路径不额外引入通用幂等键，而是依赖既有的域级幂等：`(contributionId, budgetSource)` 复合唯一约束（同一贡献同一预算来源至多一条，跨额度拆分时两条事件各占一来源）、`execute` 端点幂等、`recordHash` 含主键、合约 `require(!exists)`。
 
 ## Token Policy
 
@@ -1842,7 +1898,7 @@ GET    /api/members/:id/token-history
 ## Contribution Mint
 
 ```http
-POST   /api/contributions
+POST   /api/contributions              # 需 Idempotency-Key 请求头去重
 POST   /api/contributions/:id/analyze
 POST   /api/contributions/:id/approve
 POST   /api/contributions/:id/mint
@@ -1852,7 +1908,7 @@ POST   /api/contributions/:id/reject
 ## Token Advance
 
 ```http
-POST   /api/token-advances
+POST   /api/token-advances             # 需 Idempotency-Key 请求头去重
 GET    /api/token-advances/:id
 POST   /api/token-advances/:id/second-approve
 POST   /api/token-advances/:id/create-proposal
@@ -1869,7 +1925,7 @@ POST   /api/token/reverse
 ## Proposal
 
 ```http
-POST   /api/proposals
+POST   /api/proposals                  # 需 Idempotency-Key 请求头去重
 POST   /api/proposals/:id/start
 GET    /api/proposals/:id/snapshot
 POST   /api/proposals/:id/vote
@@ -1953,6 +2009,29 @@ event EpochRecorded(
     uint256 regularMinted,
     uint256 advancedMinted,
     uint256 advanceDebt,
+    bytes32 indexed recordHash
+);
+
+// weightsMerkleRoot / votesMerkleRoot 为非索引数据字段，紧邻（仍为最后索引的）recordHash 之前，
+// 故 recordHash 恒在 topics[3]。root 提交个体可验证性承诺，bytes32(0) 表示本记录未发布对应 Merkle 树。
+event ProposalSnapshotRecorded(
+    bytes32 indexed communityId,
+    bytes32 indexed proposalId,
+    uint64 epochNumber,
+    uint256 totalSupplySnapshot,
+    uint256 activeGovernanceSupplySnapshot,
+    uint32 policyVersion,
+    bytes32 weightsMerkleRoot,
+    bytes32 indexed recordHash
+);
+
+event ProposalResultRecorded(
+    bytes32 indexed communityId,
+    bytes32 indexed proposalId,
+    bytes32 winningOptionIdHash,
+    uint32 voterCount,
+    uint256 totalVoteWeight,
+    bytes32 votesMerkleRoot,
     bytes32 indexed recordHash
 );
 ```
@@ -2045,27 +2124,45 @@ Carol 完成重大社区基础设施贡献：
 
 ```text
 建议奖励：500 AXO
-正常额度不足：400 AXO
+正常额度剩余：100 AXO
 需要预支：400 AXO
 ```
 
-预支比例：
+这笔 500 AXO 奖励跨额度，必须拆成两条 TokenMintEvent（共享同一 contributionId）：
 
 ```text
+MintEvent #1
+  contributionId   = carol-infra-001
+  amount           = 100 AXO
+  budgetSource     = CURRENT_EPOCH        （正常额度）
+  governanceStatus = active               （治理立即生效）
+
+MintEvent #2
+  contributionId   = carol-infra-001
+  amount           = 400 AXO
+  budgetSource     = NEXT_EPOCH_ADVANCE   （预支额度）
+  governanceStatus = pending              （治理下一 Epoch 激活）
+```
+
+预支比例（按本 Epoch 累计判定）：
+
+```text
+本期已预支累计 0 + 本次 400 = 400
 400 ÷ 5,000 = 8%
 ```
 
 审批：
 
+* 8% 未超过基础额度的 10%
 * 两名管理员共同批准
 * 不需要社区 Proposal
 
-铸造后：
+铸造后（两条记录汇总）：
 
 ```text
 Carol Token 总余额：+500 AXO
-立即有效治理 Token：+100 AXO
-待激活治理 Token：+400 AXO
+立即有效治理 Token：+100 AXO（来自 MintEvent #1）
+待激活治理 Token：+400 AXO（来自 MintEvent #2）
 
 下期预算债务：400 AXO
 ```

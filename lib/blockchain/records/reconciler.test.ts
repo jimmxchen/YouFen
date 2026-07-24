@@ -273,6 +273,28 @@ describe('reconcileOnce — pending backfill (DB is the source of truth)', () =>
   });
 });
 
+describe('reconcileOnce — chainEligible filter (W2-B: DB-only / recorded rows never re-enqueue)', () => {
+  it('scopes both the in-flight and stale-pending scans to chainEligible: true', async () => {
+    const deps = makeDeps();
+    setScan(deps, [], []);
+    await build(deps).reconcileOnce(NOW);
+    const inflightWhere = deps.prisma.publicRecord.findMany.mock.calls[0][0].where;
+    const pendingWhere = deps.prisma.publicRecord.findMany.mock.calls[1][0].where;
+    expect(inflightWhere.chainEligible).toBe(true);
+    expect(pendingWhere.chainEligible).toBe(true);
+  });
+
+  it('leaves the pre-existing status/updatedAt predicates intact alongside the new guard', async () => {
+    const deps = makeDeps();
+    setScan(deps, [], []);
+    await build(deps).reconcileOnce(NOW);
+    const inflightWhere = deps.prisma.publicRecord.findMany.mock.calls[0][0].where;
+    const pendingWhere = deps.prisma.publicRecord.findMany.mock.calls[1][0].where;
+    expect(inflightWhere.status).toEqual({ in: ['submitting', 'confirming'] });
+    expect(pendingWhere.status).toBe('pending');
+  });
+});
+
 describe('reconcileOnce — resilience', () => {
   it('a single failing row does not abort the round', async () => {
     const deps = makeDeps();
