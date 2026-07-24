@@ -115,7 +115,9 @@ pnpm tsx scripts/deploy-contract.ts   # 对 Injective EVM Testnet 部署 YouFenR
 
 ## 9. v0.7 协议执行升级（进行中）⚠️
 
-方向：v0.6 的「平台钱包签一切」升级为 v0.7「合约强制执行 + EIP-712 成员/审批人签名 + YouFen 纯 Relayer」。合约接口 / EIP-712 / 数据模型 / API / 威胁模型的设计冻结正在跑（`docs/BLOCKCHAIN-DESIGN.md` 的 v0.7 重写待冻结结果落地），合约实现随后。**已决策：成员私钥客户端持有**（服务端拿不到私钥，这是「YouFen 不能替成员投票」为真的前提）。
+方向：v0.6 的「平台钱包签一切」升级为 v0.7「合约强制执行 + EIP-712 成员/审批人签名 + YouFen 纯 Relayer」。**已决策：成员私钥客户端持有**（服务端拿不到私钥，这是「YouFen 不能替成员投票」为真的前提）。
+
+进度：**Phase 0 冻结** ✅（26 处跨层冲突已裁决，冻结蓝图落于 `docs/BLOCKCHAIN-DESIGN-v0.7.md`）· **Phase 1 合约** ✅（`contracts/YouFenGovernance.sol` + `contracts/test/YouFenGovernance.test.ts` 23 项对抗性验收全绿：六个越权 demo + 冻结 revert + 快照冻结 + 预算守恒 + 非转让）· Phase 2–4（后端库 / API / 端到端）待实现，契约见 v0.7 设计文档 §5–§6。合约用 `viaIR`（hardhat.config 已开）。上线前需：部署 `YouFenGovernance` 到 Injective 测试网、Phase 2–4 落地、前端守门示例接真实 Revert（见下）。
 
 前端已先行反映 v0.7 叙事（`components/records/rule-guardian.tsx`、存档卡授权行、可退出性与信任边界文案）。由此引入两条上线前必须处理的事项：
 
@@ -128,5 +130,6 @@ pnpm tsx scripts/deploy-contract.ts   # 对 Injective EVM Testnet 部署 YouFenR
 |---|---|
 | `docs/PRD.md` | 需求唯一权威（已含 Codex 修订 P1-P6） |
 | `docs/ARCHITECTURE.md` | 全系统技术架构（已按 PRD 全量重写 + Codex 修订 A1-A6） |
-| `docs/BLOCKCHAIN-DESIGN.md` | 区块链层实现权威（模块/合约/哈希/状态机/队列/API + Injective 事实核查） |
+| `docs/BLOCKCHAIN-DESIGN.md` | v0.6 区块链层实现权威（canonical JSON / keccak256 / 队列 / Injective 事实核查——仍有效） |
+| `docs/BLOCKCHAIN-DESIGN-v0.7.md` | **v0.7 区块链层权威**（协议执行合约 / EIP-712 / 冻结 revert / Prisma+API 契约 / 分阶段计划）——取代 v0.6 的合约/授权/签名模型 |
 | `docs/HANDOFF.md` | 本文档：人工介入清单 |
