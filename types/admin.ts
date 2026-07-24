@@ -1,0 +1,95 @@
+// Admin page types matching PRD data model
+
+export interface Member {
+  id: string
+  name: string
+  email?: string
+  role: MemberRole
+  voicePower: number
+  contributionCount: number
+  tags: string[]
+  joinedAt: string
+  lastActiveAt: string
+}
+
+export type MemberRole = 'owner' | 'manager' | 'member'
+
+export interface Contribution {
+  id: string
+  memberId: string
+  memberName: string
+  description: string
+  type: string
+  suggestedVP: number
+  approvedVP?: number
+  status: ContributionStatus
+  aiReason?: string
+  evidence?: string[]
+  submittedBy: string
+  createdAt: string
+  reviewedAt?: string
+}
+
+export type ContributionStatus = 'pending' | 'approved' | 'rejected'
+
+export interface Proposal {
+  id: string
+  title: string
+  description: string
+  summary?: string
+  options: ProposalOption[]
+  status: ProposalStatus
+  voteType: VoteType
+  startTime: string
+  endTime: string
+  createdBy: string
+  createdAt: string
+  totalVotes: number
+  totalVP: number
+  voterCount: number
+  totalMembers: number
+  resultHash?: string
+  chainTxHash?: string
+}
+
+export interface ProposalOption {
+  id: string
+  text: string
+  votes: number
+  voterCount: number
+}
+
+export type ProposalStatus = 'draft' | 'active' | 'ended' | 'recorded'
+
+export type VoteType = 'weighted' | 'one_person_one_vote'
+
+export interface PublicRecord {
+  id: string
+  type: RecordType
+  hash: string
+  txHash?: string
+  network: string
+  status: RecordStatus
+  data: RecordData
+  createdBy: string
+  createdAt: string
+  recordedAt?: string
+}
+
+export type RecordType = 'community' | 'rule' | 'vp_batch' | 'proposal' | 'vote_result'
+
+export type RecordStatus = 'pending' | 'recording' | 'recorded' | 'failed'
+
+export interface RecordData {
+  [key: string]: any
+}
+
+export interface DashboardStats {
+  members: number
+  totalVoicePower: number
+  activeProposals: number
+  todayContributions: number
+  trustedRecords: number
+}
+
+export type AdminView = 'dashboard' | 'members' | 'contributions' | 'proposals' | 'records'
