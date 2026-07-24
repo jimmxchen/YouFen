@@ -7,11 +7,13 @@ export type Locale = (typeof locales)[number];
 // 默认语言
 export const defaultLocale: Locale = 'zh';
 
-export default getRequestConfig(async ({ locale }) => {
-  // 如果 locale 未定义，使用默认语言
-  const validLocale = locale || defaultLocale;
-
-  console.log('i18n.ts - Received locale:', locale, 'Using:', validLocale);
+export default getRequestConfig(async ({ requestLocale }) => {
+  // next-intl v4 API：locale 经由 requestLocale（Promise）传入；
+  // 旧版 { locale } 参数在 v4 中恒为 undefined，会导致所有语言静默回退 defaultLocale
+  const requested = await requestLocale;
+  const validLocale: Locale = locales.includes(requested as Locale)
+    ? (requested as Locale)
+    : defaultLocale;
 
   return {
     locale: validLocale,

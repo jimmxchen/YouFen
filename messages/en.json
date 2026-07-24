@@ -72,5 +72,169 @@
       "hybrid": "Hybrid Mode",
       "anonymous": "Anonymous Voting"
     }
+  },
+  "records": {
+    "back": "Back to home",
+    "eyebrow": "AdventureX Community · Public archive",
+    "title": "Trusted Records",
+    "subtitle": "Every major event in this community — tokens granted, votes decided, rules changed — is archived here in public, sealed with a stamp no one can alter.",
+    "explainer": {
+      "aria": "How trusted records work",
+      "write": {
+        "title": "Write it down",
+        "desc": "Who did what, and how much they earned — every event is entered into the community ledger."
+      },
+      "stamp": {
+        "title": "Seal it",
+        "desc": "Each record gets a unique “digital fingerprint”, filed and sealed on a public ledger."
+      },
+      "lock": {
+        "title": "Locked forever",
+        "desc": "Once sealed, no one — including us — can quietly rewrite history."
+      },
+      "whyToggle": "Why can you trust this page?",
+      "why1": "A blockchain is like a notary office shared by the whole world: once a file goes in, it can never be edited or destroyed. We store each record's digital fingerprint on the Injective blockchain.",
+      "why2": "Change even a single character of a record and its fingerprint becomes completely different. So as long as a record matches its on-chain fingerprint, it has provably never been touched since it was sealed.",
+      "why3": "Only fingerprints and numbers go on-chain — never names, emails, or any personal information. Curious? Every record has a “Technical details” section so you can check the public ledger yourself."
+    },
+    "timelineTitle": "Timeline",
+    "timelineHint": "Open any record to trace its journey",
+    "timelineAria": "Community trusted records timeline",
+    "status": {
+      "verified": "Sealed & confirmed",
+      "pending": "Waiting to be sealed",
+      "submitting": "Being sent for sealing",
+      "confirming": "Seal being confirmed",
+      "failed": "Sealing hit a snag",
+      "superseded": "Corrected"
+    },
+    "kind": {
+      "tokenMint": "Token grant",
+      "advanceMint": "Advance grant",
+      "tokenReversal": "Correction",
+      "epochSummary": "Monthly summary",
+      "policyVersion": "Rule update",
+      "proposalResult": "Vote result"
+    },
+    "journey": {
+      "recorded": {
+        "title": "On the books",
+        "desc": "The full story is entered into the community ledger."
+      },
+      "fingerprint": {
+        "title": "Fingerprinted",
+        "desc": "A unique digital fingerprint is computed from the record."
+      },
+      "stamped": {
+        "title": "Sealed on-chain",
+        "desc": "The fingerprint is filed on the Injective public ledger."
+      },
+      "checkable": {
+        "title": "Open to verify",
+        "desc": "Anyone can re-check the fingerprint at any time."
+      },
+      "supersededNote": "This record was later found to be incorrect. By the rules, the original is never deleted or overwritten — it stays as-is, and a correction is appended. You are looking at the original, pre-correction version."
+    },
+    "verify": {
+      "invite": "Don't take our word for it — click the button and compare this record's fingerprint with the on-chain archive yourself.",
+      "button": "Verify it yourself",
+      "steps": {
+        "reading": "Re-reading the record",
+        "hashing": "Computing the fingerprint live",
+        "comparing": "Comparing with the on-chain archive"
+      },
+      "matchTitle": "Fingerprints match",
+      "matchDesc": "Not a single character of this record has changed since it was sealed."
+    },
+    "privacyNote": "Only fingerprints and amounts are stored on-chain — never names or emails. This page currently shows demo data for the AdventureX community.",
+    "demo": {
+      "r6": {
+        "title": "Xiaolu earned 200 AXO",
+        "summary": "Organized this month's newcomer meetup. Approved by admins; the seal is being confirmed."
+      },
+      "r5": {
+        "title": "Vote result: weekly meeting moves to Thursday night",
+        "summary": "18 members voted, weighted by tokens. “Thursday night” won with 62% of the weight."
+      },
+      "r4": {
+        "title": "July settlement: 5,300 AXO granted",
+        "summary": "4,900 granted from this month's budget plus a 400 advance; next month's budget repays it automatically."
+      },
+      "r3": {
+        "title": "Carol earned 500 AXO (400 advanced)",
+        "summary": "Built key community infrastructure. Only 100 remained in this month's budget; 400 was advanced from next month, approved by two admins."
+      },
+      "r2": {
+        "title": "Liam earned 500 AXO",
+        "summary": "Helped three newcomers complete their Injective testnet deployment. Confirmed by admins."
+      },
+      "r1": {
+        "title": "Liam earned 800 AXO (corrected)",
+        "summary": "This record was corrected due to a data-entry error (300 over-counted). Per the rules the original is never deleted; see the reversal (July 13) and the correct grant (July 15)."
+      },
+      "r0": {
+        "title": "Community rules v2 live: 5% monthly issuance",
+        "summary": "Approved by community vote: the monthly token issuance rate is set to 5%, effective July."
+      },
+      "r9": {
+        "title": "Correction: reversed Liam's 800 AXO",
+        "summary": "The July 12 grant had a data-entry error, so the full amount was reversed per the rules. The original stays on file below; the correct grant is on July 15."
+      },
+      "r7": {
+        "title": "Vote result: new community logo, option B",
+        "summary": "21 members voted; option B won with 58% of the weight and went to the design team."
+      },
+      "r8": {
+        "title": "Community rules v1 live: founding rules",
+        "summary": "AdventureX founding rules took effect by consensus: 100,000 AXO initial supply, reviewed contributions earn tokens, votes weighted by tokens."
+      }
+    },
+    "filter": {
+      "searchPlaceholder": "Search records: names, events, keywords…",
+      "clear": "Clear search",
+      "all": "All",
+      "token": "Token grants",
+      "votes": "Vote results",
+      "rules": "Rule updates",
+      "epoch": "Monthly summaries",
+      "resultsCount": "{count} records found",
+      "emptyTitle": "No matching records",
+      "emptyDesc": "Try another keyword (a member's name, “advance”, “vote”), or switch sections above.",
+      "reset": "Clear filters, show everything"
+    },
+    "vote": {
+      "approval": "Approval",
+      "turnout": "{voters}/{total} voted ({pct}%)"
+    },
+    "archive": {
+      "title": "On-chain archive",
+      "fingerprint": "Digital fingerprint (recordHash)",
+      "txRef": "Notary reference (transaction hash)",
+      "block": "Archived at",
+      "blockValue": "Ledger page {page} (block height)",
+      "sealedAt": "Sealed at",
+      "network": "Ledger",
+      "networkValue": "Injective Testnet",
+      "pendingValue": "Written after confirmation",
+      "copy": "Copy",
+      "copied": "Copied",
+      "demoNote": "This is demo data with no real on-chain transaction yet; in production, this becomes the real archive you can check segment by segment on the notary site."
+    },
+    "guide": {
+      "toggle": "How to verify this on the notary site yourself?",
+      "intro": "The notary site (a block explorer) is an engineer's tool — but you only need to check three things and can ignore everything else:",
+      "s1": "① The 0x reference at the top of the page should match the “notary reference” above;",
+      "s2": "② The status field should say Success;",
+      "s3": "③ The timestamp should match the “sealed at” time above.",
+      "open": "Open the notary site to check this record"
+    },
+    "chain": {
+      "title": "Injective public ledger",
+      "liveTag": "Live",
+      "live": "This public ledger is on page {pages} right now, turning a new page roughly every {seconds} seconds — maintained by nodes worldwide, impossible for any single party to rewrite. Every sealed record on this page is archived on one of those pages forever.",
+      "fallback": "This public ledger is maintained by nodes worldwide and keeps turning pages — impossible for any single party to rewrite. Every sealed record on this page is archived in it forever.",
+      "open": "Open the notary site",
+      "engineerNote": "Engineer's tool, English UI — it's fine not to understand it; use the “how to verify” guide inside each record"
+    }
   }
 }
