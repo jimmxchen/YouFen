@@ -61,6 +61,8 @@ export interface ChainRecord {
   supersededById?: string
   /** 授权溯源：谁签名批准、账本放行前核对了哪些规则（发放/冲销类记录，v0.7） */
   authorization?: RecordAuthorization
+  /** 这笔发放对接收人相对所有权的影响（仅 mint 类），百分比 */
+  ownershipShift?: { before: number; after: number }
   demo: true
 }
 
@@ -94,6 +96,7 @@ export const demoRecords: ChainRecord[] = [
     txHash:
       '0x5e92c07b3f6a1d84e0b7c2a95f38d61c4a0e9b72d5c8f13a6e4b09d7c2a58f31',
     authorization: { approvers: 1, checks: ['budget', 'memberCap'] },
+    ownershipShift: { before: 0.14, after: 0.32 },
     demo: true,
   },
   {
@@ -220,8 +223,132 @@ export const demoRecords: ChainRecord[] = [
     sealedAt: '2026-06-20T14:00:03+08:00',
     demo: true,
   },
+  {
+    id: 'r10',
+    kind: 'tokenMint',
+    status: 'verified',
+    date: '2026-07-24',
+    recordHash:
+      '0x7a2f9c14e0d63b58a1f70c29e845b3d6f0c92a71e5b48d03a6f19c72e0b45d38',
+    txHash:
+      '0x1c0e93a75d24f86b0e3c17a95d820b4f6a09e73c2d51f84b0a6e39d17c25b408',
+    blockNumber: 29891204,
+    sealedAt: '2026-07-24T09:12:33+08:00',
+    authorization: { approvers: 1, checks: ['budget', 'memberCap'] },
+    demo: true,
+  },
+  {
+    id: 'r11',
+    kind: 'proposalResult',
+    status: 'verified',
+    date: '2026-07-22',
+    recordHash:
+      '0x2d84b07c9e15a3f6d0b29c74e831a5f70c48d92b6e05a13f8c7d20e64b19a5c3',
+    txHash:
+      '0x9f31c86a05e74b2d0c19a63f582b4e7a1d06c95e83f27b40a5d18c93e6b02f47',
+    blockNumber: 29840112,
+    sealedAt: '2026-07-22T20:05:10+08:00',
+    vote: { approvalPct: 71, voters: 20, totalMembers: 25 },
+    demo: true,
+  },
+  {
+    id: 'r12',
+    kind: 'tokenMint',
+    status: 'verified',
+    date: '2026-07-19',
+    recordHash:
+      '0x5b19e74c02a86d3f0e1b95c37d840a6f2c09e81b5d63a47f0e28c93d71b46a05',
+    txHash:
+      '0x0a47c93e61d85b2f0c73a19e548b06d3f1a09c72e85d41b6a03e97d24c15f803',
+    blockNumber: 29561877,
+    sealedAt: '2026-07-19T16:40:52+08:00',
+    authorization: { approvers: 2, checks: ['budget', 'memberCap'] },
+    ownershipShift: { before: 1.24, after: 2.29 },
+    demo: true,
+  },
+  {
+    id: 'r13',
+    kind: 'advanceMint',
+    status: 'verified',
+    date: '2026-07-17',
+    recordHash:
+      '0x8e02d91b6c45a37f0d2a86c19e753b04f6a0c9d17e52b83a4f0d69c27b31e05a',
+    txHash:
+      '0x3c85a17e94d02b6f0e1a75c38d940b6f2a09e63c1d75b84a0f3e28d95c16b402',
+    blockNumber: 29401336,
+    sealedAt: '2026-07-17T11:20:14+08:00',
+    authorization: { approvers: 2, checks: ['budget', 'memberCap', 'advance'] },
+    demo: true,
+  },
+  {
+    id: 'r14',
+    kind: 'epochSummary',
+    status: 'verified',
+    date: '2026-06-30',
+    recordHash:
+      '0x4f60a92d18c73b5e0a1d84c26e937b05f2c08d61a94e73b0f5a26d98c14b703e',
+    txHash:
+      '0x6d19b84a03e75c2f0b18a96d547c3b0e1f0a29d63c85b74a0e3f18c92d05a607',
+    blockNumber: 27401902,
+    sealedAt: '2026-06-30T09:00:41+08:00',
+    demo: true,
+  },
+  {
+    id: 'r15',
+    kind: 'proposalResult',
+    status: 'verified',
+    date: '2026-06-28',
+    recordHash:
+      '0x1a73e05c84b29d6f0e3a18c95d740b2f6a0c91e73d58b04a2f6e39c81d47b502',
+    txHash:
+      '0x7b40c92e15a86d3f0c29b74e831a05f6d1c08a93e64b27d0a5f18e93c72b405a',
+    blockNumber: 27203440,
+    sealedAt: '2026-06-28T21:14:08+08:00',
+    vote: { approvalPct: 66, voters: 19, totalMembers: 25 },
+    demo: true,
+  },
 ]
 
 export function shortHash(hash: string): string {
   return `${hash.slice(0, 8)}…${hash.slice(-6)}`
 }
+
+// ── 所有权分布（demo）。pct = 相对所有权 = 余额 / 总供应量。──
+export interface OwnerRow {
+  name: string
+  balance: number
+  pct: number
+}
+
+export const ownershipTop: OwnerRow[] = [
+  { name: 'Liam', balance: 9500, pct: 8.5 },
+  { name: 'Carol', balance: 6900, pct: 6.2 },
+  { name: 'Nadia', balance: 5400, pct: 4.8 },
+  { name: 'Sky', balance: 3200, pct: 2.9 },
+  { name: 'Maya', balance: 2100, pct: 1.9 },
+]
+
+/** 榜单之外的成员聚合（人数 + 合计相对所有权） */
+export const ownershipOthers = { count: 800, pct: 75.7 }
+
+// ── 进行中的治理提案（demo）。真实环境由 proposal 快照 + 实时票数投影提供。──
+export interface ActiveProposal {
+  id: string
+  /** i18n 标题键：records.proposals.items.<key> */
+  key: string
+  /** 距截止的小时数 */
+  endsInHours: number
+  /** 当前加权赞同百分比 */
+  approvalPct: number
+  /** 已投票人数 */
+  voters: number
+  /** 有资格投票的成员总数 */
+  totalMembers: number
+  /** 法定人数 */
+  quorum: number
+}
+
+export const activeProposals: ActiveProposal[] = [
+  { id: 'p-live-1', key: 'treasury', endsInHours: 20, approvalPct: 64, voters: 14, totalMembers: 25, quorum: 13 },
+  { id: 'p-live-2', key: 'newRule', endsInHours: 56, approvalPct: 48, voters: 9, totalMembers: 25, quorum: 13 },
+]
