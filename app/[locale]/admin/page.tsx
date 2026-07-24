@@ -1,16 +1,9 @@
 'use client'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
-import { Users, Vote, FileText, ShieldCheck, Plus, UserPlus, BarChart3, FileDown } from 'lucide-react'
+import { Users, Vote, FileText, ShieldCheck, Plus } from 'lucide-react'
 import { StatCard } from '@/components/admin/stat-card'
 import { demoStats, demoMembers, demoContributions, demoProposals } from '@/lib/demo-data'
-
-const quickActions = [
-  { icon: UserPlus, labelKey: 'addMember', href: '/admin/members' },
-  { icon: BarChart3, labelKey: 'distributeVP', href: '/admin/contributions' },
-  { icon: Vote, labelKey: 'createProposal', href: '/admin/proposals' },
-  { icon: FileDown, labelKey: 'generateReport', href: '#' },
-]
 
 function cn(...classes: (string | boolean | undefined | null)[]) {
   return classes.filter(Boolean).join(' ')
@@ -48,7 +41,7 @@ export default function DashboardPage() {
           accent="green"
         />
         <StatCard
-          title={t('activeProposals')}
+          title={t('activePolls')}
           value={demoStats.activeProposals}
           icon={FileText}
           accent="blue"
@@ -66,27 +59,6 @@ export default function DashboardPage() {
           accent="blue"
         />
       </div>
-
-      {/* Quick Actions */}
-      <section>
-        <h2 className="text-xl font-semibold text-[#131517] mb-4">
-          {t('quickActions')}
-        </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {quickActions.map((action) => (
-            <Link
-              key={action.labelKey}
-              href={action.href}
-              className="flex items-center gap-3 px-5 py-4 rounded-2xl border border-[#F0F0F0] bg-white hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200"
-            >
-              <div className="p-2 rounded-2xl bg-emerald-50 text-emerald-600">
-                <action.icon className="w-5 h-5" />
-              </div>
-              <span className="text-sm font-medium text-[#131517]">{t(action.labelKey)}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* Recent contributions preview */}
       <section>
@@ -145,7 +117,7 @@ export default function DashboardPage() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-[#131517]">
-            {t('activeProposals')}
+            {t('activePolls')}
           </h2>
           <Link href="/proposals" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
             {t('viewAll')}
@@ -156,7 +128,7 @@ export default function DashboardPage() {
             <thead>
               <tr className="border-b border-[#F0F0F0]">
                 <th className="text-left text-xs font-medium text-[#939597] px-6 py-3 uppercase tracking-wider">
-                  {t('proposalTitle')}
+                  {t('pollTitle')}
                 </th>
                 <th className="text-left text-xs font-medium text-[#939597] px-6 py-3 uppercase tracking-wider">
                   {t('status')}

@@ -24,7 +24,7 @@ export default function ProposalsPage() {
   }
 
   const handleDelete = (id: string) => {
-    alert(t('proposalDeleted'))
+    alert(t('pollDeleted'))
   }
 
   return (
@@ -33,10 +33,10 @@ export default function ProposalsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-[40px] font-medium text-[#131517] leading-[48px]">
-            {t('proposals')}
+            {t('polls')}
           </h1>
           <p className="text-lg text-[#525252] mt-2">
-            {t('proposalsSubtitle')}
+            {t('pollsSubtitle')}
           </p>
         </div>
         <button
@@ -44,7 +44,7 @@ export default function ProposalsPage() {
           className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
-          {t('createProposal')}
+          {t('createPoll')}
         </button>
       </div>
 
@@ -66,16 +66,16 @@ export default function ProposalsPage() {
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowCreate(false)} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-lg mx-4 p-8 space-y-6">
             <h2 className="text-xl font-semibold text-[#131517]">
-              {t('createProposal')}
+              {t('createPoll')}
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">
-                  {t('proposalTitle')}
+                  {t('pollTitle')}
                 </label>
                 <input
                   type="text"
-                  placeholder={t('proposalTitlePlaceholder')}
+                  placeholder={t('pollTitlePlaceholder')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>

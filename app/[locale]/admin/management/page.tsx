@@ -8,7 +8,7 @@ import { demoProposals, demoTasks, demoActivities } from '@/lib/demo-data'
 import { type Proposal, ProposalStatus, type Task, TaskStatus, type Activity, ActivityStatus, ActivityType } from '@/types/admin'
 import { cn } from '@/lib/utils'
 
-type Tab = 'proposals' | 'tasks' | 'activities'
+type Tab = 'polls' | 'tasks' | 'activities'
 
 const statusColors: Record<ProposalStatus, string> = {
   draft: 'bg-gray-100 text-gray-700',
@@ -47,10 +47,10 @@ const priorityColors: Record<string, string> = {
 
 export default function ManagementPage() {
   const t = useTranslations('admin')
-  const [activeTab, setActiveTab] = useState<Tab>('proposals')
+  const [activeTab, setActiveTab] = useState<Tab>('polls')
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: 'proposals', label: t('proposals') },
+    { key: 'polls', label: t('polls') },
     { key: 'tasks', label: t('tasks') },
     { key: 'activities', label: t('activities') },
   ]
@@ -88,14 +88,14 @@ export default function ManagementPage() {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'proposals' && <ProposalsTab />}
+      {activeTab === 'polls' && <PollsTab />}
       {activeTab === 'tasks' && <TasksTab />}
       {activeTab === 'activities' && <ActivitiesTab />}
     </div>
   )
 }
 
-function ProposalsTab() {
+function PollsTab() {
   const t = useTranslations('admin')
   const [showCreate, setShowCreate] = useState(false)
 
@@ -104,28 +104,28 @@ function ProposalsTab() {
   }
 
   const handleDelete = (id: string) => {
-    alert(t('proposalDeleted'))
+    alert(t('pollDeleted'))
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-[#131517]">{t('proposals')}</h2>
-          <p className="text-sm text-[#525252] mt-1">{t('proposalsSubtitle')}</p>
+          <h2 className="text-xl font-semibold text-[#131517]">{t('polls')}</h2>
+          <p className="text-sm text-[#525252] mt-1">{t('pollsSubtitle')}</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
           className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
-          {t('createProposal')}
+          {t('createPoll')}
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {demoProposals.map(proposal => (
-          <ProposalCard
+          <PollCard
             key={proposal.id}
             proposal={proposal}
             onEndVote={handleEndVote}
@@ -138,13 +138,13 @@ function ProposalsTab() {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowCreate(false)} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-lg mx-4 p-8 space-y-6">
-            <h2 className="text-xl font-semibold text-[#131517]">{t('createProposal')}</h2>
+            <h2 className="text-xl font-semibold text-[#131517]">{t('createPoll')}</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('proposalTitle')}</label>
+                <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('pollTitle')}</label>
                 <input
                   type="text"
-                  placeholder={t('proposalTitlePlaceholder')}
+                  placeholder={t('pollTitlePlaceholder')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
@@ -198,7 +198,7 @@ function ProposalsTab() {
   )
 }
 
-function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; onEndVote?: (id: string) => void; onDelete?: (id: string) => void }) {
+function PollCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; onEndVote?: (id: string) => void; onDelete?: (id: string) => void }) {
   const t = useTranslations('admin')
   const totalVP = proposal.options.reduce((sum, o) => sum + o.votes, 0)
   const maxVP = Math.max(...proposal.options.map(o => o.votes))

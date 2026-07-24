@@ -34,7 +34,7 @@ export default async function MemberChatSettingsPage({ params }: MemberChatSetti
   )
 
   return (
-    <MemberShell>
+    <MemberShell member={member}>
       <ChatSettingsView
         room={room}
         locale={locale}
