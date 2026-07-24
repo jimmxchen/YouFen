@@ -50,7 +50,7 @@ export function ProposalList({ proposals, locale, voicePower, labels }: Proposal
             ) : null}
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <div className="mt-4 grid grid-cols-2 gap-3 text-sm lg:mb-6">
             <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-3">
               <p className={`text-xs ${memberSubtle}`}>{labels.yourVoicePower}</p>
               <p className="mt-1 font-semibold text-[#131517]">

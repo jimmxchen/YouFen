@@ -62,9 +62,9 @@ export default function ContributionsPage() {
             key={s}
             onClick={() => setFilter(s)}
             className={cn(
-              'px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-200',
+              'px-3 py-1.5 rounded-2xl text-sm font-medium transition-all duration-200',
               filter === s
-                ? 'bg-[#0A0A0A] text-white'
+                ? 'bg-[#131517] text-white'
                 : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
             )}
           >
@@ -79,7 +79,7 @@ export default function ContributionsPage() {
       </div>
 
       {/* Contributions list */}
-      <div className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden">
+      <div className="rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#F0F0F0]">
@@ -151,21 +151,21 @@ export default function ContributionsPage() {
                       <>
                         <button
                           onClick={() => handleApprove(c.id)}
-                          className="p-1.5 rounded-xl hover:bg-emerald-50 text-emerald-600 transition-colors"
+                          className="p-1.5 rounded-2xl hover:bg-emerald-50 text-emerald-600 transition-colors"
                           title={t('approve')}
                         >
                           <Check className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleReject(c.id)}
-                          className="p-1.5 rounded-xl hover:bg-red-50 text-red-500 transition-colors"
+                          className="p-1.5 rounded-2xl hover:bg-red-50 text-red-500 transition-colors"
                           title={t('reject')}
                         >
                           <X className="w-4 h-4" />
                         </button>
                       </>
                     )}
-                    <button className="p-1.5 rounded-xl hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors" title={t('viewDetails')}>
+                    <button className="p-1.5 rounded-2xl hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors" title={t('viewDetails')}>
                       <Eye className="w-4 h-4" />
                     </button>
                   </div>
@@ -178,12 +178,12 @@ export default function ContributionsPage() {
 
       {/* Detail panel */}
       {selected && (
-        <div className="rounded-xl border border-[#F0F0F0] bg-white p-6 space-y-4">
+        <div className="rounded-2xl border border-[#F0F0F0] bg-white p-6 space-y-4">
           <h3 className="text-base font-semibold text-[#131517]">
             {t('aiAnalysis')}
           </h3>
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-[#FAFAFA] border border-[#F0F0F0]">
-            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
+          <div className="flex items-start gap-3 p-4 rounded-2xl bg-[#FAFAFA] border border-[#F0F0F0]">
+            <div className="p-2 rounded-2xl bg-emerald-50 text-emerald-600 shrink-0">
               <Zap className="w-5 h-5" />
             </div>
             <div>
@@ -197,14 +197,14 @@ export default function ContributionsPage() {
             <div className="flex gap-3 pt-2">
               <button
                 onClick={() => handleApprove(selected.id)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
+                className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Check className="w-4 h-4" />
                 {t('approve')}
               </button>
               <button
                 onClick={() => handleReject(selected.id)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-[#F0F0F0] text-[#525252] text-sm font-medium hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-2xl border border-[#F0F0F0] text-[#525252] text-sm font-medium hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
               >
                 <X className="w-4 h-4" />
                 {t('reject')}

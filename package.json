@@ -7,17 +7,23 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.113.0",
     "@neondatabase/serverless": "^1.1.0",
     "@paper-design/shaders-react": "^0.0.77",
+    "@prisma/client": "^6.2.1",
     "bcryptjs": "^3.0.3",
+    "bullmq": "^5.34.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
+    "ethers": "^6.13.5",
     "framer-motion": "^12.42.2",
+    "ioredis": "^5.4.2",
     "jose": "^6.2.4",
     "lucide-react": "^0.396.0",
     "next": "16.3.0-preview.8",
@@ -26,7 +32,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^3.6.0",
-    "three": "^0.185.1"
+    "three": "^0.185.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.1.2",

@@ -21,8 +21,8 @@ const accentColors = {
 export function StatCard({ title, value, change, icon: Icon, accent = 'cyan', className }: StatCardProps) {
   return (
     <div className={cn(
-      'rounded-xl border border-[#F0F0F0] bg-white p-6',
-      'transition-all duration-200 hover:shadow-md hover:border-[#E5E5E5] hover:-translate-y-0.5',
+      'rounded-2xl border border-[#F0F0F0] bg-white p-6',
+      'transition-all duration-200 hover:border-[#E5E5E5] hover:-translate-y-0.5',
       className
     )}>
       <div className="flex items-start justify-between">
@@ -39,7 +39,7 @@ export function StatCard({ title, value, change, icon: Icon, accent = 'cyan', cl
             </div>
           )}
         </div>
-        <div className={cn('p-2.5 rounded-lg', accentColors[accent])}>
+        <div className={cn('p-2.5 rounded-2xl', accentColors[accent])}>
           <Icon className="w-5 h-5" />
         </div>
       </div>

@@ -116,7 +116,7 @@ function ProposalsTab() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           {t('createProposal')}
@@ -145,7 +145,7 @@ function ProposalsTab() {
                 <input
                   type="text"
                   placeholder={t('proposalTitlePlaceholder')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
               <div>
@@ -153,7 +153,7 @@ function ProposalsTab() {
                 <textarea
                   rows={3}
                   placeholder={t('descriptionPlaceholder')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
               </div>
               <div>
@@ -164,7 +164,7 @@ function ProposalsTab() {
                       key={i}
                       type="text"
                       defaultValue={t(opt)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                      className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                     />
                   ))}
                 </div>
@@ -173,20 +173,20 @@ function ProposalsTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('deadline')}</label>
                 <input
                   type="date"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
+                className="px-4 py-2.5 rounded-2xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all shadow-sm"
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
               >
                 {t('create')}
               </button>
@@ -204,11 +204,11 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
   const maxVP = Math.max(...proposal.options.map(o => o.votes))
 
   return (
-    <div className="relative rounded-xl border border-[#F0F0F0] bg-white p-6 hover:shadow-md hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200">
+    <div className="relative rounded-2xl border border-[#F0F0F0] bg-white p-6 hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200">
       <Link
         href={`/admin/proposals/${proposal.id}`}
         aria-label={proposal.title}
-        className="absolute inset-0 rounded-xl"
+        className="absolute inset-0 rounded-2xl"
       />
       <div className="space-y-4">
         <div className="flex items-start justify-between mb-4">
@@ -268,7 +268,7 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
             {proposal.status === 'active' && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEndVote?.(proposal.id) }}
-                className="p-1.5 rounded-xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
+                className="p-1.5 rounded-2xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
                 title={t('endVote')}
               >
                 <Square className="w-4 h-4" />
@@ -279,7 +279,7 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
                 href={`https://explorer.injective.network/tx/${proposal.chainTxHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-xl hover:bg-blue-50 text-blue-500 transition-colors"
+                className="p-1.5 rounded-2xl hover:bg-blue-50 text-blue-500 transition-colors"
                 title={t('viewOnChain')}
                 onClick={(e) => e.stopPropagation()}
               >
@@ -289,7 +289,7 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
             {proposal.status === 'draft' && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete?.(proposal.id) }}
-                className="p-1.5 rounded-xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
+                className="p-1.5 rounded-2xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
                 title={t('delete')}
               >
                 <Trash2 className="w-4 h-4" />
@@ -325,7 +325,7 @@ function TasksTab() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           {t('createTask')}
@@ -341,7 +341,7 @@ function TasksTab() {
             placeholder={t('search') + '...'}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+            className="w-full pl-9 pr-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
           />
         </div>
         <Filter className="w-4 h-4 text-[#939597]" />
@@ -350,9 +350,9 @@ function TasksTab() {
             key={s}
             onClick={() => setFilter(s)}
             className={cn(
-              'px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-200',
+              'px-3 py-1.5 rounded-2xl text-sm font-medium transition-all duration-200',
               filter === s
-                ? 'bg-[#0A0A0A] text-white'
+                ? 'bg-[#131517] text-white'
                 : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
             )}
           >
@@ -367,7 +367,7 @@ function TasksTab() {
       </div>
 
       {/* Tasks table */}
-      <div className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden">
+      <div className="rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#F0F0F0]">
@@ -418,7 +418,7 @@ function TasksTab() {
                     {task.status === 'pending' || task.status === 'inProgress' ? (
                       <button
                         onClick={() => alert(t('markComplete'))}
-                        className="p-1.5 rounded-xl hover:bg-emerald-50 text-emerald-600 transition-colors"
+                        className="p-1.5 rounded-2xl hover:bg-emerald-50 text-emerald-600 transition-colors"
                         title={t('markComplete')}
                       >
                         <Check className="w-4 h-4" />
@@ -427,13 +427,13 @@ function TasksTab() {
                     {(task.status === 'pending' || task.status === 'inProgress') && (
                       <button
                         onClick={() => alert(t('cancelItem'))}
-                        className="p-1.5 rounded-xl hover:bg-red-50 text-red-500 transition-colors"
+                        className="p-1.5 rounded-2xl hover:bg-red-50 text-red-500 transition-colors"
                         title={t('cancelItem')}
                       >
                         <X className="w-4 h-4" />
                       </button>
                     )}
-                    <button className="p-1.5 rounded-xl hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors" title={t('viewDetails')}>
+                    <button className="p-1.5 rounded-2xl hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors" title={t('viewDetails')}>
                       <Eye className="w-4 h-4" />
                     </button>
                   </div>
@@ -456,7 +456,7 @@ function TasksTab() {
                 <input
                   type="text"
                   placeholder={t('taskTitle')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
               <div>
@@ -464,13 +464,13 @@ function TasksTab() {
                 <textarea
                   rows={3}
                   placeholder={t('descriptionPlaceholder')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('assignee')}</label>
-                  <select className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                  <select className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                     <option>Dan</option>
                     <option>Eve</option>
                     <option>Carol</option>
@@ -480,7 +480,7 @@ function TasksTab() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('priority')}</label>
-                  <select className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                  <select className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                     <option value="high">{t('priorityHigh')}</option>
                     <option value="medium">{t('priorityMedium')}</option>
                     <option value="low">{t('priorityLow')}</option>
@@ -491,20 +491,20 @@ function TasksTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('dueDate')}</label>
                 <input
                   type="date"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
+                className="px-4 py-2.5 rounded-2xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all shadow-sm"
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
               >
                 {t('create')}
               </button>
@@ -534,7 +534,7 @@ function ActivitiesTab() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           {t('createActivity')}
@@ -549,9 +549,9 @@ function ActivitiesTab() {
             key={s}
             onClick={() => setFilter(s)}
             className={cn(
-              'px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-200',
+              'px-3 py-1.5 rounded-2xl text-sm font-medium transition-all duration-200',
               filter === s
-                ? 'bg-[#0A0A0A] text-white'
+                ? 'bg-[#131517] text-white'
                 : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
             )}
           >
@@ -566,7 +566,7 @@ function ActivitiesTab() {
       </div>
 
       {/* Activities table */}
-      <div className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden">
+      <div className="rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#F0F0F0]">
@@ -611,13 +611,13 @@ function ActivitiesTab() {
                     {(activity.status === 'upcoming' || activity.status === 'ongoing') && (
                       <button
                         onClick={() => alert(t('cancelItem'))}
-                        className="p-1.5 rounded-xl hover:bg-red-50 text-red-500 transition-colors"
+                        className="p-1.5 rounded-2xl hover:bg-red-50 text-red-500 transition-colors"
                         title={t('cancelItem')}
                       >
                         <X className="w-4 h-4" />
                       </button>
                     )}
-                    <button className="p-1.5 rounded-xl hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors" title={t('viewDetails')}>
+                    <button className="p-1.5 rounded-2xl hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors" title={t('viewDetails')}>
                       <Eye className="w-4 h-4" />
                     </button>
                   </div>
@@ -640,7 +640,7 @@ function ActivitiesTab() {
                 <input
                   type="text"
                   placeholder={t('activityTitle')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
               <div>
@@ -648,13 +648,13 @@ function ActivitiesTab() {
                 <textarea
                   rows={3}
                   placeholder={t('descriptionPlaceholder')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('activityType')}</label>
-                  <select className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                  <select className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                     <option value="meetup">{t('activityTypeMeetup')}</option>
                     <option value="workshop">{t('activityTypeWorkshop')}</option>
                     <option value="hackathon">{t('activityTypeHackathon')}</option>
@@ -667,7 +667,7 @@ function ActivitiesTab() {
                   <input
                     type="text"
                     placeholder={t('location')}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                   />
                 </div>
               </div>
@@ -676,14 +676,14 @@ function ActivitiesTab() {
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('startTime')}</label>
                   <input
                     type="datetime-local"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('endTime')}</label>
                   <input
                     type="datetime-local"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                   />
                 </div>
               </div>
@@ -691,13 +691,13 @@ function ActivitiesTab() {
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
+                className="px-4 py-2.5 rounded-2xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all shadow-sm"
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
               >
                 {t('create')}
               </button>

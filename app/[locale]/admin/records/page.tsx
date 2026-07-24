@@ -69,9 +69,9 @@ export default function AdminRecordsPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={cn(
-              'px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-200',
+              'px-3 py-1.5 rounded-2xl text-sm font-medium transition-all duration-200',
               filter === f
-                ? 'bg-[#0A0A0A] text-white'
+                ? 'bg-[#131517] text-white'
                 : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
             )}
           >
@@ -90,7 +90,7 @@ export default function AdminRecordsPage() {
           return (
             <div
               key={record.id}
-              className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden hover:shadow-md hover:border-[#E5E5E5] transition-all duration-200"
+              className="rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden hover:border-[#E5E5E5] transition-all duration-200"
             >
               {/* Clickable header row */}
               <button
@@ -98,7 +98,7 @@ export default function AdminRecordsPage() {
                 className="w-full text-left p-5"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium ${KIND_TINT[record.kind]}`}>
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-2xl text-xs font-medium ${KIND_TINT[record.kind]}`}>
                     <ShieldCheck className="w-3.5 h-3.5" />
                     {t(`kind.${record.kind}`)}
                   </span>

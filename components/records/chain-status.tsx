@@ -50,7 +50,7 @@ export function ChainStatusStrip() {
   const nf = new Intl.NumberFormat(locale === 'zh' ? 'zh-CN' : 'en-US')
 
   return (
-    <div className="rounded-xl border border-neutral-100 bg-neutral-50/60 p-4 sm:p-5">
+    <div className="rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] p-4 sm:p-5">
       <div className="flex items-center gap-2">
         <Landmark className="w-4 h-4 text-blue-500" />
         <span className="text-sm font-semibold text-neutral-900">{t('title')}</span>
@@ -77,7 +77,7 @@ export function ChainStatusStrip() {
           href={EXPLORER_BASE}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-[13px] font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
+          className="inline-flex items-center gap-1.5 rounded-2xl border border-[#F0F0F0] bg-white px-3 py-1.5 text-[13px] font-medium text-[#525252] transition-colors hover:bg-[#FAFAFA]"
         >
           {t('open')}
           <ExternalLink className="w-3.5 h-3.5" />
