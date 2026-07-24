@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,
@@ -19,18 +15,16 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "incremental": true
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -40,9 +34,7 @@
     ".next/dev/types/**/*.ts",
     "hardhat.config.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules", "**/PixelBlast.tsx"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",
