@@ -1,10 +1,8 @@
 'use client'
 
 import { useLocale } from 'next-intl'
-import { createNavigation } from 'next-intl/navigation'
+import { useRouter, usePathname } from '@/i18n/navigation'
 import { Globe } from 'lucide-react'
-
-const { usePathname, useRouter } = createNavigation()
 
 interface LanguageSwitcherProps {
   isDark?: boolean
@@ -17,9 +15,9 @@ export function LanguageSwitcher({ isDark = false }: LanguageSwitcherProps) {
 
   const switchLanguage = () => {
     const newLocale = locale === 'zh' ? 'en' : 'zh'
-    // usePathname() already strips the locale prefix (e.g. '/features' not '/zh/features')
-    // Pass the target locale via the `locale` option so next-intl prefixes correctly
-    router.push(pathname, { locale: newLocale })
+    // usePathname() from @/i18n/navigation is locale-free (e.g. '/features');
+    // passing `locale` makes the router swap the URL prefix for us.
+    router.replace(pathname, { locale: newLocale })
   }
 
   const iconColor = isDark ? '#d1d5db' : '#131517'
