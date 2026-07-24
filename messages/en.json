@@ -262,6 +262,45 @@
     "eyebrow": "AdventureX Community · Public archive",
     "title": "Trusted Records",
     "subtitle": "Every major event in this community — tokens granted, votes decided, rules changed — is archived here in public and sealed so no one can alter it; and any move that steps past the budget or voting rules is refused by the ledger on the spot.",
+    "tagline": "— Powered by the Injective blockchain",
+    "ownership": {
+      "title": "Ownership breakdown",
+      "intro": "Contributions become non-transferable community tokens, and your token share is your relative ownership. See at a glance who owns how much — broadly distributed, not concentrated in a few hands.",
+      "others": "{count} other members",
+      "dilutionNote": "Relative ownership shifts naturally with new contributions: active builders rise, and those who stop are diluted by newcomers."
+    },
+    "proposals": {
+      "title": "Governance in progress",
+      "intro": "Proposals currently open for voting. Voting weight is frozen at the moment a proposal opened — later mints can't affect this vote.",
+      "approval": "Approval",
+      "turnout": "{voters}/{total} voted",
+      "quorumMet": "Quorum met ({quorum})",
+      "quorumShort": "{need} more to reach quorum",
+      "endsInHours": "{hours}h left",
+      "endsInDays": "{days}d left",
+      "items": {
+        "treasury": "Vote: 8,000 AXO quarterly activity budget",
+        "newRule": "Vote: add a “code review” contribution rule"
+      }
+    },
+    "verifyCenter": {
+      "title": "Verify it yourself",
+      "intro": "Don't take our word for it — paste any record's digital fingerprint (recordHash) and the page recomputes the fingerprint, confirms it's on-chain, and checks the action was released within the rules.",
+      "placeholder": "Paste a recordHash (0x…)…",
+      "button": "Verify",
+      "trySample": "Try a sample ({hash})",
+      "step1": "Read the record's contents",
+      "step2": "Recompute the fingerprint live",
+      "step3": "Confirm on-chain + compliant release",
+      "notFoundStep": "This fingerprint isn't in the public records",
+      "okTitle": "Verified",
+      "okDesc": "Fingerprint matches, it's on the Injective chain, and the contract released it within the rules — untouched since it was sealed.",
+      "notFoundDesc": "No matching record found. Check the recordHash is complete (a 0x-prefixed 64-hex string), or copy one from the timeline above."
+    },
+    "ownershipShift": {
+      "title": "Effect on relative ownership",
+      "desc": "the recipient's relative ownership share after this grant"
+    },
     "explainer": {
       "aria": "How trusted records work",
       "write": {
@@ -280,35 +319,6 @@
       "why1": "A blockchain is like a notary office shared by the whole world: once a file goes in, it can never be edited or destroyed. We store each record's digital fingerprint on the Injective blockchain.",
       "why2": "Change even a single character of a record and its fingerprint becomes completely different. So as long as a record matches its on-chain fingerprint, it has provably never been touched since it was sealed.",
       "why3": "Only fingerprints and numbers go on-chain — never names, emails, or any personal information. Curious? Every record has a “Technical details” section so you can check the public ledger yourself."
-    },
-    "guardian": {
-      "aria": "How the ledger blocks overreach",
-      "title": "The ledger blocks overreach on the spot",
-      "intro": "This public ledger doesn't just stamp records — it's a strict rule-keeper. Even an admin who steps past the budget and governance rules the community set gets turned away on the spot. What proves its worth isn't a successful grant — it's an over-privileged attempt stopped at the door.",
-      "overMint": {
-        "attempt": "An admin tries to grant an insider more than the per-member cap in one go.",
-        "verdict": "Ledger refuses",
-        "reason": "The cap is hard-coded in the contract. Without a community vote to authorize it, the excess simply cannot be issued."
-      },
-      "secretRule": {
-        "attempt": "Someone tries to quietly change monthly issuance from 5% to 8% without a vote.",
-        "verdict": "Ledger refuses",
-        "reason": "There's only one path to change a rule: propose it, pass a community vote, and it takes effect next month. No way around it."
-      },
-      "voteStuffing": {
-        "attempt": "Just before a vote closes, an admin grants supporters extra tokens to swing the result.",
-        "verdict": "Doesn't count",
-        "reason": "Each vote's weight is frozen at the moment the proposal opened. Tokens minted afterward can't affect that vote."
-      },
-      "voteForYou": {
-        "attempt": "The YouFen platform tries to cast a vote on your behalf.",
-        "verdict": "Can't be done",
-        "reason": "Only the private key in your own hands can sign your vote. YouFen just sponsors the fee and relays your vote on-chain — it never holds your key."
-      },
-      "boundaryTitle": "What the ledger guarantees",
-      "boundary": "The ledger guarantees power can't be over-issued: budgets, caps, and voting rules are unbypassable. It does not judge for the community whether a contribution is real or worthy — that always stays the community's call.",
-      "exitTitle": "The community can leave with its ledger",
-      "exit": "Every balance, grant, and vote lives on the public ledger. Even if YouFen shut down tomorrow, the community could still read its full history straight from the chain — no dependence on our database."
     },
     "timelineTitle": "Timeline",
     "timelineHint": "Open any record to trace its journey",
@@ -400,6 +410,30 @@
       "r8": {
         "title": "Community rules v1 live: founding rules",
         "summary": "AdventureX founding rules took effect by consensus: 100,000 AXO initial supply, reviewed contributions earn tokens, votes weighted by tokens."
+      },
+      "r10": {
+        "title": "Maya earned 200 AXO",
+        "summary": "Wrote the community onboarding docs and FAQ; approved by admins."
+      },
+      "r11": {
+        "title": "Vote result: quarterly activity budget approved",
+        "summary": "20 members voted, weighted by tokens; the plan passed with 71% approval."
+      },
+      "r12": {
+        "title": "Special grant: core member Nadia earned 1,200 AXO",
+        "summary": "Led a cross-month infrastructure refactor beyond the normal per-epoch cap — released by the ledger only after a community proposal specially authorized it and two admins co-signed."
+      },
+      "r13": {
+        "title": "Sky earned 400 AXO (300 advanced)",
+        "summary": "Delivered launch assets early. This month's budget fell short, so 300 was advanced from next month, approved by two admins."
+      },
+      "r14": {
+        "title": "June settlement: 4,600 AXO granted",
+        "summary": "4,600 granted this month with no advance; governance supply updated accordingly."
+      },
+      "r15": {
+        "title": "Vote result: community charter revision adopted",
+        "summary": "19 members voted; the revised charter passed with 66% approval and went to the governance group."
       }
     },
     "filter": {
