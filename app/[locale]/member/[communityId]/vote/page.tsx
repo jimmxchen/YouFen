@@ -33,12 +33,14 @@ export default async function MemberVotePage({ params }: MemberVotePageProps) {
         <ProposalList
           proposals={member.availableProposals}
           locale={locale}
+          communityId={communityId}
           voicePower={member.voicePower.active}
           labels={{
             active: t('vote.active'),
             upcoming: t('vote.upcoming'),
             ended: t('vote.ended'),
             yourVoicePower: t('vote.yourVoicePower'),
+            participation: t('vote.participation'),
             voters: (count) => t('vote.voters', { count }),
             trustedRecord: t('vote.trustedRecord'),
             openVote: t('vote.openVote'),
