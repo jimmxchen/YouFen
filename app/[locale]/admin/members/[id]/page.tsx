@@ -34,7 +34,7 @@ export default function MemberDetailPage() {
 
   if (!member) {
     return (
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="space-y-6">
         <div className="text-center py-20">
           <p className="text-lg text-[#525252]">{t('memberNotFound')}</p>
           <Link href="/admin/members" className="text-emerald-600 hover:text-emerald-700 font-medium mt-2 inline-block">
@@ -66,7 +66,7 @@ export default function MemberDetailPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <Link

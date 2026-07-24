@@ -8,6 +8,7 @@ import { demoProposals } from '@/lib/demo-data'
 import { type Proposal, ProposalStatus } from '@/types/admin'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+import { PollOptionBar } from '@/components/ui/poll-option-bar'
 
 const statusColors: Record<ProposalStatus, { bg: string; text: string; border: string }> = {
   draft: { bg: 'bg-gray-100', text: 'text-gray-700', border: 'border-gray-200' },
@@ -27,7 +28,7 @@ export default function ProposalDetailPage() {
 
   if (!proposal) {
     return (
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="space-y-6">
         <div className="text-center py-20">
           <p className="text-lg text-[#525252]">{t('pollNotFound')}</p>
           <Link href="/admin/proposals" className="text-emerald-600 hover:text-emerald-700 font-medium mt-2 inline-block">
@@ -58,7 +59,7 @@ export default function ProposalDetailPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -153,33 +154,18 @@ export default function ProposalDetailPage() {
             const pct = totalVP > 0 ? Math.round((opt.votes / totalVP) * 100) : 0
             const isWinning = opt.votes === maxVP && opt.votes > 0
             return (
-              <div key={opt.id} className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className={cn('text-sm', isWinning ? 'font-semibold text-[#131517]' : 'text-[#525252]')}>
-                      {opt.text}
-                    </span>
-                    {isWinning && isEnded && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        {t('winning', { defaultValue: 'Winning' })}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <span className="text-[#525252]">{opt.votes.toLocaleString()} VP</span>
-                    <span className="text-[#939597]">{pct}%</span>
-                    <span className="text-xs text-[#939597]">({opt.voterCount} {t('voters', { defaultValue: 'voters' })})</span>
-                  </div>
-                </div>
-                <div className="h-2.5 bg-[#FAFAFA] rounded-full overflow-hidden">
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all duration-700',
-                      isWinning ? 'bg-gradient-to-r from-emerald-500 to-green-400' : 'bg-[#E5E5E5]'
-                    )}
-                    style={{ width: `${pct}%` }}
-                  />
-                </div>
+              <div key={opt.id} className="space-y-1.5">
+                {isWinning && isEnded && (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    {t('winning', { defaultValue: 'Winning' })}
+                  </span>
+                )}
+                <PollOptionBar
+                  text={opt.text}
+                  pct={pct}
+                  isWinning={isWinning}
+                  meta={`${opt.votes.toLocaleString()} VP · ${opt.voterCount} ${t('voters', { defaultValue: 'voters' })}`}
+                />
               </div>
             )
           })}
