@@ -113,6 +113,15 @@ pnpm tsx scripts/deploy-contract.ts   # 对 Injective EVM Testnet 部署 YouFenR
 - **种子脚本用法**：`scripts/seed-demo.ts` 不带 `REDIS_URL` 运行（记录留 pending 由 reconciler 补交上链）；`--reset` 仅限演示库。
 - **AI 端点已带限流与降级**：无 key 时返回结构化「AI 不可用」，不阻塞业务。
 
+## 9. v0.7 协议执行升级（进行中）⚠️
+
+方向：v0.6 的「平台钱包签一切」升级为 v0.7「合约强制执行 + EIP-712 成员/审批人签名 + YouFen 纯 Relayer」。合约接口 / EIP-712 / 数据模型 / API / 威胁模型的设计冻结正在跑（`docs/BLOCKCHAIN-DESIGN.md` 的 v0.7 重写待冻结结果落地），合约实现随后。**已决策：成员私钥客户端持有**（服务端拿不到私钥，这是「YouFen 不能替成员投票」为真的前提）。
+
+前端已先行反映 v0.7 叙事（`components/records/rule-guardian.tsx`、存档卡授权行、可退出性与信任边界文案）。由此引入两条上线前必须处理的事项：
+
+- **守门示例目前是教学型占位**：`RuleGuardian` 的四个「越权被拒」场景是文案示例，尚无真实链上 Revert 数据。v0.7 合约部署后，应接 `executeMint`/`castVoteBySig` 的真实 Revert（`MEMBER_EPOCH_CAP_EXCEEDED` / `ADVANCE_LIMIT_EXCEEDED` / `INVALID_MEMBER_SIGNATURE` 等）替换为真实 demo。
+- **信任文案的「事实」前提尚未全部落地**：溯源页把「合约拒绝越权」「YouFen 不能替你投票」作为事实陈述——这些只有在 v0.7 合约 + 客户端持钥签名层上线后才字面为真。在 v0.7 上线前对外发布该页时，须保留 demo/占位标注（现有 `demoNote` 已具备），不得把公开信任文案当作已运行系统的字面承诺（PRD §12.2 纪律）。
+
 ## 8. 文档权威地图
 
 | 文档 | 角色 |
