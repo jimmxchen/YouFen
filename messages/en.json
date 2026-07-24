@@ -80,6 +80,7 @@
       "vote": "Vote",
       "me": "Me"
     },
+    "backToLanding": "Back to Landing",
     "status": {
       "verified": "Verified",
       "failed": "Needs retry",
