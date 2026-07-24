@@ -1,6 +1,6 @@
 {
   "nav": {
-    "logo": "有份儿",
+    "logo": "有份",
     "logoSub": "",
     "features": "功能",
     "resources": "资源",
@@ -28,8 +28,8 @@
     }
   },
   "hero": {
-    "title": "有份儿",
-    "subtitle": "让每个参与者真正有份儿",
+    "title": "有份",
+    "subtitle": "让每个参与者真正有份",
     "mainTitle": "无代码社群共治",
     "description": "把成员贡献变成发言权\n让大家一起决定社区未来"
   },
@@ -45,7 +45,7 @@
     "simplify": "简化社群管理流程"
   },
   "valueCards": {
-    "title": "为什么选择有份儿？",
+    "title": "为什么选择有份？",
     "subtitle": "让社群治理变得简单、透明、可信",
     "visible": "贡献可见",
     "visibleDesc": "志愿者、mentor、活跃成员不再被忽略",
@@ -87,6 +87,8 @@
     "proposalsSubtitle": "创建和管理社群投票",
     "trustedRecords": "可信记录",
     "trustedRecordsSubtitle": "查看链上公开可信记录",
+    "management": "管理",
+    "chat": "聊天",
     "addMember": "添加成员",
     "distributeVP": "分配发言权",
     "createProposal": "创建投票",
@@ -237,8 +239,8 @@
     "privacyPolicy": "隐私政策"
   },
   "footer": {
-    "brand": "有份儿",
-    "description": "无代码社群共治平台 —— 让每个参与者真正有份儿。",
+    "brand": "有份",
+    "description": "无代码社群共治平台 —— 让每个参与者真正有份。",
     "poweredBy": "由",
     "injective": "Injective",
     "ai": "AI",

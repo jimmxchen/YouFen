@@ -150,6 +150,8 @@
     "proposalsSubtitle": "Create and manage community votes",
     "trustedRecords": "Trusted Records",
     "trustedRecordsSubtitle": "View on-chain public trusted records",
+    "management": "Management",
+    "chat": "Chat",
     "addMember": "Add Member",
     "distributeVP": "Distribute VP",
     "createProposal": "Create Proposal",

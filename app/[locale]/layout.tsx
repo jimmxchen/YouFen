@@ -18,7 +18,7 @@ const customFont = Inter({
 })
 
 export const metadata: Metadata = {
-  title: '有份儿 YouFen - 让每个参与者真正有份儿',
+  title: '有份 YouFen - 让每个参与者真正有份',
   description: '无代码社群共治网站，把成员贡献变成发言权，让大家一起决定社区未来',
   keywords: ['社群治理', '社区管理', 'DAO', '投票', '发言权'],
 }
