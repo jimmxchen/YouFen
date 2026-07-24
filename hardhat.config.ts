@@ -9,6 +9,8 @@ const config: HardhatUserConfig = {
         enabled: true,
         runs: 200,
       },
+      // v0.7 YouFenGovernance 的 executeMint/enforcement 局部变量多，用 IR 管线避免 stack-too-deep
+      viaIR: true,
     },
   },
   paths: {
