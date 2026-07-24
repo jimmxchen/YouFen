@@ -56,25 +56,25 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
   }, [normalizedQuery, room.messages])
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-28 pt-5 lg:px-6 lg:pt-8">
+    <div className="mx-auto w-full max-w-3xl px-5 pb-28 pt-5 lg:px-0 lg:pt-0">
       <header className="flex items-center gap-2">
         <Link
           href={`/${locale}/member/${communityId}/chat/${room.id}`}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#525252] hover:bg-black/[0.04]"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#525252] hover:bg-[#FAFAFA]"
           aria-label={labels.back}
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
         </Link>
         <div className="min-w-0">
           <p className={`truncate text-sm ${memberSubtle}`}>{labels.title}</p>
-          <h1 className="truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-4xl">
+          <h1 className="truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
             {room.title}
           </h1>
         </div>
       </header>
 
-      <section className="mt-5 rounded-2xl border border-black/[0.08] bg-white p-5 text-center">
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#131517] text-xl font-semibold text-white">
+      <section className="mt-5 rounded-xl border border-[#F0F0F0] bg-white p-5 text-center">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-xl bg-[#131517] text-xl font-semibold text-white">
           {room.avatarInitials}
         </div>
         <h2 className="mt-4 text-xl font-semibold text-[#131517]">{room.title}</h2>
@@ -91,7 +91,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
         <button
           type="button"
           onClick={() => setIsMuted((current) => !current)}
-          className="flex min-h-16 items-center gap-3 rounded-2xl border border-black/[0.08] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
+          className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-[#525252]">
             {isMuted ? <BellOff className="h-5 w-5" aria-hidden="true" /> : <Bell className="h-5 w-5" aria-hidden="true" />}
@@ -106,7 +106,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
 
         <button
           type="button"
-          className="flex min-h-16 items-center gap-3 rounded-2xl border border-black/[0.08] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
+          className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
             <UserPlus className="h-5 w-5" aria-hidden="true" />
@@ -117,7 +117,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
           </span>
         </button>
 
-        <div className="flex min-h-16 items-center gap-3 rounded-2xl border border-black/[0.08] bg-white px-4">
+        <div className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
             <ImageIcon className="h-5 w-5" aria-hidden="true" />
           </span>
@@ -128,7 +128,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
         </div>
       </div>
 
-      <section className="mt-4 rounded-2xl border border-black/[0.08] bg-white p-4">
+      <section className="mt-4 rounded-xl border border-[#F0F0F0] bg-white p-4">
         <div className="flex items-center gap-2">
           <LinkIcon className="h-4 w-4 text-[#525252]" aria-hidden="true" />
           <h2 className="text-sm font-semibold text-[#131517]">{labels.inviteLink}</h2>
@@ -143,11 +143,11 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
         </div>
       </section>
 
-      <section className="mt-4 rounded-2xl border border-black/[0.08] bg-white p-4">
+      <section className="mt-4 rounded-xl border border-[#F0F0F0] bg-white p-4">
         <label htmlFor="settings-search" className="text-sm font-semibold text-[#131517]">
           {labels.search}
         </label>
-        <div className="mt-3 flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-[#FAFAFA] px-4">
+        <div className="mt-3 flex min-h-11 items-center gap-2 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4">
           <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
           <input
             id="settings-search"
@@ -174,7 +174,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
         </div>
       </section>
 
-      <section className="mt-4 overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+      <section className="mt-4 overflow-hidden rounded-xl border border-[#F0F0F0] bg-white">
         <div className="flex items-center justify-between gap-3 px-4 py-3">
           <h2 className="text-sm font-semibold text-[#131517]">{labels.membersTitle}</h2>
           <span className={`text-xs ${memberSubtle}`}>{labels.members}</span>

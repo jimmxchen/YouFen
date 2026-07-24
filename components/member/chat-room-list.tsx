@@ -19,7 +19,7 @@ export function ChatRoomList({ rooms, baseHref, labels }: ChatRoomListProps) {
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-black/[0.08] bg-white">
+    <section className="overflow-hidden rounded-xl border border-[#F0F0F0] bg-white">
       {rooms.map((room, index) => (
         <Link
           key={room.id}
@@ -28,7 +28,7 @@ export function ChatRoomList({ rooms, baseHref, labels }: ChatRoomListProps) {
             index > 0 ? 'border-t border-gray-100' : ''
           }`}
         >
-          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#131517] text-sm font-semibold text-white">
+          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-sm font-semibold text-white">
             {room.avatarInitials}
             {room.pinned ? (
               <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">

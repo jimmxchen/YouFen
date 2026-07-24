@@ -41,10 +41,10 @@ interface ContributionSubmitFormProps {
 }
 
 const fieldClass =
-  'mt-2 w-full min-h-11 rounded-xl border border-gray-200 bg-white px-4 text-sm text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-gray-300 focus:ring-2 focus:ring-emerald-500/15'
+  'mt-2 w-full min-h-11 rounded-lg border border-[#F0F0F0] bg-white px-4 text-sm text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15'
 
 const textareaClass =
-  'mt-2 w-full min-h-[120px] resize-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm leading-6 text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-gray-300 focus:ring-2 focus:ring-emerald-500/15'
+  'mt-2 w-full min-h-[120px] resize-none rounded-lg border border-[#F0F0F0] bg-white px-4 py-3 text-sm leading-6 text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15'
 
 export function ContributionSubmitForm({
   meHref,
@@ -123,7 +123,7 @@ export function ContributionSubmitForm({
                 className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-medium transition ${
                   selected
                     ? 'bg-[#131517] text-white'
-                    : 'border border-gray-200 bg-white text-[#525252] hover:border-gray-300'
+                    : 'border border-[#F0F0F0] bg-white text-[#525252] hover:border-[#E5E5E5]'
                 }`}
                 aria-pressed={selected}
               >

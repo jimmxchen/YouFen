@@ -35,15 +35,15 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
 
   return (
     <MemberShell>
-      <header className="px-5 pb-5 pt-6 lg:px-6 lg:pb-8 lg:pt-8">
+      <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
-            <h1 className="mt-1 truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-4xl">
+            <h1 className="mt-1 truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
               {t('dashboard.greeting', { name: member.name })}
             </h1>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#131517]">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
             {member.avatarInitials}
           </div>
         </div>
@@ -52,7 +52,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
         </p>
       </header>
 
-      <div className="grid gap-5 px-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] lg:items-start lg:px-6">
+      <div className="grid gap-5 px-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] lg:items-start lg:px-0">
         <div>
           <section className={memberCard}>
             <h2 className="text-xl font-semibold text-[#131517]">{t('dashboard.today')}</h2>
@@ -72,7 +72,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                 </div>
               </div>
 
-              <div className="border-t border-gray-100 pt-3 lg:rounded-xl lg:border lg:border-gray-100 lg:bg-[#FAFAFA] lg:p-4">
+              <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-lg lg:border lg:bg-[#FAFAFA] lg:p-4">
                 <div className="flex gap-3">
                   <CalendarDays
                     className="mt-0.5 h-5 w-5 shrink-0 text-blue-600"
@@ -94,7 +94,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
               </div>
 
               {activeVote ? (
-                <div className="border-t border-gray-100 pt-3 lg:rounded-xl lg:border lg:border-gray-100 lg:bg-[#FAFAFA] lg:p-4">
+                <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-lg lg:border lg:bg-[#FAFAFA] lg:p-4">
                   <div className="flex gap-3">
                     <Vote className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
                     <div className="min-w-0 flex-1">

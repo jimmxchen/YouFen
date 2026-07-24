@@ -51,13 +51,13 @@ export function ProposalList({ proposals, locale, voicePower, labels }: Proposal
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-xl border border-gray-100 bg-[#FAFAFA] p-3">
+            <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-3">
               <p className={`text-xs ${memberSubtle}`}>{labels.yourVoicePower}</p>
               <p className="mt-1 font-semibold text-[#131517]">
                 {formatNumber(voicePower, locale)}
               </p>
             </div>
-            <div className="rounded-xl border border-gray-100 bg-[#FAFAFA] p-3">
+            <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-3">
               <p className={`text-xs ${memberSubtle}`}>{labels.ended}</p>
               <p className="mt-1 font-semibold text-[#131517]">
                 {labels.voters(proposal.voterCount)}

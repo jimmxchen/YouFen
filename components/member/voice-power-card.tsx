@@ -21,48 +21,44 @@ function formatNumber(value: number, locale: string) {
 export function VoicePowerCard({ voicePower, locale, labels }: VoicePowerCardProps) {
   return (
     <section className={memberHeroCard}>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-transparent to-blue-500/20"
-      />
-      <div className="relative">
+      <div>
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm text-white/60">{labels.title}</p>
-            <p className="mt-3 text-5xl font-semibold leading-none tracking-normal">
+          <div className="min-w-0">
+            <p className="mb-1 text-sm text-[#939597]">{labels.title}</p>
+            <p className="text-4xl font-semibold leading-none tracking-normal text-[#131517]">
               {formatNumber(voicePower.total, locale)}
             </p>
-            <p className="mt-3 text-sm text-white/60">
+            <p className="mt-3 text-sm text-[#525252]">
               {labels.rank}
             </p>
           </div>
-          <div className={`${memberIconWell} bg-white/10`}>
+          <div className={`${memberIconWell} bg-emerald-50 text-emerald-600`}>
             <Mic2 className="h-5 w-5" aria-hidden="true" />
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3">
-          <div className="rounded-xl border border-white/10 bg-white/10 p-4">
-            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-400/20 text-emerald-200">
+          <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-4">
+            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
               <Vote className="h-4 w-4" aria-hidden="true" />
             </div>
-            <p className="text-xs text-white/55">{labels.active}</p>
-            <p className="mt-1 text-2xl font-semibold">
+            <p className="text-xs text-[#939597]">{labels.active}</p>
+            <p className="mt-1 text-2xl font-semibold text-[#131517]">
               {formatNumber(voicePower.active, locale)}
             </p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-white/10 p-4">
-            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-300/20 text-blue-100">
+          <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-4">
+            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
               <TrendingUp className="h-4 w-4" aria-hidden="true" />
             </div>
-            <p className="text-xs text-white/55">{labels.pending}</p>
-            <p className="mt-1 text-2xl font-semibold">
+            <p className="text-xs text-[#939597]">{labels.pending}</p>
+            <p className="mt-1 text-2xl font-semibold text-[#131517]">
               {formatNumber(voicePower.pending, locale)}
             </p>
           </div>
         </div>
 
-        <p className="mt-5 rounded-xl border border-white/10 bg-white/[0.06] p-4 text-sm text-white/70">
+        <p className="mt-5 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-4 text-sm text-[#525252]">
           {labels.earnedThisMonth}
         </p>
       </div>
