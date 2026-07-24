@@ -31,15 +31,16 @@ interface CardHeadingProps {
   icon: LucideIcon
   title: string
   description: string
+  variant?: 'light' | 'dark'
 }
 
-const CardHeading = ({ icon: Icon, title, description }: CardHeadingProps) => (
+const CardHeading = ({ icon: Icon, title, description, variant = 'dark' }: CardHeadingProps) => (
   <div className="p-6">
-    <span className="text-[#525252] flex items-center gap-2 text-sm">
+    <span className={cn('flex items-center gap-2 text-sm', variant === 'light' ? 'text-[#525252]' : 'text-white/70')}>
       <Icon className="size-4" />
       {title}
     </span>
-    <p className="mt-8 text-2xl font-semibold text-[#131517]">{description}</p>
+    <p className={cn('mt-8 text-2xl font-semibold', variant === 'light' ? 'text-[#131517]' : 'text-white')}>{description}</p>
   </div>
 )
 
