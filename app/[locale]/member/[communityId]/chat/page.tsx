@@ -7,16 +7,17 @@ import { memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberChatPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 export default async function MemberChatPage({ params }: MemberChatPageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
-  const baseHref = `/${params.locale}/member/${params.communityId}`
+  const member = getDemoMember(communityId)
+  const baseHref = `/${locale}/member/${communityId}`
   const unreadCount = member.chatRooms.reduce((total, room) => total + room.unreadCount, 0)
 
   return (
@@ -55,8 +56,8 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="chat"
         labels={{
           home: t('nav.home'),

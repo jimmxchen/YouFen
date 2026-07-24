@@ -6,15 +6,16 @@ import { memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberVotePageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 export default async function MemberVotePage({ params }: MemberVotePageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
+  const member = getDemoMember(communityId)
 
   return (
     <MemberShell>
@@ -31,7 +32,7 @@ export default async function MemberVotePage({ params }: MemberVotePageProps) {
       <div className="px-5 lg:px-0">
         <ProposalList
           proposals={member.availableProposals}
-          locale={params.locale}
+          locale={locale}
           voicePower={member.voicePower.active}
           labels={{
             active: t('vote.active'),
@@ -46,8 +47,8 @@ export default async function MemberVotePage({ params }: MemberVotePageProps) {
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="vote"
         labels={{
           home: t('nav.home'),

@@ -8,10 +8,10 @@ import { memberCard, memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberPublicPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 function formatNumber(value: number, locale: string) {
@@ -19,9 +19,10 @@ function formatNumber(value: number, locale: string) {
 }
 
 export default async function MemberPublicPage({ params }: MemberPublicPageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
-  const meHref = `/${params.locale}/member/${params.communityId}/me`
+  const member = getDemoMember(communityId)
+  const meHref = `/${locale}/member/${communityId}/me`
 
   return (
     <MemberShell>
@@ -70,7 +71,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
                     <p className={`mt-0.5 truncate text-xs ${memberSubtle}`}>{contributor.role}</p>
                   </div>
                   <span className="shrink-0 text-sm font-semibold text-[#131517]">
-                    {formatNumber(contributor.voicePower, params.locale)}
+                    {formatNumber(contributor.voicePower, locale)}
                   </span>
                 </div>
               ))}
@@ -102,26 +103,26 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
         <aside className={`${memberCard} lg:sticky lg:top-24`}>
           <h2 className="text-xl font-semibold text-[#131517]">{t('public.stats')}</h2>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <Metric label={t('public.members')} value={formatNumber(member.stats.members, params.locale)} />
+            <Metric label={t('public.members')} value={formatNumber(member.stats.members, locale)} />
             <Metric
               label={t('public.voicePower')}
-              value={formatNumber(member.voicePower.total, params.locale)}
+              value={formatNumber(member.voicePower.total, locale)}
             />
             <Metric
               label={t('public.contributions')}
-              value={formatNumber(member.stats.contributionsThisWeek, params.locale)}
+              value={formatNumber(member.stats.contributionsThisWeek, locale)}
             />
             <Metric
               label={t('public.trustedRecords')}
-              value={formatNumber(member.stats.trustedRecords, params.locale)}
+              value={formatNumber(member.stats.trustedRecords, locale)}
             />
           </div>
         </aside>
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="me"
         labels={{
           home: t('nav.home'),

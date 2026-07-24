@@ -86,6 +86,11 @@ export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
             onMouseEnter={() => setActiveDropdown('features')}
           >
             <button
+              type="button"
+              aria-expanded={activeDropdown === 'features'}
+              onClick={() =>
+                setActiveDropdown((current) => (current === 'features' ? null : 'features'))
+              }
               className={`px-4 py-2 text-sm font-normal rounded-lg transition-all flex items-center gap-1 ${
                 isHeroScrolled
                   ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
@@ -103,6 +108,11 @@ export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
             onMouseEnter={() => setActiveDropdown('resources')}
           >
             <button
+              type="button"
+              aria-expanded={activeDropdown === 'resources'}
+              onClick={() =>
+                setActiveDropdown((current) => (current === 'resources' ? null : 'resources'))
+              }
               className={`px-4 py-2 text-sm font-normal rounded-lg transition-all flex items-center gap-1 ${
                 isHeroScrolled
                   ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
