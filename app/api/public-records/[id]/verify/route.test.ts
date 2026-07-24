@@ -3,7 +3,8 @@ import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { setBlockchainRuntimeForTesting } from '../../../../../lib/blockchain/runtime';
 import type { BlockchainRuntime, PublicRecordDTO, VerifyResult } from '../../../../../lib/blockchain/types';
 
-import { GET as getVerify, resolveVerifyClientKey } from './route';
+import { GET as getVerify } from './route';
+import { resolveVerifyClientKey } from '../../../../../lib/api/public-records/verify-client-key';
 
 // resolveVerifyClientKey is the security-critical unit: it must derive the
 // limiter key from the proxy-written (rightmost) X-Forwarded-For entry, never
