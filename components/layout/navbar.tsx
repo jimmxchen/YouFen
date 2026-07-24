@@ -6,11 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { useAuth } from '@/components/auth/auth-context'
 
 export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
   const t = useTranslations('nav');
-  const { user } = useAuth()
   const [isHeroScrolled, setIsHeroScrolled] = useState(forceLight)
   const [isMounted, setIsMounted] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -139,29 +137,16 @@ export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
             {t('bip')}
           </Link>
 
-          {user ? (
-            <Link
-              href="/admin"
-              className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all active:scale-[0.97] ${
-                isHeroScrolled
-                  ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
-                  : 'text-black bg-white hover:bg-gray-100'
-              }`}
-            >
-              {t('dashboard')}
-            </Link>
-          ) : (
-            <Link
-              href="/sign-in"
-              className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all active:scale-[0.97] ${
-                isHeroScrolled
-                  ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
-                  : 'text-black bg-white hover:bg-gray-100'
-              }`}
-            >
-              {t('create')}
-            </Link>
-          )}
+          <Link
+            href="/sign-in"
+            className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all active:scale-[0.97] ${
+              isHeroScrolled
+                ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
+                : 'text-black bg-white hover:bg-gray-100'
+            }`}
+          >
+            {t('create')}
+          </Link>
 
         </div>
       </div>
