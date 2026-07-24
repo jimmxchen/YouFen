@@ -6,12 +6,14 @@ import { memberCard, memberMuted, memberPrimaryButton, memberSubtle } from '@/co
 interface ProposalListProps {
   proposals: MemberProposal[]
   locale: string
+  communityId: string
   voicePower: number
   labels: {
     active: string
     upcoming: string
     ended: string
     yourVoicePower: string
+    participation: string
     voters: (count: number) => string
     trustedRecord: string
     openVote: string
@@ -28,7 +30,7 @@ function formatNumber(value: number, locale: string) {
   return new Intl.NumberFormat(locale).format(value)
 }
 
-export function ProposalList({ proposals, locale, voicePower, labels }: ProposalListProps) {
+export function ProposalList({ proposals, locale, communityId, voicePower, labels }: ProposalListProps) {
   return (
     <section className="grid gap-4 lg:grid-cols-2">
       {proposals.map((proposal) => (
@@ -58,7 +60,7 @@ export function ProposalList({ proposals, locale, voicePower, labels }: Proposal
               </p>
             </div>
             <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-3">
-              <p className={`text-xs ${memberSubtle}`}>{labels.ended}</p>
+              <p className={`text-xs ${memberSubtle}`}>{labels.participation}</p>
               <p className="mt-1 font-semibold text-[#131517]">
                 {labels.voters(proposal.voterCount)}
               </p>
@@ -71,7 +73,7 @@ export function ProposalList({ proposals, locale, voicePower, labels }: Proposal
             </p>
           ) : null}
 
-          <Link href={`/${locale}${proposal.href}`} className={`mt-4 ${memberPrimaryButton} lg:mt-auto`}>
+          <Link href={`/${locale}/member/${communityId}${proposal.href}`} className={`mt-4 ${memberPrimaryButton} lg:mt-auto`}>
             {labels.openVote}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
