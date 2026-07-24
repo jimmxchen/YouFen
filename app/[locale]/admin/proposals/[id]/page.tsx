@@ -29,9 +29,9 @@ export default function ProposalDetailPage() {
     return (
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="text-center py-20">
-          <p className="text-lg text-[#525252]">{t('proposalNotFound')}</p>
+          <p className="text-lg text-[#525252]">{t('pollNotFound')}</p>
           <Link href="/admin/proposals" className="text-emerald-600 hover:text-emerald-700 font-medium mt-2 inline-block">
-            {t('backToProposals')}
+            {t('backToPolls')}
           </Link>
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function ProposalDetailPage() {
 
   const handleDelete = () => {
     setShowDeleteConfirm(false)
-    alert(t('proposalDeleted'))
+    alert(t('pollDeleted'))
   }
 
   return (
@@ -67,7 +67,7 @@ export default function ProposalDetailPage() {
             className="inline-flex items-center gap-1.5 text-sm text-[#939597] hover:text-[#131517] transition-colors mb-3"
           >
             <ArrowLeft className="w-4 h-4" />
-            {t('backToProposals', { defaultValue: 'Back to Proposals' })}
+            {t('backToPolls', { defaultValue: 'Back to Polls' })}
           </Link>
           <div className="flex items-center gap-3 mb-2">
             <span className={cn(
@@ -228,10 +228,10 @@ export default function ProposalDetailPage() {
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowDeleteConfirm(false)} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-md mx-4 p-6 space-y-4">
             <h3 className="text-lg font-semibold text-[#131517]">
-              {t('deleteProposalConfirm', { defaultValue: 'Delete Proposal?' })}
+              {t('deletePollConfirm', { defaultValue: 'Delete Poll?' })}
             </h3>
             <p className="text-sm text-[#525252]">
-              {t('deleteProposalWarning', { defaultValue: 'This action cannot be undone. The proposal and all votes will be permanently removed.' })}
+              {t('deletePollWarning', { defaultValue: 'This action cannot be undone. The poll and all votes will be permanently removed.' })}
             </p>
             <div className="flex justify-end gap-3 pt-2">
               <button
