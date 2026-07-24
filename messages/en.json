@@ -727,6 +727,345 @@
     "and": "and",
     "privacyPolicy": "Privacy Policy"
   },
+  "footer": {
+    "brand": "YouFen",
+    "description": "No-code community governance platform — letting every participant truly have a stake.",
+    "poweredBy": "Powered by",
+    "injective": "Injective",
+    "ai": "AI",
+    "products": {
+      "title": "Product",
+      "createCommunity": "Create Community",
+      "viewDemo": "View Demo",
+      "docs": "Documentation"
+    },
+    "about": {
+      "title": "About",
+      "buildInPublic": "Build in Public",
+      "aboutUs": "About Us",
+      "github": "GitHub"
+    },
+    "copyright": "© 2026 YouFen. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "testimonials": {
+    "title": "User Reviews",
+    "subtitle": "See what our users are saying",
+    "items": [
+      {"name": "Alex Chen", "handle": "@alex_dev", "content": "YouFen really solved our community's pain points! Members' contributions can finally be quantified, and everyone's participation has noticeably increased 🎉"},
+      {"name": "Sarah Lee", "handle": "@sarah_community", "content": "No-code community governance is perfect for non-technical organizers like us! The AI rule generation feature is incredibly useful 👍"},
+      {"name": "David Wang", "handle": "@david_dao", "content": "The voting system is so transparent, and the contribution-weighted mechanism is very fair. After two weeks, our member satisfaction has skyrocketed!"},
+      {"name": "Emily Zhang", "handle": "@emily_web3", "content": "The timeline feature gives a clear overview of community history. New members can quickly understand the community's journey. Great product experience!"},
+      {"name": "James Liu", "handle": "@james_nft", "content": "The AI recommendation feature is really smart — it suggests suitable tasks based on members' contribution history, boosting participation efficiency."},
+      {"name": "Grace Zhao", "handle": "@grace_design", "content": "The interface is clean and elegant, the user experience is incredibly smooth. As a designer, I really appreciate this attention to detail!"},
+      {"name": "Tom Sun", "handle": "@tom_tech", "content": "Voice power management makes the community more democratic. The more you contribute, the more influence you have — that's how it should be!"},
+      {"name": "Linda Zhou", "handle": "@linda_dao", "content": "Member engagement has clearly improved. Everyone is very active, and task distribution has become much more efficient 💪"},
+      {"name": "Mike Wu", "handle": "@mike_web3", "content": "Voting results are public and transparent, strengthening trust among members. This is the best community governance tool I've ever used!"},
+      {"name": "Sophia Zheng", "handle": "@sophia_crypto", "content": "Building a community governance system from scratch — YouFen makes it all so simple. Highly recommended! ✨"},
+      {"name": "Chris Ma", "handle": "@chris_builder", "content": "Truly awesome! It streamlined everything we were struggling with."},
+      {"name": "Olivia Lin", "handle": "@olivia_dao", "content": "Since adopting YouFen, our team collaboration efficiency has improved by at least 30%. Task allocation is more reasonable, and everyone can play to their strengths. The AI recommendation system is especially impressive!"}
+    ]
+  },
+  "admin": {
+    "community": "Community",
+    "backToLanding": "Back to Landing",
+    "search": "Search",
+    "dashboard": "Dashboard",
+    "dashboardSubtitle": "AdventureX Community Overview",
+    "members": "Members",
+    "membersSubtitle": "Manage community members and their voice power",
+    "contributions": "Contributions",
+    "contributionsSubtitle": "Review contributions and distribute voice power",
+    "proposals": "Proposals",
+    "proposalsSubtitle": "Create and manage community votes",
+    "trustedRecords": "Trusted Records",
+    "trustedRecordsSubtitle": "View on-chain public trusted records",
+    "management": "Management",
+    "chat": "Chat",
+    "chatSubtitle": "Chat with community members",
+    "conversations": "Conversations",
+    "online": "Online",
+    "typeMessage": "Type a message...",
+    "send": "Send",
+    "addMember": "Add Member",
+    "distributeVP": "Distribute VP",
+    "createProposal": "Create Proposal",
+    "generateReport": "Generate Report",
+    "quickActions": "Quick Actions",
+    "recentContributions": "Recent Contributions",
+    "viewAll": "View All",
+    "member": "Member",
+    "contribution": "Contribution",
+    "status": "Status",
+    "voicePower": "Voice Power",
+    "proposalTitle": "Proposal Title",
+    "voters": "Voters",
+    "deadline": "Deadline",
+    "totalVoicePower": "Total Voice Power",
+    "activeProposals": "Active Proposals",
+    "todayContributions": "Today's Contributions",
+    "searchMembers": "Search members...",
+    "memberName": "Name",
+    "role": "Role",
+    "tags": "Tags",
+    "joinedAt": "Joined",
+    "actions": "Actions",
+    "backToMembers": "Back to Members",
+    "backToProposals": "Back to Proposals",
+    "changeRole": "Change Role",
+    "addContribution": "Add Contribution",
+    "memberInfo": "Member Information",
+    "contributionHistory": "Contribution History",
+    "totalContributions": "Total Contributions",
+    "earnedVP": "Earned VP",
+    "joined": "Joined",
+    "lastActive": "Last active",
+    "started": "Started",
+    "voteResults": "Vote Results",
+    "winning": "Winning",
+    "trustedRecord": "Trusted Record",
+    "generateTrustedRecord": "Generate Trusted Record",
+    "aiSummary": "AI Summary",
+    "deleteProposalConfirm": "Delete Proposal?",
+    "deleteProposalWarning": "This action cannot be undone. The proposal and all votes will be permanently removed.",
+    "contributionCount": "Contributions",
+    "type": "Type",
+    "aiSuggestion": "AI Suggestion",
+    "date": "Date",
+    "viewDetails": "View Details",
+    "approve": "Approve",
+    "reject": "Reject",
+    "aiAnalysis": "AI Analysis",
+    "all": "All",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "proposalTitlePlaceholder": "Enter your voting question",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe the voting background",
+    "options": "Options",
+    "create": "Create",
+    "cancel": "Cancel",
+    "endVote": "End Vote",
+    "viewOnChain": "View On-Chain",
+    "delete": "Delete",
+    "draft": "Draft",
+    "active": "Active",
+    "ended": "Ended",
+    "recorded": "Recorded",
+    "weighted": "Weighted",
+    "onePersonOneVote": "One Person One Vote",
+    "roleOwner": "Owner",
+    "roleManager": "Manager",
+    "roleMember": "Member",
+    "memberNotFound": "Member not found",
+    "invalidVoicePower": "Please enter a valid voice power value.",
+    "voicePowerUpdated": "Voice power updated to {{value}}",
+    "roleChangedTo": "Role changed to {{role}}",
+    "changeToRole": "Change to {{role}}",
+    "save": "Save",
+    "noContributionsYet": "No contributions yet",
+    "contributionApproved": "Contribution approved. Voice power distributed to member.",
+    "contributionRejected": "Contribution rejected.",
+    "voteEnded": "Vote ended. A trusted record will be generated.",
+    "proposalDeleted": "Proposal deleted.",
+    "proposalNotFound": "Proposal not found",
+    "generatingRecord": "Generating trusted record...",
+    "totalVP": "Total Voice Power",
+    "dataHash": "Data Hash",
+    "txHash": "Tx Hash",
+    "recordTypeCommunity": "Community",
+    "recordTypeRule": "Rule Version",
+    "recordTypeVpBatch": "VP Batch",
+    "recordTypeProposal": "Proposal",
+    "recordTypeVoteResult": "Vote Result",
+    "recordStatusPending": "Pending",
+    "recordStatusRecording": "Recording",
+    "recordStatusRecorded": "Recorded",
+    "recordStatusFailed": "Failed",
+    "recordFieldCommunity": "Community",
+    "recordFieldNetwork": "Network",
+    "recordFieldCreated": "Created",
+    "recordFieldRecordedOnChain": "Recorded On-chain",
+    "optionA": "Option A",
+    "optionB": "Option B",
+    "optionC": "Option C",
+    "noConversationSelected": "Select a conversation to start chatting",
+    "tasks": "Tasks",
+    "tasksSubtitle": "Manage tasks and track progress",
+    "createTask": "Create Task",
+    "taskTitle": "Task Title",
+    "assignee": "Assignee",
+    "priority": "Priority",
+    "dueDate": "Due Date",
+    "markComplete": "Mark Complete",
+    "cancelItem": "Cancel",
+    "priorityHigh": "High",
+    "priorityMedium": "Medium",
+    "priorityLow": "Low",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "activities": "Activities",
+    "activitiesSubtitle": "Manage community events and activities",
+    "createActivity": "Create Activity",
+    "activityTitle": "Activity Title",
+    "activityType": "Type",
+    "participants": "Participants",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "location": "Location",
+    "activityTypeMeetup": "Meetup",
+    "activityTypeWorkshop": "Workshop",
+    "activityTypeHackathon": "Hackathon",
+    "activityTypeSocial": "Social",
+    "activityTypeOther": "Other",
+    "upcoming": "Upcoming",
+    "ongoing": "Ongoing"
+  },
+  "records": {
+    "title": "Trusted Record Center",
+    "subtitle": "All important community decisions and operations, publicly verifiable on-chain.",
+    "filter": {
+      "all": "All",
+      "token": "Token",
+      "votes": "Votes",
+      "rules": "Rules",
+      "epoch": "Epoch"
+    },
+    "kind": {
+      "tokenMint": "Token Mint",
+      "proposalResult": "Proposal Result",
+      "epochSummary": "Epoch Summary",
+      "advanceMint": "Advance Mint",
+      "tokenReversal": "Token Reversal",
+      "policyVersion": "Policy Version"
+    },
+    "status": {
+      "verified": "Verified",
+      "pending": "Pending",
+      "submitting": "Submitting",
+      "confirming": "Confirming",
+      "failed": "Failed",
+      "superseded": "Superseded"
+    },
+    "vote": {
+      "approval": "Approval",
+      "turnout": "Turnout: {voters}/{total} ({pct}%)"
+    },
+    "demo": {
+      "r6": {
+        "title": "Community Token Distribution — Batch #6",
+        "summary": "Monthly voice-power token batch for active contributors. Awaiting network confirmation."
+      },
+      "r5": {
+        "title": "Proposal #5: Community Meetup Budget",
+        "summary": "Members voted to allocate 2,000 USDC for the summer meetup. 62% approval, recorded on-chain."
+      },
+      "r4": {
+        "title": "Epoch #4 Summary — June 2026",
+        "summary": "Automated epoch close: contribution snapshots, voice-power carryover, and next-epoch config."
+      },
+      "r3": {
+        "title": "Advance Mint — New Member Welcome Bonus",
+        "summary": "Operator-initiated advance mint distributing starter voice-power to 12 new members."
+      },
+      "r2": {
+        "title": "Community Token Distribution — Batch #2",
+        "summary": "Second monthly voice-power token batch for verified contributors. Verified on-chain."
+      },
+      "r9": {
+        "title": "Token Reversal — Duplicate Batch Correction",
+        "summary": "Reversal of accidentally duplicated token mint from batch #5. Operator correction, verified."
+      },
+      "r1": {
+        "title": "Community Token Distribution — Batch #1 (Superseded)",
+        "summary": "Original first batch, later superseded by a corrected version with updated contribution data."
+      },
+      "r0": {
+        "title": "Policy v1.0 — Community Founding Rules",
+        "summary": "Founding governance policy: contribution categories, voice-power formula, and voting thresholds."
+      },
+      "r7": {
+        "title": "Proposal #3: Community Logo Redesign",
+        "summary": "Members voted on three logo options. Option B won with 58% approval. Recorded on-chain."
+      },
+      "r8": {
+        "title": "Policy v1.1 — Voting Threshold Update",
+        "summary": "Updated governance policy: lowered quorum from 20% to 15% for routine proposals."
+      }
+    },
+    "journey": {
+      "recorded": {
+        "title": "Record submitted",
+        "desc": "Content was written to the ledger."
+      },
+      "fingerprint": {
+        "title": "Fingerprint generated",
+        "desc": "A unique hash was created for this record."
+      },
+      "stamped": {
+        "title": "Stamped on-chain",
+        "desc": "The fingerprint was recorded on Injective."
+      },
+      "checkable": {
+        "title": "Publicly checkable",
+        "desc": "Anyone can verify the fingerprint."
+      },
+      "supersededNote": "This record was superseded by a newer version. The original fingerprint remains on-chain for audit purposes."
+    },
+    "archive": {
+      "title": "On-chain Archive",
+      "fingerprint": "Record Fingerprint",
+      "txRef": "Transaction Reference",
+      "block": "Block",
+      "blockValue": "Page {page}",
+      "pendingValue": "Pending",
+      "sealedAt": "Sealed at",
+      "network": "Network",
+      "networkValue": "Injective Testnet",
+      "copy": "Copy",
+      "copied": "Copied",
+      "authTitle": "Authorization",
+      "authApprovers": "Approved by {count} operator signature(s).",
+      "authChecks": "Pre-submit checks passed:",
+      "authNoChecks": "Authorization details not yet available.",
+      "checkLabel": {
+        "contentFormat": "Format check",
+        "hashMatch": "Hash match",
+        "roleAuth": "Role authorized"
+      },
+      "demoNote": "Demo mode — use a real tx hash to link to the explorer."
+    },
+    "verify": {
+      "invite": "Give it a try: repeat the verification steps below.",
+      "button": "Verify now",
+      "steps": {
+        "reading": "Reading on-chain data",
+        "hashing": "Computing local hash",
+        "comparing": "Comparing fingerprints"
+      },
+      "matchTitle": "Fingerprints match",
+      "matchDesc": "The on-chain fingerprint matches the local record. This record has not been altered since it was sealed."
+    },
+    "guide": {
+      "toggle": "How to verify on your own?",
+      "intro": "You can independently check a record on the Blockscout explorer in three steps:",
+      "s1": "Open the explorer and find the transaction by its hash.",
+      "s2": "Look at the transaction input data — it contains the record fingerprint.",
+      "s3": "Compare it with the fingerprint shown above. They must match character for character.",
+      "open": "Open Blockscout Explorer"
+    },
+    "chain": {
+      "title": "Live Ledger Status",
+      "liveTag": "Live",
+      "live": "The Injective ledger has written {pages} pages so far, turning a new page roughly every {seconds}s.",
+      "fallback": "The Injective ledger is running. It writes a new page roughly every second, and every page is permanent.",
+      "open": "Open Blockscout",
+      "engineerNote": "For engineers: data from Blockscout public stats API"
+    }
+  },
   "termsPage": {
     "title": "Terms of Service",
     "lastUpdated": "Last updated: July 24, 2026",

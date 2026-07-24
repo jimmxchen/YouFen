@@ -29,7 +29,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <Link
           href={meHref}
-          className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
+          className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#F0F0F0] bg-white transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
           aria-label={t('public.backToMe')}
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
@@ -47,7 +47,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
         <div className="space-y-5">
           <section className={memberCard}>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
                 <Users className="h-5 w-5" aria-hidden="true" />
               </div>
               <div>
@@ -55,7 +55,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
                 <p className={`mt-1 text-sm ${memberMuted}`}>{t('public.contributorsBody')}</p>
               </div>
             </div>
-            <div className="mt-4 overflow-hidden rounded-xl border border-[#F0F0F0]">
+            <div className="mt-4 overflow-hidden rounded-2xl border border-[#F0F0F0]">
               {member.featuredContributors.map((contributor, index) => (
                 <div
                   key={contributor.name}
@@ -63,7 +63,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
                     index > 0 ? 'border-t border-[#F0F0F0]' : ''
                   }`}
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#FAFAFA] text-sm font-semibold text-[#131517]">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-[#FAFAFA] text-sm font-semibold text-[#131517]">
                     {index + 1}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -137,7 +137,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] p-3">
+    <div className="rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] p-3">
       <p className="text-xl font-semibold text-[#131517]">{value}</p>
       <p className="mt-1 text-xs text-[#939597]">{label}</p>
     </div>

@@ -55,7 +55,7 @@ export function MemberProfileActions({
       </Link>
       <Link
         href={publicHref}
-        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#F0F0F0] bg-white px-4 text-sm font-medium text-[#131517] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5E5E5] hover:bg-[#FAFAFA] hover:shadow-md active:translate-y-0"
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border border-[#F0F0F0] bg-white px-4 text-sm font-medium text-[#131517] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5E5E5] hover:bg-[#FAFAFA] active:translate-y-0"
       >
         {labels.viewPublicCommunity}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -63,7 +63,7 @@ export function MemberProfileActions({
       <button
         type="button"
         onClick={shareContributions}
-        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#F0F0F0] bg-white px-4 text-sm font-medium text-[#131517] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5E5E5] hover:bg-[#FAFAFA] hover:shadow-md active:translate-y-0"
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border border-[#F0F0F0] bg-white px-4 text-sm font-medium text-[#131517] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#E5E5E5] hover:bg-[#FAFAFA] active:translate-y-0"
       >
         {labels.shareContributions}
         <Share2 className="h-4 w-4" aria-hidden="true" />

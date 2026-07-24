@@ -77,9 +77,9 @@ export default function DashboardPage() {
             <Link
               key={action.labelKey}
               href={action.href}
-              className="flex items-center gap-3 px-5 py-4 rounded-xl border border-[#F0F0F0] bg-white hover:shadow-md hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200"
+              className="flex items-center gap-3 px-5 py-4 rounded-2xl border border-[#F0F0F0] bg-white hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200"
             >
-              <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600">
+              <div className="p-2 rounded-2xl bg-emerald-50 text-emerald-600">
                 <action.icon className="w-5 h-5" />
               </div>
               <span className="text-sm font-medium text-[#131517]">{t(action.labelKey)}</span>
@@ -98,7 +98,7 @@ export default function DashboardPage() {
             {t('viewAll')}
           </Link>
         </div>
-        <div className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden">
+        <div className="rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden">
           <table className="w-full">
             <thead>
               <tr className="border-b border-[#F0F0F0]">
@@ -151,7 +151,7 @@ export default function DashboardPage() {
             {t('viewAll')}
           </Link>
         </div>
-        <div className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden">
+        <div className="rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden">
           <table className="w-full">
             <thead>
               <tr className="border-b border-[#F0F0F0]">

@@ -701,6 +701,323 @@
       "trustedRecords": "可信记录"
     }
   },
+  "admin": {
+    "community": "社群",
+    "backToLanding": "返回首页",
+    "search": "搜索",
+    "dashboard": "总览",
+    "dashboardSubtitle": "AdventureX Community 运营概览",
+    "members": "成员管理",
+    "membersSubtitle": "管理社群成员及其发言权",
+    "contributionsSubtitle": "审核成员贡献并分配发言权",
+    "proposals": "投票管理",
+    "proposalsSubtitle": "创建和管理社群投票",
+    "trustedRecords": "可信记录",
+    "trustedRecordsSubtitle": "查看链上公开可信记录",
+    "management": "管理",
+    "chat": "聊天",
+    "chatSubtitle": "与社群成员聊天",
+    "conversations": "会话",
+    "online": "在线",
+    "typeMessage": "输入消息...",
+    "send": "发送",
+    "addMember": "添加成员",
+    "distributeVP": "分配发言权",
+    "createProposal": "创建投票",
+    "generateReport": "生成报告",
+    "quickActions": "快捷操作",
+    "recentContributions": "最近贡献",
+    "viewAll": "查看全部",
+    "member": "成员",
+    "contribution": "贡献",
+    "status": "状态",
+    "voicePower": "发言权",
+    "proposalTitle": "投票标题",
+    "voters": "投票人数",
+    "deadline": "截止时间",
+    "totalVoicePower": "总发言权",
+    "activeProposals": "进行中投票",
+    "todayContributions": "今日贡献",
+    "searchMembers": "搜索成员...",
+    "memberName": "姓名",
+    "role": "角色",
+    "contributions": "贡献数",
+    "tags": "标签",
+    "joinedAt": "加入时间",
+    "actions": "操作",
+    "type": "类型",
+    "aiSuggestion": "AI 建议",
+    "date": "日期",
+    "viewDetails": "查看详情",
+    "approve": "批准",
+    "reject": "驳回",
+    "aiAnalysis": "AI 分析",
+    "all": "全部",
+    "pending": "待审核",
+    "approved": "已批准",
+    "rejected": "已驳回",
+    "proposalTitlePlaceholder": "请输入投票问题",
+    "description": "描述",
+    "descriptionPlaceholder": "请描述投票背景",
+    "options": "选项",
+    "create": "创建",
+    "cancel": "取消",
+    "endVote": "结束投票",
+    "viewOnChain": "查看链上",
+    "delete": "删除",
+    "draft": "草稿",
+    "active": "进行中",
+    "ended": "已结束",
+    "recorded": "已记录",
+    "weighted": "按权重",
+    "onePersonOneVote": "一人一票",
+    "backToMembers": "返回成员列表",
+    "backToProposals": "返回投票列表",
+    "changeRole": "变更角色",
+    "addContribution": "添加贡献",
+    "memberInfo": "成员信息",
+    "contributionHistory": "贡献历史",
+    "totalContributions": "总贡献",
+    "earnedVP": "已获得发言权",
+    "joined": "加入",
+    "lastActive": "最近活跃",
+    "started": "开始时间",
+    "voteResults": "投票结果",
+    "winning": "领先",
+    "trustedRecord": "可信记录",
+    "generateTrustedRecord": "生成可信记录",
+    "aiSummary": "AI 摘要",
+    "deleteProposalConfirm": "删除投票?",
+    "deleteProposalWarning": "此操作无法撤销。该投票及所有投票将被永久删除。",
+    "contributionCount": "贡献数",
+    "roleOwner": "所有者",
+    "roleManager": "管理员",
+    "roleMember": "成员",
+    "memberNotFound": "未找到成员",
+    "invalidVoicePower": "请输入有效的发言权数值。",
+    "voicePowerUpdated": "发言权已更新为 {{value}}",
+    "roleChangedTo": "角色已更改为 {{role}}",
+    "changeToRole": "更改为 {{role}}",
+    "save": "保存",
+    "noContributionsYet": "暂无贡献",
+    "contributionApproved": "贡献已批准。发言权已分配给成员。",
+    "contributionRejected": "贡献已驳回。",
+    "voteEnded": "投票已结束。将生成可信记录。",
+    "proposalDeleted": "投票已删除。",
+    "proposalNotFound": "未找到投票",
+    "generatingRecord": "正在生成可信记录...",
+    "totalVP": "总发言权",
+    "dataHash": "数据哈希",
+    "txHash": "交易哈希",
+    "recordTypeCommunity": "社群",
+    "recordTypeRule": "规则版本",
+    "recordTypeVpBatch": "发言权批次",
+    "recordTypeProposal": "投票",
+    "recordTypeVoteResult": "投票结果",
+    "recordStatusPending": "待处理",
+    "recordStatusRecording": "记录中",
+    "recordStatusRecorded": "已记录",
+    "recordStatusFailed": "失败",
+    "recordFieldCommunity": "社群",
+    "recordFieldNetwork": "网络",
+    "recordFieldCreated": "创建时间",
+    "recordFieldRecordedOnChain": "链上记录时间",
+    "optionA": "选项 A",
+    "optionB": "选项 B",
+    "optionC": "选项 C",
+    "noConversationSelected": "选择一个会话开始聊天",
+    "tasks": "任务",
+    "tasksSubtitle": "管理任务并追踪进度",
+    "createTask": "创建任务",
+    "taskTitle": "任务标题",
+    "assignee": "负责人",
+    "priority": "优先级",
+    "dueDate": "截止日期",
+    "markComplete": "标记完成",
+    "cancelItem": "取消",
+    "priorityHigh": "高",
+    "priorityMedium": "中",
+    "priorityLow": "低",
+    "inProgress": "进行中",
+    "completed": "已完成",
+    "cancelled": "已取消",
+    "activities": "活动",
+    "activitiesSubtitle": "管理社群活动和事件",
+    "createActivity": "创建活动",
+    "activityTitle": "活动标题",
+    "activityType": "类型",
+    "participants": "参与人数",
+    "startTime": "开始时间",
+    "endTime": "结束时间",
+    "location": "地点",
+    "activityTypeMeetup": "聚会",
+    "activityTypeWorkshop": "工作坊",
+    "activityTypeHackathon": "黑客松",
+    "activityTypeSocial": "社交",
+    "activityTypeOther": "其他",
+    "upcoming": "即将开始",
+    "ongoing": "进行中"
+  },
+  "records": {
+    "title": "可信记录中心",
+    "subtitle": "所有重要的社群决策和操作，公开可验证，记录在链上。",
+    "filter": {
+      "all": "全部",
+      "token": "Token",
+      "votes": "投票",
+      "rules": "规则",
+      "epoch": "周期"
+    },
+    "kind": {
+      "tokenMint": "Token 铸造",
+      "proposalResult": "投票结果",
+      "epochSummary": "周期汇总",
+      "advanceMint": "预支铸造",
+      "tokenReversal": "Token 撤回",
+      "policyVersion": "规则版本"
+    },
+    "status": {
+      "verified": "已验证",
+      "pending": "等待中",
+      "submitting": "提交中",
+      "confirming": "确认中",
+      "failed": "失败",
+      "superseded": "已被替代"
+    },
+    "vote": {
+      "approval": "支持率",
+      "turnout": "参与率：{voters}/{total}（{pct}%）"
+    },
+    "demo": {
+      "r6": {
+        "title": "社群 Token 分发 — 第 6 批",
+        "summary": "本月活跃贡献者的发言权 token 批次。正在等待网络确认。"
+      },
+      "r5": {
+        "title": "投票 #5：社群聚会预算",
+        "summary": "成员投票决定为夏季聚会分配 2,000 USDC。62% 支持率，已上链记录。"
+      },
+      "r4": {
+        "title": "周期 #4 汇总 — 2026 年 6 月",
+        "summary": "自动周期结算：贡献快照、发言权结转及下一周期配置。"
+      },
+      "r3": {
+        "title": "预支铸造 — 新成员欢迎奖励",
+        "summary": "运营者发起预支铸造，向 12 名新成员分发初始发言权。"
+      },
+      "r2": {
+        "title": "社群 Token 分发 — 第 2 批",
+        "summary": "第二批月度发言权 token，分发给已验证贡献者。已链上验证。"
+      },
+      "r9": {
+        "title": "Token 撤回 — 重复批次更正",
+        "summary": "撤回第 5 批意外重复铸造的 token。运营者更正操作，已验证。"
+      },
+      "r1": {
+        "title": "社群 Token 分发 — 第 1 批（已被替代）",
+        "summary": "最初的第一批分发，后被包含更新贡献数据的更正版本替代。"
+      },
+      "r0": {
+        "title": "规则 v1.0 — 社群创始规则",
+        "summary": "创始治理规则：贡献类别、发言权计算公式及投票门槛。"
+      },
+      "r7": {
+        "title": "投票 #3：社群 Logo 重新设计",
+        "summary": "成员对三个 Logo 方案进行投票。方案 B 以 58% 支持率获胜。已上链记录。"
+      },
+      "r8": {
+        "title": "规则 v1.1 — 投票门槛更新",
+        "summary": "更新治理规则：将常规提案的法定人数从 20% 降低至 15%。"
+      }
+    },
+    "journey": {
+      "recorded": {
+        "title": "记录已提交",
+        "desc": "内容已写入账本。"
+      },
+      "fingerprint": {
+        "title": "指纹已生成",
+        "desc": "为这条记录创建了唯一哈希。"
+      },
+      "stamped": {
+        "title": "已链上存证",
+        "desc": "指纹已记录在 Injective 链上。"
+      },
+      "checkable": {
+        "title": "可公开查验",
+        "desc": "任何人都可以验证指纹。"
+      },
+      "supersededNote": "此记录已被新版本替代。原始指纹保留在链上以供审计。"
+    },
+    "archive": {
+      "title": "链上存档",
+      "fingerprint": "记录指纹",
+      "txRef": "交易参考",
+      "block": "区块",
+      "blockValue": "第 {page} 页",
+      "pendingValue": "等待中",
+      "sealedAt": "封存时间",
+      "network": "网络",
+      "networkValue": "Injective 测试网",
+      "copy": "复制",
+      "copied": "已复制",
+      "authTitle": "授权信息",
+      "authApprovers": "经 {count} 个运营者签名批准。",
+      "authChecks": "提交前校验通过：",
+      "authNoChecks": "授权详情暂未提供。",
+      "checkLabel": {
+        "contentFormat": "格式校验",
+        "hashMatch": "哈希匹配",
+        "roleAuth": "角色授权"
+      },
+      "demoNote": "演示模式 — 使用真实交易哈希可跳转到浏览器查看。"
+    },
+    "verify": {
+      "invite": "亲自试试：按下面的步骤重复验证过程。",
+      "button": "立即验证",
+      "steps": {
+        "reading": "读取链上数据",
+        "hashing": "计算本地哈希",
+        "comparing": "比对指纹"
+      },
+      "matchTitle": "指纹匹配",
+      "matchDesc": "链上指纹与本地记录一致。此记录自封存以来未被篡改。"
+    },
+    "guide": {
+      "toggle": "如何自行验证？",
+      "intro": "你可以在 Blockscout 区块链浏览器上独立查验一条记录，共三步：",
+      "s1": "打开区块链浏览器，用交易哈希找到对应交易。",
+      "s2": "查看交易输入数据 — 里面包含记录指纹。",
+      "s3": "与上面显示的指纹逐字比对，必须完全一致。",
+      "open": "打开 Blockscout 浏览器"
+    },
+    "chain": {
+      "title": "实时账本状态",
+      "liveTag": "实时",
+      "live": "Injective 账本至今已写到第 {pages} 页，大约每 {seconds} 秒翻新一页。",
+      "fallback": "Injective 账本正在运行，大约每秒写一页新记录，每一页都是永久的。",
+      "open": "打开 Blockscout",
+      "engineerNote": "工程师备注：数据来自 Blockscout 公开统计 API"
+    }
+  },
+  "testimonials": {
+    "title": "用户评价",
+    "subtitle": "看看用户怎么说",
+    "items": [
+      {"name": "张伟", "handle": "@zhangwei_dev", "content": "有份真的解决了我们社群的痛点！成员的贡献终于能被量化，大家参与的积极性明显提高了 🎉"},
+      {"name": "李明", "handle": "@liming_community", "content": "无代码就能搞定社群治理，这个产品太适合我们这种非技术背景的社群组织者了！AI生成规则功能超好用 👍"},
+      {"name": "王芳", "handle": "@wangfang_dao", "content": "投票系统特别透明，按贡献加权的机制很公平。我们社群用了两周，成员满意度大幅提升！"},
+      {"name": "陈晨", "handle": "@chenchen_web3", "content": "时间线功能让社群历史一目了然，新成员能快速了解社群发展脉络。产品体验很棒！"},
+      {"name": "刘洋", "handle": "@liuyang_nft", "content": "有份的AI推荐功能真的很智能，能根据成员的历史贡献推荐合适的任务，提高了参与效率。"},
+      {"name": "赵静", "handle": "@zhaojing_design", "content": "界面设计简洁优雅，用户体验非常流畅。作为设计师，我很欣赏这种注重细节的产品！"},
+      {"name": "孙浩", "handle": "@sunhao_tech", "content": "发言权管理让社群更加民主，每个人都有话语权。贡献越多，影响力越大，这很合理！"},
+      {"name": "周琳", "handle": "@zhoulin_dao", "content": "社群成员参与度明显提高了，大家都很积极。任务分配也变得更加高效了 💪"},
+      {"name": "吴强", "handle": "@wuqiang_web3", "content": "投票结果公开透明，增强了成员之间的信任。这是我用过最好的社群治理工具！"},
+      {"name": "郑雪", "handle": "@zhengxue_crypto", "content": "从零开始搭建社群治理体系，有份让这一切变得简单。强烈推荐！✨"},
+      {"name": "马超", "handle": "@machao_builder", "content": "真的很棒！"},
+      {"name": "林静", "handle": "@linjing_dao", "content": "我们社群使用有份后，成员之间的协作效率提升了至少30%。任务分配更加合理，每个人都能发挥自己的长处。特别是AI推荐系统，真的很智能！"}
+    ]
+  },
   "auth": {
     "signIn": "登录",
     "signUp": "注册",

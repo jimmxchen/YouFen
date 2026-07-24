@@ -47,11 +47,11 @@ export function ChatRoomBrowser({ rooms, baseHref, labels }: ChatRoomBrowserProp
 
   return (
     <>
-      <section className="rounded-xl border border-[#F0F0F0] bg-white p-4">
+      <section className="rounded-2xl border border-[#F0F0F0] bg-white p-4">
         <label htmlFor="chat-list-search" className="sr-only">
           {labels.searchChats}
         </label>
-        <div className="flex min-h-11 items-center gap-2 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
+        <div className="flex min-h-11 items-center gap-2 rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
           <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
           <input
             id="chat-list-search"

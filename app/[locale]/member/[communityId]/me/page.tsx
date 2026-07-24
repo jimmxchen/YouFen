@@ -37,11 +37,27 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
         </p>
       </header>
 
-      <div className="grid gap-5 px-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:px-0">
+      <div className="px-5 lg:px-0">
+        <VoicePowerCard
+          voicePower={member.voicePower}
+          locale={locale}
+          labels={{
+            title: t('voicePower.title'),
+            active: t('voicePower.active'),
+            pending: t('voicePower.pending'),
+            rank: t('voicePower.rank', { rank: member.voicePower.rankPercent }),
+            earnedThisMonth: t('voicePower.earnedThisMonth', {
+              amount: formatNumber(member.voicePower.earnedThisMonth, locale),
+            }),
+          }}
+        />
+      </div>
+
+      <div className="grid gap-5 px-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:px-0 mt-5">
         <aside className="space-y-4 lg:sticky lg:top-24">
           <section className={memberCard}>
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
                 {member.avatarInitials}
               </div>
               <div className="min-w-0">
@@ -59,20 +75,6 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
               ))}
             </div>
           </section>
-
-          <VoicePowerCard
-            voicePower={member.voicePower}
-            locale={locale}
-            labels={{
-              title: t('voicePower.title'),
-              active: t('voicePower.active'),
-              pending: t('voicePower.pending'),
-              rank: t('voicePower.rank', { rank: member.voicePower.rankPercent }),
-              earnedThisMonth: t('voicePower.earnedThisMonth', {
-                amount: formatNumber(member.voicePower.earnedThisMonth, locale),
-              }),
-            }}
-          />
 
           <MemberProfileActions
             contributeHref={`/${locale}/member/${communityId}/contribute`}
