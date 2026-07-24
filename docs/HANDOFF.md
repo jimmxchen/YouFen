@@ -39,7 +39,7 @@
 
 ## 2. 基础设施供给
 
-- **Postgres**：创建库后运行 `pnpm prisma migrate dev`（本仓库只跑过 `generate`/`validate`，**从未建过表**）。
+- **Postgres**：**本地开发库已建**（`localhost:5432/youfen`），全部 5 个迁移已应用（含 v0.7 的 `20260724010000_v07_protocol_models`，13 张协议执行表）。**生产库尚未供给**——需一个托管 Postgres（Supabase / Neon / Railway Postgres），用 `npm run prisma:generate` 后 `npx prisma migrate deploy` 应用迁移（生产用 deploy，不用 dev）。
 - **Redis**：BullMQ 用；worker 连接要求 `maxRetriesPerRequest: null`（代码已设置）。
 - **worker 宿主**：`scripts/worker.ts` 是常驻进程（含优雅停机），部署到 Railway / Fly / Render 等长驻主机。**不能跑在 Vercel serverless**——跑在那里上链会静默不执行。
 - **Web（Next.js）**：Vercel 即可；Web 进程不需要也不应持有 `BLOCKCHAIN_PRIVATE_KEY`。
