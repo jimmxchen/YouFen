@@ -84,10 +84,10 @@ export default async function MemberVoteDetailPage({ params }: MemberVoteDetailP
           votable={proposal.status === 'active'}
           initialVotedOptionId={proposal.votedOptionId}
           labels={{
-            votesLabel: (count) => t('vote.voters', { count }),
+            votesLabelTemplate: t.raw('vote.voters'),
             castVote: t('vote.castVote'),
             voteCast: t('vote.voteCast'),
-            voteCastBody: (optionText) => t('vote.voteCastBody', { option: optionText }),
+            voteCastBodyTemplate: t.raw('vote.voteCastBody'),
             votingUpcoming: t('vote.votingUpcoming'),
           }}
         />
