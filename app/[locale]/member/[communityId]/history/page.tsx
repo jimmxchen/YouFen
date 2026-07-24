@@ -1,5 +1,5 @@
 import { redirectToMemberMe, type MemberRouteParams } from '../legacy-redirects'
 
-export default function MemberHistoryPage(props: MemberRouteParams) {
-  redirectToMemberMe(props)
+export default async function MemberHistoryPage(props: MemberRouteParams) {
+  await redirectToMemberMe(props)
 }
