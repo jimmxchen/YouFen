@@ -603,7 +603,6 @@
       "open": "Open the notary site",
       "engineerNote": "Engineer's tool, English UI — it's fine not to understand it; use the “how to verify” guide inside each record"
     }
-    "optionC": "Option C"
   },
   "auth": {
     "signIn": "Sign in",
