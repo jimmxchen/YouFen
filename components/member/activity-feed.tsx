@@ -4,6 +4,10 @@ import { memberCard, memberIconWell, memberMuted, memberSubtle } from '@/compone
 
 interface ActivityFeedProps {
   items: MemberActivityItem[]
+  labels: {
+    emptyTitle: string
+    emptyBody: string
+  }
 }
 
 function iconFor(type: MemberActivityItem['type']) {
@@ -22,7 +26,16 @@ function toneFor(type: MemberActivityItem['type']) {
   return 'bg-gray-100 text-[#525252]'
 }
 
-export function ActivityFeed({ items }: ActivityFeedProps) {
+export function ActivityFeed({ items, labels }: ActivityFeedProps) {
+  if (items.length === 0) {
+    return (
+      <div className={memberCard}>
+        <h2 className="text-xl font-semibold text-[#131517]">{labels.emptyTitle}</h2>
+        <p className={`mt-2 text-sm leading-6 ${memberMuted}`}>{labels.emptyBody}</p>
+      </div>
+    )
+  }
+
   return (
     <section className="space-y-3">
       {items.map((item) => {

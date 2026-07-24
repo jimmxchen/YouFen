@@ -77,7 +77,7 @@ export function MemberHeader({ member }: MemberHeaderProps) {
         title: t("header.notificationVoteEndingSoon"),
         description: `${p.title} (${p.endsAt})`,
         createdAt: p.endsAt,
-        href: p.href,
+        href: `${baseHref}${p.href}`,
       }))
 
     const fromContributions = member.contributions
@@ -137,7 +137,7 @@ export function MemberHeader({ member }: MemberHeaderProps) {
         category: t("header.categoryVotes"),
         label: p.title,
         sublabel: p.description,
-        href: p.href,
+        href: `${baseHref}${p.href}`,
       }))
 
     const chatResults = member.chatRooms

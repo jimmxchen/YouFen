@@ -8,9 +8,10 @@ import {
   Image as ImageIcon,
   Users,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ChatRoom } from '@/types/member'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
+import { getChatMuted, setChatMuted } from '@/lib/member/local-mutes'
 
 interface ChatSettingsViewProps {
   room: ChatRoom
@@ -32,6 +33,18 @@ interface ChatSettingsViewProps {
 
 export function ChatSettingsView({ room, locale, communityId, labels }: ChatSettingsViewProps) {
   const [isMuted, setIsMuted] = useState(room.muted)
+
+  useEffect(() => {
+    setIsMuted(getChatMuted(communityId, room.id, room.muted))
+  }, [communityId, room.id, room.muted])
+
+  function toggleMuted() {
+    setIsMuted((current) => {
+      const next = !current
+      setChatMuted(communityId, room.id, next)
+      return next
+    })
+  }
 
   return (
     <div className="mx-auto w-full max-w-3xl px-5 pb-28 pt-5 lg:px-0 lg:pt-0">
@@ -68,7 +81,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
       <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <button
           type="button"
-          onClick={() => setIsMuted((current) => !current)}
+          onClick={toggleMuted}
           className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-[#525252]">

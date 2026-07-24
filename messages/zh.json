@@ -371,7 +371,9 @@
       "voteNow": "去投票",
       "myVoice": "我的发言权",
       "viewMyRecord": "查看我的记录",
-      "recentActivity": "最近动态"
+      "recentActivity": "最近动态",
+      "activityEmptyTitle": "暂无最近动态",
+      "activityEmptyBody": "新的贡献和记录会显示在这里。"
     },
     "event": {
       "title": "活动详情",
@@ -464,7 +466,9 @@
       "castVote": "提交投票",
       "voteCast": "投票已提交",
       "voteCastBody": "你投给了「{option}」。",
-      "votingUpcoming": "投票开始后即可参与。"
+      "votingUpcoming": "投票开始后即可参与。",
+      "emptyTitle": "暂无进行中的投票",
+      "emptyBody": "目前没有需要表决的投票。社群发起新决策时再回来看看。"
     },
     "me": {
       "title": "我的",

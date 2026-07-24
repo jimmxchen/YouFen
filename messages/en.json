@@ -371,7 +371,9 @@
       "voteNow": "Vote now",
       "myVoice": "My voice",
       "viewMyRecord": "View my record",
-      "recentActivity": "Recent activity"
+      "recentActivity": "Recent activity",
+      "activityEmptyTitle": "No recent activity",
+      "activityEmptyBody": "New contributions and records will show up here."
     },
     "event": {
       "title": "Event details",
@@ -464,7 +466,9 @@
       "castVote": "Cast vote",
       "voteCast": "Vote cast",
       "voteCastBody": "You voted for \"{option}\".",
-      "votingUpcoming": "Voting opens once this poll goes active."
+      "votingUpcoming": "Voting opens once this poll goes active.",
+      "emptyTitle": "No active votes",
+      "emptyBody": "There are no votes to weigh in on right now. Check back when the community opens a new decision."
     },
     "me": {
       "title": "Me",
