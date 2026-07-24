@@ -222,7 +222,14 @@
     "markComplete": "标记完成",
     "cancelItem": "取消",
     "activeTasks": "进行中任务",
-    "upcomingActivities": "即将开始活动"
+    "upcomingActivities": "即将开始活动",
+    "chat": "聊天",
+    "chatSubtitle": "直接与成员沟通",
+    "conversations": "对话",
+    "typeMessage": "输入消息...",
+    "send": "发送",
+    "noConversationSelected": "选择一个对话开始聊天",
+    "online": "在线"
   },
   "testimonials": {
     "title": "用户评价",

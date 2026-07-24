@@ -94,7 +94,7 @@ export interface DashboardStats {
   upcomingActivities: number
 }
 
-export type AdminView = 'dashboard' | 'members' | 'contributions' | 'proposals' | 'records' | 'management'
+export type AdminView = 'dashboard' | 'members' | 'contributions' | 'proposals' | 'records' | 'management' | 'chat'
 
 export interface Task {
   id: string
@@ -129,3 +129,22 @@ export interface Activity {
 export type ActivityStatus = 'upcoming' | 'ongoing' | 'completed' | 'cancelled'
 
 export type ActivityType = 'meetup' | 'workshop' | 'hackathon' | 'social' | 'other'
+
+export interface ChatConversation {
+  id: string
+  memberId: string
+  memberName: string
+  lastMessage: string
+  lastMessageAt: string
+  unreadCount: number
+}
+
+export interface ChatMessage {
+  id: string
+  conversationId: string
+  senderId: string
+  senderName: string
+  isAdmin: boolean
+  content: string
+  createdAt: string
+}
