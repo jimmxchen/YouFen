@@ -45,7 +45,7 @@ export default function SignInPage() {
     setError("")
     setLoading(true)
     setLoading(false)
-    router.push("/admin")
+    router.push("/choose-role")
   }
 
   return (
