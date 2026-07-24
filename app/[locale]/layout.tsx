@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
+import { Inter } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
@@ -11,24 +11,8 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
-const customFont = localFont({
-  src: [
-    {
-      path: '../../public/font/BUAFC2XP3YCVWDC5LF3GWTKRIOZXURVB.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../public/font/ITOtz0GJh0f4Y4Fu3osXqgXYuAw.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../../public/font/6Q6YTQSA7J7EBIZ4AJJG7JJSMMDPZUW6.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-  ],
+const customFont = Inter({
+  subsets: ['latin'],
   variable: '--font-custom',
   display: 'swap',
 })
