@@ -11,6 +11,8 @@ interface PollOptionBarProps {
   selected?: boolean
   interactive?: boolean
   disabled?: boolean
+  /** Whether the relative percentage/fill is safe to reveal (e.g. after the viewer has voted). */
+  showResults?: boolean
   onSelect?: () => void
 }
 
@@ -26,6 +28,7 @@ export function PollOptionBar({
   selected = false,
   interactive = false,
   disabled = false,
+  showResults = true,
   onSelect,
 }: PollOptionBarProps) {
   return (
@@ -48,15 +51,20 @@ export function PollOptionBar({
           className={cn(
             'absolute inset-y-0 left-0 transition-all duration-500',
             isWinning ? 'bg-gradient-to-r from-emerald-100 to-green-50' : 'bg-[#EFEFEF]',
+            !showResults && 'blur-sm',
           )}
-          style={{ width: `${pct}%` }}
+          style={{ width: `${showResults ? pct : 100}%` }}
         />
         <div className="relative flex h-full items-center justify-between gap-3 px-4">
           <span className="truncate text-sm font-medium text-[#131517]/30">{text}</span>
-          <span className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-[#131517]">
-            {selected && <Check className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />}
-            {pct}%
-          </span>
+          {showResults ? (
+            <span className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-[#131517]">
+              {selected && <Check className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />}
+              {pct}%
+            </span>
+          ) : (
+            selected && <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" aria-hidden="true" />
+          )}
         </div>
       </button>
       {meta ? <p className="px-1 text-xs text-[#939597]">{meta}</p> : null}
