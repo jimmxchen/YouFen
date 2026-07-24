@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { ArrowLeft, BellOff, ImagePlus, Info, Search, SendHorizonal, Smile, X } from 'lucide-react'
-import { useMemo, useState } from 'react'
-import type { ChatRoom } from '@/types/member'
+import { useMemo, useRef, useState } from 'react'
+import type { ChatMessage, ChatRoom } from '@/types/member'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
 
 interface ChatRoomViewProps {
@@ -25,24 +25,76 @@ interface ChatRoomViewProps {
     addImage: string
     addReaction: string
     settings: string
+    imageShared: string
+    reactionSuffix: string
   }
 }
 
 export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomViewProps) {
   const [showSearch, setShowSearch] = useState(false)
   const [query, setQuery] = useState('')
+  const [messages, setMessages] = useState(room.messages)
+  const [draft, setDraft] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const normalizedQuery = query.trim().toLowerCase()
   const matches = useMemo(() => {
     if (!normalizedQuery) return []
 
-    return room.messages.filter((message) =>
+    return messages.filter((message) =>
       [message.author, message.role, message.body].some((value) =>
         value.toLowerCase().includes(normalizedQuery)
       )
     )
-  }, [normalizedQuery, room.messages])
-  const pinnedMessage = room.messages.find((message) => message.isOperator)
+  }, [normalizedQuery, messages])
+  const pinnedMessage = messages.find((message) => message.isOperator)
   const baseHref = `/${locale}/member/${communityId}`
+  const currentMember = room.messages.find((message) => message.isCurrentMember)
+  const currentMemberName = currentMember?.author ?? 'You'
+  const currentMemberRole = currentMember?.role ?? 'Member'
+  const currentMemberInitials = currentMember?.avatarInitials ?? 'YO'
+
+  function createCurrentMemberMessage(body: string): ChatMessage {
+    return {
+      id: `local-${Date.now()}`,
+      author: currentMemberName,
+      role: currentMemberRole,
+      avatarInitials: currentMemberInitials,
+      body,
+      createdAt: new Intl.DateTimeFormat(locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }).format(new Date()),
+      isCurrentMember: true,
+    }
+  }
+
+  function sendMessage() {
+    const body = draft.trim()
+    if (!body) return
+
+    setMessages((current) => [...current, createCurrentMemberMessage(body)])
+    setDraft('')
+  }
+
+  function addImage(fileName: string) {
+    setMessages((current) => [
+      ...current,
+      createCurrentMemberMessage(`${labels.imageShared} ${fileName}`),
+    ])
+  }
+
+  function addReaction() {
+    setMessages((current) => {
+      if (current.length === 0) return current
+
+      return current.map((message, index) =>
+        index === current.length - 1
+          ? { ...message, reactions: (message.reactions ?? 0) + 1 }
+          : message
+      )
+    })
+  }
 
   return (
     <>
@@ -50,12 +102,12 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
         <div className="flex items-center gap-2">
           <Link
             href={`${baseHref}/chat`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#525252] hover:bg-[#FAFAFA]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-[#525252] transition-all hover:bg-[#FAFAFA]"
             aria-label={labels.back}
           >
             <ArrowLeft className="h-5 w-5" aria-hidden="true" />
           </Link>
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-sm font-semibold text-white">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-sm font-semibold text-white">
             {room.avatarInitials}
           </div>
           <div className="min-w-0 flex-1">
@@ -66,7 +118,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
           </div>
           <button
             type="button"
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all ${
               showSearch ? 'bg-[#131517] text-white' : 'text-[#525252] hover:bg-[#FAFAFA]'
             }`}
             aria-label={labels.search}
@@ -76,7 +128,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
           </button>
           <Link
             href={`${baseHref}/chat/${room.id}/settings`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#525252] hover:bg-[#FAFAFA]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-[#525252] transition-all hover:bg-[#FAFAFA]"
             aria-label={labels.settings}
           >
             <Info className="h-5 w-5" aria-hidden="true" />
@@ -88,7 +140,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
             <label className="sr-only" htmlFor="chat-search">
               {labels.search}
             </label>
-            <div className="flex min-h-11 items-center gap-2 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4">
+            <div className="flex min-h-11 items-center gap-2 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
               <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
               <input
                 id="chat-search"
@@ -140,7 +192,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
         ) : null}
 
         <div className="space-y-4">
-          {room.messages.map((message) => (
+          {messages.map((message) => (
             <div
               key={message.id}
               className={`flex gap-2 ${message.isCurrentMember ? 'justify-end' : 'justify-start'}`}
@@ -160,7 +212,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
                 ) : null}
 
                 <div
-                  className={`rounded-xl px-4 py-3 text-sm leading-6 ${
+                  className={`rounded-2xl px-4 py-3 text-sm leading-6 ${
                     message.isCurrentMember
                       ? 'rounded-br-md bg-[#DCF8C6] text-[#131517]'
                       : message.isOperator
@@ -177,7 +229,12 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
                   }`}
                 >
                   <span>{message.createdAt}</span>
-                  {message.reactions ? <span>{labels.reactionsByMessageId[message.id]}</span> : null}
+                  {message.reactions ? (
+                    <span>
+                      {labels.reactionsByMessageId[message.id] ??
+                        `${message.reactions}${labels.reactionSuffix}`}
+                    </span>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -186,28 +243,56 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
       </div>
 
       <div className="fixed bottom-[64px] left-1/2 z-30 w-full max-w-md -translate-x-1/2 border-t border-[#F0F0F0] bg-white px-3 py-3 lg:bottom-8 lg:left-[calc(50%+8rem)] lg:w-[calc(100%-20rem)] lg:max-w-3xl lg:rounded-xl lg:border lg:px-4">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="sr-only"
+          onChange={(event) => {
+            const file = event.target.files?.[0]
+            if (file) addImage(file.name)
+            event.target.value = ''
+          }}
+        />
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] text-[#525252]"
+            onClick={() => fileInputRef.current?.click()}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] text-[#525252] transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
             aria-label={labels.addImage}
           >
             <ImagePlus className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex min-h-11 flex-1 items-center rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4 text-sm text-[#939597]">
+          <label className="sr-only" htmlFor="chat-composer">
             {labels.composer}
-          </div>
+          </label>
+          <input
+            id="chat-composer"
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault()
+                sendMessage()
+              }
+            }}
+            placeholder={labels.composer}
+            className="min-h-11 min-w-0 flex-1 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4 text-sm text-[#131517] outline-none placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15"
+          />
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] text-[#525252]"
+            onClick={addReaction}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] text-[#525252] transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
             aria-label={labels.addReaction}
           >
             <Smile className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-white"
+            onClick={sendMessage}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] hover:shadow-md active:translate-y-0 disabled:cursor-not-allowed disabled:bg-[#D4D4D4] disabled:hover:translate-y-0 disabled:hover:bg-[#D4D4D4] disabled:hover:shadow-sm"
             aria-label={labels.send}
+            disabled={!draft.trim()}
           >
             <SendHorizonal className="h-5 w-5" aria-hidden="true" />
           </button>
