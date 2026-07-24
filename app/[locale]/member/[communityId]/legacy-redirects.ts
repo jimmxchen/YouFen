@@ -1,16 +1,18 @@
 import { redirect } from 'next/navigation'
 
 export interface MemberRouteParams {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
-export function redirectToMemberHome({ params }: MemberRouteParams) {
-  redirect(`/${params.locale}/member/${params.communityId}`)
+export async function redirectToMemberHome({ params }: MemberRouteParams) {
+  const { locale, communityId } = await params
+  redirect(`/${locale}/member/${communityId}`)
 }
 
-export function redirectToMemberMe({ params }: MemberRouteParams) {
-  redirect(`/${params.locale}/member/${params.communityId}/me`)
+export async function redirectToMemberMe({ params }: MemberRouteParams) {
+  const { locale, communityId } = await params
+  redirect(`/${locale}/member/${communityId}/me`)
 }

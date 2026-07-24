@@ -5,29 +5,25 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { YouFenLogo } from '@/components/brand/youfen-logo'
+import Image from 'next/image'
+import { useAuth } from '@/components/auth/auth-context'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
-interface NavbarProps {
-  /** 强制亮色导航样式（如登录/注册页，无 hero 背景时使用）。 */
-  forceLight?: boolean
-}
-
-export function Navbar({ forceLight = false }: NavbarProps) {
+export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
   const t = useTranslations('nav');
-  const [scrolledPastHero, setScrolledPastHero] = useState(false)
+  const { user } = useAuth()
+  const [isHeroScrolled, setIsHeroScrolled] = useState(forceLight)
   const [isMounted, setIsMounted] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  // forceLight 恒为亮色态；否则跟随滚动
-  const isLight = forceLight || scrolledPastHero
 
   useEffect(() => {
     setIsMounted(true)
+
     if (forceLight) return
 
     const handleScroll = () => {
       const heroHeight = window.innerHeight
-      setScrolledPastHero(window.scrollY > heroHeight)
+      setIsHeroScrolled(window.scrollY > heroHeight)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -53,7 +49,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
     <motion.nav
       initial={false}
       animate={{
-        backgroundColor: isLight ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 1)',
+        backgroundColor: isHeroScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 1)',
       }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
       className="fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-[20px]"
@@ -64,19 +60,25 @@ export function Navbar({ forceLight = false }: NavbarProps) {
         {/* 左侧：Logo + 功能菜单 */}
         <div className="flex items-center space-x-1">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 mr-4">
-            <YouFenLogo
-              variant={isLight ? 'black' : 'white'}
-              markClassName="h-9 w-9"
-              textClassName={`text-xl transition-colors duration-500 ${isLight ? 'text-[#131517]' : 'text-white'}`}
+          <Link href="/" className="relative flex items-center mr-4 ml-2">
+            <Image
+              src="/YouFen_Logo_White.png"
+              alt="YouFen"
+              width={100}
+              height={32}
+              className="h-8 w-auto transition-opacity duration-500"
+              style={{ opacity: isHeroScrolled ? 0 : 1 }}
+              priority
             />
-            <motion.div
-              animate={{ color: isLight ? '#939597' : '#cccccc' }}
-              transition={{ duration: 0.5 }}
-              className="text-sm hidden sm:block"
-            >
-              {t('logoSub')}
-            </motion.div>
+            <Image
+              src="/YouFen_Logo_Black.png"
+              alt="YouFen"
+              width={100}
+              height={32}
+              className="h-8 w-auto transition-opacity duration-500 absolute"
+              style={{ opacity: isHeroScrolled ? 1 : 0, mixBlendMode: 'multiply' }}
+              priority
+            />
           </Link>
 
           {/* 带下拉菜单的功能链接 */}
@@ -86,7 +88,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
           >
             <button
               className={`px-4 py-2 text-sm font-normal rounded-lg transition-all flex items-center gap-1 ${
-                isLight
+                isHeroScrolled
                   ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
@@ -103,7 +105,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
           >
             <button
               className={`px-4 py-2 text-sm font-normal rounded-lg transition-all flex items-center gap-1 ${
-                isLight
+                isHeroScrolled
                   ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
@@ -116,60 +118,39 @@ export function Navbar({ forceLight = false }: NavbarProps) {
 
         {/* 右侧：其他导航链接 */}
         <div className="flex items-center space-x-1">
-          <Link
-            href="/demo"
-            className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
-              isLight
-                ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
-                : 'text-gray-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            {t('demo')}
-          </Link>
+          <LanguageSwitcher isDark={!isHeroScrolled} />
 
-          <Link
-            href="/admin"
-            className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
-              isLight
-                ? 'text-amber-700 hover:text-amber-900 hover:bg-amber-50'
-                : 'text-amber-300 hover:text-amber-100 hover:bg-white/10'
-            }`}
-          >
-            Admin
-          </Link>
+          {user ? (
+            <Link
+              href="/admin"
+              className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all active:scale-[0.97] ${
+                isHeroScrolled
+                  ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
+                  : 'text-black bg-white hover:bg-gray-100'
+              }`}
+            >
+              {t('dashboard')}
+            </Link>
+          ) : (
+            <Link
+              href="/sign-in"
+              className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all active:scale-[0.97] ${
+                isHeroScrolled
+                  ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
+                  : 'text-black bg-white hover:bg-gray-100'
+              }`}
+            >
+              {t('create')}
+            </Link>
+          )}
 
-          <Link
-            href="/bip"
-            className={`px-4 py-2 text-sm font-normal rounded-lg transition-all ${
-              isLight
-                ? 'text-[#131517] hover:text-[#939597] hover:bg-black/4'
-                : 'text-gray-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            {t('bip')}
-          </Link>
-
-          <Link
-            href="/create"
-            className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all hover:-translate-y-0.5 hover:shadow-lg ${
-              isLight
-                ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
-                : 'text-black bg-white hover:bg-gray-100'
-            }`}
-          >
-            {t('create')}
-          </Link>
-
-          <div className="ml-2">
-            <LanguageSwitcher isDark={!isLight} />
-          </div>
         </div>
       </div>
 
       {/* 底部分割线 */}
       <motion.div
         animate={{
-          backgroundColor: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
+          backgroundColor: isHeroScrolled ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
         }}
         transition={{ duration: 0.5 }}
         className="absolute bottom-0 left-0 right-0 h-[0.5px]"
@@ -185,7 +166,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
             transition={{ duration: 0.2 }}
             className="absolute top-16 left-0 right-0 backdrop-blur-[20px]"
             style={{
-              backgroundColor: isLight ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)',
+              backgroundColor: isHeroScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)',
             }}
           >
             <div className="max-w-7xl mx-auto px-6 py-8">
@@ -195,21 +176,21 @@ export function Navbar({ forceLight = false }: NavbarProps) {
                     key={item.href}
                     href={item.href}
                     className={`p-4 rounded-lg transition-all hover:scale-105 ${
-                      isLight
+                      isHeroScrolled
                         ? 'hover:bg-black/5'
                         : 'hover:bg-white/10'
                     }`}
                   >
                     <div
                       className={`font-medium mb-1 ${
-                        isLight ? 'text-[#131517]' : 'text-white'
+                        isHeroScrolled ? 'text-[#131517]' : 'text-white'
                       }`}
                     >
                       {item.label}
                     </div>
                     <div
                       className={`text-sm ${
-                        isLight ? 'text-[#939597]' : 'text-gray-400'
+                        isHeroScrolled ? 'text-[#939597]' : 'text-gray-400'
                       }`}
                     >
                       {item.description}
@@ -223,7 +204,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
             <div
               className="h-[0.5px]"
               style={{
-                backgroundColor: isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
+                backgroundColor: isHeroScrolled ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)',
               }}
             />
           </motion.div>
