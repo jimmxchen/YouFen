@@ -8,27 +8,30 @@ import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
 interface NavbarProps {
+  /** 强制亮色导航样式（如登录/注册页，无 hero 背景时使用）。 */
   forceLight?: boolean
 }
 
 export function Navbar({ forceLight = false }: NavbarProps) {
   const t = useTranslations('nav');
-  const [isHeroScrolled, setIsHeroScrolled] = useState(false)
+  const [scrolledPastHero, setScrolledPastHero] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const isLight = forceLight || isHeroScrolled
+  // forceLight 恒为亮色态；否则跟随滚动
+  const isHeroScrolled = forceLight || scrolledPastHero
 
   useEffect(() => {
     setIsMounted(true)
+    if (forceLight) return
 
     const handleScroll = () => {
       const heroHeight = window.innerHeight
-      setIsHeroScrolled(window.scrollY > heroHeight)
+      setScrolledPastHero(window.scrollY > heroHeight)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [forceLight])
 
   const dropdownMenus = {
     features: [

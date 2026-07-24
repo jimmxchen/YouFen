@@ -90,6 +90,61 @@ export interface DashboardStats {
   activeProposals: number
   todayContributions: number
   trustedRecords: number
+  activeTasks: number
+  upcomingActivities: number
 }
 
-export type AdminView = 'dashboard' | 'members' | 'contributions' | 'proposals' | 'records'
+export type AdminView = 'dashboard' | 'members' | 'contributions' | 'proposals' | 'records' | 'management' | 'chat'
+
+export interface Task {
+  id: string
+  title: string
+  description: string
+  status: TaskStatus
+  assigneeId: string
+  assigneeName: string
+  priority: TaskPriority
+  dueDate: string
+  createdAt: string
+  completedAt?: string
+}
+
+export type TaskStatus = 'pending' | 'inProgress' | 'completed' | 'cancelled'
+
+export type TaskPriority = 'high' | 'medium' | 'low'
+
+export interface Activity {
+  id: string
+  title: string
+  description: string
+  status: ActivityStatus
+  type: ActivityType
+  participantCount: number
+  startTime: string
+  endTime: string
+  location: string
+  createdAt: string
+}
+
+export type ActivityStatus = 'upcoming' | 'ongoing' | 'completed' | 'cancelled'
+
+export type ActivityType = 'meetup' | 'workshop' | 'hackathon' | 'social' | 'other'
+
+export interface ChatConversation {
+  id: string
+  memberId: string
+  memberName: string
+  lastMessage: string
+  lastMessageAt: string
+  unreadCount: number
+}
+
+export interface ChatMessage {
+  id: string
+  conversationId: string
+  senderId: string
+  senderName: string
+  isAdmin: boolean
+  content: string
+  createdAt: string
+}

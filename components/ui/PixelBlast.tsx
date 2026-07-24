@@ -531,8 +531,8 @@ const PixelBlast = ({
         }
         uniforms.uTime.value = timeOffset + clock.getElapsedTime() * speedRef.current;
         if (liquidEffect) {
-          const liquidTime = liquidEffect.uniforms.get('uTime');
-          if (liquidTime) liquidTime.value = uniforms.uTime.value;
+          const uTime = liquidEffect.uniforms.get('uTime');
+          if (uTime) uTime.value = uniforms.uTime.value;
         }
         if (composer) {
           if (touch) touch.update();
