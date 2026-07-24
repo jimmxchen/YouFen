@@ -1,7 +1,7 @@
 {
   "nav": {
     "logo": "YouFen",
-    "logoSub": "有份儿",
+    "logoSub": "",
     "features": "Features",
     "resources": "Resources",
     "demo": "Demo",
@@ -30,7 +30,7 @@
     "title": "YouFen",
     "subtitle": "Everyone truly has a stake",
     "mainTitle": "No-Code Community Governance",
-    "description": "Turn member contributions into voting power\nLet everyone decide the community's future together"
+    "description": "Turn member contributions into voting power. \nLet everyone decide the community's future together"
   },
   "features": {
     "title": "Core Features",
@@ -72,6 +72,32 @@
       "hybrid": "Hybrid Mode",
       "anonymous": "Anonymous Voting"
     }
+  },
+  "footer": {
+    "brand": "YouFen",
+    "description": "No-code community governance platform — letting every participant truly have a stake.",
+    "poweredBy": "Powered by",
+    "injective": "Injective",
+    "ai": "AI",
+    "products": {
+      "title": "Product",
+      "createCommunity": "Create Community",
+      "viewDemo": "View Demo",
+      "docs": "Documentation"
+    },
+    "about": {
+      "title": "About",
+      "buildInPublic": "Build in Public",
+      "aboutUs": "About Us",
+      "github": "GitHub"
+    },
+    "copyright": "© 2026 YouFen. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "testimonials": {
+    "title": "User Reviews",
+    "subtitle": "See what our users are saying"
   },
   "admin": {
     "community": "Community",
@@ -149,8 +175,10 @@
     "endVote": "End Vote",
     "viewOnChain": "View On-Chain",
     "delete": "Delete",
+    "draft": "Draft",
     "active": "Active",
     "ended": "Ended",
+    "recorded": "Recorded",
     "weighted": "Weighted",
     "onePersonOneVote": "One Person One Vote",
     "roleOwner": "Owner",

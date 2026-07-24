@@ -54,3 +54,15 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# MD Files
+CLAUDE.md 
+AGENTS.md
+
+# YAML Files
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.github/workflows/ci.yml
+
+
+

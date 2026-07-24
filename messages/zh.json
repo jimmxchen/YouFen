@@ -1,7 +1,7 @@
 {
   "nav": {
     "logo": "有份儿",
-    "logoSub": "YouFen",
+    "logoSub": "",
     "features": "功能",
     "resources": "资源",
     "demo": "Demo",
@@ -130,8 +130,10 @@
     "endVote": "结束投票",
     "viewOnChain": "查看链上",
     "delete": "删除",
+    "draft": "草稿",
     "active": "进行中",
     "ended": "已结束",
+    "recorded": "已记录",
     "weighted": "按权重",
     "onePersonOneVote": "一人一票",
     "backToMembers": "返回成员列表",
@@ -188,5 +190,31 @@
     "optionA": "选项 A",
     "optionB": "选项 B",
     "optionC": "选项 C"
+  },
+  "testimonials": {
+    "title": "用户评价",
+    "subtitle": "看看用户怎么说"
+  },
+  "footer": {
+    "brand": "有份儿",
+    "description": "无代码社群共治平台 —— 让每个参与者真正有份儿。",
+    "poweredBy": "由",
+    "injective": "Injective",
+    "ai": "AI",
+    "products": {
+      "title": "产品",
+      "createCommunity": "创建社群",
+      "viewDemo": "查看 Demo",
+      "docs": "使用文档"
+    },
+    "about": {
+      "title": "关于",
+      "buildInPublic": "Build in Public",
+      "aboutUs": "关于我们",
+      "github": "GitHub"
+    },
+    "copyright": "© 2026 YouFen. 保留所有权利。",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
   }
 }
