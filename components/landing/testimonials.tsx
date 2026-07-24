@@ -1,245 +1,152 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
 import { useTranslations } from 'next-intl'
+import { Marquee } from "@/registry/magicui/marquee"
 
-interface TestimonialCardProps {
-  avatar: string;
-  username: string;
-  handle: string;
-  verified?: boolean;
-  badge?: string;
-  title?: string;
-  content: string;
-  image?: string;
-  stats?: {
-    comments?: number;
-    retweets?: number;
-    likes?: number;
-    views?: number;
-  };
-  tweetUrl: string;
-}
-
-function VerifiedBadge() {
-  return (
-    <img
-      src="https://framerusercontent.com/images/ChWiKef1FUFW1Dfe0OumqNzfus.png?width=96&height=96"
-      alt="Verified Badge"
-      className="w-4 h-4 object-contain flex-shrink-0"
-    />
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <div className="hover-arrow-icon absolute top-5 right-5 w-[18px] h-[18px] z-[5] opacity-0 translate-x-[-4px] translate-y-[4px] transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-60 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:hover:opacity-100">
-      <svg viewBox="0 0 24 24" className="w-full h-full stroke-black stroke-2 fill-none" style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}>
-        <line x1="7" y1="17" x2="17" y2="7"></line>
-        <polyline points="7 7 17 7 17 17"></polyline>
-      </svg>
-    </div>
-  );
-}
-
-function TestimonialCard({
-  avatar,
-  username,
-  handle,
-  verified = true,
-  title,
-  content,
-  image,
-  stats,
-  tweetUrl,
-}: TestimonialCardProps) {
-  return (
-    <a
-      href={tweetUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative w-full flex flex-col justify-center bg-white p-5 box-border rounded-2xl border border-gray-200 overflow-hidden cursor-pointer no-underline select-none transition-all hover:shadow-lg"
-      style={{
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        color: 'rgb(0, 0, 0)',
-      }}
-    >
-      <ArrowIcon />
-
-      <div className="flex flex-col gap-[14px] w-full justify-start">
-        {/* User Info */}
-        <div className="flex items-center gap-3 w-full mt-0">
-          <img
-            src={avatar}
-            alt={username}
-            className="w-[42px] h-[42px] rounded-full object-cover"
-          />
-          <div className="flex flex-col flex-1 min-w-0">
-            <div className="flex items-center gap-1 pr-6 max-w-full box-border">
-              <span className="font-bold text-[15px] overflow-hidden text-ellipsis whitespace-nowrap flex-shrink text-black">
-                {username}
-              </span>
-              {verified && (
-                <div className="flex items-center gap-1 flex-shrink-0">
-                  <VerifiedBadge />
-                </div>
-              )}
-            </div>
-            <span className="text-black opacity-60 text-[14px]">{title || handle}</span>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="leading-[1.5] whitespace-pre-wrap break-words text-black relative z-[2] font-normal text-[15px]">
-          {content}
-        </div>
-
-        {/* Image if exists */}
-        {image && (
-          <div className="w-full rounded-xl overflow-hidden border border-[rgba(238,238,238,0.6)] mt-[2px] leading-[0]">
-            <img
-              src={image}
-              alt="Media Content"
-              className="w-full h-auto max-h-[360px] object-cover block"
-            />
-          </div>
-        )}
-
-        {/* Stats */}
-        {stats && (
-          <>
-            <div className="h-[1px] bg-[rgba(238,238,238,0.4)] my-[2px]"></div>
-            <div className="flex flex-wrap gap-6 text-black opacity-60 text-[13.5px]">
-              {stats.comments !== undefined && (
-                <div className="flex items-center gap-[6px]">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-black stroke-2 fill-none opacity-60 block flex-shrink-0" style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}>
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                  </svg>
-                  <span className="font-bold text-black">{stats.comments}</span>
-                </div>
-              )}
-              {stats.retweets !== undefined && (
-                <div className="flex items-center gap-[6px]">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-black stroke-2 fill-none opacity-60 block flex-shrink-0" style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}>
-                    <path d="m17 2 4 4-4 4"></path>
-                    <path d="M3 11v-1a4 4 0 0 1 4-4h14"></path>
-                    <path d="m7 22-4-4 4-4"></path>
-                    <path d="M21 13v1a4 4 0 0 1-4 4H3"></path>
-                  </svg>
-                  <span className="font-bold text-black">{stats.retweets}</span>
-                </div>
-              )}
-              {stats.likes !== undefined && (
-                <div className="flex items-center gap-[6px]">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-black stroke-2 fill-none opacity-60 block flex-shrink-0" style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}>
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-                  </svg>
-                  <span className="font-bold text-black">{stats.likes}</span>
-                </div>
-              )}
-              {stats.views !== undefined && (
-                <div className="flex items-center gap-[6px]">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-black stroke-2 fill-none opacity-60 block flex-shrink-0" style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}>
-                    <path d="M3 3v18h18M18 17V9M13 17V5M8 17v-4"></path>
-                  </svg>
-                  <span className="font-bold text-black">{stats.views}</span>
-                </div>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-    </a>
-  );
-}
-
-// Testimonial data
-const testimonials: TestimonialCardProps[] = [
+const testimonialsData = [
   {
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Zhang",
-    username: "张伟",
+    id: "1",
+    name: "张伟",
     handle: "@zhangwei_dev",
-    title: "技术团队负责人",
-    content: "有份儿真的解决了我们社群的痛点！成员的贡献终于能被量化，大家参与的积极性明显提高了 🎉",
-    tweetUrl: "https://x.com",
-    stats: { comments: 15, retweets: 23, likes: 142, views: 5200 }
+    avatar: "https://avatar.vercel.sh/zhangwei",
+    content: "有份真的解决了我们社群的痛点！成员的贡献终于能被量化，大家参与的积极性明显提高了 🎉",
   },
   {
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Li",
-    username: "李明",
+    id: "2",
+    name: "李明",
     handle: "@liming_community",
-    title: "社区运营专家",
+    avatar: "https://avatar.vercel.sh/liming",
     content: "无代码就能搞定社群治理，这个产品太适合我们这种非技术背景的社群组织者了！AI生成规则功能超好用 👍",
-    tweetUrl: "https://x.com",
-    stats: { comments: 28, retweets: 45, likes: 267, views: 8900 }
   },
   {
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Wang",
-    username: "王芳",
+    id: "3",
+    name: "王芳",
     handle: "@wangfang_dao",
-    title: "DAO创始人",
+    avatar: "https://avatar.vercel.sh/wangfang",
     content: "投票系统特别透明，按贡献加权的机制很公平。我们社群用了两周，成员满意度大幅提升！",
-    tweetUrl: "https://x.com",
-    stats: { comments: 32, retweets: 56, likes: 389, views: 12400 }
   },
   {
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Chen",
-    username: "陈晨",
+    id: "4",
+    name: "陈晨",
     handle: "@chenchen_web3",
-    title: "Web3 开发者",
+    avatar: "https://avatar.vercel.sh/chenchen",
     content: "时间线功能让社群历史一目了然，新成员能快速了解社群发展脉络。产品体验很棒！",
-    tweetUrl: "https://x.com",
-    stats: { comments: 19, retweets: 34, likes: 203, views: 6700 }
   },
   {
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Liu",
-    username: "刘洋",
+    id: "5",
+    name: "刘洋",
     handle: "@liuyang_nft",
-    title: "NFT 社区管理员",
-    content: "有份儿的AI推荐功能真的很智能，能根据成员的历史贡献推荐合适的任务，提高了参与效率。",
-    tweetUrl: "https://x.com",
-    stats: { comments: 41, retweets: 67, likes: 445, views: 15800 }
+    avatar: "https://avatar.vercel.sh/liuyang",
+    content: "有份的AI推荐功能真的很智能，能根据成员的历史贡献推荐合适的任务，提高了参与效率。",
   },
   {
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Zhao",
-    username: "赵静",
+    id: "6",
+    name: "赵静",
     handle: "@zhaojing_design",
-    title: "产品设计师",
+    avatar: "https://avatar.vercel.sh/zhaojing",
     content: "界面设计简洁优雅，用户体验非常流畅。作为设计师，我很欣赏这种注重细节的产品！",
-    tweetUrl: "https://x.com",
-    stats: { comments: 22, retweets: 38, likes: 312, views: 9200 }
   },
-];
+  {
+    id: "7",
+    name: "孙浩",
+    handle: "@sunhao_tech",
+    avatar: "https://avatar.vercel.sh/sunhao",
+    content: "发言权管理让社群更加民主，每个人都有话语权。贡献越多，影响力越大，这很合理！",
+  },
+  {
+    id: "8",
+    name: "周琳",
+    handle: "@zhoulin_dao",
+    avatar: "https://avatar.vercel.sh/zhoulin",
+    content: "社群成员参与度明显提高了，大家都很积极。任务分配也变得更加高效了 💪",
+  },
+  {
+    id: "9",
+    name: "吴强",
+    handle: "@wuqiang_web3",
+    avatar: "https://avatar.vercel.sh/wuqiang",
+    content: "投票结果公开透明，增强了成员之间的信任。这是我用过最好的社群治理工具！",
+  },
+  {
+    id: "10",
+    name: "郑雪",
+    handle: "@zhengxue_crypto",
+    avatar: "https://avatar.vercel.sh/zhengxue",
+    content: "从零开始搭建社群治理体系，有份让这一切变得简单。强烈推荐！✨",
+  },
+  {
+    id: "11",
+    name: "马超",
+    handle: "@machao_builder",
+    avatar: "https://avatar.vercel.sh/machao",
+    content: "真的很棒！",
+  },
+  {
+    id: "12",
+    name: "林静",
+    handle: "@linjing_dao",
+    avatar: "https://avatar.vercel.sh/linjing",
+    content: "我们社群使用有份后，成员之间的协作效率提升了至少30%。任务分配更加合理，每个人都能发挥自己的长处。特别是AI推荐系统，真的很智能！",
+  },
+]
 
-// Main component with masonry layout
+const col1 = testimonialsData.filter((_, i) => i % 5 === 0)
+const col2 = testimonialsData.filter((_, i) => i % 5 === 1)
+const col3 = testimonialsData.filter((_, i) => i % 5 === 2)
+const col4 = testimonialsData.filter((_, i) => i % 5 === 3)
+const col5 = testimonialsData.filter((_, i) => i % 5 === 4)
+
+function Card({ item }: { item: (typeof testimonialsData)[0] }) {
+  return (
+    <div className="mb-3 rounded-2xl bg-white p-5 border border-gray-100 shadow-sm">
+      <div className="flex items-center gap-3 mb-3">
+        <img src={item.avatar} alt={item.name} className="size-10 rounded-full" />
+        <div>
+          <div className="font-bold text-[15px] text-[#0F1419]">{item.name}</div>
+          <div className="text-[14px] text-[#536471]">{item.handle}</div>
+        </div>
+      </div>
+      <p className="text-[15px] leading-relaxed text-[#0F1419]">{item.content}</p>
+    </div>
+  )
+}
+
 export function Testimonials() {
   const t = useTranslations('testimonials')
 
-  // Split testimonials into five columns for masonry layout
-  const columns = [
-    testimonials.filter((_, index) => index % 5 === 0),
-    testimonials.filter((_, index) => index % 5 === 1),
-    testimonials.filter((_, index) => index % 5 === 2),
-    testimonials.filter((_, index) => index % 5 === 3),
-    testimonials.filter((_, index) => index % 5 === 4),
-  ];
-
   return (
-    <div className="w-full py-20 px-6 bg-gray-100">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative w-full py-24 overflow-hidden bg-white">
+      <div className="max-w-7xl mx-auto mb-14 px-6">
         <h2 className="text-4xl font-bold text-center mb-4 text-black">{t('title')}</h2>
-        <p className="text-center text-gray-600 mb-12">{t('subtitle')}</p>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {columns.map((columnItems, colIndex) => (
-            <div key={`col-${colIndex}`} className="flex flex-col gap-5">
-              {columnItems.map((testimonial, index) => (
-                <TestimonialCard key={`col${colIndex}-${index}`} {...testimonial} />
-              ))}
-            </div>
-          ))}
-        </div>
+        <p className="text-center text-gray-500 text-lg">{t('subtitle')}</p>
       </div>
-    </div>
-  );
+
+      <div className="relative flex h-[580px] w-full flex-row items-start justify-center overflow-hidden px-2">
+        <Marquee pauseOnHover vertical repeat={5} className="[--duration:28s]">
+          {col1.map((item) => <Card key={item.id} item={item} />)}
+        </Marquee>
+
+        <Marquee reverse pauseOnHover vertical repeat={5} className="[--duration:24s]">
+          {col2.map((item) => <Card key={item.id} item={item} />)}
+        </Marquee>
+
+        <Marquee pauseOnHover vertical repeat={5} className="[--duration:26s]">
+          {col3.map((item) => <Card key={item.id} item={item} />)}
+        </Marquee>
+
+        <Marquee reverse pauseOnHover vertical repeat={5} className="[--duration:22s] hidden md:flex">
+          {col4.map((item) => <Card key={item.id} item={item} />)}
+        </Marquee>
+
+        <Marquee pauseOnHover vertical repeat={5} className="[--duration:25s] hidden lg:flex">
+          {col5.map((item) => <Card key={item.id} item={item} />)}
+        </Marquee>
+
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white via-white/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white via-white/60 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white via-white/60 to-transparent z-10" />
+      </div>
+    </section>
+  )
 }

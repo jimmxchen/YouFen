@@ -72,7 +72,7 @@ export default function RecordsPage() {
                 : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
             )}
           >
-            {f === 'all' ? t('all') : recordTypeLabels[f as RecordType]}
+            {f === 'all' ? t('all') : recordTypeLabels[f]}
           </button>
         ))}
       </div>
