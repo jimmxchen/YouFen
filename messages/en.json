@@ -102,6 +102,16 @@
       "viewMyRecord": "View my record",
       "recentActivity": "Recent activity"
     },
+    "event": {
+      "title": "Event details",
+      "description": "Confirm your spot and keep the event details handy.",
+      "startsAt": "Starts at",
+      "location": "Location",
+      "join": "Join event",
+      "joined": "You are in",
+      "joinedBody": "Your spot is saved in this demo. The event card will stay marked as joined on this device.",
+      "backHome": "Back home"
+    },
     "activity": {
       "title": "Activity",
       "description": "Recent contributions, votes, and verified records in this community."
@@ -121,8 +131,10 @@
       "send": "Send",
       "online": "{count} online",
       "reactions": "{count} reactions",
+      "reactionSuffix": " reactions",
       "groupChats": "Group chats",
       "searchChats": "Search chats",
+      "noChatsFound": "No chats found.",
       "unread": "{count} unread",
       "members": "{count} members",
       "pinned": "Pinned",
@@ -139,9 +151,13 @@
       "inviteMembers": "Invite members",
       "inviteLink": "Invite link",
       "copyInvite": "Copy invite link",
+      "copied": "Copied",
       "membersTitle": "Members",
       "sharedMedia": "Shared media",
       "publicInviteNote": "Share the group invite",
+      "invitePanelTitle": "Invite ready",
+      "invitePanelBody": "Copy this invite and send it to members who should join this room.",
+      "imageShared": "Shared image:",
       "operator": "Operator",
       "onlineStatus": "Online",
       "lastSeen": "Last seen {time}"
@@ -165,7 +181,11 @@
       "contributions": "My contributions",
       "pendingVoicePower": "Pending voice power",
       "trustedRecords": "Related trusted records",
-      "submitContribution": "Submit contribution"
+      "submitContribution": "Submit contribution",
+      "viewPublicCommunity": "View public community",
+      "shareContributions": "Share my contributions",
+      "shareCopied": "Contribution link copied",
+      "submittedAt": "Submitted at"
     },
     "contribute": {
       "title": "Submit contribution",
@@ -216,6 +236,18 @@
       "viewExplorer": "View explorer",
       "emptyTitle": "No receipts yet",
       "emptyBody": "Important records will appear here after they are saved."
+    },
+    "public": {
+      "label": "Public community",
+      "backToMe": "Back to Me",
+      "contributors": "Featured contributors",
+      "contributorsBody": "Members who made visible contributions to this community.",
+      "records": "Trusted records",
+      "stats": "Community stats",
+      "members": "Members",
+      "voicePower": "Total voice power",
+      "contributions": "Contributions this week",
+      "trustedRecords": "Trusted records"
     }
   },
   "footer": {
