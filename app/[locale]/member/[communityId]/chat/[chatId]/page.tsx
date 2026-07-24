@@ -1,8 +1,14 @@
+import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import { ChatRoomLoader } from '@/components/member/chat-room-loader'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
+import { db } from '@/db'
+import { chatConversations } from '@/db/schema'
+import { eq, and } from 'drizzle-orm'
+import { ChatRoomView } from '@/components/member/chat-room-view'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { getDemoMember } from '@/lib/demo/member-data'
+import type { ChatRoom } from '@/types/member'
 
 interface MemberChatRoomPageProps {
   params: Promise<{
@@ -15,22 +21,52 @@ interface MemberChatRoomPageProps {
 export default async function MemberChatRoomPage({ params }: MemberChatRoomPageProps) {
   const { locale, communityId, chatId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
-  const baseHref = `/${locale}/member/${communityId}`
-  const room = member.chatRooms.find((chatRoom) => chatRoom.id === chatId) ?? null
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
+
+  // Fetch conversation metadata from DB
+  const convRows = await db
+    .select()
+    .from(chatConversations)
+    .where(and(eq(chatConversations.id, chatId), eq(chatConversations.communityId, communityId)))
+    .limit(1)
+
+  const conv = convRows[0]
+  const isDirect = conv?.type === 'admin_direct'
+  const displayTitle = conv
+    ? (isDirect ? 'Admin' : conv.title)
+    : 'Chat'
+
+  const room: ChatRoom = {
+    id: chatId,
+    title: displayTitle,
+    description: '',
+    avatarInitials: displayTitle.split(/\s+/).map((s: string) => s[0]).join('').toUpperCase().slice(0, 2) || 'CH',
+    category: isDirect ? 'Direct' : 'Group',
+    unreadCount: 0,
+    muted: false,
+    pinned: false,
+    updatedAt: conv?.createdAt?.toISOString() || new Date().toISOString(),
+    inviteCode: '',
+    sharedMediaCount: 0,
+    lastMessage: { author: '', body: '' },
+    participants: [],
+    messages: [],
+  }
 
   return (
     <MemberShell member={member}>
-      <ChatRoomLoader
-        serverRoom={room}
+      <ChatRoomView
+        room={room}
         locale={locale}
         communityId={communityId}
-        chatId={chatId}
-        baseHref={baseHref}
-        onlineTemplate={t('chat.online', { count: '__COUNT__' })}
-        membersTemplate={t('chat.members', { count: '__COUNT__' })}
+        currentUserId={userId}
+        currentMemberName={member.name}
         labels={{
           back: t('chat.backToChats'),
+          online: t('chat.online', { count: 0 }),
+          members: t('chat.members', { count: 0 }),
           pinned: t('chat.operatorPrompt'),
           search: t('chat.search'),
           searchPlaceholder: t('chat.searchPlaceholder'),
@@ -38,13 +74,12 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
           muted: t('chat.muted'),
           composer: t('chat.composer'),
           send: t('chat.send'),
+          reactionsByMessageId: {},
           addImage: t('chat.addImage'),
+          addReaction: t('chat.addReaction'),
           settings: t('chat.settings'),
           imageShared: t('chat.imageShared'),
-        }}
-        notFound={{
-          title: t('chat.chatNotFound'),
-          back: t('chat.backToChats'),
+          reactionSuffix: t('chat.reactionSuffix'),
         }}
       />
 

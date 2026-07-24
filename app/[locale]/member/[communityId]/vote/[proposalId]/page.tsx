@@ -1,12 +1,13 @@
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { ArrowLeft, FileCheck2 } from 'lucide-react'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { PollVoteCard } from '@/components/member/poll-vote-card'
 import { memberCard, memberInset, memberMuted, memberSubtle } from '@/components/member/ui'
-import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberVoteDetailPageProps {
   params: Promise<{
@@ -19,7 +20,9 @@ interface MemberVoteDetailPageProps {
 export default async function MemberVoteDetailPage({ params }: MemberVoteDetailPageProps) {
   const { locale, communityId, proposalId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
   const proposal = member.availableProposals.find((p) => p.id === proposalId)
 
   if (!proposal) {

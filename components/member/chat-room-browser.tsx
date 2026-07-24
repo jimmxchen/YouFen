@@ -1,74 +1,94 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { PenSquare, Search } from 'lucide-react'
-import type { ChatParticipant, ChatMessage, ChatRoom } from '@/types/member'
+import { useEffect, useMemo, useState, useCallback } from 'react'
+import { Search } from 'lucide-react'
+import type { ChatRoom } from '@/types/member'
 import { ChatRoomList } from '@/components/member/chat-room-list'
-import { ChatComposePanel, type ChatComposeLabels } from '@/components/member/chat-compose-panel'
 import { memberCard, memberMuted } from '@/components/member/ui'
-import { getLocalChats, saveLocalChat, subscribeLocalChats } from '@/lib/member/local-chats'
+
+const POLL_INTERVAL = 5000
+
+function mapConversationToRoom(conv: {
+  id: string
+  communityId: string
+  type: string
+  title: string
+  memberId?: string | null
+  memberName?: string | null
+  createdAt: string
+  lastMessage?: string
+  lastMessageAt?: string
+  unreadCount?: number
+}): ChatRoom {
+  const isDirect = conv.type === 'admin_direct'
+  const displayTitle = isDirect ? 'Admin' : conv.title
+  return {
+    id: conv.id,
+    title: displayTitle,
+    description: '',
+    avatarInitials: displayTitle.split(/\s+/).map((s: string) => s[0]).join('').toUpperCase().slice(0, 2) || '?',
+    category: isDirect ? 'Direct' : 'Group',
+    unreadCount: conv.unreadCount || 0,
+    muted: false,
+    pinned: false,
+    updatedAt: conv.lastMessageAt || conv.createdAt,
+    inviteCode: '',
+    sharedMediaCount: 0,
+    lastMessage: {
+      author: '',
+      body: conv.lastMessage || '',
+    },
+    participants: [],
+    messages: [],
+  }
+}
 
 interface ChatRoomBrowserProps {
-  rooms: ChatRoom[]
-  baseHref: string
-  locale: string
   communityId: string
-  contacts: ChatParticipant[]
-  currentMember: ChatParticipant
-  directMessageCategory: string
+  baseHref: string
   labels: {
     searchChats: string
+    groupChats: string
+    unread: string
     pinned: string
     muted: string
     empty: string
     members: string
-    newMessage: string
-    compose: ChatComposeLabels
   }
 }
 
-function toInitials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? '')
-    .join('')
-}
-
-export function ChatRoomBrowser({
-  rooms,
-  baseHref,
-  locale,
-  communityId,
-  contacts,
-  currentMember,
-  directMessageCategory,
-  labels,
-}: ChatRoomBrowserProps) {
-  const router = useRouter()
+export function ChatRoomBrowser({ communityId, baseHref, labels }: ChatRoomBrowserProps) {
   const [query, setQuery] = useState('')
-  const [isComposing, setIsComposing] = useState(false)
-  const [localChats, setLocalChats] = useState<ChatRoom[]>([])
+  const [rooms, setRooms] = useState<ChatRoom[]>([])
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const sync = () => setLocalChats(getLocalChats(communityId))
-    sync()
-    return subscribeLocalChats(sync)
+  const fetchRooms = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/chat/${communityId}/conversations`)
+      if (!res.ok) return
+      const data = await res.json()
+      setRooms(data.conversations.map(mapConversationToRoom))
+    } catch { /* ignore */ }
   }, [communityId])
 
-  const allRooms = useMemo(() => [...localChats, ...rooms], [localChats, rooms])
+  useEffect(() => {
+    setLoading(true)
+    fetchRooms().finally(() => setLoading(false))
+  }, [fetchRooms])
+
+  // Poll for updates
+  useEffect(() => {
+    const interval = setInterval(fetchRooms, POLL_INTERVAL)
+    return () => clearInterval(interval)
+  }, [fetchRooms])
 
   const normalizedQuery = query.trim().toLowerCase()
   const filteredRooms = useMemo(() => {
-    if (!normalizedQuery) return allRooms
-
-    return allRooms.filter((room) => {
+    if (!normalizedQuery) return rooms
+    return rooms.filter((room) => {
       const participantText = room.participants
         .map((participant) => `${participant.name} ${participant.role}`)
         .join(' ')
-
       return [
         room.title,
         room.description,
@@ -81,60 +101,7 @@ export function ChatRoomBrowser({
         .toLowerCase()
         .includes(normalizedQuery)
     })
-  }, [normalizedQuery, allRooms])
-
-  function handleCreate({
-    contacts: selected,
-    message,
-  }: {
-    contacts: ChatParticipant[]
-    message: string
-  }) {
-    const now = new Intl.DateTimeFormat(locale, {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    }).format(new Date())
-    const id = `local-${Date.now()}`
-
-    const title =
-      selected.length === 1
-        ? selected[0].name
-        : selected.map((contact) => contact.name.split(/\s+/)[0]).join(', ')
-    const avatarInitials =
-      selected.length === 1 ? selected[0].avatarInitials : toInitials(title) || 'GC'
-
-    const firstMessage: ChatMessage = {
-      id: `local-msg-${Date.now()}`,
-      author: currentMember.name,
-      role: currentMember.role,
-      avatarInitials: currentMember.avatarInitials,
-      body: message,
-      createdAt: now,
-      isCurrentMember: true,
-    }
-
-    const room: ChatRoom = {
-      id,
-      title,
-      description: '',
-      avatarInitials,
-      category: directMessageCategory,
-      unreadCount: 0,
-      muted: false,
-      pinned: false,
-      updatedAt: now,
-      inviteCode: '',
-      sharedMediaCount: 0,
-      lastMessage: { author: currentMember.name, body: message },
-      participants: [currentMember, ...selected],
-      messages: [firstMessage],
-    }
-
-    saveLocalChat(communityId, room)
-    setIsComposing(false)
-    router.push(`${baseHref}/chat/${id}`)
-  }
+  }, [normalizedQuery, rooms])
 
   return (
     <>
@@ -142,36 +109,36 @@ export function ChatRoomBrowser({
         <label htmlFor="chat-list-search" className="sr-only">
           {labels.searchChats}
         </label>
-        <div className="flex items-center gap-2">
-          <div className="flex min-h-11 flex-1 items-center gap-2 rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
-            <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
-            <input
-              id="chat-list-search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder={labels.searchChats}
-              className="min-w-0 flex-1 bg-transparent text-sm text-[#131517] outline-none placeholder:text-[#939597]"
-            />
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsComposing(true)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#131517] text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] hover:shadow-md active:translate-y-0"
-            aria-label={labels.newMessage}
-          >
-            <PenSquare className="h-5 w-5" aria-hidden="true" />
-          </button>
+        <div className="flex min-h-11 items-center gap-2 rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
+          <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
+          <input
+            id="chat-list-search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={labels.searchChats}
+            className="min-w-0 flex-1 bg-transparent text-sm text-[#131517] outline-none placeholder:text-[#939597]"
+          />
+        </div>
+        <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+          <span className={memberMuted}>{labels.groupChats}</span>
+          <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+            {labels.unread}
+          </span>
         </div>
       </section>
 
-      {filteredRooms.length > 0 ? (
+      {loading ? (
+        <section className={memberCard}>
+          <p className={`text-sm ${memberMuted}`}>Loading...</p>
+        </section>
+      ) : filteredRooms.length > 0 ? (
         <ChatRoomList
           rooms={filteredRooms}
           baseHref={baseHref}
           labels={{
             pinned: labels.pinned,
             muted: labels.muted,
-            members: (count) => labels.members.replace('__COUNT__', String(count)),
+            members: (count: number) => labels.members.replace('__COUNT__', String(count)),
           }}
         />
       ) : (
@@ -179,15 +146,6 @@ export function ChatRoomBrowser({
           <p className={`text-sm ${memberMuted}`}>{labels.empty}</p>
         </section>
       )}
-
-      {isComposing ? (
-        <ChatComposePanel
-          contacts={contacts}
-          labels={labels.compose}
-          onClose={() => setIsComposing(false)}
-          onSubmit={handleCreate}
-        />
-      ) : null}
     </>
   )
 }

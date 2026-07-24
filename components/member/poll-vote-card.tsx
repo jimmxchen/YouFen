@@ -38,6 +38,8 @@ export function PollVoteCard({
   const storageKey = `youfen:vote:${communityId}:${proposalId}`
   const [votedOptionId, setVotedOptionId] = useState<string | undefined>(initialVotedOptionId)
   const [selectedOptionId, setSelectedOptionId] = useState<string | undefined>(initialVotedOptionId)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   // Rehydrate a previously cast vote so it survives navigation and reloads.
   useEffect(() => {
@@ -58,10 +60,27 @@ export function PollVoteCard({
   const maxVotes = Math.max(...displayOptions.map((opt) => opt.votes), 0)
   const hasVoted = Boolean(votedOptionId)
 
-  function handleSubmit() {
-    if (!selectedOptionId || votedOptionId) return
-    window.localStorage.setItem(storageKey, selectedOptionId)
-    setVotedOptionId(selectedOptionId)
+  async function handleSubmit() {
+    if (!selectedOptionId || votedOptionId || submitting) return
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/member/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ communityId, proposalId, optionId: selectedOptionId }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || `${res.status}`)
+      }
+      window.localStorage.setItem(storageKey, selectedOptionId)
+      setVotedOptionId(selectedOptionId)
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : 'Failed to submit vote')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const votedOption = options.find((opt) => opt.id === votedOptionId)
@@ -90,14 +109,19 @@ export function PollVoteCard({
       </div>
 
       {votable && !hasVoted ? (
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={!selectedOptionId}
-          className={`mt-5 ${memberPrimaryButton} disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0`}
-        >
-          {labels.castVote}
-        </button>
+        <div className="mt-5 space-y-3">
+          {submitError && (
+            <p className="text-sm text-red-600 bg-red-50 rounded-xl p-3">{submitError}</p>
+          )}
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!selectedOptionId || submitting}
+            className={`${memberPrimaryButton} disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0`}
+          >
+            {submitting ? '...' : labels.castVote}
+          </button>
+        </div>
       ) : null}
 
       {!votable && !hasVoted ? (

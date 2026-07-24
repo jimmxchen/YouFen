@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaNeonHTTP } from '@prisma/adapter-neon';
 import { immutableGuardExtension } from './immutable-guard';
 
 // Lazy Prisma singleton with the ledger immutability guard attached. Production
@@ -6,12 +7,17 @@ import { immutableGuardExtension } from './immutable-guard';
 // via setPrismaForTesting so they never touch a real database (test offline
 // rule). $extends returns a structurally-extended client; the guard only adds a
 // query hook and changes no method shapes, so we surface it as PrismaClient.
+//
+// Uses PrismaNeonHTTP adapter so Prisma traffic goes through Neon's HTTP
+// driver (port 443) instead of raw TCP 5432 — same strategy as Drizzle, which
+// avoids the firewall issues of direct TCP connections.
 
 let cached: PrismaClient | null = null;
 let testOverride: PrismaClient | null = null;
 
 function createGuardedClient(): PrismaClient {
-  const base = new PrismaClient();
+  const adapter = new PrismaNeonHTTP(process.env.DATABASE_URL!, {});
+  const base = new PrismaClient({ adapter });
   return base.$extends(immutableGuardExtension) as unknown as PrismaClient;
 }
 

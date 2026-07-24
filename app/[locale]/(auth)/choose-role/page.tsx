@@ -1,13 +1,14 @@
 "use client"
 
+import { useState } from "react"
 import { ArrowUpRight, Building2, UsersRound } from "lucide-react"
 import { useLocale } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { Navbar } from "@/components/layout/navbar"
+import { CreateCommunityModal } from "@/components/auth/create-community-modal"
 
 const roleCards = [
   {
-    href: "/admin",
     title: {
       en: "I'm an operator",
       zh: "我是运营者",
@@ -26,7 +27,7 @@ const roleCards = [
     glow: "from-blue-100/90 via-white/0 to-white/0",
   },
   {
-    href: "/member/demo",
+    href: "/member",
     title: {
       en: "I'm a member",
       zh: "我是成员",
@@ -50,6 +51,7 @@ export default function ChooseRolePage() {
   const locale = useLocale()
   const copyLocale = locale === "zh" ? "zh" : "en"
   const cardPrompt = copyLocale === "zh" ? "用有份可以做什么？" : "What can we do with YouFen?"
+  const [showCreateModal, setShowCreateModal] = useState(false)
 
   return (
     <main className="min-h-screen bg-white flex flex-col overflow-hidden">
@@ -59,12 +61,17 @@ export default function ChooseRolePage() {
           <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-7 md:grid-cols-2 lg:gap-10">
             {roleCards.map((card) => {
               const Icon = card.icon
+              const isOperator = !("href" in card)
+              const Wrapper = isOperator ? "button" : Link
+              const wrapperProps = isOperator
+                ? { type: "button" as const, onClick: () => setShowCreateModal(true) }
+                : { href: (card as typeof roleCards[1]).href }
 
               return (
-                <Link
-                  key={card.href}
-                  href={card.href}
-                  className={`group relative flex aspect-[1.08/1] min-h-[300px] overflow-hidden rounded-[32px] border p-7 shadow-sm transition-all duration-300 hover:-translate-y-2 sm:p-8 ${card.surface}`}
+                <Wrapper
+                  key={isOperator ? "operator" : (card as typeof roleCards[1]).href}
+                  {...wrapperProps as any}
+                  className={`group relative flex aspect-[1.08/1] min-h-[300px] w-full overflow-hidden rounded-[32px] border p-7 shadow-sm transition-all duration-300 hover:-translate-y-2 sm:p-8 text-left ${card.surface}`}
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${card.glow}`} />
                   <div className="absolute inset-x-8 top-0 h-px bg-white/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -92,12 +99,13 @@ export default function ChooseRolePage() {
                       </div>
                     </div>
                   </div>
-                </Link>
+                </Wrapper>
               )
             })}
           </div>
         </section>
       </div>
+      <CreateCommunityModal open={showCreateModal} onClose={() => setShowCreateModal(false)} />
     </main>
   )
 }

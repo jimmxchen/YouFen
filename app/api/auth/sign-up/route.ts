@@ -21,9 +21,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { name, email, password } = await req.json()
+    const { name, email, phone, password } = await req.json()
+    const loginId = email || phone
 
-    if (!name || !email || !password) {
+    if (!name || !loginId || !password) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 })
     }
 
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Password too short" }, { status: 400 })
     }
 
-    const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1)
+    const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, loginId)).limit(1)
     if (existing.length > 0) {
       return NextResponse.json({ error: "Email already registered" }, { status: 409 })
     }
@@ -39,10 +40,13 @@ export async function POST(req: NextRequest) {
     const id = generateId()
     const passwordHash = await hashPassword(password)
 
-    await db.insert(users).values({ id, name, email, passwordHash })
+    await db.insert(users).values({ id, name, email: loginId, passwordHash })
     await setSession(id)
 
-    return NextResponse.json({ user: { id, name, email } })
+    return NextResponse.json({
+      user: { id, name, email: loginId },
+      redirectTo: "/choose-role",
+    })
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }

@@ -3,6 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { Link, useRouter, usePathname } from '@/i18n/navigation'
 import { LayoutDashboard, Users, ClipboardCheck, ShieldCheck, ChevronRight, Languages, ClipboardList, MessageCircle } from 'lucide-react'
 import { YouFenLogo } from '@/components/brand/youfen-logo'
+import { SideSwitcher } from '@/components/admin/side-switcher'
 import { cn } from '@/lib/utils'
 import { type AdminView } from '@/types/admin'
 
@@ -52,10 +53,13 @@ export function AdminSidebar({ communityName }: AdminSidebarProps) {
 
   return (
     <aside className="w-64 min-h-screen bg-[#FAFAFA] border-r border-[#F0F0F0] flex flex-col fixed left-0 top-0 z-40">
-      <div className="h-16 border-b border-[#F0F0F0]">
-        <Link href="/" className="flex h-16 items-center px-6 text-[#131517] transition-colors hover:text-[#10B981]" aria-label="YouFen">
-          <YouFenLogo markClassName="h-9 w-9" textClassName="text-lg" />
+      <div className="h-16 border-b border-[#F0F0F0] flex items-center px-6">
+        <Link href="/" className="flex items-center text-[#131517] transition-colors hover:text-[#10B981]" aria-label="YouFen">
+          <YouFenLogo markClassName="h-9 w-9" showText={false} />
         </Link>
+        <div className="ml-auto">
+          <SideSwitcher side="admin" />
+        </div>
       </div>
       <nav className="flex-1 py-4 px-3">
         <ul className="space-y-1">

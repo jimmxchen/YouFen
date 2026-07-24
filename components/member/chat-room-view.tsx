@@ -1,17 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, BellOff, ImagePlus, Info, Search, SendHorizonal, X } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import type { ChatMessage, ChatRoom } from '@/types/member'
+import { ArrowLeft, BellOff, ImagePlus, Info, Search, SendHorizonal, Smile, X } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import type { ChatMessage as MemberChatMessage, ChatRoom } from '@/types/member'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
-import { getChatMuted, subscribeChatMutes } from '@/lib/member/local-mutes'
+
+const POLL_INTERVAL = 3000
 
 interface ChatRoomViewProps {
   room: ChatRoom
   locale: string
   communityId: string
-  onMessagesChange?: (messages: ChatMessage[]) => void
+  currentUserId?: string
+  currentMemberName?: string
   labels: {
     back: string
     online: string
@@ -23,39 +25,77 @@ interface ChatRoomViewProps {
     muted: string
     composer: string
     send: string
+    reactionsByMessageId: Record<string, string>
     addImage: string
+    addReaction: string
     settings: string
     imageShared: string
+    reactionSuffix: string
   }
 }
 
-export function ChatRoomView({ room, locale, communityId, onMessagesChange, labels }: ChatRoomViewProps) {
+export function ChatRoomView({ room, locale, communityId, currentUserId, currentMemberName, labels }: ChatRoomViewProps) {
   const [showSearch, setShowSearch] = useState(false)
   const [query, setQuery] = useState('')
-  const [messages, setMessages] = useState(room.messages)
+  const [messages, setMessages] = useState<MemberChatMessage[]>([])
   const [draft, setDraft] = useState('')
-  const [isMuted, setIsMuted] = useState(room.muted)
+  const [loading, setLoading] = useState(true)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const didMountRef = useRef(false)
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const lastTsRef = useRef<string>('')
 
-  useEffect(() => {
-    const sync = () => setIsMuted(getChatMuted(communityId, room.id, room.muted))
-    sync()
-    return subscribeChatMutes(sync)
-  }, [communityId, room.id, room.muted])
+  // Fetch messages from API
+  const fetchMessages = useCallback(async (since?: string) => {
+    try {
+      const params = new URLSearchParams({ conversationId: room.id })
+      if (since) params.set('since', since)
+      const res = await fetch(`/api/chat/${communityId}/messages?${params}`)
+      if (!res.ok) return
+      const data = await res.json()
+      const mapped: MemberChatMessage[] = data.messages.map((m: { id: string; senderId: string; senderName: string; senderRole: string; content: string; createdAt: string }) => ({
+        id: m.id,
+        author: m.senderName,
+        role: m.senderRole === 'admin' ? 'Admin' : 'Member',
+        avatarInitials: m.senderName.split(/\s+/).map((s: string) => s[0]).join('').toUpperCase().slice(0, 2) || '?',
+        body: m.content,
+        createdAt: new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+        isCurrentMember: currentUserId ? m.senderId === currentUserId : false,
+      }))
+      if (since) {
+        setMessages(prev => {
+          const existingIds = new Set(prev.map(m => m.id))
+          return [...prev, ...mapped.filter((m: MemberChatMessage) => !existingIds.has(m.id))]
+        })
+      } else {
+        setMessages(mapped)
+      }
+      if (data.messages.length > 0) {
+        lastTsRef.current = data.messages[data.messages.length - 1].createdAt
+      }
+    } catch { /* ignore */ }
+  }, [communityId, room.id])
 
+  // Initial load
   useEffect(() => {
-    // Skip the initial render so we only persist changes the user makes here.
-    if (!didMountRef.current) {
-      didMountRef.current = true
-      return
+    setLoading(true)
+    setMessages([])
+    lastTsRef.current = ''
+    fetchMessages().finally(() => setLoading(false))
+  }, [fetchMessages])
+
+  // Polling
+  useEffect(() => {
+    pollRef.current = setInterval(() => {
+      fetchMessages(lastTsRef.current || undefined)
+    }, POLL_INTERVAL)
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current)
     }
-    onMessagesChange?.(messages)
-  }, [messages, onMessagesChange])
+  }, [fetchMessages])
+
   const normalizedQuery = query.trim().toLowerCase()
   const matches = useMemo(() => {
     if (!normalizedQuery) return []
-
     return messages.filter((message) =>
       [message.author, message.role, message.body].some((value) =>
         value.toLowerCase().includes(normalizedQuery)
@@ -64,17 +104,15 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
   }, [normalizedQuery, messages])
   const pinnedMessage = messages.find((message) => message.isOperator)
   const baseHref = `/${locale}/member/${communityId}`
-  const currentMember = room.messages.find((message) => message.isCurrentMember)
-  const currentMemberName = currentMember?.author ?? 'You'
-  const currentMemberRole = currentMember?.role ?? 'Member'
-  const currentMemberInitials = currentMember?.avatarInitials ?? 'YO'
+  const displayName = currentMemberName || 'You'
+  const displayInitials = displayName.split(/\s+/).map((s: string) => s[0]).join('').toUpperCase().slice(0, 2) || 'YO'
 
-  function createCurrentMemberMessage(body: string): ChatMessage {
+  function createLocalMessage(body: string): MemberChatMessage {
     return {
       id: `local-${Date.now()}`,
-      author: currentMemberName,
-      role: currentMemberRole,
-      avatarInitials: currentMemberInitials,
+      author: displayName,
+      role: 'Member',
+      avatarInitials: displayInitials,
       body,
       createdAt: new Intl.DateTimeFormat(locale, {
         hour: '2-digit',
@@ -85,19 +123,69 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
     }
   }
 
-  function sendMessage() {
+  const sendMessage = async () => {
     const body = draft.trim()
     if (!body) return
-
-    setMessages((current) => [...current, createCurrentMemberMessage(body)])
     setDraft('')
+
+    // Optimistic
+    const optimistic = createLocalMessage(body)
+    setMessages((current) => [...current, optimistic])
+
+    try {
+      const res = await fetch(`/api/chat/${communityId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ conversationId: room.id, content: body }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        // Replace optimistic with real
+        setMessages((current) =>
+          current.map((m) =>
+            m.id === optimistic.id
+              ? {
+                  id: data.message.id,
+                  author: data.message.senderName,
+                  role: data.message.senderRole === 'admin' ? 'Admin' : 'Member',
+                  avatarInitials: displayInitials,
+                  body: data.message.content,
+                  createdAt: new Date(data.message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+                  isCurrentMember: true,
+                }
+              : m
+          )
+        )
+      }
+    } catch {
+      // Keep optimistic
+    }
   }
 
   function addImage(fileName: string) {
     setMessages((current) => [
       ...current,
-      createCurrentMemberMessage(`${labels.imageShared} ${fileName}`),
+      createLocalMessage(`${labels.imageShared} ${fileName}`),
     ])
+  }
+
+  function addReaction() {
+    setMessages((current) => {
+      if (current.length === 0) return current
+      return current.map((message, index) =>
+        index === current.length - 1
+          ? { ...message, reactions: (message.reactions ?? 0) + 1 }
+          : message
+      )
+    })
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64 text-sm text-[#939597]">
+        Loading...
+      </div>
+    )
   }
 
   return (
@@ -179,7 +267,7 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
           </section>
         ) : null}
 
-        {isMuted ? (
+        {room.muted ? (
           <div className="flex items-center gap-2 rounded-xl border border-[#F0F0F0] bg-white px-4 py-3 text-sm text-[#525252]">
             <BellOff className="h-4 w-4 shrink-0" aria-hidden="true" />
             {labels.muted}
@@ -233,6 +321,12 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
                   }`}
                 >
                   <span>{message.createdAt}</span>
+                  {message.reactions ? (
+                    <span>
+                      {labels.reactionsByMessageId[message.id] ??
+                        `${message.reactions}${labels.reactionSuffix}`}
+                    </span>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -277,6 +371,14 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
             placeholder={labels.composer}
             className="min-h-11 min-w-0 flex-1 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4 text-sm text-[#131517] outline-none placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15"
           />
+          <button
+            type="button"
+            onClick={addReaction}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] text-[#525252] transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
+            aria-label={labels.addReaction}
+          >
+            <Smile className="h-5 w-5" aria-hidden="true" />
+          </button>
           <button
             type="button"
             onClick={sendMessage}

@@ -646,3 +646,40 @@ model ProposalExecution {
   txHash      String?
   createdAt   DateTime  @default(now())
 }
+
+// Community management: tasks
+model Task {
+  id           String    @id @default(cuid())
+  communityId  String
+  title        String
+  description  String?
+  status       String    @default("pending")
+  priority     String    @default("medium")
+  assigneeId   String?
+  assigneeName String?
+  dueDate      String?
+  createdBy    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([communityId, status])
+}
+
+// Community management: activities / events
+model Activity {
+  id               String    @id @default(cuid())
+  communityId      String
+  title            String
+  description      String?
+  type             String    @default("other")
+  status           String    @default("upcoming")
+  location         String?
+  startTime        DateTime?
+  endTime          DateTime?
+  participantCount Int       @default(0)
+  createdBy        String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([communityId, status])
+}

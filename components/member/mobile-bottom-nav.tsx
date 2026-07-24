@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { CircleUserRound, ChevronRight, Home, Languages, MessageCircle, Vote } from 'lucide-react'
 import { YouFenLogo } from '@/components/brand/youfen-logo'
+import { SideSwitcher } from '@/components/admin/side-switcher'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter, usePathname } from '@/i18n/navigation'
 
@@ -77,13 +78,18 @@ export function MobileBottomNav({ locale, communityId, active, labels }: MobileB
       </nav>
 
       <nav className="fixed left-0 top-0 z-40 hidden min-h-screen w-64 flex-col border-r border-[#F0F0F0] bg-[#FAFAFA] lg:flex">
-        <Link
-          href={`/${locale}/member/${communityId}`}
-          className="flex h-16 items-center border-b border-[#F0F0F0] px-6 text-[#131517] transition-colors hover:text-[#10B981]"
-          aria-label="YouFen"
-        >
-          <YouFenLogo markClassName="h-9 w-9" textClassName="text-lg" />
-        </Link>
+        <div className="h-16 border-b border-[#F0F0F0] flex items-center px-6">
+          <Link
+            href="/"
+            className="flex items-center text-[#131517] transition-colors hover:text-[#10B981]"
+            aria-label="YouFen"
+          >
+            <YouFenLogo markClassName="h-9 w-9" showText={false} />
+          </Link>
+          <div className="ml-auto">
+            <SideSwitcher side="member" />
+          </div>
+        </div>
 
         <div className="flex flex-1 flex-col gap-1 px-3 py-4">
           {items.map((item) => {

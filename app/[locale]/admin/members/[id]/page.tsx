@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
 import { Link } from '@/i18n/navigation'
 import { ArrowLeft, Mail, Calendar, Clock, Zap, Edit2, Shield, UserPlus } from 'lucide-react'
-import { demoMembers, demoContributions } from '@/lib/demo-data'
+import { useAdminMember, apiPatch } from '@/lib/hooks/use-admin-data'
+import { useCommunity } from '@/lib/hooks/use-community'
 import { type Member, MemberRole } from '@/types/admin'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
@@ -26,11 +27,27 @@ export default function MemberDetailPage() {
   const params = useParams()
   const memberId = params.id as string
 
-  const member = demoMembers.find(m => m.id === memberId)
+  const { member, contributions, loading, refetch } = useAdminMember(memberId)
+  const { communityId } = useCommunity()
 
   const [isEditingVP, setIsEditingVP] = useState(false)
   const [vpValue, setVpValue] = useState(member?.voicePower.toString() ?? '0')
   const [showRoleChange, setShowRoleChange] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [showAddContribution, setShowAddContribution] = useState(false)
+  const [contribTitle, setContribTitle] = useState('')
+  const [contribType, setContribType] = useState('contribution')
+  const [contribAmount, setContribAmount] = useState('')
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="text-center py-20">
+          <p className="text-lg text-[#525252]">{t('loading')}</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!member) {
     return (
@@ -45,24 +62,66 @@ export default function MemberDetailPage() {
     )
   }
 
-  const memberContributions = demoContributions.filter(c => c.memberId === member.id)
+  const memberContributions = contributions
   const totalApprovedVP = memberContributions
     .filter(c => c.status === 'approved')
     .reduce((sum, c) => sum + (c.approvedVP || c.suggestedVP), 0)
 
-  const handleSaveVP = () => {
+  const handleSaveVP = async () => {
     const newVP = parseInt(vpValue, 10)
     if (isNaN(newVP) || newVP < 0) {
-      alert(t('invalidVoicePower'))
       return
     }
-    setIsEditingVP(false)
-    alert(t('voicePowerUpdated', { value: newVP }))
+    setSaving(true)
+    try {
+      await apiPatch(`/members/${memberId}`, { voicePower: newVP })
+      setIsEditingVP(false)
+      refetch()
+    } catch {
+      // revert on error
+      setVpValue(member.voicePower.toString())
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const handleRoleChange = (newRole: MemberRole) => {
+  const handleRoleChange = async (newRole: MemberRole) => {
     setShowRoleChange(false)
-    alert(t('roleChangedTo', { role: t(roleLabels[newRole]) }))
+    setSaving(true)
+    try {
+      await apiPatch(`/members/${memberId}`, { role: newRole })
+      refetch()
+    } catch {
+      // silent fail
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleAddContribution = async () => {
+    if (!contribTitle.trim()) return
+    setSaving(true)
+    try {
+      await fetch('/api/admin/contributions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          communityId,
+          memberId,
+          description: contribTitle.trim(),
+          type: contribType,
+          suggestedTokenAmount: parseInt(contribAmount, 10) || 0,
+        }),
+      })
+      setShowAddContribution(false)
+      setContribTitle('')
+      setContribAmount('')
+      refetch()
+    } catch {
+      // silent fail
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -101,7 +160,10 @@ export default function MemberDetailPage() {
               <Shield className="w-4 h-4" />
               {t('changeRole', { defaultValue: 'Change Role' })}
             </button>
-            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all shadow-sm">
+            <button
+              onClick={() => setShowAddContribution(!showAddContribution)}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all shadow-sm"
+            >
               <UserPlus className="w-4 h-4" />
               {t('addContribution', { defaultValue: 'Add Contribution' })}
             </button>
@@ -121,6 +183,57 @@ export default function MemberDetailPage() {
               {t('changeToRole', { role: t(roleLabels[role]) })}
             </button>
           ))}
+        </div>
+      )}
+
+      {/* Add Contribution Form */}
+      {showAddContribution && (
+        <div className="rounded-xl border border-[#F0F0F0] bg-white p-4 space-y-3">
+          <h3 className="text-sm font-semibold text-[#131517]">
+            {t('addContribution', { defaultValue: 'Add Contribution' })}
+          </h3>
+          <input
+            type="text"
+            value={contribTitle}
+            onChange={(e) => setContribTitle(e.target.value)}
+            placeholder={t('contributionDescription', { defaultValue: 'Description' })}
+            className="w-full px-3 py-2 rounded-xl border border-[#F0F0F0] text-sm text-[#131517] focus:outline-none focus:border-emerald-500"
+          />
+          <div className="flex gap-2">
+            <select
+              value={contribType}
+              onChange={(e) => setContribType(e.target.value)}
+              className="px-3 py-2 rounded-xl border border-[#F0F0F0] text-sm text-[#131517]"
+            >
+              <option value="contribution">Contribution</option>
+              <option value="social-post">Social Post</option>
+              <option value="event-review">Event Review</option>
+              <option value="mentorship">Mentorship</option>
+              <option value="other">Other</option>
+            </select>
+            <input
+              type="number"
+              value={contribAmount}
+              onChange={(e) => setContribAmount(e.target.value)}
+              placeholder={t('suggestedVP', { defaultValue: 'Suggested VP' })}
+              className="w-32 px-3 py-2 rounded-xl border border-[#F0F0F0] text-sm text-[#131517] focus:outline-none focus:border-emerald-500"
+            />
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={handleAddContribution}
+              disabled={saving || !contribTitle.trim()}
+              className="px-4 py-2 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] disabled:opacity-50"
+            >
+              {saving ? 'Saving...' : t('save')}
+            </button>
+            <button
+              onClick={() => setShowAddContribution(false)}
+              className="px-4 py-2 rounded-xl border border-[#F0F0F0] text-sm text-[#525252] hover:bg-[#FAFAFA]"
+            >
+              {t('cancel')}
+            </button>
+          </div>
         </div>
       )}
 

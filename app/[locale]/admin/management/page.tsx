@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { Plus, Square, ExternalLink, Trash2, Search, Filter, Check, X, Eye } from 'lucide-react'
-import { demoProposals, demoTasks, demoActivities } from '@/lib/demo-data'
+import { useAdminProposals, useAdminTasks, useAdminActivities, apiPost, apiPatch } from '@/lib/hooks/use-admin-data'
+import { useCommunity } from '@/lib/hooks/use-community'
 import { type Proposal, ProposalStatus, type Task, TaskStatus, type Activity, ActivityStatus, ActivityType } from '@/types/admin'
 import { cn } from '@/lib/utils'
 import { PollOptionBar } from '@/components/ui/poll-option-bar'
@@ -51,7 +52,7 @@ export default function ManagementPage() {
   const [activeTab, setActiveTab] = useState<Tab>('polls')
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: 'polls', label: t('polls') },
+    { key: 'polls', label: t('proposals') },
     { key: 'tasks', label: t('tasks') },
     { key: 'activities', label: t('activities') },
   ]
@@ -100,8 +101,14 @@ const MIN_POLL_OPTIONS = 2
 
 function PollsTab() {
   const t = useTranslations('admin')
+  const { communityId } = useCommunity()
+  const { proposals, refetch } = useAdminProposals(communityId)
   const [showCreate, setShowCreate] = useState(false)
-  const [options, setOptions] = useState<string[]>(['', ''])
+  const [options, setOptions] = useState<string[]>([t('optionA'), t('optionB')])
+  const [createTitle, setCreateTitle] = useState('')
+  const [createDesc, setCreateDesc] = useState('')
+  const [createDeadline, setCreateDeadline] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const handleAddOption = () => {
     setOptions((prev) => [...prev, ''])
@@ -117,41 +124,62 @@ function PollsTab() {
 
   const closeCreate = () => {
     setShowCreate(false)
-    setOptions(['', ''])
+    setOptions([t('optionA'), t('optionB')])
+    setCreateTitle('')
+    setCreateDesc('')
+    setCreateDeadline('')
   }
 
-  const optionPlaceholder = (index: number) => {
-    if (index === 0) return t('optionA')
-    if (index === 1) return t('optionB')
-    return t('optionPlaceholder')
+  const handleCreate = async () => {
+    if (!createTitle.trim()) return
+    setSaving(true)
+    try {
+      await apiPost('/proposals', {
+        communityId,
+        title: createTitle.trim(),
+        description: createDesc.trim(),
+        options: options.filter(o => o.trim()),
+        startTime: new Date().toISOString(),
+        endTime: createDeadline ? new Date(createDeadline).toISOString() : undefined,
+      })
+      closeCreate()
+      refetch()
+    } catch { /* ignore */ }
+    finally { setSaving(false) }
   }
 
-  const handleEndVote = (id: string) => {
-    alert(t('voteEnded'))
+  const handleEndVote = async (id: string) => {
+    try {
+      await apiPatch(`/proposals/${id}`, { status: 'ended' })
+      refetch()
+    } catch { /* ignore */ }
   }
 
-  const handleDelete = (id: string) => {
-    alert(t('pollDeleted'))
+  const handleDelete = async (id: string) => {
+    try {
+      await apiPatch(`/proposals/${id}`, { status: 'draft' })
+      refetch()
+    } catch { /* ignore */ }
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-[#131517]">{t('polls')}</h2>
-          <p className="text-sm text-[#525252] mt-1">{t('pollsSubtitle')}</p>
+          <h2 className="text-xl font-semibold text-[#131517]">{t('proposals')}</h2>
+          <p className="text-sm text-[#525252] mt-1">{t('proposalsSubtitle')}</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
           className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
-          {t('createPoll')}
+          {t('createProposal')}
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {demoProposals.map(proposal => (
+        {proposals.map(proposal => (
           <PollCard
             key={proposal.id}
             proposal={proposal}
@@ -165,13 +193,15 @@ function PollsTab() {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={closeCreate} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-lg mx-4 p-8 space-y-6">
-            <h2 className="text-xl font-semibold text-[#131517]">{t('createPoll')}</h2>
+            <h2 className="text-xl font-semibold text-[#131517]">{t('createProposal')}</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('pollTitle')}</label>
+                <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('proposalTitle')}</label>
                 <input
                   type="text"
-                  placeholder={t('pollTitlePlaceholder')}
+                  value={createTitle}
+                  onChange={(e) => setCreateTitle(e.target.value)}
+                  placeholder={t('proposalTitlePlaceholder')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
@@ -179,6 +209,8 @@ function PollsTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('description')}</label>
                 <textarea
                   rows={3}
+                  value={createDesc}
+                  onChange={(e) => setCreateDesc(e.target.value)}
                   placeholder={t('descriptionPlaceholder')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
@@ -192,7 +224,7 @@ function PollsTab() {
                         type="text"
                         value={opt}
                         onChange={(e) => handleOptionChange(i, e.target.value)}
-                        placeholder={optionPlaceholder(i)}
+                        placeholder={t('optionPlaceholder')}
                         className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                       />
                       <button
@@ -220,6 +252,8 @@ function PollsTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('deadline')}</label>
                 <input
                   type="date"
+                  value={createDeadline}
+                  onChange={(e) => setCreateDeadline(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
@@ -232,10 +266,11 @@ function PollsTab() {
                 {t('cancel')}
               </button>
               <button
-                onClick={closeCreate}
-                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
+                onClick={handleCreate}
+                disabled={saving || !createTitle.trim()}
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all disabled:opacity-50"
               >
-                {t('create')}
+                {saving ? '...' : t('create')}
               </button>
             </div>
           </div>
@@ -305,10 +340,9 @@ function PollCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; onEnd
             {proposal.status === 'active' && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEndVote?.(proposal.id) }}
-                className="p-1.5 rounded-2xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
-                title={t('endVote')}
+                className="px-3 py-1.5 rounded-2xl text-xs font-medium text-red-600 hover:bg-red-50 transition-colors"
               >
-                <Square className="w-4 h-4" />
+                {t('endVote')}
               </button>
             )}
             {proposal.chainTxHash && (
@@ -341,17 +375,55 @@ function PollCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; onEnd
 
 function TasksTab() {
   const t = useTranslations('admin')
+  const { communityId } = useCommunity()
+  const { tasks, refetch } = useAdminTasks(communityId)
   const [showCreate, setShowCreate] = useState(false)
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<string | 'all'>('all')
+  const [createTitle, setCreateTitle] = useState('')
+  const [createDesc, setCreateDesc] = useState('')
+  const [createPriority, setCreatePriority] = useState('medium')
+  const [createAssignee, setCreateAssignee] = useState('')
+  const [createDueDate, setCreateDueDate] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const filtered = filter === 'all'
-    ? demoTasks
-    : demoTasks.filter(task => task.status === filter)
+    ? tasks
+    : tasks.filter(task => task.status === filter)
 
   const searched = search
-    ? filtered.filter(task => task.title.toLowerCase().includes(search.toLowerCase()) || task.assigneeName.toLowerCase().includes(search.toLowerCase()))
+    ? filtered.filter(task => task.title.toLowerCase().includes(search.toLowerCase()) || (task.assigneeName ?? '').toLowerCase().includes(search.toLowerCase()))
     : filtered
+
+  const handleCreate = async () => {
+    if (!createTitle.trim()) return
+    setSaving(true)
+    try {
+      await apiPost('/tasks', {
+        communityId,
+        title: createTitle.trim(),
+        description: createDesc.trim(),
+        priority: createPriority,
+        assigneeName: createAssignee.trim() || undefined,
+        dueDate: createDueDate || undefined,
+      })
+      setShowCreate(false)
+      setCreateTitle('')
+      setCreateDesc('')
+      setCreatePriority('medium')
+      setCreateAssignee('')
+      setCreateDueDate('')
+      refetch()
+    } catch { /* ignore */ }
+    finally { setSaving(false) }
+  }
+
+  const handleStatusChange = async (id: string, status: string) => {
+    try {
+      await apiPatch(`/tasks/${id}`, { status })
+      refetch()
+    } catch { /* ignore */ }
+  }
 
   return (
     <div className="space-y-6">
@@ -396,7 +468,7 @@ function TasksTab() {
             {s === 'all' ? t('all') : t(s)}
             {s !== 'all' && (
               <span className="ml-1.5 text-xs opacity-70">
-                ({demoTasks.filter(task => task.status === s).length})
+                ({tasks.filter(task => task.status === s).length})
               </span>
             )}
           </button>
@@ -454,7 +526,7 @@ function TasksTab() {
                   <div className="flex items-center justify-end gap-1">
                     {task.status === 'pending' || task.status === 'inProgress' ? (
                       <button
-                        onClick={() => alert(t('markComplete'))}
+                        onClick={() => handleStatusChange(task.id, 'completed')}
                         className="p-1.5 rounded-2xl hover:bg-emerald-50 text-emerald-600 transition-colors"
                         title={t('markComplete')}
                       >
@@ -463,7 +535,7 @@ function TasksTab() {
                     ) : null}
                     {(task.status === 'pending' || task.status === 'inProgress') && (
                       <button
-                        onClick={() => alert(t('cancelItem'))}
+                        onClick={() => handleStatusChange(task.id, 'cancelled')}
                         className="p-1.5 rounded-2xl hover:bg-red-50 text-red-500 transition-colors"
                         title={t('cancelItem')}
                       >
@@ -492,6 +564,8 @@ function TasksTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('taskTitle')}</label>
                 <input
                   type="text"
+                  value={createTitle}
+                  onChange={(e) => setCreateTitle(e.target.value)}
                   placeholder={t('taskTitle')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
@@ -500,6 +574,8 @@ function TasksTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('description')}</label>
                 <textarea
                   rows={3}
+                  value={createDesc}
+                  onChange={(e) => setCreateDesc(e.target.value)}
                   placeholder={t('descriptionPlaceholder')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
@@ -507,17 +583,21 @@ function TasksTab() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('assignee')}</label>
-                  <select className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
-                    <option>Dan</option>
-                    <option>Eve</option>
-                    <option>Carol</option>
-                    <option>Bob</option>
-                    <option>Alice</option>
-                  </select>
+                  <input
+                    type="text"
+                    value={createAssignee}
+                    onChange={(e) => setCreateAssignee(e.target.value)}
+                    placeholder={t('assignee')}
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('priority')}</label>
-                  <select className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                  <select
+                    value={createPriority}
+                    onChange={(e) => setCreatePriority(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  >
                     <option value="high">{t('priorityHigh')}</option>
                     <option value="medium">{t('priorityMedium')}</option>
                     <option value="low">{t('priorityLow')}</option>
@@ -528,6 +608,8 @@ function TasksTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('dueDate')}</label>
                 <input
                   type="date"
+                  value={createDueDate}
+                  onChange={(e) => setCreateDueDate(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
@@ -540,10 +622,11 @@ function TasksTab() {
                 {t('cancel')}
               </button>
               <button
-                onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
+                onClick={handleCreate}
+                disabled={saving || !createTitle.trim()}
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all disabled:opacity-50"
               >
-                {t('create')}
+                {saving ? '...' : t('create')}
               </button>
             </div>
           </div>
@@ -555,12 +638,53 @@ function TasksTab() {
 
 function ActivitiesTab() {
   const t = useTranslations('admin')
+  const { communityId } = useCommunity()
+  const { activities, refetch } = useAdminActivities(communityId)
   const [showCreate, setShowCreate] = useState(false)
   const [filter, setFilter] = useState<string | 'all'>('all')
+  const [createTitle, setCreateTitle] = useState('')
+  const [createDesc, setCreateDesc] = useState('')
+  const [createType, setCreateType] = useState('meetup')
+  const [createLocation, setCreateLocation] = useState('')
+  const [createStartTime, setCreateStartTime] = useState('')
+  const [createEndTime, setCreateEndTime] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const filtered = filter === 'all'
-    ? demoActivities
-    : demoActivities.filter(activity => activity.status === filter)
+    ? activities
+    : activities.filter(a => a.status === filter)
+
+  const handleCreate = async () => {
+    if (!createTitle.trim()) return
+    setSaving(true)
+    try {
+      await apiPost('/activities', {
+        communityId,
+        title: createTitle.trim(),
+        description: createDesc.trim(),
+        type: createType,
+        location: createLocation.trim() || undefined,
+        startTime: createStartTime ? new Date(createStartTime).toISOString() : undefined,
+        endTime: createEndTime ? new Date(createEndTime).toISOString() : undefined,
+      })
+      setShowCreate(false)
+      setCreateTitle('')
+      setCreateDesc('')
+      setCreateType('meetup')
+      setCreateLocation('')
+      setCreateStartTime('')
+      setCreateEndTime('')
+      refetch()
+    } catch { /* ignore */ }
+    finally { setSaving(false) }
+  }
+
+  const handleCancel = async (id: string) => {
+    try {
+      await apiPatch(`/activities/${id}`, { status: 'cancelled' })
+      refetch()
+    } catch { /* ignore */ }
+  }
 
   return (
     <div className="space-y-6">
@@ -595,7 +719,7 @@ function ActivitiesTab() {
             {s === 'all' ? t('all') : t(s)}
             {s !== 'all' && (
               <span className="ml-1.5 text-xs opacity-70">
-                ({demoActivities.filter(a => a.status === s).length})
+                ({activities.filter(a => a.status === s).length})
               </span>
             )}
           </button>
@@ -647,7 +771,7 @@ function ActivitiesTab() {
                   <div className="flex items-center justify-end gap-1">
                     {(activity.status === 'upcoming' || activity.status === 'ongoing') && (
                       <button
-                        onClick={() => alert(t('cancelItem'))}
+                        onClick={() => handleCancel(activity.id)}
                         className="p-1.5 rounded-2xl hover:bg-red-50 text-red-500 transition-colors"
                         title={t('cancelItem')}
                       >
@@ -676,6 +800,8 @@ function ActivitiesTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('activityTitle')}</label>
                 <input
                   type="text"
+                  value={createTitle}
+                  onChange={(e) => setCreateTitle(e.target.value)}
                   placeholder={t('activityTitle')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
@@ -684,6 +810,8 @@ function ActivitiesTab() {
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('description')}</label>
                 <textarea
                   rows={3}
+                  value={createDesc}
+                  onChange={(e) => setCreateDesc(e.target.value)}
                   placeholder={t('descriptionPlaceholder')}
                   className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
@@ -691,7 +819,11 @@ function ActivitiesTab() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('activityType')}</label>
-                  <select className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                  <select
+                    value={createType}
+                    onChange={(e) => setCreateType(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  >
                     <option value="meetup">{t('activityTypeMeetup')}</option>
                     <option value="workshop">{t('activityTypeWorkshop')}</option>
                     <option value="hackathon">{t('activityTypeHackathon')}</option>
@@ -703,6 +835,8 @@ function ActivitiesTab() {
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('location')}</label>
                   <input
                     type="text"
+                    value={createLocation}
+                    onChange={(e) => setCreateLocation(e.target.value)}
                     placeholder={t('location')}
                     className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                   />
@@ -713,6 +847,8 @@ function ActivitiesTab() {
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('startTime')}</label>
                   <input
                     type="datetime-local"
+                    value={createStartTime}
+                    onChange={(e) => setCreateStartTime(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                   />
                 </div>
@@ -720,6 +856,8 @@ function ActivitiesTab() {
                   <label className="block text-sm font-medium text-[#525252] mb-1.5">{t('endTime')}</label>
                   <input
                     type="datetime-local"
+                    value={createEndTime}
+                    onChange={(e) => setCreateEndTime(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                   />
                 </div>
@@ -733,10 +871,11 @@ function ActivitiesTab() {
                 {t('cancel')}
               </button>
               <button
-                onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
+                onClick={handleCreate}
+                disabled={saving || !createTitle.trim()}
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all disabled:opacity-50"
               >
-                {t('create')}
+                {saving ? '...' : t('create')}
               </button>
             </div>
           </div>

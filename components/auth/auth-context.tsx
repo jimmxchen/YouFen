@@ -6,6 +6,8 @@ export interface AuthUser {
   id: string
   name: string
   email: string
+  hasOwnedCommunity: boolean
+  memberCommunityId: string | null
 }
 
 interface AuthContextValue {

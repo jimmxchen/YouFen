@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Check, X, Eye, Zap, Filter } from 'lucide-react'
 import { VoicePowerBadge } from '@/components/admin/voice-power-badge'
-import { demoContributions } from '@/lib/demo-data'
+import { useAdminContributions } from '@/lib/hooks/use-admin-data'
+import { useCommunity } from '@/lib/hooks/use-community'
 import { type Contribution, ContributionStatus } from '@/types/admin'
 import { cn } from '@/lib/utils'
 
@@ -22,24 +23,44 @@ export default function ContributionsPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [localStatuses, setLocalStatuses] = useState<Record<string, ContributionStatus>>({})
 
+  const apiStatus = filter === 'all' ? undefined : filter
+  const { communityId } = useCommunity()
+  const { contributions, refetch } = useAdminContributions(communityId, apiStatus)
+
   const getStatus = (c: Contribution): ContributionStatus => localStatuses[c.id] || c.status
 
-  const filtered = filter === 'all'
-    ? demoContributions
-    : demoContributions.filter(c => getStatus(c) === filter)
+  const filtered = contributions
 
   const selected = filtered.find(c => c.id === selectedId)
 
-  const handleApprove = (id: string) => {
-    setLocalStatuses(prev => ({ ...prev, [id]: 'approved' }))
-    setSelectedId(null)
-    alert(t('contributionApproved'))
+  const handleApprove = async (id: string) => {
+    try {
+      await fetch(`/api/contributions/${id}/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approvedTokenAmount: 0 }),
+      })
+      setLocalStatuses(prev => ({ ...prev, [id]: 'approved' }))
+      setSelectedId(null)
+      refetch()
+    } catch {
+      // silently fail, refetch will show actual state
+    }
   }
 
-  const handleReject = (id: string) => {
-    setLocalStatuses(prev => ({ ...prev, [id]: 'rejected' }))
-    setSelectedId(null)
-    alert(t('contributionRejected'))
+  const handleReject = async (id: string) => {
+    try {
+      await fetch(`/api/contributions/${id}/reject`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      })
+      setLocalStatuses(prev => ({ ...prev, [id]: 'rejected' }))
+      setSelectedId(null)
+      refetch()
+    } catch {
+      // silently fail
+    }
   }
 
   return (
@@ -71,7 +92,7 @@ export default function ContributionsPage() {
             {s === 'all' ? t('all') : t(s)}
             {s !== 'all' && (
               <span className="ml-1.5 text-xs opacity-70">
-                ({demoContributions.filter(c => getStatus(c) === s).length})
+                ({contributions.filter(c => getStatus(c) === s).length})
               </span>
             )}
           </button>

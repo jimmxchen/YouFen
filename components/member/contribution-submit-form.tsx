@@ -62,14 +62,19 @@ export function ContributionSubmitForm({
   const [evidenceName, setEvidenceName] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [showErrors, setShowErrors] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (!title.trim() || !details.trim() || !typeId) {
       setShowErrors(true)
       return
     }
+
+    setSubmitting(true)
+    setSubmitError('')
 
     const typeLabel = types.find((type) => type.id === typeId)?.label ?? typeId
     const storageKey = pendingContributionStorageKey(communityId)
@@ -106,6 +111,37 @@ export function ContributionSubmitForm({
       ])
     )
 
+    // Submit to API
+    try {
+      const res = await fetch('/api/member/contributions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          communityId,
+          title: title.trim(),
+          description: details.trim(),
+          type: typeId,
+          proofLink: proofLink.trim() || undefined,
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        if (data.error === 'UNAUTHORIZED') {
+          setSubmitError('Please sign in to submit.')
+        } else {
+          setSubmitError('Failed to submit. Your contribution is saved locally.')
+        }
+        setSubmitting(false)
+        return
+      }
+    } catch {
+      setSubmitError('Network error. Your contribution is saved locally and will be submitted when you reconnect.')
+      setSubmitting(false)
+      return
+    }
+
+    setSubmitting(false)
     setSubmitted(true)
   }
 
@@ -245,9 +281,17 @@ export function ContributionSubmitForm({
         </div>
       </div>
 
-      <button type="submit" className={`${memberPrimaryButton} lg:col-span-2 lg:w-auto lg:justify-self-end lg:px-6`}>
-        {labels.submit}
+      <button
+        type="submit"
+        disabled={submitting}
+        className={`${memberPrimaryButton} lg:col-span-2 lg:w-auto lg:justify-self-end lg:px-6 disabled:opacity-50`}
+      >
+        {submitting ? 'Submitting...' : labels.submit}
       </button>
+
+      {submitError ? (
+        <p className="lg:col-span-2 text-sm text-red-500 -mt-2">{submitError}</p>
+      ) : null}
     </form>
   )
 }
