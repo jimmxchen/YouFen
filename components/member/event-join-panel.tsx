@@ -26,6 +26,7 @@ export function EventJoinPanel({ communityId, event, labels }: EventJoinPanelPro
   }, [event.status, storageKey])
 
   function joinEvent() {
+    if (event.status !== 'open') return
     window.localStorage.setItem(storageKey, 'true')
     setJoined(true)
   }
