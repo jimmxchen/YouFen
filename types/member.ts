@@ -90,6 +90,7 @@ export interface ChatRoom {
 export interface CommunityMember {
   id: string
   name: string
+  email: string
   role: string
   tags: string[]
   avatarInitials: string

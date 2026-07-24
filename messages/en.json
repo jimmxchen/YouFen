@@ -324,7 +324,10 @@
     "activityTypeSocial": "Social",
     "activityTypeOther": "Other",
     "upcoming": "Upcoming",
-    "ongoing": "Ongoing"
+    "ongoing": "Ongoing",
+    "myProfile": "My Profile",
+    "myDashboard": "My Dashboard",
+    "signOut": "Sign Out"
   },
   "member": {
     "nav": {
@@ -345,7 +348,6 @@
       "categoryVotes": "Votes",
       "categoryChats": "Chats",
       "myProfile": "My Profile",
-      "allCommunities": "All Communities",
       "signOut": "Sign Out"
     },
     "backToLanding": "Back to Landing",

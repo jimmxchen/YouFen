@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { Users, Vote, FileText, ShieldCheck, Plus } from 'lucide-react'
 import { StatCard } from '@/components/admin/stat-card'
+import { VoicePowerBadge } from '@/components/admin/voice-power-badge'
 import { demoStats, demoMembers, demoContributions, demoProposals } from '@/lib/demo-data'
 
 function cn(...classes: (string | boolean | undefined | null)[]) {
@@ -13,6 +14,12 @@ export default function DashboardPage() {
   const t = useTranslations('admin')
 
   const recentContributions = demoContributions.slice(0, 5)
+  const currentUser = demoMembers[0]
+  const roleLabels: Record<typeof currentUser.role, string> = {
+    owner: t('roleOwner'),
+    manager: t('roleManager'),
+    member: t('roleMember'),
+  }
 
   return (
     <div className="space-y-8">
@@ -24,6 +31,20 @@ export default function DashboardPage() {
         <p className="text-lg text-[#525252] mt-2">
           {t('dashboardSubtitle')}
         </p>
+      </div>
+
+      {/* Personal profile card */}
+      <div className="rounded-2xl border border-[#F0F0F0] bg-white p-6 flex items-center gap-4">
+        <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 flex items-center justify-center text-white text-lg font-medium">
+          {currentUser.name[0]}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-base font-medium text-[#131517]">{currentUser.name}</p>
+          <p className="text-sm text-[#939597]">
+            {roleLabels[currentUser.role]} · {currentUser.email}
+          </p>
+        </div>
+        <VoicePowerBadge value={currentUser.voicePower} size="md" />
       </div>
 
       {/* Stat cards */}

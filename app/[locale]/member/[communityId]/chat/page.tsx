@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { ChatRoomBrowser } from '@/components/member/chat-room-browser'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { memberMuted, memberSubtle } from '@/components/member/ui'
+import { memberMuted } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberChatPageProps {
@@ -25,8 +25,7 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
       <header className="px-5 pb-4 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className={`truncate text-base ${memberSubtle}`}>{member.communityName}</p>
-            <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
+            <h1 className="text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
               {t('chat.title')}
             </h1>
             <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>
