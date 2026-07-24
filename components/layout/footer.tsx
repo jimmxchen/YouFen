@@ -83,6 +83,15 @@ export function Footer() {
               {t('copyright')}
             </p>
             <div className="flex items-center space-x-6">
+              <a
+                href="https://www.xiaohongshu.com/user/profile/686ac552000000001d00b639"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center"
+                aria-label="Xiaohongshu"
+              >
+                <img src="/xhs_Logo.png" alt="Xiaohongshu" width="40" height="40" className="size-10 object-contain" />
+              </a>
               <Link href="/privacy" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
                 {t('privacy')}
               </Link>
