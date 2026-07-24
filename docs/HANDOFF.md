@@ -124,6 +124,21 @@ pnpm tsx scripts/deploy-contract.ts   # 对 Injective EVM Testnet 部署 YouFenR
 - **守门示例目前是教学型占位**：`RuleGuardian` 的四个「越权被拒」场景是文案示例，尚无真实链上 Revert 数据。v0.7 合约部署后，应接 `executeMint`/`castVoteBySig` 的真实 Revert（`MEMBER_EPOCH_CAP_EXCEEDED` / `ADVANCE_LIMIT_EXCEEDED` / `INVALID_MEMBER_SIGNATURE` 等）替换为真实 demo。
 - **信任文案的「事实」前提尚未全部落地**：溯源页把「合约拒绝越权」「YouFen 不能替你投票」作为事实陈述——这些只有在 v0.7 合约 + 客户端持钥签名层上线后才字面为真。在 v0.7 上线前对外发布该页时，须保留 demo/占位标注（现有 `demoNote` 已具备），不得把公开信任文案当作已运行系统的字面承诺（PRD §12.2 纪律）。
 
+### 9.1 部署架构：纯 Vercel Cron（方案 A，已实现）
+
+v0.7 后端不用常驻 worker——relay/indexer 是**拉取式幂等服务**，由 **Vercel Cron** 每分钟触发（`vercel.json` 已配）：
+
+- `GET /api/internal/chain/sync` —— getLogs → 折叠投影（确认余额）
+- `GET /api/internal/chain-actions/submit` —— 广播 ready 的 ChainAction
+- `GET /api/internal/chain-actions/confirm` —— 查回执、捕获 revert
+- `GET /api/internal/chain/health` —— RPC head / relayer 余额 / 同步滞后
+
+人工事项：
+- **鉴权**：这些端点走 `requireInternal`（Bearer `CRON_SECRET` 或 `INTERNAL_API_TOKEN`）。在 Vercel 设 `CRON_SECRET` 环境变量，Vercel Cron 会自动带 `Authorization: Bearer $CRON_SECRET`。
+- **每分钟 cron 需 Vercel Pro**（Hobby 仅每日一次）。若用 Hobby，改用外部定时器（cron-job.org / GitHub Actions 定时）打这些 URL，带上 `INTERNAL_API_TOKEN`。
+- **函数时限**：`syncOnce` 的 `maxBlockRange`（默认 2000）与 submit/confirm 的 `limit`（默认 10/20）控制单次批量，确保在 Vercel 函数时限内完成；追赶历史时多打几次即可。
+- **env**：需 `CONTRACT_ADDRESS`（部署 `YouFenGovernance` 后填）、`BLOCKCHAIN_PRIVATE_KEY`（relayer，只付 gas 无授权）、`CONTRACT_DEPLOY_BLOCK`、`INTERNAL_API_TOKEN`、`CRON_SECRET`。未配时端点优雅返回 `CHAIN_RUNTIME_UNCONFIGURED`。
+
 ## 8. 文档权威地图
 
 | 文档 | 角色 |
