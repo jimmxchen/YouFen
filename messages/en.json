@@ -252,6 +252,32 @@
       "trustedRecords": "Trusted records"
     }
   },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "welcomeBack": "Welcome back! Please sign in to continue",
+    "createAccount": "Create your account to get started",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Name",
+    "phone": "Phone number",
+    "smsCode": "SMS code",
+    "sendCode": "Send code",
+    "confirmPassword": "Confirm password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "login": "Sign In",
+    "create": "Create account",
+    "orContinueWith": "Or continue with",
+    "googleSignIn": "Sign in with Google",
+    "wechatSignIn": "Sign in with WeChat",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "agreeToTerms": "I agree to",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy"
+  },
   "footer": {
     "brand": "YouFen",
     "description": "No-code community governance platform — letting every participant truly have a stake.",
