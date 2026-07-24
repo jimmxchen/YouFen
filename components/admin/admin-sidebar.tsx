@@ -2,6 +2,7 @@
 import { useTranslations, useLocale } from 'next-intl'
 import { Link, useRouter, usePathname } from '@/i18n/navigation'
 import { LayoutDashboard, Users, ClipboardCheck, Vote, ShieldCheck, ChevronRight, Languages, ClipboardList, MessageCircle } from 'lucide-react'
+import { YouFenLogo } from '@/components/brand/youfen-logo'
 import { cn } from '@/lib/utils'
 import { type AdminView } from '@/types/admin'
 
@@ -54,7 +55,9 @@ export function AdminSidebar({ communityName }: AdminSidebarProps) {
   return (
     <aside className="w-64 min-h-screen bg-[#FAFAFA] border-r border-[#F0F0F0] flex flex-col fixed left-0 top-0 z-40">
       <div className="h-16 flex items-center px-6 border-b border-[#F0F0F0]">
-        <Link href="/" className="text-lg font-semibold text-[#131517] hover:text-[#10B981] transition-colors">YouFen</Link>
+        <Link href="/" className="text-[#131517] hover:text-[#10B981] transition-colors" aria-label="YouFen">
+          <YouFenLogo markClassName="h-9 w-9" textClassName="text-lg" />
+        </Link>
       </div>
       <div className="px-6 py-4 border-b border-[#F0F0F0]">
         <p className="text-xs text-[#939597] mb-1">{t('community')}</p>

@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-import { Calendar, LucideIcon, MapIcon, Users } from 'lucide-react'
+import { Calendar, LucideIcon, MapIcon } from 'lucide-react'
 import { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 
@@ -34,7 +34,7 @@ interface CardHeadingProps {
   variant?: 'light' | 'dark'
 }
 
-const CardHeading = ({ icon: Icon, title, description, variant = 'dark' }: CardHeadingProps) => (
+const CardHeading = ({ icon: Icon, title, description, variant = 'light' }: CardHeadingProps) => (
   <div className="p-6">
     <span className={cn('flex items-center gap-2 text-sm', variant === 'light' ? 'text-[#525252]' : 'text-white/70')}>
       <Icon className="size-4" />
@@ -42,34 +42,6 @@ const CardHeading = ({ icon: Icon, title, description, variant = 'dark' }: CardH
     </span>
     <p className={cn('mt-8 text-2xl font-semibold', variant === 'light' ? 'text-[#131517]' : 'text-white')}>{description}</p>
   </div>
-)
-
-interface DualModeImageProps {
-  darkSrc: string
-  lightSrc: string
-  alt: string
-  width: number
-  height: number
-  className?: string
-}
-
-const DualModeImage = ({ darkSrc, lightSrc, alt, width, height, className }: DualModeImageProps) => (
-  <>
-    <img
-      src={darkSrc}
-      className={cn('hidden dark:block', className)}
-      alt={`${alt} dark`}
-      width={width}
-      height={height}
-    />
-    <img
-      src={lightSrc}
-      className={cn('shadow dark:hidden', className)}
-      alt={`${alt} light`}
-      width={width}
-      height={height}
-    />
-  </>
 )
 
 interface CircleConfig {
@@ -121,14 +93,30 @@ export function AdvancedFeatures() {
 
             <div className="relative mb-6 border-t border-dashed sm:mb-0">
               <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_40%,#93c5fd,white_125%)]"></div>
-              <div className="aspect-[76/59] p-1 px-6">
-                <DualModeImage
-                  darkSrc="https://tailark.com/_next/image?url=%2Fpayments.png&w=3840&q=75"
-                  lightSrc="https://tailark.com/_next/image?url=%2Fpayments-light.png&w=3840&q=75"
-                  alt={t('aiRecommend.alt')}
-                  width={1207}
-                  height={929}
-                />
+              <div className="p-6 space-y-3">
+                <div className="flex items-center gap-3 bg-blue-50 rounded-xl p-4 border border-blue-100">
+                  <div className="size-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">AI</div>
+                  <div className="flex-1">
+                    <div className="h-2.5 bg-blue-200 rounded-full w-3/4" />
+                    <div className="h-2 bg-blue-100 rounded-full w-1/2 mt-1.5" />
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="size-2 rounded-full bg-emerald-500" />
+                    <span className="text-xs font-medium text-gray-700">Generated Rule #1</span>
+                  </div>
+                  <div className="h-2 bg-gray-100 rounded-full w-full mb-1.5" />
+                  <div className="h-2 bg-gray-100 rounded-full w-5/6" />
+                </div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm opacity-70">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="size-2 rounded-full bg-amber-500" />
+                    <span className="text-xs font-medium text-gray-700">Generated Rule #2</span>
+                  </div>
+                  <div className="h-2 bg-gray-100 rounded-full w-full mb-1.5" />
+                  <div className="h-2 bg-gray-100 rounded-full w-4/6" />
+                </div>
               </div>
             </div>
           </FeatureCard>
@@ -143,16 +131,24 @@ export function AdvancedFeatures() {
             </CardHeader>
 
             <CardContent>
-              <div className="relative mb-6 sm:mb-0">
+              <div className="relative mb-6 sm:mb-0 px-2">
                 <div className="absolute -inset-6 [background:radial-gradient(50%_50%_at_75%_50%,transparent,white_100%)]"></div>
-                <div className="aspect-[76/59] border rounded-xl overflow-hidden">
-                  <DualModeImage
-                    darkSrc="https://tailark.com/_next/image?url=%2Forigin-cal-dark.png&w=3840&q=75"
-                    lightSrc="https://tailark.com/_next/image?url=%2Forigin-cal.png&w=3840&q=75"
-                    alt={t('timeline.alt')}
-                    width={1207}
-                    height={929}
-                  />
+                <div className="relative pl-8 space-y-6 before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-px before:bg-gray-200">
+                  {[
+                    { name: "Alex Chen", action: "Proposed governance rule #12", time: "2h ago", color: "bg-emerald-500" },
+                    { name: "Sarah Kim", action: "Completed code review — 3 files", time: "5h ago", color: "bg-blue-500" },
+                    { name: "Marcus Liu", action: "Voted on proposal #8", time: "1d ago", color: "bg-amber-500" },
+                    { name: "Emily Wang", action: "Submitted contribution report", time: "2d ago", color: "bg-violet-500" },
+                  ].map((item, i) => (
+                    <div key={i} className="relative">
+                      <div className={`absolute -left-[23px] top-1.5 size-[17px] rounded-full border-2 border-white ${item.color}`} />
+                      <div>
+                        <p className="text-sm font-semibold text-[#131517]">{item.name}</p>
+                        <p className="text-sm text-[#525252]">{item.action}</p>
+                        <p className="text-xs text-[#939597] mt-0.5">{item.time}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </CardContent>
