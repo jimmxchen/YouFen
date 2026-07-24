@@ -1,19 +1,19 @@
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { ContributionTimeline } from '@/components/member/contribution-timeline'
+import { MemberProfileActions } from '@/components/member/member-profile-actions'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
+import { PendingContributionList } from '@/components/member/pending-contribution-list'
 import { RecordReceiptList } from '@/components/member/record-receipt-list'
 import { VoicePowerCard } from '@/components/member/voice-power-card'
-import { memberCard, memberMuted, memberPrimaryButton, memberSubtle } from '@/components/member/ui'
+import { memberCard, memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberMePageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 function formatNumber(value: number, locale: string) {
@@ -21,8 +21,9 @@ function formatNumber(value: number, locale: string) {
 }
 
 export default async function MemberMePage({ params }: MemberMePageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
+  const member = getDemoMember(communityId)
 
   return (
     <MemberShell>
@@ -40,7 +41,7 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
         <aside className="space-y-4 lg:sticky lg:top-24">
           <section className={memberCard}>
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
                 {member.avatarInitials}
               </div>
               <div className="min-w-0">
@@ -61,30 +62,48 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
 
           <VoicePowerCard
             voicePower={member.voicePower}
-            locale={params.locale}
+            locale={locale}
             labels={{
               title: t('voicePower.title'),
               active: t('voicePower.active'),
               pending: t('voicePower.pending'),
               rank: t('voicePower.rank', { rank: member.voicePower.rankPercent }),
               earnedThisMonth: t('voicePower.earnedThisMonth', {
-                amount: formatNumber(member.voicePower.earnedThisMonth, params.locale),
+                amount: formatNumber(member.voicePower.earnedThisMonth, locale),
               }),
             }}
           />
 
-          <Link href={`/${params.locale}/member/${params.communityId}/contribute`} className={memberPrimaryButton}>
-            {t('me.submitContribution')}
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <MemberProfileActions
+            contributeHref={`/${locale}/member/${communityId}/contribute`}
+            publicHref={`/${locale}/member/${communityId}/public`}
+            labels={{
+              submitContribution: t('me.submitContribution'),
+              viewPublicCommunity: t('me.viewPublicCommunity'),
+              shareContributions: t('me.shareContributions'),
+              shareCopied: t('me.shareCopied'),
+            }}
+          />
         </aside>
 
         <div className="space-y-6">
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-[#131517]">{t('me.contributions')}</h2>
+            <h2 id="contributions" className="mb-3 text-xl font-semibold text-[#131517]">
+              {t('me.contributions')}
+            </h2>
+            <PendingContributionList
+              communityId={communityId}
+              labels={{
+                title: t('contribute.type'),
+                status: t('status.pending'),
+                submittedAt: t('me.submittedAt'),
+                proof: t('contribute.proofLink'),
+                evidence: t('contribute.evidence'),
+              }}
+            />
             <ContributionTimeline
               contributions={member.contributions}
-              locale={params.locale}
+              locale={locale}
               labels={{
                 approvedBy: t('history.approvedBy'),
                 statusLabel: t('history.statusLabel'),
@@ -119,8 +138,8 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="me"
         labels={{
           home: t('nav.home'),

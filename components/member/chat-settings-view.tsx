@@ -36,6 +36,9 @@ interface ChatSettingsViewProps {
     membersTitle: string
     sharedMedia: string
     publicInviteNote: string
+    invitePanelTitle: string
+    invitePanelBody: string
+    copied: string
     operator: string
     participantStatusById: Record<string, string>
   }
@@ -43,6 +46,8 @@ interface ChatSettingsViewProps {
 
 export function ChatSettingsView({ room, locale, communityId, labels }: ChatSettingsViewProps) {
   const [isMuted, setIsMuted] = useState(room.muted)
+  const [showInvite, setShowInvite] = useState(false)
+  const [copied, setCopied] = useState(false)
   const [query, setQuery] = useState('')
   const normalizedQuery = query.trim().toLowerCase()
   const searchMatches = useMemo(() => {
@@ -60,7 +65,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
       <header className="flex items-center gap-2">
         <Link
           href={`/${locale}/member/${communityId}/chat/${room.id}`}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#525252] hover:bg-[#FAFAFA]"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-[#525252] transition-all hover:bg-[#FAFAFA]"
           aria-label={labels.back}
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
@@ -106,6 +111,7 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
 
         <button
           type="button"
+          onClick={() => setShowInvite((current) => !current)}
           className="flex min-h-16 items-center gap-3 rounded-xl border border-[#F0F0F0] bg-white px-4 text-left transition hover:bg-[#FAFAFA]"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
@@ -133,21 +139,40 @@ export function ChatSettingsView({ room, locale, communityId, labels }: ChatSett
           <LinkIcon className="h-4 w-4 text-[#525252]" aria-hidden="true" />
           <h2 className="text-sm font-semibold text-[#131517]">{labels.inviteLink}</h2>
         </div>
+        {showInvite ? (
+          <div className="mt-3 rounded-xl border border-emerald-100 bg-emerald-50 p-3">
+            <p className="text-sm font-semibold text-emerald-950">{labels.invitePanelTitle}</p>
+            <p className="mt-1 text-sm leading-6 text-emerald-800">{labels.invitePanelBody}</p>
+          </div>
+        ) : null}
         <div className="mt-3 flex gap-2">
-          <div className="flex min-h-11 min-w-0 flex-1 items-center rounded-lg bg-[#FAFAFA] px-3 font-mono text-xs text-[#525252]">
+          <div className="flex min-h-11 min-w-0 flex-1 items-center rounded-xl bg-[#FAFAFA] px-3 font-mono text-xs text-[#525252]">
             <span className="truncate">{room.inviteCode}</span>
           </div>
-          <button type="button" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-white" aria-label={labels.copyInvite}>
+          <button
+            type="button"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] hover:shadow-md active:translate-y-0"
+            aria-label={labels.copyInvite}
+            onClick={async () => {
+              try {
+                await navigator.clipboard?.writeText(room.inviteCode)
+                setCopied(true)
+              } catch {
+                setCopied(false)
+              }
+            }}
+          >
             <Copy className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
+        {copied ? <p className="mt-2 text-xs font-medium text-emerald-700">{labels.copied}</p> : null}
       </section>
 
       <section className="mt-4 rounded-xl border border-[#F0F0F0] bg-white p-4">
         <label htmlFor="settings-search" className="text-sm font-semibold text-[#131517]">
           {labels.search}
         </label>
-        <div className="mt-3 flex min-h-11 items-center gap-2 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4">
+        <div className="mt-3 flex min-h-11 items-center gap-2 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4">
           <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
           <input
             id="settings-search"

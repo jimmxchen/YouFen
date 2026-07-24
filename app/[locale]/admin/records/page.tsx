@@ -1,45 +1,41 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { ExternalLink, ShieldCheck, Copy, CheckCircle2, Clock, XCircle } from 'lucide-react'
-import { demoRecords } from '@/lib/demo-data'
-import { type PublicRecord, RecordType, RecordStatus } from '@/types/admin'
+import { demoRecords, KIND_TINT, type ChainRecord } from '@/components/records/demo-data'
+import { ProvenanceJourney } from '@/components/records/provenance-journey'
+import { ChainStatusStrip } from '@/components/records/chain-status'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
-const recordTypeLabels: Record<RecordType, string> = {
-  community: 'recordTypeCommunity',
-  rule: 'recordTypeRule',
-  vp_batch: 'recordTypeVpBatch',
-  proposal: 'recordTypeProposal',
-  vote_result: 'recordTypeVoteResult',
+const statusConfig: Record<ChainRecord['status'], { labelKey: string; icon: typeof CheckCircle2; color: string; bg: string }> = {
+  verified: { labelKey: 'status.verified', icon: CheckCircle2, color: 'text-emerald-700', bg: 'bg-emerald-50' },
+  pending: { labelKey: 'status.pending', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
+  submitting: { labelKey: 'status.submitting', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
+  confirming: { labelKey: 'status.confirming', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
+  failed: { labelKey: 'status.failed', icon: XCircle, color: 'text-red-700', bg: 'bg-red-50' },
+  superseded: { labelKey: 'status.superseded', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
 }
 
-const recordTypeIcons: Record<RecordType, typeof ShieldCheck> = {
-  community: ShieldCheck,
-  rule: ShieldCheck,
-  vp_batch: ShieldCheck,
-  proposal: ShieldCheck,
-  vote_result: ShieldCheck,
-}
+const typeFilters = ['all', 'token', 'votes', 'rules', 'epoch'] as const
 
-const statusConfig: Record<RecordStatus, { labelKey: string; icon: typeof CheckCircle2; color: string; bg: string }> = {
-  pending: { labelKey: 'recordStatusPending', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
-  recording: { labelKey: 'recordStatusRecording', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
-  recorded: { labelKey: 'recordStatusRecorded', icon: CheckCircle2, color: 'text-emerald-700', bg: 'bg-emerald-50' },
-  failed: { labelKey: 'recordStatusFailed', icon: XCircle, color: 'text-red-700', bg: 'bg-red-50' },
-}
-
-const typeFilters = ['all', 'vote_result', 'proposal', 'rule', 'vp_batch', 'community'] as const
-
-export default function RecordsPage() {
-  const t = useTranslations('admin')
+export default function AdminRecordsPage() {
+  const t = useTranslations('records')
+  const locale = useLocale()
   const [filter, setFilter] = useState<string | 'all'>('all')
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(null)
 
   const filtered = filter === 'all'
     ? demoRecords
-    : demoRecords.filter(r => r.type === filter)
+    : demoRecords.filter(r => {
+        const kind = r.kind
+        if (filter === 'token') return kind === 'tokenMint' || kind === 'advanceMint' || kind === 'tokenReversal'
+        if (filter === 'votes') return kind === 'proposalResult'
+        if (filter === 'rules') return kind === 'policyVersion'
+        if (filter === 'epoch') return kind === 'epochSummary'
+        return true
+      })
 
   const copyToClipboard = (hash: string, id: string) => {
     navigator.clipboard.writeText(hash)
@@ -47,15 +43,22 @@ export default function RecordsPage() {
     setTimeout(() => setCopiedId(null), 2000)
   }
 
+  const formatDate = (dateStr: string) => {
+    return new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
+      month: 'short',
+      day: 'numeric',
+    }).format(new Date(dateStr))
+  }
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-[40px] font-medium text-[#131517] leading-[48px]">
-          {t('trustedRecords')}
+          {t('title')}
         </h1>
         <p className="text-lg text-[#525252] mt-2">
-          {t('trustedRecordsSubtitle')}
+          {t('subtitle')}
         </p>
       </div>
 
@@ -72,102 +75,91 @@ export default function RecordsPage() {
                 : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
             )}
           >
-            {f === 'all' ? t('all') : recordTypeLabels[f]}
+            {t(`filter.${f}`)}
           </button>
         ))}
       </div>
 
       {/* Records list */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {filtered.map((record) => {
           const statusCfg = statusConfig[record.status]
           const StatusIcon = statusCfg.icon
+          const isOpen = openId === record.id
 
           return (
             <div
               key={record.id}
-              className="rounded-xl border border-[#F0F0F0] bg-white p-6 hover:shadow-md hover:border-[#E5E5E5] transition-all duration-200"
+              className="rounded-xl border border-[#F0F0F0] bg-white overflow-hidden hover:shadow-md hover:border-[#E5E5E5] transition-all duration-200"
             >
-              <div className="flex items-start justify-between">
-                <div className="flex-1 space-y-3">
-                  {/* Top row: type + status */}
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-50 text-blue-700 text-xs font-medium">
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      {t(recordTypeLabels[record.type])}
-                    </span>
-                    <span className={cn(
-                      'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium',
-                      statusCfg.bg, statusCfg.color
-                    )}>
-                      <StatusIcon className="w-3 h-3" />
-                      {t(statusCfg.labelKey)}
-                    </span>
-                  </div>
-
-                  {/* Data preview */}
-                  <div className="p-4 rounded-xl bg-[#FAFAFA] border border-[#F0F0F0] space-y-2">
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="text-xs text-[#939597] block mb-0.5">{t('recordFieldCommunity')}</span>
-                        <span className="text-[#131517] font-medium">
-                          {(record.data as any)?.name || (record.data as any)?.proposalTitle || 'N/A'}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-xs text-[#939597] block mb-0.5">{t('recordFieldNetwork')}</span>
-                        <span className="text-[#131517] font-medium capitalize">{record.network}</span>
-                      </div>
-                      <div>
-                        <span className="text-xs text-[#939597] block mb-0.5">{t('recordFieldCreated')}</span>
-                        <span className="text-[#131517]">{record.createdAt}</span>
-                      </div>
-                      {record.recordedAt && (
-                        <div>
-                          <span className="text-xs text-[#939597] block mb-0.5">{t('recordFieldRecordedOnChain')}</span>
-                          <span className="text-[#131517]">{record.recordedAt}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Hashes */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-[#939597] shrink-0 w-16">{t('dataHash')}</span>
-                      <code className="flex-1 px-3 py-1.5 rounded-md bg-[#FAFAFA] border border-[#F0F0F0] text-xs text-[#525252] font-mono truncate">
-                        {record.hash}
-                      </code>
-                      <button
-                        onClick={() => copyToClipboard(record.hash, record.id)}
-                        className="p-1.5 rounded-md hover:bg-[#FAFAFA] text-[#939597] hover:text-[#131517] transition-colors shrink-0"
-                      >
-                        {copiedId === record.id ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                      </button>
-                    </div>
-                    {record.txHash && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-[#939597] shrink-0 w-16">{t('txHash')}</span>
-                        <code className="flex-1 px-3 py-1.5 rounded-md bg-[#FAFAFA] border border-[#F0F0F0] text-xs text-[#525252] font-mono truncate">
-                          {record.txHash}
-                        </code>
-                        <a
-                          href={`https://explorer.injective.network/tx/${record.txHash}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-1.5 rounded-md hover:bg-blue-50 text-blue-500 transition-colors shrink-0"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      </div>
-                    )}
-                  </div>
+              {/* Clickable header row */}
+              <button
+                onClick={() => setOpenId(isOpen ? null : record.id)}
+                className="w-full text-left p-5"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium ${KIND_TINT[record.kind]}`}>
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    {t(`kind.${record.kind}`)}
+                  </span>
+                  <span className={cn(
+                    'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium',
+                    statusCfg.bg, statusCfg.color
+                  )}>
+                    <StatusIcon className="w-3 h-3" />
+                    {t(statusCfg.labelKey)}
+                  </span>
+                  <span className="text-xs text-[#939597] ml-auto">
+                    {formatDate(record.date)}
+                  </span>
                 </div>
-              </div>
+
+                <h3 className="text-[15px] font-medium text-[#131517] leading-snug">
+                  {t(`demo.${record.id}.title`)}
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-[#525252]">
+                  {t(`demo.${record.id}.summary`)}
+                </p>
+
+                {/* Vote stats inline */}
+                {record.vote && (
+                  <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+                    <span className="inline-flex items-center gap-2">
+                      <span className="text-xs text-[#939597]">{t('vote.approval')}</span>
+                      <span className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-100">
+                        <span
+                          className="block h-full rounded-full bg-emerald-500"
+                          style={{ width: `${record.vote.approvalPct}%` }}
+                        />
+                      </span>
+                      <span className="text-xs font-semibold tabular-nums text-emerald-600">
+                        {record.vote.approvalPct}%
+                      </span>
+                    </span>
+                    <span className="text-xs tabular-nums text-[#939597]">
+                      {t('vote.turnout', {
+                        voters: record.vote.voters,
+                        total: record.vote.totalMembers,
+                        pct: Math.round((record.vote.voters / record.vote.totalMembers) * 100),
+                      })}
+                    </span>
+                  </div>
+                )}
+              </button>
+
+              {/* Expandable provenance journey */}
+              {isOpen && (
+                <div className="border-t border-[#F0F0F0] px-5 pb-5">
+                  <ProvenanceJourney record={record} />
+                </div>
+              )}
             </div>
           )
         })}
       </div>
+
+      {/* Chain status */}
+      <ChainStatusStrip />
     </div>
   )
 }

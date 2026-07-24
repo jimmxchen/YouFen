@@ -6,17 +6,18 @@ import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberChatRoomPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
     chatId: string
-  }
+  }>
 }
 
 export default async function MemberChatRoomPage({ params }: MemberChatRoomPageProps) {
+  const { locale, communityId, chatId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
-  const room = member.chatRooms.find((chatRoom) => chatRoom.id === params.chatId)
+  const member = getDemoMember(communityId)
+  const room = member.chatRooms.find((chatRoom) => chatRoom.id === chatId)
 
   if (!room) {
     notFound()
@@ -33,8 +34,8 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
     <MemberShell>
       <ChatRoomView
         room={room}
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         labels={{
           back: t('chat.backToChats'),
           online: t('chat.online', { count: onlineCount }),
@@ -50,12 +51,14 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
           addImage: t('chat.addImage'),
           addReaction: t('chat.addReaction'),
           settings: t('chat.settings'),
+          imageShared: t('chat.imageShared'),
+          reactionSuffix: t('chat.reactionSuffix'),
         }}
       />
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="chat"
         labels={{
           home: t('nav.home'),

@@ -358,6 +358,11 @@ import Link from 'next/link'
 - Image: 200x200px, under 32KB
 - Link: Supports direct open
 
+**Multi-language Support Optimization**:
+- All permanent pages should have support for both English and Mandarin Chinese, accessible via a switch or toggle on the page 
+- Update messages/en.json and messages/zh.json with all relevant terms when necessary 
+
+
 ### 2.5 Records Explorer — v0.7 Protocol-Enforcement Narrative
 
 A public provenance page for humanities-background community managers with no web3 experience. Route `/[locale]/records`, components under `components/records/`:
