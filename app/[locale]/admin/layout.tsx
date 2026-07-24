@@ -9,6 +9,7 @@ const viewTitles: Record<AdminView, string> = {
   contributions: '',
   proposals: '',
   records: '',
+  management: '管理',
 }
 
 export default function AdminLayout({
