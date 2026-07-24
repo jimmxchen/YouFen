@@ -616,6 +616,22 @@ model MemberEpochMintCounter {
   @@unique([communityId, memberIdHash, epochNumber])
 }
 
+// Confirmed per-member balance keyed by the on-chain memberIdHash (projection of
+// MintExecuted/ReversalExecuted). `ledgerSeq` mirrors the event's monotonic
+// govSeqAfter so a late/retried event can never overwrite a fresher balance
+// (fresher-wins guard). Only the indexer writes this, only on a `verified` event.
+model MemberChainBalance {
+  id           String   @id @default(cuid())
+  communityId  String
+  memberIdHash String
+  balance      Decimal  @default(0) @db.Decimal(78, 0)
+  ledgerSeq    BigInt   @default(0)
+  updatedAt    DateTime @updatedAt
+
+  @@unique([communityId, memberIdHash])
+  @@index([communityId])
+}
+
 // Record of a proposal's on-chain execution (policy staging / authorization consumption).
 model ProposalExecution {
   id          String    @id @default(cuid())
