@@ -1,12 +1,13 @@
 {
   "nav": {
     "logo": "YouFen",
-    "logoSub": "有份儿",
+    "logoSub": "",
     "features": "Features",
     "resources": "Resources",
     "demo": "Demo",
     "bip": "Build in Public",
     "create": "Create Community",
+    "dashboard": "Dashboard",
     "dropdown": {
       "aiRules": "AI-Generated Rules",
       "aiRulesDesc": "Smart generation of community participation rules",
@@ -30,7 +31,7 @@
     "title": "YouFen",
     "subtitle": "Everyone truly has a stake",
     "mainTitle": "No-Code Community Governance",
-    "description": "Turn member contributions into voting power\nLet everyone decide the community's future together"
+    "description": "Turn member contributions into voting power. \nLet everyone decide the community's future together"
   },
   "features": {
     "title": "Core Features",
@@ -73,182 +74,27 @@
       "anonymous": "Anonymous Voting"
     }
   },
-  "member": {
-    "nav": {
-      "home": "Home",
-      "chat": "Chat",
-      "vote": "Vote",
-      "me": "Me"
-    },
-    "status": {
-      "verified": "Verified",
-      "failed": "Needs retry",
-      "pending": "Pending",
-      "active": "Active",
-      "upcoming": "Upcoming",
-      "ended": "Ended",
-      "approved": "Approved",
-      "joined": "Joined"
-    },
-    "dashboard": {
-      "greeting": "Hi, {name}",
-      "today": "Today",
-      "latestUpdate": "Latest update",
-      "nextEvent": "Next event",
-      "joinEvent": "Join event",
-      "activeVote": "Active vote",
-      "voteNow": "Vote now",
-      "myVoice": "My voice",
-      "viewMyRecord": "View my record",
-      "recentActivity": "Recent activity"
-    },
-    "event": {
-      "title": "Event details",
-      "description": "Confirm your spot and keep the event details handy.",
-      "startsAt": "Starts at",
-      "location": "Location",
-      "join": "Join event",
-      "joined": "You are in",
-      "joinedBody": "Your spot is saved in this demo. The event card will stay marked as joined on this device.",
-      "backHome": "Back home"
-    },
-    "activity": {
-      "title": "Activity",
-      "description": "Recent contributions, votes, and verified records in this community."
-    },
-    "voicePower": {
-      "title": "Your voice power",
-      "active": "Can vote now",
-      "pending": "Waiting approval",
-      "rank": "Top {rank}% in this community",
-      "earnedThisMonth": "+{amount} this month"
-    },
-    "chat": {
-      "title": "Chat",
-      "description": "Group chats for updates, help requests, events, and small team coordination.",
-      "operatorPrompt": "Pinned by operator",
-      "composer": "Write a message...",
-      "send": "Send",
-      "online": "{count} online",
-      "reactions": "{count} reactions",
-      "reactionSuffix": " reactions",
-      "groupChats": "Group chats",
-      "searchChats": "Search chats",
-      "noChatsFound": "No chats found.",
-      "unread": "{count} unread",
-      "members": "{count} members",
-      "pinned": "Pinned",
-      "muted": "Muted",
-      "search": "Search chat",
-      "searchPlaceholder": "Search messages, names, or roles",
-      "searchEmpty": "No messages found.",
-      "settings": "Chat settings",
-      "backToChats": "Back to chats",
-      "backToChat": "Back to chat",
-      "addImage": "Add image",
-      "addReaction": "Add reaction",
-      "muteNotifications": "Mute notifications",
-      "inviteMembers": "Invite members",
-      "inviteLink": "Invite link",
-      "copyInvite": "Copy invite link",
-      "copied": "Copied",
-      "membersTitle": "Members",
-      "sharedMedia": "Shared media",
-      "publicInviteNote": "Share the group invite",
-      "invitePanelTitle": "Invite ready",
-      "invitePanelBody": "Copy this invite and send it to members who should join this room.",
-      "imageShared": "Shared image:",
-      "operator": "Operator",
-      "onlineStatus": "Online",
-      "lastSeen": "Last seen {time}"
-    },
-    "vote": {
-      "title": "Vote",
-      "description": "Decisions where members use voice power to shape the community.",
-      "active": "Active",
-      "upcoming": "Upcoming",
-      "ended": "Ended",
-      "yourVoicePower": "Your voice power",
-      "voters": "{count} voters",
-      "trustedRecord": "Trusted record ready",
-      "openVote": "Open vote"
-    },
-    "me": {
-      "title": "Me",
-      "description": "Your role, voice power, contributions, and trusted records in this community.",
-      "role": "Role",
-      "tags": "Tags",
-      "contributions": "My contributions",
-      "pendingVoicePower": "Pending voice power",
-      "trustedRecords": "Related trusted records",
-      "submitContribution": "Submit contribution",
-      "viewPublicCommunity": "View public community",
-      "shareContributions": "Share my contributions",
-      "shareCopied": "Contribution link copied",
-      "submittedAt": "Submitted at"
-    },
-    "contribute": {
-      "title": "Submit contribution",
-      "description": "Share something you did for the community that was not recorded automatically.",
-      "titleField": "Contribution title",
-      "type": "Contribution type",
-      "details": "What did you do?",
-      "detailsPlaceholder": "Briefly explain what you did, who it helped, and why it matters.",
-      "evidence": "Evidence",
-      "evidenceHint": "Upload a screenshot or file as evidence (demo)",
-      "evidenceChosen": "File selected",
-      "proofLink": "Proof link",
-      "proofLinkPlaceholder": "https://...",
-      "reviewTitle": "Operator review",
-      "reviewNote": "An operator will review this before 发言权 is added. If approved, this may add 发言权.",
-      "placeholderTitle": "Social post, recap, mentoring, sponsor intro...",
-      "successTitle": "Submitted for review",
-      "successBody": "If approved, this may add 发言权.",
-      "backToMe": "Back to Me",
-      "required": "Please fill in this field",
-      "types": {
-        "socialPost": "Social media post",
-        "eventRecap": "Event recap",
-        "mentoring": "Offline mentoring",
-        "sponsorIntro": "Sponsor intro",
-        "helpTeam": "Helping another team",
-        "other": "Other"
-      }
-    },
-    "history": {
-      "title": "Voice power history",
-      "description": "Every voice power change should have a clear source. This page shows what changed, who approved it, and whether a public receipt exists.",
-      "approvedBy": "Approved by",
-      "statusLabel": "Status",
-      "activeNow": "Active now",
-      "pending": "Pending",
-      "receiptVerified": "Public receipt verified",
-      "noReceipt": "No public receipt attached yet.",
-      "emptyTitle": "No voice power history yet",
-      "emptyBody": "Approved contributions will appear here."
-    },
-    "records": {
-      "title": "Public receipts",
-      "description": "These receipts prove important community records were not quietly changed. Members can verify them from this page.",
-      "blockHeight": "Block height",
-      "receiptHash": "Receipt hash",
-      "waiting": "This receipt is waiting for confirmation.",
-      "viewExplorer": "View explorer",
-      "emptyTitle": "No receipts yet",
-      "emptyBody": "Important records will appear here after they are saved."
-    },
-    "public": {
-      "label": "Public community",
-      "backToMe": "Back to Me",
-      "contributors": "Featured contributors",
-      "contributorsBody": "Members who made visible contributions to this community.",
-      "records": "Trusted records",
-      "stats": "Community stats",
-      "members": "Members",
-      "voicePower": "Total voice power",
-      "contributions": "Contributions this week",
-      "trustedRecords": "Trusted records"
-    }
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "welcomeBack": "Welcome back! Please sign in to continue",
+    "createAccount": "Create your account to get started",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Full name",
+    "confirmPassword": "Confirm password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "login": "Log in",
+    "create": "Create account",
+    "orContinueWith": "or continue with",
+    "googleSignIn": "Continue with Google",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "agreeToTerms": "I agree to the",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy"
   },
   "footer": {
     "brand": "YouFen",
@@ -274,7 +120,21 @@
   },
   "testimonials": {
     "title": "User Reviews",
-    "subtitle": "See what our users are saying"
+    "subtitle": "See what our users are saying",
+    "items": [
+      {"name": "Alex Chen", "handle": "@alex_dev", "content": "YouFen really solved our community's pain points! Members' contributions can finally be quantified, and everyone's participation has noticeably increased 🎉"},
+      {"name": "Sarah Lee", "handle": "@sarah_community", "content": "No-code community governance is perfect for non-technical organizers like us! The AI rule generation feature is incredibly useful 👍"},
+      {"name": "David Wang", "handle": "@david_dao", "content": "The voting system is so transparent, and the contribution-weighted mechanism is very fair. After two weeks, our member satisfaction has skyrocketed!"},
+      {"name": "Emily Zhang", "handle": "@emily_web3", "content": "The timeline feature gives a clear overview of community history. New members can quickly understand the community's journey. Great product experience!"},
+      {"name": "James Liu", "handle": "@james_nft", "content": "The AI recommendation feature is really smart — it suggests suitable tasks based on members' contribution history, boosting participation efficiency."},
+      {"name": "Grace Zhao", "handle": "@grace_design", "content": "The interface is clean and elegant, the user experience is incredibly smooth. As a designer, I really appreciate this attention to detail!"},
+      {"name": "Tom Sun", "handle": "@tom_tech", "content": "Voice power management makes the community more democratic. The more you contribute, the more influence you have — that's how it should be!"},
+      {"name": "Linda Zhou", "handle": "@linda_dao", "content": "Member engagement has clearly improved. Everyone is very active, and task distribution has become much more efficient 💪"},
+      {"name": "Mike Wu", "handle": "@mike_web3", "content": "Voting results are public and transparent, strengthening trust among members. This is the best community governance tool I've ever used!"},
+      {"name": "Sophia Zheng", "handle": "@sophia_crypto", "content": "Building a community governance system from scratch — YouFen makes it all so simple. Highly recommended! ✨"},
+      {"name": "Chris Ma", "handle": "@chris_builder", "content": "Truly awesome! It streamlined everything we were struggling with."},
+      {"name": "Olivia Lin", "handle": "@olivia_dao", "content": "Since adopting YouFen, our team collaboration efficiency has improved by at least 30%. Task allocation is more reasonable, and everyone can play to their strengths. The AI recommendation system is especially impressive!"}
+    ]
   },
   "admin": {
     "community": "Community",
@@ -392,270 +252,124 @@
     "recordFieldRecordedOnChain": "Recorded On-chain",
     "optionA": "Option A",
     "optionB": "Option B",
-    "optionC": "Option C",
-    "management": "Management",
-    "tasks": "Tasks",
-    "tasksSubtitle": "Create and manage community tasks",
-    "activities": "Activities",
-    "activitiesSubtitle": "Organize and manage community events",
-    "taskTitle": "Task Title",
-    "assignee": "Assignee",
-    "priority": "Priority",
-    "dueDate": "Due Date",
-    "priorityHigh": "High",
-    "priorityMedium": "Medium",
-    "priorityLow": "Low",
-    "activityTitle": "Activity Title",
-    "activityType": "Type",
-    "participants": "Participants",
-    "startTime": "Start Time",
-    "endTime": "End Time",
-    "location": "Location",
-    "activityTypeMeetup": "Meetup",
-    "activityTypeWorkshop": "Workshop",
-    "activityTypeHackathon": "Hackathon",
-    "activityTypeSocial": "Social",
-    "activityTypeOther": "Other",
-    "inProgress": "In Progress",
-    "cancelled": "Cancelled",
-    "ongoing": "Ongoing",
-    "upcoming": "Upcoming",
-    "createTask": "Create Task",
-    "createActivity": "Create Activity",
-    "markComplete": "Mark Complete",
-    "cancelItem": "Cancel",
-    "activeTasks": "Active Tasks",
-    "upcomingActivities": "Upcoming Activities",
-    "chat": "Chat",
-    "chatSubtitle": "Message members directly",
-    "conversations": "Conversations",
-    "typeMessage": "Type a message...",
-    "send": "Send",
-    "noConversationSelected": "Select a conversation to start chatting",
-    "online": "Online"
+    "optionC": "Option C"
   },
-  "records": {
-    "back": "Back to home",
-    "eyebrow": "AdventureX Community · Public archive",
-    "title": "Trusted Records",
-    "subtitle": "Every major event in this community — tokens granted, votes decided, rules changed — is archived here in public and sealed so no one can alter it; and any move that steps past the budget or voting rules is refused by the ledger on the spot.",
-    "explainer": {
-      "aria": "How trusted records work",
-      "write": {
-        "title": "Write it down",
-        "desc": "Who did what, and how much they earned — every event is entered into the community ledger."
+  "termsPage": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: July 24, 2026",
+    "intro": "Welcome to YouFen. By using our service, you agree to the following terms. Please read them carefully.",
+    "sections": [
+      {
+        "heading": "1. Service Description",
+        "body": "YouFen is a no-code community governance platform that helps community operators create and manage participation rules, track member contributions, organize voting decisions, and generate publicly verifiable records for important decisions. We leverage AI to assist with rule generation and contribution analysis, and selectively use the Injective blockchain to provide publicly verifiable records for key operations."
       },
-      "stamp": {
-        "title": "Seal it",
-        "desc": "Each record gets a unique “digital fingerprint”, filed and sealed on a public ledger."
+      {
+        "heading": "2. Accounts and Registration",
+        "body": "You must create an account to use our service. You must provide accurate and complete registration information and are responsible for maintaining the security of your account. You are responsible for all activities under your account. You must be at least 13 years old (or the minimum age required in your jurisdiction) to use our service."
       },
-      "lock": {
-        "title": "Locked forever",
-        "desc": "Once sealed, no one — including us — can quietly rewrite history."
+      {
+        "heading": "3. Community Creation and Management",
+        "body": "Community operators (Owners/Managers) may customize participation rules, manage members, review contributions, and initiate proposals when creating communities. Community operators are responsible for ensuring that community activities comply with applicable laws. We reserve the right to remove communities that violate these terms."
       },
-      "whyToggle": "Why can you trust this page?",
-      "why1": "A blockchain is like a notary office shared by the whole world: once a file goes in, it can never be edited or destroyed. We store each record's digital fingerprint on the Injective blockchain.",
-      "why2": "Change even a single character of a record and its fingerprint becomes completely different. So as long as a record matches its on-chain fingerprint, it has provably never been touched since it was sealed.",
-      "why3": "Only fingerprints and numbers go on-chain — never names, emails, or any personal information. Curious? Every record has a “Technical details” section so you can check the public ledger yourself."
-    },
-    "guardian": {
-      "aria": "How the ledger blocks overreach",
-      "title": "The ledger blocks overreach on the spot",
-      "intro": "This public ledger doesn't just stamp records — it's a strict rule-keeper. Even an admin who steps past the budget and governance rules the community set gets turned away on the spot. What proves its worth isn't a successful grant — it's an over-privileged attempt stopped at the door.",
-      "overMint": {
-        "attempt": "An admin tries to grant an insider more than the per-member cap in one go.",
-        "verdict": "Ledger refuses",
-        "reason": "The cap is hard-coded in the contract. Without a community vote to authorize it, the excess simply cannot be issued."
+      {
+        "heading": "4. Voice Power and Contributions",
+        "body": "Voice Power is a community-internal participation weight. It does not represent monetary value, financial assets, or tradable rights. Voice Power is non-transferable, non-withdrawable, and cannot be exchanged for fiat currency or cryptocurrency. Community operators have final authority over the allocation and usage rules of Voice Power within their communities."
       },
-      "secretRule": {
-        "attempt": "Someone tries to quietly change monthly issuance from 5% to 8% without a vote.",
-        "verdict": "Ledger refuses",
-        "reason": "There's only one path to change a rule: propose it, pass a community vote, and it takes effect next month. No way around it."
+      {
+        "heading": "5. Voting and Decisions",
+        "body": "Community voting results are determined by community operators and members. Unless an on-chain trusted record is generated, voting data is stored on centralized servers. We make no guarantees regarding the accuracy, fairness, or legal effect of voting results."
       },
-      "voteStuffing": {
-        "attempt": "Just before a vote closes, an admin grants supporters extra tokens to swing the result.",
-        "verdict": "Doesn't count",
-        "reason": "Each vote's weight is frozen at the moment the proposal opened. Tokens minted afterward can't affect that vote."
+      {
+        "heading": "6. AI Features",
+        "body": "We use AI technology to assist with rule generation, contribution analysis, and content optimization. AI-generated content is advisory only; the final decision always rests with the user. AI may produce inaccurate or biased results, and you should exercise independent judgment before acting on AI suggestions. We make no guarantees regarding the accuracy, completeness, or suitability of AI-generated content."
       },
-      "voteForYou": {
-        "attempt": "The YouFen platform tries to cast a vote on your behalf.",
-        "verdict": "Can't be done",
-        "reason": "Only the private key in your own hands can sign your vote. YouFen just sponsors the fee and relays your vote on-chain — it never holds your key."
+      {
+        "heading": "7. Blockchain Trusted Records",
+        "body": "We may generate publicly verifiable records on the Injective blockchain network for important community operations (e.g., voting results, rule changes). You understand and agree that: (a) on-chain records are public and immutable; (b) once recorded on-chain, we cannot delete or modify them; (c) we do not guarantee continuous availability of the on-chain recording feature — network congestion or technical failures may affect record generation."
       },
-      "boundaryTitle": "What the ledger guarantees",
-      "boundary": "The ledger guarantees power can't be over-issued: budgets, caps, and voting rules are unbypassable. It does not judge for the community whether a contribution is real or worthy — that always stays the community's call.",
-      "exitTitle": "The community can leave with its ledger",
-      "exit": "Every balance, grant, and vote lives on the public ledger. Even if YouFen shut down tomorrow, the community could still read its full history straight from the chain — no dependence on our database."
-    },
-    "timelineTitle": "Timeline",
-    "timelineHint": "Open any record to trace its journey",
-    "timelineAria": "Community trusted records timeline",
-    "status": {
-      "verified": "Sealed & confirmed",
-      "pending": "Waiting to be sealed",
-      "submitting": "Being sent for sealing",
-      "confirming": "Seal being confirmed",
-      "failed": "Sealing hit a snag",
-      "superseded": "Corrected"
-    },
-    "kind": {
-      "tokenMint": "Token grant",
-      "advanceMint": "Advance grant",
-      "tokenReversal": "Correction",
-      "epochSummary": "Monthly summary",
-      "policyVersion": "Rule update",
-      "proposalResult": "Vote result"
-    },
-    "journey": {
-      "recorded": {
-        "title": "On the books",
-        "desc": "The full story is entered into the community ledger."
+      {
+        "heading": "8. Prohibited Conduct",
+        "body": "You may not: (a) upload or disseminate illegal, infringing, defamatory, obscene, harassing, or otherwise inappropriate content; (b) impersonate others or provide false information; (c) interfere with or disrupt our service; (d) attempt unauthorized access to our systems; (e) abuse the Voice Power system for fraud or manipulation; (f) use automated tools for vote manipulation, contribution farming, or other cheating; (g) use the service for any illegal or unauthorized purpose."
       },
-      "fingerprint": {
-        "title": "Fingerprinted",
-        "desc": "A unique digital fingerprint is computed from the record."
+      {
+        "heading": "9. Intellectual Property",
+        "body": "The YouFen name, logo, website code, and design elements are our intellectual property. Content created by users within their communities (including rules, proposal descriptions, contribution records, etc.) belongs to the users, but you grant us a license to use, display, and store such content as necessary to provide the service."
       },
-      "stamped": {
-        "title": "Sealed on-chain",
-        "desc": "The fingerprint is filed on the Injective public ledger."
+      {
+        "heading": "10. Limitation of Liability",
+        "body": "The service is provided \"as is\" without warranties of any kind, express or implied. To the fullest extent permitted by law, we shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from your use of the service, including but not limited to data loss, business interruption, or lost profits."
       },
-      "checkable": {
-        "title": "Open to verify",
-        "desc": "Anyone can re-check the fingerprint at any time."
+      {
+        "heading": "11. Termination",
+        "body": "We reserve the right to suspend or terminate accounts that violate these terms at any time. You may stop using the service at any time. Upon termination, community data may be retained for public record purposes, while data already recorded on-chain cannot be removed."
       },
-      "supersededNote": "This record was later found to be incorrect. By the rules, the original is never deleted or overwritten — it stays as-is, and a correction is appended. You are looking at the original, pre-correction version."
-    },
-    "verify": {
-      "invite": "Don't take our word for it — click the button and compare this record's fingerprint with the on-chain archive yourself.",
-      "button": "Verify it yourself",
-      "steps": {
-        "reading": "Re-reading the record",
-        "hashing": "Computing the fingerprint live",
-        "comparing": "Comparing with the on-chain archive"
+      {
+        "heading": "12. Changes to Terms",
+        "body": "We may update these terms from time to time. Material changes will be communicated via website notice or email. Continued use of the service constitutes acceptance of the revised terms."
       },
-      "matchTitle": "Fingerprints match",
-      "matchDesc": "Not a single character of this record has changed since it was sealed."
-    },
-    "privacyNote": "Only fingerprints and amounts are stored on-chain — never names or emails. This page currently shows demo data for the AdventureX community.",
-    "demo": {
-      "r6": {
-        "title": "Xiaolu earned 200 AXO",
-        "summary": "Organized this month's newcomer meetup. Approved by admins; the seal is being confirmed."
-      },
-      "r5": {
-        "title": "Vote result: weekly meeting moves to Thursday night",
-        "summary": "18 members voted, weighted by tokens. “Thursday night” won with 62% of the weight."
-      },
-      "r4": {
-        "title": "July settlement: 5,300 AXO granted",
-        "summary": "4,900 granted from this month's budget plus a 400 advance; next month's budget repays it automatically."
-      },
-      "r3": {
-        "title": "Carol earned 500 AXO (400 advanced)",
-        "summary": "Built key community infrastructure. Only 100 remained in this month's budget; 400 was advanced from next month, approved by two admins."
-      },
-      "r2": {
-        "title": "Liam earned 500 AXO",
-        "summary": "Helped three newcomers complete their Injective testnet deployment. Confirmed by admins."
-      },
-      "r1": {
-        "title": "Liam earned 800 AXO (corrected)",
-        "summary": "This record was corrected due to a data-entry error (300 over-counted). Per the rules the original is never deleted; see the reversal (July 13) and the correct grant (July 15)."
-      },
-      "r0": {
-        "title": "Community rules v2 live: 5% monthly issuance",
-        "summary": "Approved by community vote: the monthly token issuance rate is set to 5%, effective July."
-      },
-      "r9": {
-        "title": "Correction: reversed Liam's 800 AXO",
-        "summary": "The July 12 grant had a data-entry error, so the full amount was reversed per the rules. The original stays on file below; the correct grant is on July 15."
-      },
-      "r7": {
-        "title": "Vote result: new community logo, option B",
-        "summary": "21 members voted; option B won with 58% of the weight and went to the design team."
-      },
-      "r8": {
-        "title": "Community rules v1 live: founding rules",
-        "summary": "AdventureX founding rules took effect by consensus: 100,000 AXO initial supply, reviewed contributions earn tokens, votes weighted by tokens."
+      {
+        "heading": "13. Contact Us",
+        "body": "If you have any questions about these terms, please contact us via GitHub Issues at github.com/Simon-Snow/YouFen, or email the project maintainer."
       }
-    },
-    "filter": {
-      "searchPlaceholder": "Search records: names, events, keywords…",
-      "clear": "Clear search",
-      "all": "All",
-      "token": "Token grants",
-      "votes": "Vote results",
-      "rules": "Rule updates",
-      "epoch": "Monthly summaries",
-      "resultsCount": "{count} records found",
-      "emptyTitle": "No matching records",
-      "emptyDesc": "Try another keyword (a member's name, “advance”, “vote”), or switch sections above.",
-      "reset": "Clear filters, show everything"
-    },
-    "vote": {
-      "approval": "Approval",
-      "turnout": "{voters}/{total} voted ({pct}%)"
-    },
-    "archive": {
-      "title": "On-chain archive",
-      "fingerprint": "Digital fingerprint (recordHash)",
-      "txRef": "Notary reference (transaction hash)",
-      "block": "Archived at",
-      "blockValue": "Ledger page {page} (block height)",
-      "sealedAt": "Sealed at",
-      "network": "Ledger",
-      "networkValue": "Injective Testnet",
-      "pendingValue": "Written after confirmation",
-      "copy": "Copy",
-      "copied": "Copied",
-      "authTitle": "Approval & release",
-      "authApprovers": "Approved by {count, plural, one {# admin} other {# admins}}, each signing with their own private key",
-      "authChecks": "Before releasing, the ledger checked:",
-      "authNoChecks": "Released after the ledger verified the reference to the original record",
-      "checkLabel": {
-        "budget": "This month's budget",
-        "memberCap": "Per-member cap",
-        "advance": "Advance limit"
-      },
-      "demoNote": "This is demo data with no real on-chain transaction yet; in production, this becomes the real archive you can check segment by segment on the notary site."
-    },
-    "guide": {
-      "toggle": "How to verify this on the notary site yourself?",
-      "intro": "The notary site (a block explorer) is an engineer's tool — but you only need to check three things and can ignore everything else:",
-      "s1": "① The 0x reference at the top of the page should match the “notary reference” above;",
-      "s2": "② The status field should say Success;",
-      "s3": "③ The timestamp should match the “sealed at” time above.",
-      "open": "Open the notary site to check this record"
-    },
-    "chain": {
-      "title": "Injective public ledger",
-      "liveTag": "Live",
-      "live": "This public ledger is on page {pages} right now, turning a new page roughly every {seconds} seconds — maintained by nodes worldwide, impossible for any single party to rewrite. Every sealed record on this page is archived on one of those pages forever.",
-      "fallback": "This public ledger is maintained by nodes worldwide and keeps turning pages — impossible for any single party to rewrite. Every sealed record on this page is archived in it forever.",
-      "open": "Open the notary site",
-      "engineerNote": "Engineer's tool, English UI — it's fine not to understand it; use the “how to verify” guide inside each record"
-    }
+    ]
   },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "welcomeBack": "Welcome back to YouFen",
-    "createAccount": "Create your YouFen account",
-    "googleSignIn": "Continue with Google",
-    "orContinueWith": "or continue with email",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm password",
-    "name": "Name",
-    "rememberMe": "Remember me",
-    "forgotPassword": "Forgot password?",
-    "login": "Log in",
-    "noAccount": "No account?",
-    "hasAccount": "Already have an account?",
-    "agreeToTerms": "I agree to the",
-    "termsOfService": "Terms of Service",
-    "and": "and",
-    "privacyPolicy": "Privacy Policy",
-    "create": "Create account"
+  "privacyPage": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: July 24, 2026",
+    "intro": "YouFen values your privacy. This privacy policy explains how we collect, use, and protect your information.",
+    "sections": [
+      {
+        "heading": "1. Information We Collect",
+        "body": "We collect the following types of information: (a) Account information: name and email address provided during registration; (b) Community data: communities you create or participate in, contribution records, Voice Power data, and voting records; (c) Usage data: technical information about how you interact with our service, including IP address, browser type, access times, and page views; (d) Communications: any content, feedback, or communications you submit through our platform."
+      },
+      {
+        "heading": "2. How We Use Your Information",
+        "body": "We use your information to: (a) provide, maintain, and improve our community governance services; (b) create and manage your account and communities; (c) display contribution records, Voice Power, and voting activities within communities (subject to community visibility settings); (d) provide context for AI features to generate suggestions and summaries; (e) communicate with you about service changes, security updates, and support matters; (f) monitor and analyze usage trends to improve user experience; (g) detect, prevent, and respond to fraud or abuse."
+      },
+      {
+        "heading": "3. AI Data Processing",
+        "body": "When you use AI features (such as rule generation, contribution analysis, or proposal summaries), content you input is sent to our AI service providers (including OpenAI and/or Anthropic) for processing. This content is used solely to generate AI responses and is not used to train AI models. AI providers will not use your data for their own model improvement purposes."
+      },
+      {
+        "heading": "4. Blockchain Data",
+        "body": "When you choose to generate publicly verifiable records for certain operations, a hash of the relevant data is recorded on the Injective blockchain. Blockchains are public and immutable — once a data hash is recorded on-chain, it exists permanently on the blockchain and can be viewed by anyone. On-chain records do not contain personally identifiable information (PII), only community identifiers and data hashes."
+      },
+      {
+        "heading": "5. Cookies and Tracking",
+        "body": "We use essential cookies to maintain sessions and authentication. You can manage cookie preferences through your browser settings. We do not currently use third-party tracking cookies or advertising networks."
+      },
+      {
+        "heading": "6. Data Sharing",
+        "body": "We do not sell your personal information. We may share information: (a) as public data displayed on community public pages (subject to community privacy settings); (b) with AI service providers, solely for processing AI requests; (c) with the Injective blockchain network, for generating trusted records; (d) as required by law or to protect our rights."
+      },
+      {
+        "heading": "7. Data Security",
+        "body": "We implement reasonable technical and organizational measures to protect your data. However, no internet transmission or electronic storage is 100% secure. We cannot guarantee absolute security."
+      },
+      {
+        "heading": "8. Data Retention",
+        "body": "We retain your personal information for the duration of your account. After account deletion, we may retain certain data for a reasonable period for backup, audit, or legal compliance purposes. Data already recorded on the blockchain cannot be removed."
+      },
+      {
+        "heading": "9. Your Rights",
+        "body": "You have the right to: (a) access the personal data we hold about you; (b) request correction of inaccurate data; (c) request deletion of your data (subject to exceptions such as blockchain records); (d) export your community data. To exercise these rights, please contact us via GitHub or email."
+      },
+      {
+        "heading": "10. Children's Privacy",
+        "body": "Our service is not directed at children under 13. We do not knowingly collect personal information from children under 13. If we discover that we have inadvertently collected such information, we will delete it immediately."
+      },
+      {
+        "heading": "11. International Data Transfers",
+        "body": "Our servers may be located outside your country of residence, and data may be stored and processed in multiple jurisdictions. By using our service, you consent to such transfers."
+      },
+      {
+        "heading": "12. Changes to Policy",
+        "body": "We may update this privacy policy from time to time. Material changes will be communicated via website notice or email. Continued use of the service constitutes acceptance of the revised policy."
+      },
+      {
+        "heading": "13. Contact Us",
+        "body": "If you have any questions about this privacy policy, please contact us via GitHub Issues at github.com/Simon-Snow/YouFen, or email the project maintainer."
+      }
+    ]
   }
 }
