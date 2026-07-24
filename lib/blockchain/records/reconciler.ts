@@ -145,6 +145,9 @@ export function createReconciler(deps: ReconcilerDeps): Reconciler {
     // Steps (a)/(b): stale in-flight rows (submitting|confirming).
     const inFlight = (await deps.prisma.publicRecord.findMany({
       where: {
+        // W2-B: never touch DB-only rows. They are terminal, unqueued, and
+        // (defensively) not even in the scanned status set — double guard.
+        chainEligible: true,
         status: { in: IN_FLIGHT_FROM },
         updatedAt: { lt: new Date(now.getTime() - staleThresholdMs) },
       },
@@ -163,6 +166,9 @@ export function createReconciler(deps: ReconcilerDeps): Reconciler {
     // re-enqueue without touching status; the DB fully rebuilds the queue.
     const stalePending = (await deps.prisma.publicRecord.findMany({
       where: {
+        // W2-B (red-team high): step (c) previously bypassed the enqueue guard and
+        // could re-enqueue a DB-only stale-pending row. Scope it to chainEligible.
+        chainEligible: true,
         status: 'pending',
         updatedAt: { lt: new Date(now.getTime() - pendingStaleMs) },
       },

@@ -33,12 +33,29 @@ export interface CreateTxConfirmerDeps {
   readonly confirmations: number;
   readonly pollIntervalMs?: number;
   readonly maxRangePerQuery?: number;
+  /**
+   * Additive-only (W2-B). Contract existence probe used by the null-receipt fast
+   * path: a load-balanced RPC whose getTransactionReceipt index lags behind
+   * getLogs can return null forever even though the tx mined. When wired, after
+   * `nullReceiptFastPathThreshold` consecutive null receipts the confirmer asks
+   * the contract whether the record already landed and, if so, treats the
+   * contract state as final (Injective has instant finality). Omitted -> the
+   * fast path is inert and confirmation behaves exactly as before.
+   */
+  readonly readRecord?: (recordHash: Hex32) => Promise<{ exists: boolean }>;
+  /** Consecutive null receipts before the fast path consults the contract (default 5). */
+  readonly nullReceiptFastPathThreshold?: number;
 }
 
 const DEFAULT_POLL_INTERVAL_MS = 2000;
 const DEFAULT_TIMEOUT_MS = 120000;
 const DEFAULT_MAX_RANGE_PER_QUERY = 9000;
+const DEFAULT_NULL_RECEIPT_FAST_PATH_THRESHOLD = 5;
 const RECORD_HASH_TOPIC_INDEX = 3;
+// blockHash is unobtainable from a getLogs backfill; the mirror layer tolerates a
+// zero placeholder because verification never depends on blockHash (only on the
+// contract's recordHash existence). See BLOCKCHAIN-DESIGN §8.
+const ZERO_BLOCK_HASH = '0x' + '0'.repeat(64);
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -47,18 +64,26 @@ function delay(ms: number): Promise<void> {
 export function createTxConfirmer(deps: CreateTxConfirmerDeps): TxConfirmer {
   const pollIntervalMs = deps.pollIntervalMs ?? DEFAULT_POLL_INTERVAL_MS;
   const maxRangePerQuery = deps.maxRangePerQuery ?? DEFAULT_MAX_RANGE_PER_QUERY;
+  const fastPathThreshold =
+    deps.nullReceiptFastPathThreshold ?? DEFAULT_NULL_RECEIPT_FAST_PATH_THRESHOLD;
 
   async function waitForConfirmation(
     txHash: string,
-    opts?: { confirmations?: number; timeoutMs?: number },
+    opts?: { confirmations?: number; timeoutMs?: number; recordHash?: Hex32 },
   ): Promise<ConfirmResult> {
     const confirmations = opts?.confirmations ?? deps.confirmations;
     const timeoutMs = opts?.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     const deadline = Date.now() + timeoutMs;
+    const recordHash = opts?.recordHash;
+    // The fast path is armed only when both a recordHash to probe and a readRecord
+    // capability are present; otherwise this stays 0 and never fires.
+    let consecutiveNullReceipts = 0;
 
     for (;;) {
       const receipt = await deps.provider.getTransactionReceipt(txHash);
       if (receipt) {
+        // A visible receipt resets the null streak — the normal path owns it.
+        consecutiveNullReceipts = 0;
         if (receipt.status === 0) {
           return {
             status: 'reverted',
@@ -76,6 +101,31 @@ export function createTxConfirmer(deps: CreateTxConfirmerDeps): TxConfirmer {
               blockHash: receipt.blockHash,
               confirmedAt: new Date(),
             };
+          }
+        }
+      } else if (recordHash && deps.readRecord) {
+        consecutiveNullReceipts += 1;
+        if (consecutiveNullReceipts >= fastPathThreshold) {
+          // The fast path must NEVER make the normal path worse: any error here is
+          // swallowed and polling continues (BLOCKCHAIN-DESIGN §8).
+          try {
+            const { exists } = await deps.readRecord(recordHash);
+            if (exists) {
+              // The contract holds the record: on Injective that is final. Backfill
+              // block info from the event log; blockHash is not recoverable so a
+              // zero placeholder stands in (verify does not use blockHash).
+              const found = await findTxByRecordHash(recordHash);
+              return {
+                status: 'confirmed',
+                blockNumber: found?.blockNumber ?? 0,
+                blockHash: ZERO_BLOCK_HASH,
+                confirmedAt: new Date(),
+              };
+            }
+            // Not yet indexed on chain: reset and keep polling the normal path.
+            consecutiveNullReceipts = 0;
+          } catch {
+            // Swallow: never degrade the normal polling path.
           }
         }
       }
