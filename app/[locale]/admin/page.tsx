@@ -6,9 +6,9 @@ import { StatCard } from '@/components/admin/stat-card'
 import { demoStats, demoMembers, demoContributions, demoProposals } from '@/lib/demo-data'
 
 const quickActions = [
-  { icon: UserPlus, labelKey: 'addMember', href: '/members' },
-  { icon: BarChart3, labelKey: 'distributeVP', href: '/contributions' },
-  { icon: Vote, labelKey: 'createProposal', href: '/proposals' },
+  { icon: UserPlus, labelKey: 'addMember', href: '/admin/members' },
+  { icon: BarChart3, labelKey: 'distributeVP', href: '/admin/contributions' },
+  { icon: Vote, labelKey: 'createProposal', href: '/admin/proposals' },
   { icon: FileDown, labelKey: 'generateReport', href: '#' },
 ]
 
