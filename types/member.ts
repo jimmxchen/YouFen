@@ -57,6 +57,36 @@ export interface ChatMessage {
   reactions?: number
 }
 
+export interface ChatParticipant {
+  id: string
+  name: string
+  role: string
+  avatarInitials: string
+  status: 'online' | 'offline'
+  lastSeen?: string
+  isOperator?: boolean
+}
+
+export interface ChatRoom {
+  id: string
+  title: string
+  description: string
+  avatarInitials: string
+  category: string
+  unreadCount: number
+  muted: boolean
+  pinned: boolean
+  updatedAt: string
+  inviteCode: string
+  sharedMediaCount: number
+  lastMessage: {
+    author: string
+    body: string
+  }
+  participants: ChatParticipant[]
+  messages: ChatMessage[]
+}
+
 export interface CommunityMember {
   id: string
   name: string
@@ -72,6 +102,7 @@ export interface CommunityMember {
   nextEvent: CommunityEvent
   activity: MemberActivityItem[]
   chatMessages: ChatMessage[]
+  chatRooms: ChatRoom[]
   featuredContributors: FeaturedContributor[]
   contributions: ContributionTokenEvent[]
   availableProposals: MemberProposal[]
