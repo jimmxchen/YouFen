@@ -28,6 +28,19 @@ export interface VoteStats {
   totalMembers: number
 }
 
+/** 账本放行一笔发放前，合约强制核对的规则项（v0.7 协议执行层） */
+export type LedgerCheck = 'budget' | 'memberCap' | 'advance'
+
+/**
+ * 一笔发放/冲销的授权溯源（v0.7）。
+ * approvers = 用各自私钥签名批准的管理员人数；checks = 账本放行前合约核对的规则。
+ * 集成点：真实环境由 executeMint 的 signatures[] 与合约校验事件回填。
+ */
+export interface RecordAuthorization {
+  approvers: number
+  checks: LedgerCheck[]
+}
+
 export interface ChainRecord {
   id: string
   kind: RecordKind
@@ -46,6 +59,8 @@ export interface ChainRecord {
   vote?: VoteStats
   /** 该记录被哪条新记录更正（superseded 时） */
   supersededById?: string
+  /** 授权溯源：谁签名批准、账本放行前核对了哪些规则（发放/冲销类记录，v0.7） */
+  authorization?: RecordAuthorization
   demo: true
 }
 
@@ -78,6 +93,7 @@ export const demoRecords: ChainRecord[] = [
       '0x8c41f7a2d95e03b6c8a1f04e7d2b9c5a3e6f08d1b4a7c290e5d8f3a6b1c4e708',
     txHash:
       '0x5e92c07b3f6a1d84e0b7c2a95f38d61c4a0e9b72d5c8f13a6e4b09d7c2a58f31',
+    authorization: { approvers: 1, checks: ['budget', 'memberCap'] },
     demo: true,
   },
   {
@@ -118,6 +134,7 @@ export const demoRecords: ChainRecord[] = [
       '0x7c30b95d2e64f18a0c5b7d29e46a83f1b0d5c7a92e64f08b3d1a5c92e7b40f68',
     blockNumber: 29473598,
     sealedAt: '2026-07-18T15:02:19+08:00',
+    authorization: { approvers: 2, checks: ['budget', 'memberCap', 'advance'] },
     demo: true,
   },
   {
@@ -131,6 +148,7 @@ export const demoRecords: ChainRecord[] = [
       '0x48f1b6d03a75c92e84d0b61f5a29c73e08b4d6a15f92c70e3b8d54a267c91e0f',
     blockNumber: 29160433,
     sealedAt: '2026-07-15T11:47:53+08:00',
+    authorization: { approvers: 1, checks: ['budget', 'memberCap'] },
     demo: true,
   },
   {
@@ -144,6 +162,7 @@ export const demoRecords: ChainRecord[] = [
       '0x8a15c96d3e70b42f81d6a05c97e34b28f60d1a49c85e72b03f6d18a5c92e74b0',
     blockNumber: 28951720,
     sealedAt: '2026-07-13T10:08:26+08:00',
+    authorization: { approvers: 2, checks: [] },
     demo: true,
   },
   {
@@ -158,6 +177,7 @@ export const demoRecords: ChainRecord[] = [
     supersededById: 'r9',
     blockNumber: 28847166,
     sealedAt: '2026-07-12T18:21:34+08:00',
+    authorization: { approvers: 1, checks: ['budget', 'memberCap'] },
     demo: true,
   },
   {

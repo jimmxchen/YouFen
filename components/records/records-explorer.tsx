@@ -25,6 +25,7 @@ import {
 } from './demo-data'
 import { ProvenanceJourney } from './provenance-journey'
 import { ChainStatusStrip } from './chain-status'
+import { RuleGuardian } from './rule-guardian'
 
 const KIND_TINT: Record<RecordKind, string> = {
   tokenMint: 'bg-emerald-50 text-emerald-700',
@@ -277,6 +278,9 @@ export function RecordsExplorer() {
         </header>
 
         <ExplainerStrip />
+
+        {/* 规则守门：账本不只是盖章，还会拒绝越权（v0.7 协议执行叙事） */}
+        <RuleGuardian />
 
         {/* 记录检索与分区 */}
         <section className="mt-14" aria-label={t('timelineAria')}>

@@ -358,6 +358,31 @@ export function InjectiveStatusBadge({
 * 懒加载：`next/image` 的 `loading="lazy"` + 模糊占位；账本与 Epoch 等长列表按 Epoch 分段虚拟滚动。
 * 预取：关键跳转（去投票、看结果）用 `<Link prefetch>`；快照与余额在服务端组件预取，客户端只读渲染。
 
+### 2.6 链上记录溯源页（Records Explorer）—— v0.7 协议执行叙事
+
+面向无 web3 经验的文科社群管理者的公开溯源页，路由 `/[locale]/records`，组件位于 `components/records/`：
+
+| 文件 | 职责 |
+|---|---|
+| `records-explorer.tsx` | 页面主体：页头、解释条、规则守门区、分区检索、时间线、账本状态条 |
+| `provenance-journey.tsx` | 单条记录的四步溯源旅程 + 链上存档卡（含 v0.7 授权行）+ 亲验流程 |
+| `rule-guardian.tsx` | **v0.7 新增**：规则守门区，把"越权被合约拒绝"叙事化 |
+| `chain-status.tsx` | Injective 公共账本实时状态（Blockscout `/api/v2/stats` 轮询） |
+| `demo-data.ts` | PRD §29 AdventureX 演示数据（含 v0.7 `authorization` 字段） |
+
+**两层信任叙事，缺一不可。**
+
+1. **公证存证层（v0.6）**——"已发生的事改不了"：记录 → 数字指纹（recordHash/keccak256）→ 上链盖章 → 人人可复算校验。
+2. **规则守门层（v0.7）**——"不合规的事发生不了"：合约在放行前强制核对预算、成员上限、预支比例、治理门禁，越权操作当场 Revert。`RuleGuardian` 用四个文科可读的"越权尝试 → 账本回应"示例呈现（超员上限、绕投票改规则、快照后突击拉票、平台替投票），对应威胁模型 §13.2–13.6 的越权 Revert demo。
+
+**信任文案纪律（PRD §12.2）。** 守门区显式声明账本**保证什么 / 不保证什么**：账本保证权力不被滥发（预算/上限/投票规则不可绕过），但不替社区判断贡献真伪——那是社区的事。并强调**可退出性**：余额与治理历史存于链上，即使 YouFen 关站也可从链上读回，不依赖本平台数据库。
+
+**客户端持钥前提。** "YouFen 不能替成员投票"在文案中作为**事实**陈述，其成立前提是成员私钥客户端持有（服务端拿不到私钥）——详见 BLOCKCHAIN-DESIGN v0.7 与 HANDOFF。
+
+**授权溯源。** 发放/冲销类记录的存档卡展示 `authorization`：签名批准的管理员人数 + 账本放行前核对的规则项（本月预算 / 成员单期上限 / 预支比例）。真实环境由 `executeMint` 的 `signatures[]` 与合约校验事件回填。
+
+> 当前 `RuleGuardian` 的四个场景为教学型示例；v0.7 合约部署后即成为真实的越权 Revert 演示（见 HANDOFF）。中英文案位于 `messages/{zh,en}.json` 的 `records.guardian` / `records.archive.auth*`，两语言键位对齐（各 165 键）。
+
 ---
 
 ## 3. 数据模型（Prisma Schema）

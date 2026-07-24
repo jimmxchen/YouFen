@@ -221,7 +221,7 @@
     "back": "Back to home",
     "eyebrow": "AdventureX Community · Public archive",
     "title": "Trusted Records",
-    "subtitle": "Every major event in this community — tokens granted, votes decided, rules changed — is archived here in public, sealed with a stamp no one can alter.",
+    "subtitle": "Every major event in this community — tokens granted, votes decided, rules changed — is archived here in public and sealed so no one can alter it; and any move that steps past the budget or voting rules is refused by the ledger on the spot.",
     "explainer": {
       "aria": "How trusted records work",
       "write": {
@@ -240,6 +240,35 @@
       "why1": "A blockchain is like a notary office shared by the whole world: once a file goes in, it can never be edited or destroyed. We store each record's digital fingerprint on the Injective blockchain.",
       "why2": "Change even a single character of a record and its fingerprint becomes completely different. So as long as a record matches its on-chain fingerprint, it has provably never been touched since it was sealed.",
       "why3": "Only fingerprints and numbers go on-chain — never names, emails, or any personal information. Curious? Every record has a “Technical details” section so you can check the public ledger yourself."
+    },
+    "guardian": {
+      "aria": "How the ledger blocks overreach",
+      "title": "The ledger blocks overreach on the spot",
+      "intro": "This public ledger doesn't just stamp records — it's a strict rule-keeper. Even an admin who steps past the budget and governance rules the community set gets turned away on the spot. What proves its worth isn't a successful grant — it's an over-privileged attempt stopped at the door.",
+      "overMint": {
+        "attempt": "An admin tries to grant an insider more than the per-member cap in one go.",
+        "verdict": "Ledger refuses",
+        "reason": "The cap is hard-coded in the contract. Without a community vote to authorize it, the excess simply cannot be issued."
+      },
+      "secretRule": {
+        "attempt": "Someone tries to quietly change monthly issuance from 5% to 8% without a vote.",
+        "verdict": "Ledger refuses",
+        "reason": "There's only one path to change a rule: propose it, pass a community vote, and it takes effect next month. No way around it."
+      },
+      "voteStuffing": {
+        "attempt": "Just before a vote closes, an admin grants supporters extra tokens to swing the result.",
+        "verdict": "Doesn't count",
+        "reason": "Each vote's weight is frozen at the moment the proposal opened. Tokens minted afterward can't affect that vote."
+      },
+      "voteForYou": {
+        "attempt": "The YouFen platform tries to cast a vote on your behalf.",
+        "verdict": "Can't be done",
+        "reason": "Only the private key in your own hands can sign your vote. YouFen just sponsors the fee and relays your vote on-chain — it never holds your key."
+      },
+      "boundaryTitle": "What the ledger guarantees",
+      "boundary": "The ledger guarantees power can't be over-issued: budgets, caps, and voting rules are unbypassable. It does not judge for the community whether a contribution is real or worthy — that always stays the community's call.",
+      "exitTitle": "The community can leave with its ledger",
+      "exit": "Every balance, grant, and vote lives on the public ledger. Even if YouFen shut down tomorrow, the community could still read its full history straight from the chain — no dependence on our database."
     },
     "timelineTitle": "Timeline",
     "timelineHint": "Open any record to trace its journey",
@@ -362,6 +391,15 @@
       "pendingValue": "Written after confirmation",
       "copy": "Copy",
       "copied": "Copied",
+      "authTitle": "Approval & release",
+      "authApprovers": "Approved by {count, plural, one {# admin} other {# admins}}, each signing with their own private key",
+      "authChecks": "Before releasing, the ledger checked:",
+      "authNoChecks": "Released after the ledger verified the reference to the original record",
+      "checkLabel": {
+        "budget": "This month's budget",
+        "memberCap": "Per-member cap",
+        "advance": "Advance limit"
+      },
       "demoNote": "This is demo data with no real on-chain transaction yet; in production, this becomes the real archive you can check segment by segment on the notary site."
     },
     "guide": {

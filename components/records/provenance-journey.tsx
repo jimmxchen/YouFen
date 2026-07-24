@@ -115,6 +115,31 @@ function ChainArchiveCard({ record }: { record: ChainRecord }) {
             <dd className="mt-1 text-neutral-700">{t('networkValue')}</dd>
           </div>
         </div>
+        {record.authorization && (
+          /* v0.7：谁签名批准 + 账本放行前核对了哪些规则 */
+          <div className="border-t border-blue-100/70 pt-3.5">
+            <dt className="text-neutral-400">{t('authTitle')}</dt>
+            <dd className="mt-1.5 space-y-2 text-neutral-700">
+              <p>{t('authApprovers', { count: record.authorization.approvers })}</p>
+              {record.authorization.checks.length > 0 ? (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-neutral-500">{t('authChecks')}</span>
+                  {record.authorization.checks.map((c) => (
+                    <span
+                      key={c}
+                      className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700"
+                    >
+                      <Check className="h-3 w-3" strokeWidth={2.5} />
+                      {t(`checkLabel.${c}`)}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-neutral-500">{t('authNoChecks')}</p>
+              )}
+            </dd>
+          </div>
+        )}
       </dl>
     </div>
   )
