@@ -8,19 +8,10 @@ import { VoicePowerBadge } from "@/components/admin/voice-power-badge"
 import { type Member } from "@/types/admin"
 import { demoMembers, demoContributions, demoProposals, demoTasks } from "@/lib/demo-data"
 
-interface MembershipInfo {
-  memberId: string
-  communityId: string
-  communityName: string
-  role: string
-  voicePower: number
-}
-
 interface AdminHeaderProps {
   communityName: string
   currentUser: Member
   title?: string
-  memberships?: MembershipInfo[]
 }
 
 interface NotificationItem {
@@ -39,8 +30,13 @@ interface SearchResult {
   href: string
 }
 
-export function AdminHeader({ communityName, currentUser, title, memberships }: AdminHeaderProps) {
+export function AdminHeader({ communityName, currentUser, title }: AdminHeaderProps) {
   const t = useTranslations("admin")
+  const roleLabels: Record<Member["role"], string> = {
+    owner: t("roleOwner"),
+    manager: t("roleManager"),
+    member: t("roleMember"),
+  }
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -296,38 +292,26 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
             <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-[#F0F0F0] rounded-2xl z-50 py-1">
               <div className="px-4 py-3 border-b border-[#F0F0F0]">
                 <p className="text-sm font-medium text-[#131517]">{currentUser.name}</p>
-                <p className="text-xs text-[#939597]">{currentUser.email}</p>
+                <p className="text-xs text-[#939597] mt-0.5">{roleLabels[currentUser.role]}</p>
+                <p className="text-xs text-[#939597] mt-0.5">{currentUser.email}</p>
                 <div className="mt-1.5">
                   <VoicePowerBadge value={currentUser.voicePower} size="sm" />
-                  <span className="text-xs text-[#939597] ml-1 capitalize">{currentUser.role}</span>
                 </div>
               </div>
-
-              {memberships && memberships.length > 1 && (
-                <div className="px-4 py-2 border-b border-[#F0F0F0]">
-                  <p className="text-xs text-[#939597] mb-1.5">Your Communities</p>
-                  {memberships.map((m) => (
-                    <div key={m.communityId} className="flex items-center justify-between py-1">
-                      <span className="text-sm text-[#131517] truncate flex-1">{m.communityName}</span>
-                      <span className="text-xs text-[#939597] capitalize">{m.role}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
 
               <button
                 onClick={() => router.push("/admin")}
                 className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-[#525252] hover:bg-[#FAFAFA] transition-colors"
               >
                 <User className="w-4 h-4" />
-                My Dashboard
+                {t("myDashboard")}
               </button>
               <button
                 onClick={() => router.push("/sign-in")}
                 className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
-                Sign Out
+                {t("signOut")}
               </button>
             </div>
           )}

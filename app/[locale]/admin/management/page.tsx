@@ -101,7 +101,7 @@ const MIN_POLL_OPTIONS = 2
 function PollsTab() {
   const t = useTranslations('admin')
   const [showCreate, setShowCreate] = useState(false)
-  const [options, setOptions] = useState<string[]>([t('optionA'), t('optionB')])
+  const [options, setOptions] = useState<string[]>(['', ''])
 
   const handleAddOption = () => {
     setOptions((prev) => [...prev, ''])
@@ -117,7 +117,13 @@ function PollsTab() {
 
   const closeCreate = () => {
     setShowCreate(false)
-    setOptions([t('optionA'), t('optionB')])
+    setOptions(['', ''])
+  }
+
+  const optionPlaceholder = (index: number) => {
+    if (index === 0) return t('optionA')
+    if (index === 1) return t('optionB')
+    return t('optionPlaceholder')
   }
 
   const handleEndVote = (id: string) => {
@@ -186,7 +192,7 @@ function PollsTab() {
                         type="text"
                         value={opt}
                         onChange={(e) => handleOptionChange(i, e.target.value)}
-                        placeholder={t('optionPlaceholder')}
+                        placeholder={optionPlaceholder(i)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                       />
                       <button

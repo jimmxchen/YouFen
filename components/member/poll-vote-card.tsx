@@ -81,6 +81,7 @@ export function PollVoteCard({
               selected={selectedOptionId === opt.id}
               interactive={votable && !hasVoted}
               disabled={hasVoted}
+              showResults={hasVoted || !votable}
               onSelect={() => setSelectedOptionId(opt.id)}
               meta={hasVoted || !votable ? fillTemplate(labels.votesLabelTemplate, '{count}', String(opt.votes)) : undefined}
             />
