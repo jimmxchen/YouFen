@@ -1,15 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale } from './i18n';
+import { routing } from './i18n/routing';
 
-export default createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: 'always',
-  localeCookie: {
-    name: 'NEXT_LOCALE',
-    maxAge: 31536000,
-  }
-});
+export default createMiddleware(routing);
 
 // Match all routes except Next.js internals and static files
 // This ensures every request gets locale-prefixed (e.g. /admin → /zh/admin)
