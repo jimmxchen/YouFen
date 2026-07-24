@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    { "path": "/api/internal/chain/sync", "schedule": "* * * * *" },
+    { "path": "/api/internal/chain-actions/submit", "schedule": "* * * * *" },
+    { "path": "/api/internal/chain-actions/confirm", "schedule": "* * * * *" }
+  ]
+}
