@@ -49,6 +49,9 @@ export const YOUFEN_GOVERNANCE_ABI = [
   'function getEpoch(bytes32 communityId, uint64 epochNumber) view returns ((bool active, uint64 epochNumber, uint256 openingSupply, uint32 inflationRateBps, uint256 baseMintBudget, uint256 advanceDebtFromPrev, uint256 effectiveRegularBudget, uint256 maxAdvanceAmount, uint256 regularMinted, uint256 advanceMinted))',
   'function recordExists(bytes32) view returns (bool)',
   'function memberSignerOf(bytes32 communityId, bytes32 memberIdHash) view returns (address)',
+  // public-mapping auto-getters (used by the chain-write READ reader; §6 write endpoints)
+  'function communities(bytes32 communityId) view returns (bool exists, uint64 currentEpochNumber, uint256 currentTotalSupply, uint32 activePolicyVersion, uint32 inflationRateBps, uint32 maxAdvanceRateBps, uint32 memberMintCapRateBps, uint32 minVoterCount, uint32 approverThreshold, address owner)',
+  'function isApprover(bytes32 communityId, address account) view returns (bool)',
 ] as const;
 
 /** Every event the indexer projects. The order is not significant. */

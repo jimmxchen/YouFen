@@ -13,6 +13,8 @@ import {
   Copy,
   Loader2,
   Search,
+  TrendingUp,
+  ArrowRight,
 } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { type ChainRecord, explorerTxUrl, shortHash } from './demo-data'
@@ -294,6 +296,22 @@ export function ProvenanceJourney({ record }: { record: ChainRecord }) {
 
       {/* 链上存档原文（默认可见，把链上数据完整搬进页面） */}
       <ChainArchiveCard record={record} />
+
+      {/* 这笔发放如何改变接收人的相对所有权 */}
+      {record.ownershipShift && (
+        <div className="mt-4 rounded-xl border border-neutral-100 bg-white p-4">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4 text-blue-500" />
+            <h4 className="text-sm font-semibold text-neutral-900">{t('ownershipShift.title')}</h4>
+          </div>
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="text-sm tabular-nums text-neutral-400">{record.ownershipShift.before}%</span>
+            <ArrowRight className="h-4 w-4 text-neutral-300" />
+            <span className="text-lg font-semibold tabular-nums text-emerald-600">{record.ownershipShift.after}%</span>
+            <span className="ml-1 text-[13px] leading-relaxed text-neutral-500">{t('ownershipShift.desc')}</span>
+          </div>
+        </div>
+      )}
 
       {/* 亲自验一验 */}
       {record.status === 'verified' || record.status === 'superseded' ? (

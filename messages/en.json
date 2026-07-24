@@ -443,6 +443,57 @@
     "optionB": "Option B",
     "optionC": "Option C"
   },
+<<<<<<< HEAD
+  "records": {
+    "back": "Back to home",
+    "eyebrow": "AdventureX Community · Public archive",
+    "title": "Trusted Records",
+    "subtitle": "Every major event in this community — tokens granted, votes decided, rules changed — is archived here in public and sealed so no one can alter it; and any move that steps past the budget or voting rules is refused by the ledger on the spot.",
+    "tagline": "— Powered by the Injective blockchain",
+    "ownership": {
+      "title": "Ownership breakdown",
+      "intro": "Contributions become non-transferable community tokens, and your token share is your relative ownership. See at a glance who owns how much — broadly distributed, not concentrated in a few hands.",
+      "others": "{count} other members",
+      "dilutionNote": "Relative ownership shifts naturally with new contributions: active builders rise, and those who stop are diluted by newcomers."
+    },
+    "proposals": {
+      "title": "Governance in progress",
+      "intro": "Proposals currently open for voting. Voting weight is frozen at the moment a proposal opened — later mints can't affect this vote.",
+      "approval": "Approval",
+      "turnout": "{voters}/{total} voted",
+      "quorumMet": "Quorum met ({quorum})",
+      "quorumShort": "{need} more to reach quorum",
+      "endsInHours": "{hours}h left",
+      "endsInDays": "{days}d left",
+      "items": {
+        "treasury": "Vote: 8,000 AXO quarterly activity budget",
+        "newRule": "Vote: add a “code review” contribution rule"
+      }
+    },
+    "verifyCenter": {
+      "title": "Verify it yourself",
+      "intro": "Don't take our word for it — paste any record's digital fingerprint (recordHash) and the page recomputes the fingerprint, confirms it's on-chain, and checks the action was released within the rules.",
+      "placeholder": "Paste a recordHash (0x…)…",
+      "button": "Verify",
+      "trySample": "Try a sample ({hash})",
+      "step1": "Read the record's contents",
+      "step2": "Recompute the fingerprint live",
+      "step3": "Confirm on-chain + compliant release",
+      "notFoundStep": "This fingerprint isn't in the public records",
+      "okTitle": "Verified",
+      "okDesc": "Fingerprint matches, it's on the Injective chain, and the contract released it within the rules — untouched since it was sealed.",
+      "notFoundDesc": "No matching record found. Check the recordHash is complete (a 0x-prefixed 64-hex string), or copy one from the timeline above."
+    },
+    "ownershipShift": {
+      "title": "Effect on relative ownership",
+      "desc": "the recipient's relative ownership share after this grant"
+    },
+    "explainer": {
+      "aria": "How trusted records work",
+      "write": {
+        "title": "Write it down",
+        "desc": "Who did what, and how much they earned — every event is entered into the community ledger."
+=======
   "termsPage": {
     "title": "Terms of Service",
     "lastUpdated": "Last updated: July 24, 2026",
@@ -451,6 +502,7 @@
       {
         "heading": "1. Service Description",
         "body": "YouFen is a no-code community governance platform that helps community operators create and manage participation rules, track member contributions, organize voting decisions, and generate publicly verifiable records for important decisions. We leverage AI to assist with rule generation and contribution analysis, and selectively use the Injective blockchain to provide publicly verifiable records for key operations."
+>>>>>>> origin/develop
       },
       {
         "heading": "2. Accounts and Registration",
@@ -460,6 +512,36 @@
         "heading": "3. Community Creation and Management",
         "body": "Community operators (Owners/Managers) may customize participation rules, manage members, review contributions, and initiate proposals when creating communities. Community operators are responsible for ensuring that community activities comply with applicable laws. We reserve the right to remove communities that violate these terms."
       },
+<<<<<<< HEAD
+      "whyToggle": "Why can you trust this page?",
+      "why1": "A blockchain is like a notary office shared by the whole world: once a file goes in, it can never be edited or destroyed. We store each record's digital fingerprint on the Injective blockchain.",
+      "why2": "Change even a single character of a record and its fingerprint becomes completely different. So as long as a record matches its on-chain fingerprint, it has provably never been touched since it was sealed.",
+      "why3": "Only fingerprints and numbers go on-chain — never names, emails, or any personal information. Curious? Every record has a “Technical details” section so you can check the public ledger yourself."
+    },
+    "timelineTitle": "Timeline",
+    "timelineHint": "Open any record to trace its journey",
+    "timelineAria": "Community trusted records timeline",
+    "status": {
+      "verified": "Sealed & confirmed",
+      "pending": "Waiting to be sealed",
+      "submitting": "Being sent for sealing",
+      "confirming": "Seal being confirmed",
+      "failed": "Sealing hit a snag",
+      "superseded": "Corrected"
+    },
+    "kind": {
+      "tokenMint": "Token grant",
+      "advanceMint": "Advance grant",
+      "tokenReversal": "Correction",
+      "epochSummary": "Monthly summary",
+      "policyVersion": "Rule update",
+      "proposalResult": "Vote result"
+    },
+    "journey": {
+      "recorded": {
+        "title": "On the books",
+        "desc": "The full story is entered into the community ledger."
+=======
       {
         "heading": "4. Voice Power and Contributions",
         "body": "Voice Power is a community-internal participation weight. It does not represent monetary value, financial assets, or tradable rights. Voice Power is non-transferable, non-withdrawable, and cannot be exchanged for fiat currency or cryptocurrency. Community operators have final authority over the allocation and usage rules of Voice Power within their communities."
@@ -479,6 +561,7 @@
       {
         "heading": "8. Prohibited Conduct",
         "body": "You may not: (a) upload or disseminate illegal, infringing, defamatory, obscene, harassing, or otherwise inappropriate content; (b) impersonate others or provide false information; (c) interfere with or disrupt our service; (d) attempt unauthorized access to our systems; (e) abuse the Voice Power system for fraud or manipulation; (f) use automated tools for vote manipulation, contribution farming, or other cheating; (g) use the service for any illegal or unauthorized purpose."
+>>>>>>> origin/develop
       },
       {
         "heading": "9. Intellectual Property",
@@ -496,9 +579,80 @@
         "heading": "12. Changes to Terms",
         "body": "We may update these terms from time to time. Material changes will be communicated via website notice or email. Continued use of the service constitutes acceptance of the revised terms."
       },
+<<<<<<< HEAD
+      "matchTitle": "Fingerprints match",
+      "matchDesc": "Not a single character of this record has changed since it was sealed."
+    },
+    "privacyNote": "Only fingerprints and amounts are stored on-chain — never names or emails. This page currently shows demo data for the AdventureX community.",
+    "demo": {
+      "r6": {
+        "title": "Xiaolu earned 200 AXO",
+        "summary": "Organized this month's newcomer meetup. Approved by admins; the seal is being confirmed."
+      },
+      "r5": {
+        "title": "Vote result: weekly meeting moves to Thursday night",
+        "summary": "18 members voted, weighted by tokens. “Thursday night” won with 62% of the weight."
+      },
+      "r4": {
+        "title": "July settlement: 5,300 AXO granted",
+        "summary": "4,900 granted from this month's budget plus a 400 advance; next month's budget repays it automatically."
+      },
+      "r3": {
+        "title": "Carol earned 500 AXO (400 advanced)",
+        "summary": "Built key community infrastructure. Only 100 remained in this month's budget; 400 was advanced from next month, approved by two admins."
+      },
+      "r2": {
+        "title": "Liam earned 500 AXO",
+        "summary": "Helped three newcomers complete their Injective testnet deployment. Confirmed by admins."
+      },
+      "r1": {
+        "title": "Liam earned 800 AXO (corrected)",
+        "summary": "This record was corrected due to a data-entry error (300 over-counted). Per the rules the original is never deleted; see the reversal (July 13) and the correct grant (July 15)."
+      },
+      "r0": {
+        "title": "Community rules v2 live: 5% monthly issuance",
+        "summary": "Approved by community vote: the monthly token issuance rate is set to 5%, effective July."
+      },
+      "r9": {
+        "title": "Correction: reversed Liam's 800 AXO",
+        "summary": "The July 12 grant had a data-entry error, so the full amount was reversed per the rules. The original stays on file below; the correct grant is on July 15."
+      },
+      "r7": {
+        "title": "Vote result: new community logo, option B",
+        "summary": "21 members voted; option B won with 58% of the weight and went to the design team."
+      },
+      "r8": {
+        "title": "Community rules v1 live: founding rules",
+        "summary": "AdventureX founding rules took effect by consensus: 100,000 AXO initial supply, reviewed contributions earn tokens, votes weighted by tokens."
+      },
+      "r10": {
+        "title": "Maya earned 200 AXO",
+        "summary": "Wrote the community onboarding docs and FAQ; approved by admins."
+      },
+      "r11": {
+        "title": "Vote result: quarterly activity budget approved",
+        "summary": "20 members voted, weighted by tokens; the plan passed with 71% approval."
+      },
+      "r12": {
+        "title": "Special grant: core member Nadia earned 1,200 AXO",
+        "summary": "Led a cross-month infrastructure refactor beyond the normal per-epoch cap — released by the ledger only after a community proposal specially authorized it and two admins co-signed."
+      },
+      "r13": {
+        "title": "Sky earned 400 AXO (300 advanced)",
+        "summary": "Delivered launch assets early. This month's budget fell short, so 300 was advanced from next month, approved by two admins."
+      },
+      "r14": {
+        "title": "June settlement: 4,600 AXO granted",
+        "summary": "4,600 granted this month with no advance; governance supply updated accordingly."
+      },
+      "r15": {
+        "title": "Vote result: community charter revision adopted",
+        "summary": "19 members voted; the revised charter passed with 66% approval and went to the governance group."
+=======
       {
         "heading": "13. Contact Us",
         "body": "If you have any questions about these terms, please contact us via GitHub Issues at github.com/Simon-Snow/YouFen, or email the project maintainer."
+>>>>>>> origin/develop
       }
     ]
   },

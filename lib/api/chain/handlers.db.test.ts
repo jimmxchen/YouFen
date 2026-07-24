@@ -18,6 +18,27 @@ const INTERNAL_TOKEN = 'test-internal-token-1234567890';
 const fakeRuntime: GovernanceRuntime = {
   sender: { async send() { return { txHash: id('t'), nonce: 0 }; }, async getReceipt() { return null; } },
   logProvider: { async getBlockNumber() { return 6; }, async getLogs() { return []; } },
+  reader: {
+    async getEpoch() {
+      return {
+        active: true, epochNumber: 0n, openingSupply: 0n, inflationRateBps: 0,
+        baseMintBudget: 0n, advanceDebtFromPrev: 0n, effectiveRegularBudget: 0n,
+        maxAdvanceAmount: 0n, regularMinted: 0n, advanceMinted: 0n,
+      };
+    },
+    async communities() {
+      return {
+        exists: true, currentEpochNumber: 0n, currentTotalSupply: 0n, activePolicyVersion: 1,
+        inflationRateBps: 0, maxAdvanceRateBps: 0, memberMintCapRateBps: 0, minVoterCount: 0,
+        approverThreshold: 1, owner: '0x0000000000000000000000000000000000000000',
+      };
+    },
+    async balanceOf() { return 0n; },
+    async governanceBalanceAt() { return 0n; },
+    async recordExists() { return false; },
+    async memberSignerOf() { return '0x0000000000000000000000000000000000000000'; },
+    async isApprover() { return false; },
+  },
   contractAddress: CONTRACT,
   chainId: 1439,
   domain: buildDomain(1439, CONTRACT),

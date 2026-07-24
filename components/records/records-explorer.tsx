@@ -3,9 +3,6 @@
 import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  ScrollText,
-  Landmark,
-  Lock,
   ChevronDown,
   Clock,
   BadgeCheck,
@@ -25,7 +22,9 @@ import {
 } from './demo-data'
 import { ProvenanceJourney } from './provenance-journey'
 import { ChainStatusStrip } from './chain-status'
-import { RuleGuardian } from './rule-guardian'
+import { OwnershipBreakdown } from './ownership-breakdown'
+import { LiveProposals } from './live-proposals'
+import { VerifyCenter } from './verify-center'
 
 const KIND_TINT: Record<RecordKind, string> = {
   tokenMint: 'bg-emerald-50 text-emerald-700',
@@ -65,64 +64,6 @@ function StatusBadge({ status }: { status: RecordStatus }) {
       <Clock className="w-3.5 h-3.5" />
       {t(status)}
     </span>
-  )
-}
-
-function ExplainerStrip() {
-  const t = useTranslations('records.explainer')
-  const [open, setOpen] = useState(false)
-  const steps = [
-    { key: 'write', icon: ScrollText },
-    { key: 'stamp', icon: Landmark },
-    { key: 'lock', icon: Lock },
-  ] as const
-  return (
-    <section aria-label={t('aria')} className="mt-10">
-      <div className="grid gap-6 sm:grid-cols-3">
-        {steps.map((s, i) => {
-          const Icon = s.icon
-          return (
-            <div key={s.key} className="flex items-start gap-3.5">
-              <div className="shrink-0 w-10 h-10 rounded-full bg-neutral-50 border border-neutral-100 grid place-items-center">
-                <Icon className="w-[18px] h-[18px] text-neutral-600" strokeWidth={1.75} />
-              </div>
-              <div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xs font-semibold text-neutral-300">{i + 1}</span>
-                  <h3 className="text-[15px] font-semibold text-neutral-900">{t(`${s.key}.title`)}</h3>
-                </div>
-                <p className="mt-1 text-sm leading-relaxed text-neutral-500">{t(`${s.key}.desc`)}</p>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="mt-6 inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-700 transition-colors"
-      >
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
-        {t('whyToggle')}
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="overflow-hidden"
-          >
-            <div className="mt-3 max-w-2xl space-y-3 rounded-xl bg-blue-50/50 border border-blue-100/60 px-5 py-4 text-sm leading-relaxed text-neutral-600">
-              <p>{t('why1')}</p>
-              <p>{t('why2')}</p>
-              <p>{t('why3')}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
   )
 }
 
@@ -250,10 +191,13 @@ export function RecordsExplorer() {
   }, [])
 
   const q = query.trim().toLowerCase()
-  const filtered = searchable.filter(
-    ({ record, haystack }) =>
-      (category === 'all' || KIND_CATEGORY[record.kind] === category) && (q === '' || haystack.includes(q))
-  )
+  const filtered = searchable
+    .filter(
+      ({ record, haystack }) =>
+        (category === 'all' || KIND_CATEGORY[record.kind] === category) && (q === '' || haystack.includes(q))
+    )
+    // 最新在前——按日期倒序，新增事件放数组任意位置都自动排好
+    .sort((a, b) => b.record.date.localeCompare(a.record.date))
 
   return (
     <div className="relative">
@@ -267,23 +211,21 @@ export function RecordsExplorer() {
         }}
       />
 
-      <div className="mx-auto max-w-3xl px-5 sm:px-8 pb-24 pt-14 sm:pt-20">
-        {/* 页头 —— 左对齐非对称构图 */}
-        <header>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10 pb-24 pt-14 sm:pt-20">
+        {/* 页头 —— 左对齐，全宽横跨两列之上 */}
+        <header className="max-w-3xl">
           <p className="text-[13px] font-medium tracking-wide text-blue-600">{t('eyebrow')}</p>
           <h1 className="mt-2.5 text-3xl sm:text-[40px] font-semibold leading-tight text-neutral-900 text-balance">
             {t('title')}
           </h1>
+          <p className="mt-2 text-sm font-medium tracking-wide text-blue-600/90">{t('tagline')}</p>
           <p className="mt-3.5 max-w-xl text-base leading-relaxed text-neutral-500">{t('subtitle')}</p>
         </header>
 
-        <ExplainerStrip />
-
-        {/* 规则守门：账本不只是盖章，还会拒绝越权（v0.7 协议执行叙事） */}
-        <RuleGuardian />
-
-        {/* 记录检索与分区 */}
-        <section className="mt-14" aria-label={t('timelineAria')}>
+        {/* 两列 PC 布局：左=大事记主栏（宽），右=侧栏（所有权/治理/验证/账本）；移动端堆叠 */}
+        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] lg:items-start lg:gap-14">
+          {/* 主栏：大事记 */}
+          <section aria-label={t('timelineAria')}>
           <div className="flex items-baseline justify-between">
             <h2 className="text-lg font-semibold text-neutral-900">{t('timelineTitle')}</h2>
             <span className="hidden sm:inline text-xs text-neutral-400">{t('timelineHint')}</span>
@@ -369,11 +311,17 @@ export function RecordsExplorer() {
           )}
         </section>
 
-        {/* 底部：Injective 公共账本实时状态 + 隐私说明 */}
-        <footer className="mt-16 border-t border-neutral-100 pt-8">
-          <ChainStatusStrip />
-          <p className="mt-4 text-[13px] leading-relaxed text-neutral-400 max-w-xl">{t('privacyNote')}</p>
-        </footer>
+          {/* 侧栏：所有权 / 治理 / 自助验证 / 账本状态（PC 右列，移动端堆叠在下） */}
+          <aside className="space-y-10">
+            <OwnershipBreakdown />
+            <LiveProposals />
+            <VerifyCenter />
+            <div className="border-t border-neutral-100 pt-6">
+              <ChainStatusStrip />
+              <p className="mt-4 text-[13px] leading-relaxed text-neutral-400">{t('privacyNote')}</p>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
   )
