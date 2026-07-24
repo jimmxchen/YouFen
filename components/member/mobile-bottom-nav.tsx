@@ -60,15 +60,15 @@ export function MobileBottomNav({ locale, communityId, active, labels }: MobileB
         })}
       </nav>
 
-      <nav className="fixed bottom-6 left-6 top-6 z-30 hidden w-56 flex-col rounded-2xl border border-black/[0.08] bg-white/85 p-3 shadow-sm backdrop-blur-[20px] lg:flex">
+      <nav className="fixed left-0 top-0 z-40 hidden min-h-screen w-64 flex-col border-r border-[#F0F0F0] bg-[#FAFAFA] lg:flex">
         <Link
           href={`/${locale}/member/${communityId}`}
-          className="flex min-h-12 items-center rounded-xl px-3 text-sm font-semibold text-[#131517]"
+          className="flex h-16 items-center border-b border-[#F0F0F0] px-6 text-lg font-semibold text-[#131517] transition-colors hover:text-[#10B981]"
         >
           YouFen
         </Link>
 
-        <div className="mt-5 flex flex-1 flex-col gap-1">
+        <div className="flex flex-1 flex-col gap-1 px-3 py-4">
           {items.map((item) => {
             const Icon = item.icon
             const isActive = active === item.id
@@ -77,20 +77,20 @@ export function MobileBottomNav({ locale, communityId, active, labels }: MobileB
               <Link
                 key={item.id}
                 href={`/${locale}/member/${communityId}${item.href}`}
-                className={`flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm font-medium transition ${
+                className={`flex min-h-10 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#131517] text-white'
-                    : 'text-[#525252] hover:bg-black/[0.04] hover:text-[#131517]'
+                    ? 'border border-[#F0F0F0] bg-white text-[#131517] shadow-sm'
+                    : 'text-[#525252] hover:bg-white/60 hover:text-[#131517]'
                 }`}
                 aria-current={isActive ? 'page' : undefined}
               >
                 <Icon className="h-4 w-4" aria-hidden="true" />
-                {labels[item.id]}
+                <span className="flex-1">{labels[item.id]}</span>
+                {isActive ? <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" /> : null}
               </Link>
             )
           })}
         </div>
-
       </nav>
     </>
   )

@@ -26,9 +26,9 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
 
   return (
     <MemberShell>
-      <header className="px-5 pb-5 pt-6 lg:px-6 lg:pb-8 lg:pt-8">
+      <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-4xl">
+        <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
           {t('me.title')}
         </h1>
         <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>
@@ -36,11 +36,11 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
         </p>
       </header>
 
-      <div className="grid gap-5 px-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:px-6">
+      <div className="grid gap-5 px-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:px-0">
         <aside className="space-y-4 lg:sticky lg:top-24">
           <section className={memberCard}>
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-sm font-semibold text-[#131517]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
                 {member.avatarInitials}
               </div>
               <div className="min-w-0">

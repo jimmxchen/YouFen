@@ -21,29 +21,29 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
 
   return (
     <MemberShell>
-      <header className="px-5 pb-4 pt-6 lg:px-6 lg:pb-8 lg:pt-8">
+      <header className="px-5 pb-4 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
-            <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-4xl">
+            <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
               {t('chat.title')}
             </h1>
             <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>
               {t('chat.description')}
             </p>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-white">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-white">
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
           </div>
         </div>
       </header>
 
-      <div className="space-y-4 px-5 pb-28 lg:px-6">
-        <section className="rounded-2xl border border-black/[0.08] bg-white p-4">
+      <div className="space-y-4 px-5 pb-28 lg:px-0">
+        <section className="rounded-xl border border-[#F0F0F0] bg-white p-4">
           <label htmlFor="chat-list-search" className="sr-only">
             {t('chat.searchChats')}
           </label>
-          <div className="flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-[#FAFAFA] px-4">
+          <div className="flex min-h-11 items-center gap-2 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4">
             <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
             <input
               id="chat-list-search"

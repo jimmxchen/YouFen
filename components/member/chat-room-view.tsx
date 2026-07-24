@@ -46,16 +46,16 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b border-black/[0.08] bg-white/90 px-3 py-3 backdrop-blur-[20px] lg:static lg:mx-auto lg:mt-8 lg:w-full lg:max-w-3xl lg:rounded-2xl lg:border lg:border-black/[0.08] lg:px-4">
+      <header className="sticky top-0 z-20 border-b border-[#F0F0F0] bg-white px-3 py-3 lg:static lg:mx-auto lg:w-full lg:max-w-3xl lg:rounded-xl lg:border lg:px-4">
         <div className="flex items-center gap-2">
           <Link
             href={`${baseHref}/chat`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#525252] hover:bg-black/[0.04]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#525252] hover:bg-[#FAFAFA]"
             aria-label={labels.back}
           >
             <ArrowLeft className="h-5 w-5" aria-hidden="true" />
           </Link>
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#131517] text-sm font-semibold text-white">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-sm font-semibold text-white">
             {room.avatarInitials}
           </div>
           <div className="min-w-0 flex-1">
@@ -66,8 +66,8 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
           </div>
           <button
             type="button"
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
-              showSearch ? 'bg-[#131517] text-white' : 'text-[#525252] hover:bg-black/[0.04]'
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${
+              showSearch ? 'bg-[#131517] text-white' : 'text-[#525252] hover:bg-[#FAFAFA]'
             }`}
             aria-label={labels.search}
             onClick={() => setShowSearch((current) => !current)}
@@ -76,7 +76,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
           </button>
           <Link
             href={`${baseHref}/chat/${room.id}/settings`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#525252] hover:bg-black/[0.04]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#525252] hover:bg-[#FAFAFA]"
             aria-label={labels.settings}
           >
             <Info className="h-5 w-5" aria-hidden="true" />
@@ -88,7 +88,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
             <label className="sr-only" htmlFor="chat-search">
               {labels.search}
             </label>
-            <div className="flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-[#FAFAFA] px-4">
+            <div className="flex min-h-11 items-center gap-2 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4">
               <Search className="h-4 w-4 shrink-0 text-[#939597]" aria-hidden="true" />
               <input
                 id="chat-search"
@@ -104,7 +104,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
 
       <div className="mx-auto w-full max-w-3xl space-y-4 px-4 pb-28 pt-4 lg:px-0 lg:pt-5">
         {showSearch && normalizedQuery ? (
-          <section className="rounded-2xl border border-black/[0.08] bg-white px-4 py-3">
+          <section className="rounded-xl border border-[#F0F0F0] bg-white px-4 py-3">
             {matches.length > 0 ? (
               <div className="space-y-3">
                 {matches.map((message) => (
@@ -124,14 +124,14 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
         ) : null}
 
         {room.muted ? (
-          <div className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#525252]">
+          <div className="flex items-center gap-2 rounded-xl border border-[#F0F0F0] bg-white px-4 py-3 text-sm text-[#525252]">
             <BellOff className="h-4 w-4 shrink-0" aria-hidden="true" />
             {labels.muted}
           </div>
         ) : null}
 
         {pinnedMessage ? (
-          <section className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3">
+          <section className="rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3">
             <div className="mb-2 text-xs font-medium uppercase tracking-wide text-emerald-700">
               {labels.pinned}
             </div>
@@ -160,7 +160,7 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
                 ) : null}
 
                 <div
-                  className={`rounded-2xl px-4 py-3 text-sm leading-6 shadow-sm ${
+                  className={`rounded-xl px-4 py-3 text-sm leading-6 ${
                     message.isCurrentMember
                       ? 'rounded-br-md bg-[#DCF8C6] text-[#131517]'
                       : message.isOperator
@@ -185,28 +185,28 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
         </div>
       </div>
 
-      <div className="fixed bottom-[64px] left-1/2 z-30 w-full max-w-md -translate-x-1/2 border-t border-black/[0.08] bg-white/90 px-3 py-3 backdrop-blur-[20px] lg:bottom-6 lg:w-[calc(100%-48px)] lg:max-w-3xl lg:rounded-2xl lg:border lg:px-4">
+      <div className="fixed bottom-[64px] left-1/2 z-30 w-full max-w-md -translate-x-1/2 border-t border-[#F0F0F0] bg-white px-3 py-3 lg:bottom-8 lg:left-[calc(50%+8rem)] lg:w-[calc(100%-20rem)] lg:max-w-3xl lg:rounded-xl lg:border lg:px-4">
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-200 text-[#525252]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] text-[#525252]"
             aria-label={labels.addImage}
           >
             <ImagePlus className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex min-h-11 flex-1 items-center rounded-full border border-gray-200 bg-[#FAFAFA] px-4 text-sm text-[#939597]">
+          <div className="flex min-h-11 flex-1 items-center rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] px-4 text-sm text-[#939597]">
             {labels.composer}
           </div>
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-200 text-[#525252]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] text-[#525252]"
             aria-label={labels.addReaction}
           >
             <Smile className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#131517] text-white"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-white"
             aria-label={labels.send}
           >
             <SendHorizonal className="h-5 w-5" aria-hidden="true" />
