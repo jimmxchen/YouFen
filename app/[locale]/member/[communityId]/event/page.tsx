@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
 import { EventJoinPanel } from '@/components/member/event-join-panel'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { memberMuted } from '@/components/member/ui'
-import { getDemoMember } from '@/lib/demo/member-data'
+import { memberMuted, memberSubtle } from '@/components/member/ui'
 
 interface MemberEventPageProps {
   params: Promise<{
@@ -17,7 +19,9 @@ interface MemberEventPageProps {
 export default async function MemberEventPage({ params }: MemberEventPageProps) {
   const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
   const homeHref = `/${locale}/member/${communityId}`
 
   return (
@@ -30,7 +34,8 @@ export default async function MemberEventPage({ params }: MemberEventPageProps) 
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
         </Link>
-        <h1 className="text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
+        <p className={`truncate text-base ${memberSubtle}`}>{member.communityName}</p>
+        <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
           {t('event.title')}
         </h1>
         <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>

@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { ArrowLeft, FileCheck2, Users } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { RecordReceiptList } from '@/components/member/record-receipt-list'
 import { memberCard, memberMuted, memberSubtle } from '@/components/member/ui'
-import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberPublicPageProps {
   params: Promise<{
@@ -21,7 +23,9 @@ function formatNumber(value: number, locale: string) {
 export default async function MemberPublicPage({ params }: MemberPublicPageProps) {
   const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
   const meHref = `/${locale}/member/${communityId}/me`
 
   return (

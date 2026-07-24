@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
 import { Link } from '@/i18n/navigation'
 import { ArrowLeft, Square, ShieldCheck, Trash2, ExternalLink, Users, Vote as VoteIcon } from 'lucide-react'
-import { demoProposals } from '@/lib/demo-data'
+import { useAdminProposal, apiPatch } from '@/lib/hooks/use-admin-data'
 import { type Proposal, ProposalStatus } from '@/types/admin'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
@@ -22,17 +22,27 @@ export default function ProposalDetailPage() {
   const params = useParams()
   const proposalId = params.id as string
 
-  const proposal = demoProposals.find(p => p.id === proposalId)
+  const { proposal, loading, refetch } = useAdminProposal(proposalId)
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="text-center py-20">
+          <p className="text-lg text-[#525252]">{t('loading')}</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!proposal) {
     return (
       <div className="space-y-6">
         <div className="text-center py-20">
-          <p className="text-lg text-[#525252]">{t('pollNotFound')}</p>
+          <p className="text-lg text-[#525252]">{t('proposalNotFound')}</p>
           <Link href="/admin/proposals" className="text-emerald-600 hover:text-emerald-700 font-medium mt-2 inline-block">
-            {t('backToPolls')}
+            {t('backToProposals')}
           </Link>
         </div>
       </div>
@@ -45,17 +55,36 @@ export default function ProposalDetailPage() {
   const isEnded = proposal.status === 'ended' || proposal.status === 'recorded'
   const isDraft = proposal.status === 'draft'
 
-  const handleEndVote = () => {
-    alert(t('voteEnded'))
+  const [actionLoading, setActionLoading] = useState(false)
+
+  const handleEndVote = async () => {
+    setActionLoading(true)
+    try {
+      await apiPatch(`/proposals/${proposalId}`, { status: 'ended' })
+      refetch()
+    } catch {
+      // silent
+    } finally {
+      setActionLoading(false)
+    }
   }
 
-  const handleGenerateRecord = () => {
-    alert(t('generatingRecord'))
+  const handleGenerateRecord = async () => {
+    // End vote already creates a result record; just end the vote
+    await handleEndVote()
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     setShowDeleteConfirm(false)
-    alert(t('pollDeleted'))
+    setActionLoading(true)
+    try {
+      await apiPatch(`/proposals/${proposalId}`, { status: 'draft' })
+      refetch()
+    } catch {
+      // silent
+    } finally {
+      setActionLoading(false)
+    }
   }
 
   return (
@@ -68,7 +97,7 @@ export default function ProposalDetailPage() {
             className="inline-flex items-center gap-1.5 text-sm text-[#939597] hover:text-[#131517] transition-colors mb-3"
           >
             <ArrowLeft className="w-4 h-4" />
-            {t('backToPolls', { defaultValue: 'Back to Polls' })}
+            {t('backToProposals')}
           </Link>
           <div className="flex items-center gap-3 mb-2">
             <span className={cn(
@@ -214,10 +243,10 @@ export default function ProposalDetailPage() {
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowDeleteConfirm(false)} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-md mx-4 p-6 space-y-4">
             <h3 className="text-lg font-semibold text-[#131517]">
-              {t('deletePollConfirm', { defaultValue: 'Delete Poll?' })}
+              {t('deleteProposalConfirm')}
             </h3>
             <p className="text-sm text-[#525252]">
-              {t('deletePollWarning', { defaultValue: 'This action cannot be undone. The poll and all votes will be permanently removed.' })}
+              {t('deleteProposalWarning')}
             </p>
             <div className="flex justify-end gap-3 pt-2">
               <button

@@ -1,4 +1,7 @@
 import { getTranslations } from 'next-intl/server'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
 import { ContributionTimeline } from '@/components/member/contribution-timeline'
 import { MemberProfileActions } from '@/components/member/member-profile-actions'
 import { MemberShell } from '@/components/member/member-shell'
@@ -7,7 +10,6 @@ import { PendingContributionList } from '@/components/member/pending-contributio
 import { RecordReceiptList } from '@/components/member/record-receipt-list'
 import { VoicePowerCard } from '@/components/member/voice-power-card'
 import { memberCard, memberMuted, memberSubtle } from '@/components/member/ui'
-import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberMePageProps {
   params: Promise<{
@@ -23,7 +25,9 @@ function formatNumber(value: number, locale: string) {
 export default async function MemberMePage({ params }: MemberMePageProps) {
   const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
 
   return (
     <MemberShell member={member}>

@@ -84,6 +84,29 @@ async function setup() {
     )
   `
 
+  await sql`
+    CREATE TABLE IF NOT EXISTS chat_conversations (
+      id TEXT PRIMARY KEY,
+      community_id TEXT NOT NULL,
+      type TEXT NOT NULL DEFAULT 'member_group',
+      title TEXT NOT NULL,
+      member_id TEXT,
+      created_at TIMESTAMP DEFAULT NOW() NOT NULL
+    )
+  `
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS chat_messages (
+      id TEXT PRIMARY KEY,
+      conversation_id TEXT NOT NULL,
+      sender_id TEXT NOT NULL,
+      sender_name TEXT NOT NULL,
+      sender_role TEXT NOT NULL DEFAULT 'member',
+      content TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW() NOT NULL
+    )
+  `
+
   console.log("All tables created successfully.")
 }
 

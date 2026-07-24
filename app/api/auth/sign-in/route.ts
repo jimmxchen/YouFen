@@ -4,10 +4,26 @@ import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { verifyPassword } from "@/lib/crypto"
 import { setSession } from "@/lib/auth"
+import { getPrisma } from "@/lib/db/client"
 import { rateLimit } from "@/lib/rate-limit"
 
 const WINDOW_MS = 60 * 1000 // 1 minute
 const MAX_ATTEMPTS = 5
+
+async function getRedirectPath(userId: string): Promise<string> {
+  try {
+    const prisma = getPrisma()
+    const membership = await prisma.member.findFirst({
+      where: { userId },
+      select: { role: true },
+    })
+    if (!membership) return "/choose-role"
+    if (membership.role === "owner" || membership.role === "manager") return "/admin"
+    return "/member"
+  } catch {
+    return "/choose-role"
+  }
+}
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown"
@@ -21,13 +37,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { email, password } = await req.json()
+    const { email, phone, password } = await req.json()
+    const loginId = email || phone
 
-    if (!email || !password) {
+    if (!loginId || !password) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 })
     }
 
-    const rows = await db.select().from(users).where(eq(users.email, email)).limit(1)
+    const rows = await db.select().from(users).where(eq(users.email, loginId)).limit(1)
     if (rows.length === 0) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 })
     }
@@ -40,7 +57,12 @@ export async function POST(req: NextRequest) {
 
     await setSession(user.id)
 
-    return NextResponse.json({ user: { id: user.id, name: user.name, email: user.email } })
+    const redirectTo = await getRedirectPath(user.id)
+
+    return NextResponse.json({
+      user: { id: user.id, name: user.name, email: user.email },
+      redirectTo,
+    })
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 })
   }

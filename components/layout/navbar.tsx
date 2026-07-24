@@ -122,7 +122,7 @@ export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
 
           {user ? (
             <Link
-              href="/admin"
+              href={user.hasOwnedCommunity ? "/admin" : `/member/${user.memberCommunityId ?? ""}`}
               className={`ml-4 px-6 py-2 text-sm font-normal rounded-[15px] transition-all active:scale-[0.97] ${
                 isHeroScrolled
                   ? 'text-[#131517] bg-[#f5f5f5] hover:bg-[#e5e5e5]'
@@ -210,6 +210,7 @@ export function Navbar({ forceLight = false }: { forceLight?: boolean }) {
           </motion.div>
         )}
       </AnimatePresence>
+
     </motion.nav>
   )
 }

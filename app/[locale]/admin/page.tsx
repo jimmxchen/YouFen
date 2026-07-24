@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { Users, Vote, FileText, ShieldCheck, Plus } from 'lucide-react'
 import { StatCard } from '@/components/admin/stat-card'
-import { VoicePowerBadge } from '@/components/admin/voice-power-badge'
-import { demoStats, demoMembers, demoContributions, demoProposals } from '@/lib/demo-data'
+import { useAdminDashboard, useAdminContributions, useAdminProposals } from '@/lib/hooks/use-admin-data'
+import { useCommunity } from '@/lib/hooks/use-community'
 
 function cn(...classes: (string | boolean | undefined | null)[]) {
   return classes.filter(Boolean).join(' ')
@@ -12,14 +12,12 @@ function cn(...classes: (string | boolean | undefined | null)[]) {
 
 export default function DashboardPage() {
   const t = useTranslations('admin')
+  const { communityId } = useCommunity()
+  const { stats, loading } = useAdminDashboard(communityId)
+  const { contributions } = useAdminContributions(communityId)
+  const { proposals } = useAdminProposals(communityId)
 
-  const recentContributions = demoContributions.slice(0, 5)
-  const currentUser = demoMembers[0]
-  const roleLabels: Record<typeof currentUser.role, string> = {
-    owner: t('roleOwner'),
-    manager: t('roleManager'),
-    member: t('roleMember'),
-  }
+  const recentContributions = contributions.slice(0, 5)
 
   return (
     <div className="space-y-8">
@@ -33,49 +31,35 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Personal profile card */}
-      <div className="rounded-2xl border border-[#F0F0F0] bg-white p-6 flex items-center gap-4">
-        <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 flex items-center justify-center text-white text-lg font-medium">
-          {currentUser.name[0]}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-base font-medium text-[#131517]">{currentUser.name}</p>
-          <p className="text-sm text-[#939597]">
-            {roleLabels[currentUser.role]} · {currentUser.email}
-          </p>
-        </div>
-        <VoicePowerBadge value={currentUser.voicePower} size="md" />
-      </div>
-
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard
           title={t('members')}
-          value={demoStats.members}
+          value={stats ? stats.members : '...'}
           icon={Users}
           accent="cyan"
         />
         <StatCard
           title={t('totalVoicePower')}
-          value={demoStats.totalVoicePower.toLocaleString()}
+          value={stats ? stats.totalVoicePower.toLocaleString() : '...'}
           icon={Vote}
           accent="green"
         />
         <StatCard
-          title={t('activePolls')}
-          value={demoStats.activeProposals}
+          title={t('activeProposals')}
+          value={stats ? stats.activeProposals : '...'}
           icon={FileText}
           accent="blue"
         />
         <StatCard
           title={t('todayContributions')}
-          value={demoStats.todayContributions}
+          value={stats ? stats.todayContributions : '...'}
           icon={Plus}
           accent="amber"
         />
         <StatCard
           title={t('trustedRecords')}
-          value={demoStats.trustedRecords}
+          value={stats ? stats.trustedRecords : '...'}
           icon={ShieldCheck}
           accent="blue"
         />
@@ -138,7 +122,7 @@ export default function DashboardPage() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-[#131517]">
-            {t('activePolls')}
+            {t('activeProposals')}
           </h2>
           <Link href="/proposals" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
             {t('viewAll')}
@@ -149,7 +133,7 @@ export default function DashboardPage() {
             <thead>
               <tr className="border-b border-[#F0F0F0]">
                 <th className="text-left text-xs font-medium text-[#939597] px-6 py-3 uppercase tracking-wider">
-                  {t('pollTitle')}
+                  {t('proposalTitle')}
                 </th>
                 <th className="text-left text-xs font-medium text-[#939597] px-6 py-3 uppercase tracking-wider">
                   {t('status')}
@@ -163,7 +147,7 @@ export default function DashboardPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#F0F0F0]">
-              {demoProposals.map((p, i) => (
+              {proposals.map((p, i) => (
                 <tr key={p.id} className={i % 2 === 1 ? 'bg-[#FAFAFA]' : ''}>
                   <td className="px-6 py-3.5 text-sm font-medium text-[#131517]">{p.title}</td>
                   <td className="px-6 py-3.5">

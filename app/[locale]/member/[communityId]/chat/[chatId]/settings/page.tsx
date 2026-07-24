@@ -1,9 +1,14 @@
-import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
+import { db } from '@/db'
+import { chatConversations } from '@/db/schema'
+import { eq, and } from 'drizzle-orm'
 import { ChatSettingsView } from '@/components/member/chat-settings-view'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { getDemoMember } from '@/lib/demo/member-data'
+import type { ChatRoom } from '@/types/member'
 
 interface MemberChatSettingsPageProps {
   params: Promise<{
@@ -16,22 +21,39 @@ interface MemberChatSettingsPageProps {
 export default async function MemberChatSettingsPage({ params }: MemberChatSettingsPageProps) {
   const { locale, communityId, chatId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
-  const room = member.chatRooms.find((chatRoom) => chatRoom.id === chatId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
 
-  if (!room) {
-    notFound()
+  // Fetch conversation metadata from DB
+  const convRows = await db
+    .select()
+    .from(chatConversations)
+    .where(and(eq(chatConversations.id, chatId), eq(chatConversations.communityId, communityId)))
+    .limit(1)
+
+  const conv = convRows[0]
+  const isDirect = conv?.type === 'admin_direct'
+  const displayTitle = conv
+    ? (isDirect ? 'Admin' : conv.title)
+    : 'Chat'
+
+  const room: ChatRoom = {
+    id: chatId,
+    title: displayTitle,
+    description: '',
+    avatarInitials: displayTitle.split(/\s+/).map((s: string) => s[0]).join('').toUpperCase().slice(0, 2) || 'CH',
+    category: isDirect ? 'Direct' : 'Group',
+    unreadCount: 0,
+    muted: false,
+    pinned: false,
+    updatedAt: conv?.createdAt?.toISOString() || new Date().toISOString(),
+    inviteCode: `${chatId}-invite`,
+    sharedMediaCount: 0,
+    lastMessage: { author: '', body: '' },
+    participants: [],
+    messages: [],
   }
-
-  const onlineCount = room.participants.filter((participant) => participant.status === 'online').length
-  const participantStatusById = Object.fromEntries(
-    room.participants.map((participant) => [
-      participant.id,
-      participant.status === 'online'
-        ? t('chat.onlineStatus')
-        : t('chat.lastSeen', { time: participant.lastSeen ?? '' }),
-    ])
-  )
 
   return (
     <MemberShell member={member}>
@@ -42,14 +64,14 @@ export default async function MemberChatSettingsPage({ params }: MemberChatSetti
         labels={{
           back: t('chat.backToChat'),
           title: t('chat.settings'),
-          members: t('chat.members', { count: room.participants.length }),
-          online: t('chat.online', { count: onlineCount }),
+          members: t('chat.members', { count: 0 }),
+          online: t('chat.online', { count: 0 }),
           mute: t('chat.muteNotifications'),
           muted: t('chat.muted'),
           membersTitle: t('chat.membersTitle'),
           sharedMedia: t('chat.sharedMedia'),
           operator: t('chat.operator'),
-          participantStatusById,
+          participantStatusById: {},
         }}
       />
 

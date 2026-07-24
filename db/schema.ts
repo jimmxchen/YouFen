@@ -68,3 +68,22 @@ export const sessions = pgTable("sessions", {
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 })
+
+export const chatConversations = pgTable("chat_conversations", {
+  id: text("id").primaryKey(),
+  communityId: text("community_id").notNull(),
+  type: text("type", { enum: ["member_group", "admin_direct"] }).notNull().default("member_group"),
+  title: text("title").notNull(),
+  memberId: text("member_id"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+})
+
+export const chatMessages = pgTable("chat_messages", {
+  id: text("id").primaryKey(),
+  conversationId: text("conversation_id").notNull(),
+  senderId: text("sender_id").notNull(),
+  senderName: text("sender_name").notNull(),
+  senderRole: text("sender_role", { enum: ["admin", "member"] }).notNull().default("member"),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+})

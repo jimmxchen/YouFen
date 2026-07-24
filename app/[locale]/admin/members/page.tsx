@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Search, ChevronUp, ChevronDown, Edit2 } from 'lucide-react'
+import { Search, ChevronUp, ChevronDown, Edit2, UserPlus } from 'lucide-react'
 import { VoicePowerBadge } from '@/components/admin/voice-power-badge'
-import { demoMembers } from '@/lib/demo-data'
+import { useAdminMembers } from '@/lib/hooks/use-admin-data'
+import { useCommunity } from '@/lib/hooks/use-community'
+import { AddMemberModal } from '@/components/admin/add-member-modal'
 import { type Member, MemberRole } from '@/types/admin'
 import { cn } from '@/lib/utils'
 import { Link } from '@/i18n/navigation'
@@ -26,7 +28,10 @@ const roleColors: Record<MemberRole, string> = {
 
 export default function MembersPage() {
   const t = useTranslations('admin')
+  const { communityId } = useCommunity()
+  const { members, loading, refetch } = useAdminMembers(communityId)
   const [search, setSearch] = useState('')
+  const [showAddModal, setShowAddModal] = useState(false)
   const [sortKey, setSortKey] = useState<SortKey>('voicePower')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
@@ -39,7 +44,7 @@ export default function MembersPage() {
     }
   }
 
-  const filtered = demoMembers
+  const filtered = members
     .filter(m => m.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
       const aVal = a[sortKey]
@@ -67,8 +72,11 @@ export default function MembersPage() {
             {t('membersSubtitle')}
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200">
-          <Edit2 className="w-4 h-4" />
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
+        >
+          <UserPlus className="w-4 h-4" />
           {t('addMember')}
         </button>
       </div>
@@ -182,6 +190,13 @@ export default function MembersPage() {
           </tbody>
         </table>
       </div>
+
+      <AddMemberModal
+        open={showAddModal}
+        communityId={communityId}
+        onClose={() => setShowAddModal(false)}
+        onAdded={() => refetch()}
+      />
     </div>
   )
 }

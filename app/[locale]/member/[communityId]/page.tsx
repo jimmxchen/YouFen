@@ -10,7 +10,9 @@ import {
   memberMuted,
   memberSubtle,
 } from '@/components/member/ui'
-import { getDemoMember } from '@/lib/demo/member-data'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
 
 interface MemberPageProps {
   params: Promise<{
@@ -26,7 +28,9 @@ function formatNumber(value: number, locale: string) {
 export default async function MemberCommunityPage({ params }: MemberPageProps) {
   const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
   const activeVote = member.availableProposals.find((proposal) => proposal.status === 'active')
   const baseHref = `/${locale}/member/${communityId}`
   const recentActivity = member.activity.filter(

@@ -3,7 +3,9 @@ import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { ProposalList } from '@/components/member/proposal-list'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
-import { getDemoMember } from '@/lib/demo/member-data'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
+import { getMemberProfile } from '@/lib/api/member/queries'
 
 interface MemberVotePageProps {
   params: Promise<{
@@ -15,7 +17,9 @@ interface MemberVotePageProps {
 export default async function MemberVotePage({ params }: MemberVotePageProps) {
   const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(communityId)
+  const userId = await getSession()
+  if (!userId) redirect('/sign-in')
+  const member = await getMemberProfile(userId, communityId)
 
   return (
     <MemberShell member={member}>

@@ -132,8 +132,11 @@ export type ActivityType = 'meetup' | 'workshop' | 'hackathon' | 'social' | 'oth
 
 export interface ChatConversation {
   id: string
-  memberId: string
-  memberName: string
+  communityId?: string
+  type?: string
+  title?: string
+  memberId: string | null
+  memberName: string | null
   lastMessage: string
   lastMessageAt: string
   unreadCount: number

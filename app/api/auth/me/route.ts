@@ -3,6 +3,7 @@ import { db } from "@/db"
 import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { getSession } from "@/lib/auth"
+import { getPrisma } from "@/lib/db/client"
 
 export async function GET() {
   const userId = await getSession()
@@ -15,5 +16,23 @@ export async function GET() {
     return NextResponse.json({ user: null }, { status: 401 })
   }
 
-  return NextResponse.json({ user: rows[0] })
+  let hasOwnedCommunity = false
+  let memberCommunityId: string | null = null
+  try {
+    const prisma = getPrisma()
+    const owned = await prisma.member.findFirst({
+      where: { userId, role: { in: ["owner", "admin"] } },
+    })
+    hasOwnedCommunity = !!owned
+
+    if (!hasOwnedCommunity) {
+      const membership = await prisma.member.findFirst({
+        where: { userId },
+        orderBy: { createdAt: "desc" },
+      })
+      memberCommunityId = membership?.communityId ?? null
+    }
+  } catch {}
+
+  return NextResponse.json({ user: { ...rows[0], hasOwnedCommunity, memberCommunityId } })
 }
