@@ -38,5 +38,11 @@
   "exclude": [
     "node_modules",
     "**/PixelBlast.tsx"
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node"
+    }
+  }
 }
