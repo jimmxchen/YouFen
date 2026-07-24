@@ -8,16 +8,17 @@ import { memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberEventPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 export default async function MemberEventPage({ params }: MemberEventPageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
-  const homeHref = `/${params.locale}/member/${params.communityId}`
+  const member = getDemoMember(communityId)
+  const homeHref = `/${locale}/member/${communityId}`
 
   return (
     <MemberShell>
@@ -40,7 +41,7 @@ export default async function MemberEventPage({ params }: MemberEventPageProps) 
 
       <div className="px-5 lg:px-0">
         <EventJoinPanel
-          communityId={params.communityId}
+          communityId={communityId}
           event={member.nextEvent}
           labels={{
             startsAt: t('event.startsAt'),
@@ -53,8 +54,8 @@ export default async function MemberEventPage({ params }: MemberEventPageProps) 
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="home"
         labels={{
           home: t('nav.home'),

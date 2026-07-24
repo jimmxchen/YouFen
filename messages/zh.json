@@ -1,12 +1,13 @@
 {
   "nav": {
-    "logo": "有份儿",
-    "logoSub": "YouFen",
+    "logo": "有份",
+    "logoSub": "",
     "features": "功能",
     "resources": "资源",
     "demo": "Demo",
     "bip": "Build in Public",
     "create": "创建社群",
+    "dashboard": "管理面板",
     "dropdown": {
       "aiRules": "AI 生成规则",
       "aiRulesDesc": "智能生成社群参与规则",
@@ -27,8 +28,8 @@
     }
   },
   "hero": {
-    "title": "有份儿",
-    "subtitle": "让每个参与者真正有份儿",
+    "title": "有份",
+    "subtitle": "让每个参与者真正有份",
     "mainTitle": "无代码社群共治",
     "description": "把成员贡献变成发言权\n让大家一起决定社区未来"
   },
@@ -44,7 +45,7 @@
     "simplify": "简化社群管理流程"
   },
   "valueCards": {
-    "title": "为什么选择有份儿？",
+    "title": "为什么选择有份？",
     "subtitle": "让社群治理变得简单、透明、可信",
     "visible": "贡献可见",
     "visibleDesc": "志愿者、mentor、活跃成员不再被忽略",
@@ -264,6 +265,8 @@
     "proposalsSubtitle": "创建和管理社群投票",
     "trustedRecords": "可信记录",
     "trustedRecordsSubtitle": "查看链上公开可信记录",
+    "management": "管理",
+    "chat": "聊天",
     "addMember": "添加成员",
     "distributeVP": "分配发言权",
     "createProposal": "创建投票",
@@ -367,55 +370,55 @@
     "recordFieldRecordedOnChain": "链上记录时间",
     "optionA": "选项 A",
     "optionB": "选项 B",
-    "optionC": "选项 C",
-    "management": "互动管理",
-    "tasks": "任务",
-    "tasksSubtitle": "创建和管理社群任务",
-    "activities": "活动",
-    "activitiesSubtitle": "组织和管理社群活动",
-    "taskTitle": "任务标题",
-    "assignee": "负责人",
-    "priority": "优先级",
-    "dueDate": "截止时间",
-    "priorityHigh": "高",
-    "priorityMedium": "中",
-    "priorityLow": "低",
-    "activityTitle": "活动标题",
-    "activityType": "类型",
-    "participants": "参与人数",
-    "startTime": "开始时间",
-    "endTime": "结束时间",
-    "location": "地点",
-    "activityTypeMeetup": "聚会",
-    "activityTypeWorkshop": "工作坊",
-    "activityTypeHackathon": "黑客松",
-    "activityTypeSocial": "社交",
-    "activityTypeOther": "其他",
-    "inProgress": "进行中",
-    "cancelled": "已取消",
-    "ongoing": "进行中",
-    "upcoming": "即将开始",
-    "createTask": "创建任务",
-    "createActivity": "创建活动",
-    "markComplete": "标记完成",
-    "cancelItem": "取消",
-    "activeTasks": "进行中任务",
-    "upcomingActivities": "即将开始活动",
-    "chat": "聊天",
-    "chatSubtitle": "直接与成员沟通",
-    "conversations": "对话",
-    "typeMessage": "输入消息...",
-    "send": "发送",
-    "noConversationSelected": "选择一个对话开始聊天",
-    "online": "在线"
+    "optionC": "选项 C"
   },
   "testimonials": {
     "title": "用户评价",
-    "subtitle": "看看用户怎么说"
+    "subtitle": "看看用户怎么说",
+    "items": [
+      {"name": "张伟", "handle": "@zhangwei_dev", "content": "有份真的解决了我们社群的痛点！成员的贡献终于能被量化，大家参与的积极性明显提高了 🎉"},
+      {"name": "李明", "handle": "@liming_community", "content": "无代码就能搞定社群治理，这个产品太适合我们这种非技术背景的社群组织者了！AI生成规则功能超好用 👍"},
+      {"name": "王芳", "handle": "@wangfang_dao", "content": "投票系统特别透明，按贡献加权的机制很公平。我们社群用了两周，成员满意度大幅提升！"},
+      {"name": "陈晨", "handle": "@chenchen_web3", "content": "时间线功能让社群历史一目了然，新成员能快速了解社群发展脉络。产品体验很棒！"},
+      {"name": "刘洋", "handle": "@liuyang_nft", "content": "有份的AI推荐功能真的很智能，能根据成员的历史贡献推荐合适的任务，提高了参与效率。"},
+      {"name": "赵静", "handle": "@zhaojing_design", "content": "界面设计简洁优雅，用户体验非常流畅。作为设计师，我很欣赏这种注重细节的产品！"},
+      {"name": "孙浩", "handle": "@sunhao_tech", "content": "发言权管理让社群更加民主，每个人都有话语权。贡献越多，影响力越大，这很合理！"},
+      {"name": "周琳", "handle": "@zhoulin_dao", "content": "社群成员参与度明显提高了，大家都很积极。任务分配也变得更加高效了 💪"},
+      {"name": "吴强", "handle": "@wuqiang_web3", "content": "投票结果公开透明，增强了成员之间的信任。这是我用过最好的社群治理工具！"},
+      {"name": "郑雪", "handle": "@zhengxue_crypto", "content": "从零开始搭建社群治理体系，有份让这一切变得简单。强烈推荐！✨"},
+      {"name": "马超", "handle": "@machao_builder", "content": "真的很棒！"},
+      {"name": "林静", "handle": "@linjing_dao", "content": "我们社群使用有份后，成员之间的协作效率提升了至少30%。任务分配更加合理，每个人都能发挥自己的长处。特别是AI推荐系统，真的很智能！"}
+    ]
+  },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "welcomeBack": "欢迎回来！请登录以继续",
+    "createAccount": "创建您的账户以开始使用",
+    "email": "邮箱地址",
+    "password": "密码",
+    "name": "姓名",
+    "phone": "手机号",
+    "smsCode": "验证码",
+    "sendCode": "发送验证码",
+    "confirmPassword": "确认密码",
+    "rememberMe": "记住我",
+    "forgotPassword": "忘记密码？",
+    "login": "登录",
+    "create": "创建账户",
+    "orContinueWith": "或使用以下方式继续",
+    "googleSignIn": "使用 Google 登录",
+    "wechatSignIn": "微信登录",
+    "noAccount": "还没有账户？",
+    "hasAccount": "已经有账户？",
+    "agreeToTerms": "我同意",
+    "termsOfService": "服务条款",
+    "and": "和",
+    "privacyPolicy": "隐私政策"
   },
   "footer": {
-    "brand": "有份儿",
-    "description": "无代码社群共治平台 —— 让每个参与者真正有份儿。",
+    "brand": "有份",
+    "description": "无代码社群共治平台 —— 让每个参与者真正有份。",
     "poweredBy": "由",
     "injective": "Injective",
     "ai": "AI",
@@ -435,228 +438,284 @@
     "privacy": "隐私政策",
     "terms": "服务条款"
   },
-  "records": {
-    "back": "返回首页",
-    "eyebrow": "AdventureX Community · 公开档案",
-    "title": "可信记录",
-    "subtitle": "社群里发生的每一件大事——发了多少 Token、投票结果如何、规则改成什么样——都公开存档在这里，盖上无法涂改的“公证章”；而任何越过预算或投票规则的操作，账本会当场拒绝。",
-    "explainer": {
-      "aria": "可信记录是怎么工作的",
-      "write": {
-        "title": "记下来",
-        "desc": "谁、因为什么贡献、获得了多少，一笔一笔记录在案。"
-      },
-      "stamp": {
-        "title": "盖个章",
-        "desc": "每条记录生成一枚独一无二的“数字指纹”，送到公共账本上盖章存档。"
-      },
-      "lock": {
-        "title": "改不了",
-        "desc": "章一旦盖下，任何人——包括我们自己——都无法悄悄修改历史。"
-      },
-      "whyToggle": "为什么可以相信这个页面？",
-      "why1": "区块链就像一座全世界共用的公证处：档案一旦存进去，就永远无法涂改、无法销毁。我们把每条记录的“数字指纹”存进了 Injective 这条区块链。",
-      "why2": "数字指纹的特点是：记录内容哪怕只改动一个标点，指纹都会变得完全不同。所以只要页面上的记录和链上的指纹对得上，就证明它从盖章那一刻起从未被动过。",
-      "why3": "我们只把指纹和数字存上链，不存任何姓名、联系方式等个人信息。想深究的话，每条记录都附有“技术细节”，可以去公共账本网站亲自查证。"
+  "member": {
+    "nav": {
+      "home": "首页",
+      "chat": "聊天",
+      "vote": "投票",
+      "me": "我的"
     },
-    "guardian": {
-      "aria": "账本如何拦住越权行为",
-      "title": "账本会当场拒绝越权",
-      "intro": "这本公共账本不只是盖章存证——它还是一位铁面的规则守门人。哪怕是管理员，只要越过社区定下的预算和治理规则，账本都会当场拒绝。最能说明它价值的，不是一次成功的发放，而是一次越权尝试被挡在门外。",
-      "overMint": {
-        "attempt": "管理员想给自己人一次性超发，超过成员单期上限。",
-        "verdict": "账本拒绝",
-        "reason": "上限写死在合约里。没有社区投票授权，超额的那部分根本发不出来。"
-      },
-      "secretRule": {
-        "attempt": "有人想不经投票，偷偷把每月增发比例从 5% 改成 8%。",
-        "verdict": "账本拒绝",
-        "reason": "改规则只有一条路：先发起提案、社区投票通过，再到下个月自动生效。绕不过去。"
-      },
-      "voteStuffing": {
-        "attempt": "投票快截止时，管理员突击给支持者多发 Token，想拉高赞成票。",
-        "verdict": "不算数",
-        "reason": "每场投票的权重，按提案发起那一刻的持有量冻结。之后新发的 Token 影响不了这场投票。"
-      },
-      "voteForYou": {
-        "attempt": "YouFen 平台想替你投下一票。",
-        "verdict": "做不到",
-        "reason": "只有你自己手里的私钥能签署你的投票。YouFen 只负责代付手续费、把票转交上链——它拿不到你的钥匙。"
-      },
-      "boundaryTitle": "账本保证什么",
-      "boundary": "账本保证权力不能被滥发：预算、上限、投票规则谁都绕不过。但它不替社区判断每个贡献是否真实、是否值得——那始终是社区自己的事。",
-      "exitTitle": "社区可以带着账本离开",
-      "exit": "所有余额、发放和投票历史都存在公共账本上。就算有一天 YouFen 关站，社区依然能从链上读回完整记录，不依赖我们的数据库。"
-    },
-    "timelineTitle": "大事记",
-    "timelineHint": "点开任意记录查看它的溯源过程",
-    "timelineAria": "社群可信记录时间线",
-    "status": {
-      "verified": "已盖章确认",
-      "pending": "排队等待盖章",
-      "submitting": "正在送去盖章",
-      "confirming": "盖章确认中",
-      "failed": "盖章遇到问题",
-      "superseded": "已被更正"
-    },
-    "kind": {
-      "tokenMint": "发放 Token",
-      "advanceMint": "预支发放",
-      "tokenReversal": "更正冲销",
-      "epochSummary": "月度结算",
-      "policyVersion": "规则更新",
-      "proposalResult": "投票结果"
-    },
-    "journey": {
-      "recorded": {
-        "title": "记录在案",
-        "desc": "这件事的经过完整登记进社群账本。"
-      },
-      "fingerprint": {
-        "title": "生成指纹",
-        "desc": "由记录内容算出一枚独一无二的数字指纹。"
-      },
-      "stamped": {
-        "title": "送去盖章",
-        "desc": "指纹提交到 Injective 公共账本，盖章存档。"
-      },
-      "checkable": {
-        "title": "人人可验",
-        "desc": "任何人随时可以核对指纹，确认记录没被改过。"
-      },
-      "supersededNote": "这条记录后来被发现有误。按规则，原记录不删除、不覆盖，而是保留原样并追加一条更正记录——你现在看到的就是被更正前的原始版本。"
-    },
-    "verify": {
-      "invite": "不需要相信我们的口头承诺——点击按钮，亲自核对这条记录的指纹和链上存档是否一致。",
-      "button": "亲自验一验",
-      "steps": {
-        "reading": "重新读取记录内容",
-        "hashing": "现场计算数字指纹",
-        "comparing": "与链上存档的指纹比对"
-      },
-      "matchTitle": "指纹一致",
-      "matchDesc": "这条记录自盖章以来，没有被任何人改动过一个字。"
-    },
-    "privacyNote": "链上只存数字指纹与数额，不含任何姓名、邮箱等个人信息。本页当前展示 AdventureX 社群的演示数据。",
-    "demo": {
-      "r6": {
-        "title": "小鹿 获得 200 AXO",
-        "summary": "组织了本月的新人见面会，经管理员审核通过，Token 正在盖章确认中。"
-      },
-      "r5": {
-        "title": "投票结果：社区周会改到周四晚上",
-        "summary": "18 位成员参与投票，按 Token 加权计票，“周四晚”以 62% 的权重胜出。"
-      },
-      "r4": {
-        "title": "7 月结算：本月共发放 5,300 AXO",
-        "summary": "本月正常发放 4,900，预支 400；下月预算将自动扣除这笔预支。"
-      },
-      "r3": {
-        "title": "Carol 获得 500 AXO（含 400 预支）",
-        "summary": "完成了重大社区基础设施建设。本月正常额度只剩 100，其余 400 从下月预算预支，经两位管理员共同批准。"
-      },
-      "r2": {
-        "title": "Liam 获得 500 AXO",
-        "summary": "帮助三位新成员完成 Injective 测试网部署，经管理员审核确认。"
-      },
-      "r1": {
-        "title": "Liam 获得 800 AXO（已更正）",
-        "summary": "这条记录因数量录入错误（多记 300）被更正。按规则原记录不删除、永久保留；冲销与重新发放见 7 月 13 日和 7 月 15 日。"
-      },
-      "r0": {
-        "title": "社群规则 v2 生效：每月增发 5%",
-        "summary": "经社区投票通过，Token 月度增发比例定为 5%，自 7 月起生效。"
-      },
-      "r9": {
-        "title": "更正：冲销 Liam 的 800 AXO",
-        "summary": "7 月 12 日那笔发放数量录入有误，按规则整笔冲销。原错误记录永久保留在下方，正确的发放见 7 月 15 日。"
-      },
-      "r7": {
-        "title": "投票结果：社区新徽标采用方案 B",
-        "summary": "21 位成员参与投票，方案 B 以 58% 的权重当选，已交设计组落地。"
-      },
-      "r8": {
-        "title": "社群规则 v1 生效：创始规则上线",
-        "summary": "AdventureX 创始规则经全体共识生效：初始 100,000 AXO，贡献审核发放，投票按 Token 加权。"
-      }
-    },
-    "filter": {
-      "searchPlaceholder": "搜索记录：人名、事件、关键词…",
-      "clear": "清空搜索",
-      "all": "全部",
-      "token": "Token 发放",
-      "votes": "投票结果",
-      "rules": "规则更新",
-      "epoch": "月度结算",
-      "resultsCount": "找到 {count} 条记录",
-      "emptyTitle": "没有找到匹配的记录",
-      "emptyDesc": "换个关键词试试（比如成员名字、“预支”、“投票”），或者切换上面的分区看看。",
-      "reset": "清除条件，看全部记录"
+    "dashboard": {
+      "greeting": "你好，{name}",
+      "today": "今日",
+      "latestUpdate": "最新动态",
+      "nextEvent": "下一场活动",
+      "joinEvent": "参加活动",
+      "activeVote": "进行中的投票",
+      "voteNow": "立即投票",
+      "myVoice": "我的发言权",
+      "viewMyRecord": "查看我的记录",
+      "recentActivity": "最近动态"
     },
     "vote": {
-      "approval": "赞同",
-      "turnout": "{voters}/{total} 人参与（{pct}%）"
+      "title": "投票",
+      "description": "参与投票，共同决定社群事务",
+      "active": "进行中",
+      "upcoming": "即将开始",
+      "ended": "已结束",
+      "yourVoicePower": "你的发言权",
+      "voters": "{count} 人已投票",
+      "trustedRecord": "可信记录",
+      "openVote": "查看投票"
     },
-    "archive": {
-      "title": "链上存档原文",
-      "fingerprint": "数字指纹（recordHash）",
-      "txRef": "公证编号（交易哈希）",
-      "block": "存档位置",
-      "blockValue": "账本第 {page} 页（区块高度）",
-      "sealedAt": "盖章时间",
-      "network": "所在账本",
-      "networkValue": "Injective 测试网",
-      "pendingValue": "确认完成后写入",
-      "copy": "复制",
+    "chat": {
+      "title": "聊天",
+      "description": "与社群成员保持联系",
+      "searchChats": "搜索聊天",
+      "groupChats": "群聊",
+      "unread": "{count} 条未读",
+      "pinned": "置顶",
+      "muted": "已静音",
+      "noChatsFound": "未找到聊天",
+      "members": "{count} 位成员",
+      "reactions": "{count} 个回应",
+      "backToChats": "返回聊天列表",
+      "online": "{count} 人在线",
+      "operatorPrompt": "仅管理员可在此频道发言",
+      "search": "搜索",
+      "searchPlaceholder": "搜索消息",
+      "searchEmpty": "未找到相关消息",
+      "composer": "输入消息",
+      "send": "发送",
+      "addImage": "添加图片",
+      "addReaction": "添加回应",
+      "settings": "设置",
+      "imageShared": "分享了一张图片",
+      "reactionSuffix": "回应了",
+      "onlineStatus": "在线状态",
+      "lastSeen": "最后活跃于 {time}",
+      "backToChat": "返回聊天",
+      "muteNotifications": "静音通知",
+      "inviteMembers": "邀请成员",
+      "inviteLink": "邀请链接",
+      "copyInvite": "复制邀请链接",
+      "membersTitle": "成员",
+      "sharedMedia": "共享媒体",
+      "publicInviteNote": "任何拥有此链接的人都可以加入聊天",
+      "invitePanelTitle": "邀请他人",
+      "invitePanelBody": "分享此链接，邀请成员加入该聊天",
       "copied": "已复制",
-      "authTitle": "批准与放行",
-      "authApprovers": "{count} 位管理员各自用私钥签名批准",
-      "authChecks": "账本放行前核对了：",
-      "authNoChecks": "账本核对原始记录引用无误后放行",
-      "checkLabel": {
-        "budget": "本月预算",
-        "memberCap": "成员单期上限",
-        "advance": "预支比例"
-      },
-      "demoNote": "当前为演示数据，暂无真实链上交易；正式上线后，这里就是可以去公证处网站逐段核对的真实档案。"
+      "operator": "管理员"
     },
-    "guide": {
-      "toggle": "如何去公证处网站亲自核对？",
-      "intro": "公证处网站（区块链浏览器）是面向工程师的英文工具，但你只需要核对三样东西，其余内容都可以不看：",
-      "s1": "① 页面顶部那串 0x 开头的编号，应与上面的「公证编号」一致；",
-      "s2": "② 状态一栏应显示 Success（成功）；",
-      "s3": "③ 时间应与上面的「盖章时间」对得上。",
-      "open": "打开公证处网站核对这条记录"
+    "me": {
+      "title": "我的",
+      "description": "你的贡献、发言权与可信记录",
+      "role": "角色",
+      "submitContribution": "提交贡献",
+      "viewPublicCommunity": "查看社群公开主页",
+      "shareContributions": "分享我的贡献",
+      "shareCopied": "链接已复制",
+      "contributions": "贡献",
+      "submittedAt": "提交时间",
+      "trustedRecords": "可信记录"
     },
-    "chain": {
-      "title": "Injective 公共账本",
-      "liveTag": "实时",
-      "live": "这本公共账本此刻已写到第 {pages} 页，大约每 {seconds} 秒翻新一页——由全球节点共同维护，无人能单独涂改。本页每条已盖章的记录，都永久存档在其中某一页上。",
-      "fallback": "这本公共账本由全球节点共同维护、持续翻页，无人能单独涂改。本页每条已盖章的记录都永久存档其中。",
-      "open": "打开公证处网站",
-      "engineerNote": "工程师工具 · 英文界面——看不懂内容没关系，用上面每条记录里的「查证指南」即可"
+    "public": {
+      "backToMe": "返回我的主页",
+      "label": "公开主页",
+      "contributors": "贡献榜",
+      "contributorsBody": "对该社群贡献最多的成员",
+      "records": "可信记录",
+      "stats": "数据概览",
+      "members": "成员",
+      "voicePower": "发言权",
+      "contributions": "贡献",
+      "trustedRecords": "可信记录"
+    },
+    "contribute": {
+      "backToMe": "返回",
+      "title": "提交贡献",
+      "description": "告诉我们你为社群做了什么，我们会审核并分配发言权",
+      "titleField": "标题",
+      "placeholderTitle": "例如：主持了本周社群例会",
+      "type": "类型",
+      "details": "详细说明",
+      "detailsPlaceholder": "描述你做了什么以及产生的影响",
+      "evidence": "证明材料",
+      "evidenceHint": "上传截图或文件作为证明",
+      "evidenceChosen": "已选择 1 个文件",
+      "proofLink": "证明链接",
+      "proofLinkPlaceholder": "https://",
+      "reviewTitle": "待审核",
+      "reviewNote": "管理员将审核你的贡献并分配发言权",
+      "successTitle": "贡献已提交",
+      "successBody": "审核完成后我们会通知你",
+      "required": "必填",
+      "types": {
+        "socialPost": "社交媒体分享",
+        "eventRecap": "活动回顾",
+        "mentoring": "指导他人",
+        "sponsorIntro": "引荐赞助商",
+        "helpTeam": "协助团队",
+        "other": "其他"
+      }
+    },
+    "event": {
+      "backHome": "返回首页",
+      "title": "活动",
+      "description": "活动详情",
+      "startsAt": "开始时间",
+      "location": "地点",
+      "join": "参加活动",
+      "joined": "报名成功！",
+      "joinedBody": "我们已为你保留名额，活动现场见！"
+    },
+    "voicePower": {
+      "title": "发言权",
+      "active": "已生效",
+      "pending": "待生效",
+      "rank": "排名第 {rank} 名",
+      "earnedThisMonth": "本月新增 {amount}"
+    },
+    "status": {
+      "verified": "已验证",
+      "failed": "失败",
+      "pending": "待处理"
+    },
+    "records": {
+      "blockHeight": "区块高度",
+      "receiptHash": "凭证哈希",
+      "waiting": "等待确认中",
+      "viewExplorer": "在浏览器中查看",
+      "emptyTitle": "暂无可信记录",
+      "emptyBody": "生成后，可信记录将显示在这里"
+    },
+    "history": {
+      "approvedBy": "审核人",
+      "statusLabel": "状态",
+      "activeNow": "已生效",
+      "pending": "待审核",
+      "receiptVerified": "凭证已验证",
+      "noReceipt": "暂无凭证",
+      "emptyTitle": "暂无贡献记录",
+      "emptyBody": "你提交的贡献将显示在这里"
     }
   },
-  "auth": {
-    "signIn": "登录",
-    "signUp": "注册",
-    "welcomeBack": "欢迎回到有份儿",
-    "createAccount": "创建你的有份儿账号",
-    "googleSignIn": "使用 Google 继续",
-    "orContinueWith": "或使用邮箱继续",
-    "email": "邮箱",
-    "password": "密码",
-    "confirmPassword": "确认密码",
-    "name": "姓名",
-    "rememberMe": "记住我",
-    "forgotPassword": "忘记密码？",
-    "login": "登录",
-    "noAccount": "还没有账号？",
-    "hasAccount": "已有账号？",
-    "agreeToTerms": "我同意",
-    "termsOfService": "服务条款",
-    "and": "和",
-    "privacyPolicy": "隐私政策",
-    "create": "创建账号"
+  "termsPage": {
+    "title": "服务条款",
+    "lastUpdated": "最后更新：2026年7月24日",
+    "intro": "欢迎使用有份 YouFen（以下简称「有份」或「我们」）。使用我们的服务即表示您同意以下条款。请仔细阅读。",
+    "sections": [
+      {
+        "heading": "1. 服务说明",
+        "body": "有份是一个无代码社群共治平台，帮助社群运营者创建和管理社群参与规则、追踪成员贡献、组织投票决策，并为重要决策生成公开可信记录。我们利用人工智能辅助规则生成和贡献分析，并选择性使用 Injective 区块链为关键操作提供公开可验证记录。"
+      },
+      {
+        "heading": "2. 账户与注册",
+        "body": "您需要创建账户才能使用我们的服务。您必须提供准确、完整的注册信息，并对账户安全负责。您应对账户下发生的所有活动负责。您必须年满 13 周岁（或您所在司法管辖区规定的最低年龄）才能使用我们的服务。"
+      },
+      {
+        "heading": "3. 社群创建与管理",
+        "body": "社群运营者（Owner/Manager）创建社群时，可自定义参与规则、管理成员、审核贡献和发起投票。社群运营者有责任确保社群活动合法合规。我们保留移除违反本条款的社群的权利。"
+      },
+      {
+        "heading": "4. 发言权与贡献",
+        "body": "发言权（Voice Power）是社群内部的参与权重，不代表任何货币价值、金融资产或可交易权利。发言权不可转让、不可提现、不可兑换为法定货币或加密货币。社群运营者对其社群内的发言权分配和使用规则拥有最终决定权。"
+      },
+      {
+        "heading": "5. 投票与决策",
+        "body": "社群投票结果由社群运营者和成员自行决定。除非生成了链上可信记录，否则投票数据存储在中心化服务器上。我们不对投票结果的准确性、公平性或法律效力做出任何保证。"
+      },
+      {
+        "heading": "6. AI 功能",
+        "body": "我们使用 AI 技术辅助规则生成、贡献分析和内容优化。AI 生成的内容仅为建议，最终决定权始终在用户手中。AI 可能产生不准确或有偏见的结果，您应在采纳 AI 建议前进行独立判断。我们不对 AI 生成内容的准确性、完整性或适用性做出任何保证。"
+      },
+      {
+        "heading": "7. 区块链可信记录",
+        "body": "我们可能在 Injective 区块链网络上为社群的重要操作（如投票结果、规则变更）生成公开可信记录。您理解并同意：（a）链上记录是公开的、不可篡改的；（b）一旦记录上链，我们无法删除或修改；（c）我们不保证链上记录功能的持续可用性，网络拥堵或技术故障可能影响记录生成。"
+      },
+      {
+        "heading": "8. 禁止行为",
+        "body": "您不得：（a）上传或传播违法、侵权、诽谤、淫秽、骚扰或其他不当内容；（b）冒充他人或提供虚假信息；（c）干扰或破坏我们的服务；（d）试图未经授权访问我们的系统；（e）滥用发言权系统进行欺诈或操纵；（f）使用自动化工具进行刷票、刷贡献等作弊行为；（g）将本服务用于任何违法或未经授权的目的。"
+      },
+      {
+        "heading": "9. 知识产权",
+        "body": "有份 YouFen 的名称、标识、网站代码和设计元素均为我们的知识产权。用户在其社群中创建的内容（包括规则、议题描述、贡献记录等）归用户所有，但您授予我们在提供服务所必需的范围内使用、展示和存储该等内容的许可。"
+      },
+      {
+        "heading": "10. 责任限制",
+        "body": "本服务按「现状」提供，不作任何明示或暗示的保证。在法律允许的最大范围内，我们不对因使用本服务而产生的任何直接、间接、附带、特殊或后果性损害承担责任，包括但不限于数据丢失、业务中断或利润损失。"
+      },
+      {
+        "heading": "11. 终止",
+        "body": "我们保留随时暂停或终止违反本条款的账户的权利。您可随时停止使用本服务。终止后，社群数据可能被保留用于公开记录目的，而已上链的数据无法删除。"
+      },
+      {
+        "heading": "12. 条款变更",
+        "body": "我们可能不时更新本条款。重大变更将通过网站通知或电子邮件告知。继续使用本服务即表示您接受修订后的条款。"
+      },
+      {
+        "heading": "13. 联系我们",
+        "body": "如对本条款有任何疑问，请通过 GitHub Issues 联系我们：github.com/Simon-Snow/YouFen，或发送邮件至项目维护者邮箱。"
+      }
+    ]
+  },
+  "privacyPage": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新：2026年7月24日",
+    "intro": "有份 YouFen（以下简称「有份」或「我们」）重视您的隐私。本隐私政策说明了我们如何收集、使用和保护您的信息。",
+    "sections": [
+      {
+        "heading": "1. 我们收集的信息",
+        "body": "我们收集以下类型的信息：（a）账户信息：注册时提供的姓名、电子邮件地址；（b）社群数据：您创建或参与的社群信息、贡献记录、发言权数据和投票记录；（c）使用数据：您如何与我们的服务互动的技术信息，包括 IP 地址、浏览器类型、访问时间和页面浏览记录；（d）通信内容：您通过我们的平台提交的任何内容、反馈或通信。"
+      },
+      {
+        "heading": "2. 信息的使用方式",
+        "body": "我们使用您的信息来：（a）提供、维护和改进我们的社群治理服务；（b）为您创建和管理账户及社群；（c）在社群中展示贡献记录、发言权和投票活动（根据社群公开设置而定）；（d）为 AI 功能提供上下文以生成建议和摘要；（e）与您就服务变更、安全更新和支持事宜进行沟通；（f）监控和分析使用趋势以改善用户体验；（g）检测、预防和应对欺诈或滥用行为。"
+      },
+      {
+        "heading": "3. AI 数据处理",
+        "body": "当您使用 AI 功能（如生成规则、分析贡献、总结议题）时，您输入的内容会发送至我们的 AI 服务提供商（包括 OpenAI 和/或 Anthropic）进行处理。这些内容仅用于生成 AI 回复，不会用于训练 AI 模型。AI 提供商不会将您的数据用于其自身的模型改进目的。"
+      },
+      {
+        "heading": "4. 区块链数据",
+        "body": "当您选择为特定操作生成公开可信记录时，相关数据的哈希值将被记录在 Injective 区块链上。区块链是公开且不可篡改的——一旦数据哈希被记录上链，将永久存在于区块链上，任何人均可查看。链上记录不包含个人身份信息（PII），仅包含社群标识符和数据哈希值。"
+      },
+      {
+        "heading": "5. Cookie 与追踪",
+        "body": "我们使用必要的 Cookie 来维持会话和身份验证。您可以通过浏览器设置管理 Cookie 偏好。我们目前不使用第三方追踪 Cookie 或广告网络。"
+      },
+      {
+        "heading": "6. 数据共享",
+        "body": "我们不会出售您的个人信息。我们可能在以下情况下共享信息：（a）在社群公开页面展示的公开数据（根据社群隐私设置而定）；（b）AI 服务提供商，仅用于处理 AI 请求；（c）Injective 区块链网络，用于生成可信记录；（d）法律要求或为了保护我们的权利。"
+      },
+      {
+        "heading": "7. 数据安全",
+        "body": "我们采取合理的技术和组织措施保护您的数据。然而，没有任何互联网传输或电子存储是 100% 安全的。我们无法保证绝对的安全性。"
+      },
+      {
+        "heading": "8. 数据保留",
+        "body": "我们会在您的账户存续期间保留您的个人信息。账户删除后，我们可能会将部分数据保留合理期限用于备份、审计或法律合规目的。已记录在区块链上的数据无法删除。"
+      },
+      {
+        "heading": "9. 您的权利",
+        "body": "您有权：（a）访问我们持有的关于您的个人数据；（b）要求更正不准确的数据；（c）要求删除您的数据（受限于区块链记录等例外情况）；（d）导出您的社群数据。如需行使这些权利，请通过 GitHub 或电子邮件联系我们。"
+      },
+      {
+        "heading": "10. 儿童隐私",
+        "body": "我们的服务不面向 13 岁以下的儿童。我们不会故意收集 13 岁以下儿童的个人信息。如发现我们无意中收集了此类信息，我们将立即删除。"
+      },
+      {
+        "heading": "11. 国际数据传输",
+        "body": "我们的服务器可能位于您所在国家/地区以外的地方，数据可能在多个司法管辖区存储和处理。使用我们的服务即表示您同意此类传输。"
+      },
+      {
+        "heading": "12. 政策变更",
+        "body": "我们可能不时更新本隐私政策。重大变更将通过网站通知或电子邮件告知。继续使用本服务即表示您接受修订后的政策。"
+      },
+      {
+        "heading": "13. 联系我们",
+        "body": "如对本隐私政策有任何疑问，请通过 GitHub Issues 联系我们：github.com/Simon-Snow/YouFen，或发送邮件至项目维护者邮箱。"
+      }
+    ]
   }
 }

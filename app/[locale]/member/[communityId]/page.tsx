@@ -14,10 +14,10 @@ import {
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 function formatNumber(value: number, locale: string) {
@@ -25,10 +25,11 @@ function formatNumber(value: number, locale: string) {
 }
 
 export default async function MemberCommunityPage({ params }: MemberPageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
+  const member = getDemoMember(communityId)
   const activeVote = member.availableProposals.find((proposal) => proposal.status === 'active')
-  const baseHref = `/${params.locale}/member/${params.communityId}`
+  const baseHref = `/${locale}/member/${communityId}`
   const recentActivity = member.activity.filter(
     (item) => !['update', 'event', 'vote'].includes(item.type)
   )
@@ -128,11 +129,11 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                 <div className="mt-3 grid grid-cols-2 gap-3">
                   <Metric
                     label={t('voicePower.active')}
-                    value={formatNumber(member.voicePower.active, params.locale)}
+                    value={formatNumber(member.voicePower.active, locale)}
                   />
                   <Metric
                     label={t('voicePower.pending')}
-                    value={formatNumber(member.voicePower.pending, params.locale)}
+                    value={formatNumber(member.voicePower.pending, locale)}
                   />
                 </div>
                 <Link
@@ -158,8 +159,8 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="home"
         labels={{
           home: t('nav.home'),

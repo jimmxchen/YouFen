@@ -6,17 +6,18 @@ import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberChatSettingsPageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
     chatId: string
-  }
+  }>
 }
 
 export default async function MemberChatSettingsPage({ params }: MemberChatSettingsPageProps) {
+  const { locale, communityId, chatId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
-  const room = member.chatRooms.find((chatRoom) => chatRoom.id === params.chatId)
+  const member = getDemoMember(communityId)
+  const room = member.chatRooms.find((chatRoom) => chatRoom.id === chatId)
 
   if (!room) {
     notFound()
@@ -36,8 +37,8 @@ export default async function MemberChatSettingsPage({ params }: MemberChatSetti
     <MemberShell>
       <ChatSettingsView
         room={room}
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         labels={{
           back: t('chat.backToChat'),
           title: t('chat.settings'),
@@ -63,8 +64,8 @@ export default async function MemberChatSettingsPage({ params }: MemberChatSetti
       />
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="chat"
         labels={{
           home: t('nav.home'),

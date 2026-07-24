@@ -10,10 +10,10 @@ import { memberCard, memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberMePageProps {
-  params: {
+  params: Promise<{
     locale: string
     communityId: string
-  }
+  }>
 }
 
 function formatNumber(value: number, locale: string) {
@@ -21,8 +21,9 @@ function formatNumber(value: number, locale: string) {
 }
 
 export default async function MemberMePage({ params }: MemberMePageProps) {
+  const { locale, communityId } = await params
   const t = await getTranslations('member')
-  const member = getDemoMember(params.communityId)
+  const member = getDemoMember(communityId)
 
   return (
     <MemberShell>
@@ -61,21 +62,21 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
 
           <VoicePowerCard
             voicePower={member.voicePower}
-            locale={params.locale}
+            locale={locale}
             labels={{
               title: t('voicePower.title'),
               active: t('voicePower.active'),
               pending: t('voicePower.pending'),
               rank: t('voicePower.rank', { rank: member.voicePower.rankPercent }),
               earnedThisMonth: t('voicePower.earnedThisMonth', {
-                amount: formatNumber(member.voicePower.earnedThisMonth, params.locale),
+                amount: formatNumber(member.voicePower.earnedThisMonth, locale),
               }),
             }}
           />
 
           <MemberProfileActions
-            contributeHref={`/${params.locale}/member/${params.communityId}/contribute`}
-            publicHref={`/${params.locale}/member/${params.communityId}/public`}
+            contributeHref={`/${locale}/member/${communityId}/contribute`}
+            publicHref={`/${locale}/member/${communityId}/public`}
             labels={{
               submitContribution: t('me.submitContribution'),
               viewPublicCommunity: t('me.viewPublicCommunity'),
@@ -91,7 +92,7 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
               {t('me.contributions')}
             </h2>
             <PendingContributionList
-              communityId={params.communityId}
+              communityId={communityId}
               labels={{
                 title: t('contribute.type'),
                 status: t('status.pending'),
@@ -102,7 +103,7 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
             />
             <ContributionTimeline
               contributions={member.contributions}
-              locale={params.locale}
+              locale={locale}
               labels={{
                 approvedBy: t('history.approvedBy'),
                 statusLabel: t('history.statusLabel'),
@@ -137,8 +138,8 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
       </div>
 
       <MobileBottomNav
-        locale={params.locale}
-        communityId={params.communityId}
+        locale={locale}
+        communityId={communityId}
         active="me"
         labels={{
           home: t('nav.home'),
