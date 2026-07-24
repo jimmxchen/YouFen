@@ -48,11 +48,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-screen bg-white">
-      <AdminSidebar
-        communityName={communityName}
-        user={currentUser}
-        memberships={data.memberships}
-      />
+      <AdminSidebar communityName={communityName} />
       <div className="ml-64">
         <AdminHeader
           communityName={communityName}
