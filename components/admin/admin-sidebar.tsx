@@ -70,12 +70,12 @@ export function AdminSidebar({ communityName }: AdminSidebarProps) {
             return (
               <li key={view}>
                 <Link href={view === 'dashboard' ? '/admin' : `/admin/${view}`} className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
-                  isActive ? 'bg-white text-[#131517] shadow-sm border border-[#F0F0F0]' : 'text-[#525252] hover:bg-white/60 hover:text-[#131517]'
+                  'flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-[color,background-color] duration-200 border border-transparent',
+                  isActive ? 'bg-white text-[#131517] border-[#F0F0F0]' : 'text-[#525252] hover:bg-white/60 hover:text-[#131517]'
                 )}>
                   <ViewIcon view={view} />
                   <span className="flex-1">{t(VIEW_LABELS[view])}</span>
-                  {isActive && <ChevronRight className="w-4 h-4 text-[#10B981]" />}
+                  {isActive ? <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" /> : null}
                 </Link>
               </li>
             )
@@ -83,13 +83,13 @@ export function AdminSidebar({ communityName }: AdminSidebarProps) {
         </ul>
       </nav>
       <div className="p-4 border-t border-[#F0F0F0] space-y-2">
-        <Link href="/" className="flex items-center gap-2 px-3 py-2 text-sm text-[#939597] hover:text-[#131517] transition-colors rounded-lg hover:bg-white/60">
+        <Link href="/" className="flex items-center gap-2 px-3 py-2 text-sm text-[#939597] hover:text-[#131517] transition-colors rounded-2xl hover:bg-white/60">
           <ChevronRight className="w-4 h-4 rotate-180" />
           {t('backToLanding')}
         </Link>
         <button
           onClick={switchLanguage}
-          className="flex items-center gap-2 px-3 py-2 text-sm text-[#939597] hover:text-[#131517] transition-colors rounded-lg hover:bg-white/60 w-full"
+          className="flex items-center gap-2 px-3 py-2 text-sm text-[#939597] hover:text-[#131517] transition-colors rounded-2xl hover:bg-white/60 w-full"
         >
           <Languages className="w-4 h-4" />
           {localeLabel}

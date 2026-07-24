@@ -41,7 +41,7 @@ export default function ProposalsPage() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200 shadow-sm"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           {t('createProposal')}
@@ -76,7 +76,7 @@ export default function ProposalsPage() {
                 <input
                   type="text"
                   placeholder={t('proposalTitlePlaceholder')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
               <div>
@@ -86,7 +86,7 @@ export default function ProposalsPage() {
                 <textarea
                   rows={3}
                   placeholder={t('descriptionPlaceholder')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all resize-none"
                 />
               </div>
               <div>
@@ -99,7 +99,7 @@ export default function ProposalsPage() {
                       key={i}
                       type="text"
                       defaultValue={t(opt)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                      className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                     />
                   ))}
                 </div>
@@ -110,20 +110,20 @@ export default function ProposalsPage() {
                 </label>
                 <input
                   type="date"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
+                className="px-4 py-2.5 rounded-2xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all shadow-sm"
+                className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
               >
                 {t('create')}
               </button>
@@ -144,11 +144,11 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
   // (the end-vote/delete buttons and the on-chain <a> below), so the card link
   // is an absolutely-positioned overlay instead of a wrapper.
   return (
-    <div className="relative rounded-xl border border-[#F0F0F0] bg-white p-6 hover:shadow-md hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200">
+    <div className="relative rounded-2xl border border-[#F0F0F0] bg-white p-6 hover:border-[#E5E5E5] hover:-translate-y-0.5 transition-all duration-200">
       <Link
         href={`/admin/proposals/${proposal.id}`}
         aria-label={proposal.title}
-        className="absolute inset-0 rounded-xl"
+        className="absolute inset-0 rounded-2xl"
       />
       <div className="space-y-4">
         <div className="flex items-start justify-between mb-4">
@@ -210,7 +210,7 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
             {proposal.status === 'active' && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEndVote?.(proposal.id) }}
-                className="p-1.5 rounded-xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
+                className="p-1.5 rounded-2xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
                 title={t('endVote')}
               >
                 <Square className="w-4 h-4" />
@@ -221,7 +221,7 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
                 href={`https://explorer.injective.network/tx/${proposal.chainTxHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-xl hover:bg-blue-50 text-blue-500 transition-colors"
+                className="p-1.5 rounded-2xl hover:bg-blue-50 text-blue-500 transition-colors"
                 title={t('viewOnChain')}
                 onClick={(e) => e.stopPropagation()}
               >
@@ -231,7 +231,7 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
             {proposal.status === 'draft' && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete?.(proposal.id) }}
-                className="p-1.5 rounded-xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
+                className="p-1.5 rounded-2xl hover:bg-red-50 text-[#939597] hover:text-red-500 transition-colors"
                 title={t('delete')}
               >
                 <Trash2 className="w-4 h-4" />

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, CalendarDays, Megaphone, Mic2, Vote } from 'lucide-react'
+import { ArrowRight, CalendarDays, Megaphone, Vote } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { ActivityFeed } from '@/components/member/activity-feed'
 import { MemberShell } from '@/components/member/member-shell'
@@ -37,15 +37,12 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
   return (
     <MemberShell>
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
           <div className="min-w-0">
             <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
             <h1 className="mt-1 truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
               {t('dashboard.greeting', { name: member.name })}
             </h1>
-          </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
-            {member.avatarInitials}
           </div>
         </div>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[#525252] lg:text-base">
@@ -73,7 +70,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                 </div>
               </div>
 
-              <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-xl lg:border lg:bg-[#FAFAFA] lg:p-4">
+              <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-2xl lg:border lg:bg-[#FAFAFA] lg:p-4">
                 <div className="flex gap-3">
                   <CalendarDays
                     className="mt-0.5 h-5 w-5 shrink-0 text-blue-600"
@@ -95,7 +92,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
               </div>
 
               {activeVote ? (
-                <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-xl lg:border lg:bg-[#FAFAFA] lg:p-4">
+                <div className="border-t border-[#F0F0F0] pt-3 lg:rounded-2xl lg:border lg:bg-[#FAFAFA] lg:p-4">
                   <div className="flex gap-3">
                     <Vote className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
                     <div className="min-w-0 flex-1">
@@ -105,7 +102,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                       </h3>
                       <Link
                         href={`${baseHref}/vote`}
-                        className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#131517] px-4 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] hover:shadow-md active:translate-y-0"
+                        className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-2xl bg-[#131517] px-4 text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] active:translate-y-0"
                       >
                         {t('dashboard.voteNow')}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -121,9 +118,6 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
         <aside className="space-y-5">
           <section className={memberCard}>
             <div className="flex items-start gap-3">
-              <div className={`${memberIconWell} bg-black text-white`}>
-                <Mic2 className="h-5 w-5" aria-hidden="true" />
-              </div>
               <div className="min-w-0 flex-1">
                 <p className={`text-sm ${memberSubtle}`}>{t('dashboard.myVoice')}</p>
                 <div className="mt-3 grid grid-cols-2 gap-3">
