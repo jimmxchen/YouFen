@@ -69,11 +69,7 @@ export default function RecordsPage() {
               'px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-200',
               filter === f
                 ? 'bg-[#0A0A0A] text-white'
-                : 'bg-white border border-[#F0F0F0] text-[#525252] hover:border-[#E5E5E5] hover:text-[#131517]'
-            )}
-          >
-            {f === 'all' ? t('all') : recordTypeLabels[f]}
-          </button>
+            {f === 'all' ? t('all') : t(recordTypeLabels[f])}
         ))}
       </div>
 
