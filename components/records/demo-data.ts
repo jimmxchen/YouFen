@@ -222,6 +222,15 @@ export const demoRecords: ChainRecord[] = [
   },
 ]
 
+export const KIND_TINT: Record<RecordKind, string> = {
+  tokenMint: 'bg-emerald-50 text-emerald-700',
+  advanceMint: 'bg-emerald-50 text-emerald-700',
+  tokenReversal: 'bg-amber-50 text-amber-700',
+  epochSummary: 'bg-neutral-100 text-neutral-600',
+  policyVersion: 'bg-blue-50 text-blue-700',
+  proposalResult: 'bg-blue-50 text-blue-700',
+}
+
 export function shortHash(hash: string): string {
   return `${hash.slice(0, 8)}…${hash.slice(-6)}`
 }
