@@ -1,45 +1,24 @@
 import { redirect } from "next/navigation"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { AdminHeader } from "@/components/admin/admin-header"
-import { getSession } from "@/lib/auth"
-import { db } from "@/db"
-import { users, communityMembers, communities } from "@/db/schema"
-import { eq } from "drizzle-orm"
 import { demoMembers } from "@/lib/demo-data"
 
-async function getAdminData() {
-  const userId = await getSession()
-  if (!userId) return null
+function getAdminData() {
+  // Demo mode — use first demo member as the admin user
+  const demoUser = demoMembers[0]
+  if (!demoUser) return null
 
-  try {
-    const userRows = await db
-      .select({ id: users.id, name: users.name, email: users.email })
-      .from(users)
-      .where(eq(users.id, userId))
-      .limit(1)
-
-    if (userRows.length === 0) return null
-
-    const memberships = await db
-      .select({
-        memberId: communityMembers.id,
-        communityId: communities.id,
-        communityName: communities.name,
-        role: communityMembers.role,
-        voicePower: communityMembers.voicePower,
-        contributionCount: communityMembers.contributionCount,
-        tags: communityMembers.tags,
-      })
-      .from(communityMembers)
-      .innerJoin(communities, eq(communityMembers.communityId, communities.id))
-      .where(eq(communityMembers.userId, userId))
-
-    return {
-      user: userRows[0],
-      memberships,
-    }
-  } catch {
-    return null
+  return {
+    user: { id: demoUser.id, name: demoUser.name, email: demoUser.email },
+    memberships: [{
+      memberId: demoUser.id,
+      communityId: "adventurex",
+      communityName: "AdventureX Community",
+      role: demoUser.role,
+      voicePower: demoUser.voicePower,
+      contributionCount: demoUser.contributionCount || 0,
+      tags: demoUser.tags || [],
+    }],
   }
 }
 

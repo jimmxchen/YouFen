@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useTranslations, useLocale } from "next-intl"
-import { useAuth } from "@/components/auth/auth-context"
 import { Navbar } from "@/components/layout/navbar"
 import { AuthVisual } from "@/components/auth/auth-visual"
 
@@ -31,7 +30,6 @@ export default function SignUpPage() {
   const t = useTranslations("auth")
   const locale = useLocale()
   const router = useRouter()
-  const { signUp } = useAuth()
   const isZh = locale === "zh"
 
   const [name, setName] = useState("")
@@ -56,13 +54,8 @@ export default function SignUpPage() {
     }
 
     setLoading(true)
-    const result = await signUp(name, isZh ? phone : email, isZh ? "sms-placeholder" : password)
     setLoading(false)
-    if (result.error) {
-      setError(result.error)
-    } else {
-      router.push("/admin")
-    }
+    router.push("/admin")
   }
 
   return (
