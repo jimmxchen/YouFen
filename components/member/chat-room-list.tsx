@@ -28,7 +28,7 @@ export function ChatRoomList({ rooms, baseHref, labels }: ChatRoomListProps) {
             index > 0 ? 'border-t border-gray-100' : ''
           }`}
         >
-          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-[#131517] text-sm font-semibold text-white">
+          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-sm font-semibold text-white">
             {room.avatarInitials}
             {room.pinned ? (
               <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">

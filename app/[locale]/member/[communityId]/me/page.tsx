@@ -1,12 +1,12 @@
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { ContributionTimeline } from '@/components/member/contribution-timeline'
+import { MemberProfileActions } from '@/components/member/member-profile-actions'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
+import { PendingContributionList } from '@/components/member/pending-contribution-list'
 import { RecordReceiptList } from '@/components/member/record-receipt-list'
 import { VoicePowerCard } from '@/components/member/voice-power-card'
-import { memberCard, memberMuted, memberPrimaryButton, memberSubtle } from '@/components/member/ui'
+import { memberCard, memberMuted, memberSubtle } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberMePageProps {
@@ -40,7 +40,7 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
         <aside className="space-y-4 lg:sticky lg:top-24">
           <section className={memberCard}>
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
                 {member.avatarInitials}
               </div>
               <div className="min-w-0">
@@ -73,15 +73,33 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
             }}
           />
 
-          <Link href={`/${params.locale}/member/${params.communityId}/contribute`} className={memberPrimaryButton}>
-            {t('me.submitContribution')}
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <MemberProfileActions
+            contributeHref={`/${params.locale}/member/${params.communityId}/contribute`}
+            publicHref={`/${params.locale}/member/${params.communityId}/public`}
+            labels={{
+              submitContribution: t('me.submitContribution'),
+              viewPublicCommunity: t('me.viewPublicCommunity'),
+              shareContributions: t('me.shareContributions'),
+              shareCopied: t('me.shareCopied'),
+            }}
+          />
         </aside>
 
         <div className="space-y-6">
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-[#131517]">{t('me.contributions')}</h2>
+            <h2 id="contributions" className="mb-3 text-xl font-semibold text-[#131517]">
+              {t('me.contributions')}
+            </h2>
+            <PendingContributionList
+              communityId={params.communityId}
+              labels={{
+                title: t('contribute.type'),
+                status: t('status.pending'),
+                submittedAt: t('me.submittedAt'),
+                proof: t('contribute.proofLink'),
+                evidence: t('contribute.evidence'),
+              }}
+            />
             <ContributionTimeline
               contributions={member.contributions}
               locale={params.locale}

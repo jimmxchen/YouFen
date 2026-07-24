@@ -33,7 +33,7 @@ export default async function MemberContributePage({ params }: MemberContributeP
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <Link
           href={meHref}
-          className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg border border-[#F0F0F0] bg-white transition hover:border-[#E5E5E5]"
+          className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-[#F0F0F0] bg-white transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
           aria-label={t('contribute.backToMe')}
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
@@ -49,6 +49,7 @@ export default async function MemberContributePage({ params }: MemberContributeP
 
       <div className="px-5 lg:px-0">
         <ContributionSubmitForm
+          communityId={params.communityId}
           meHref={meHref}
           types={types}
           labels={{

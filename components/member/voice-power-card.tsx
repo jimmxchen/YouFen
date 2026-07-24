@@ -38,8 +38,8 @@ export function VoicePowerCard({ voicePower, locale, labels }: VoicePowerCardPro
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3">
-          <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-4">
-            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+          <div className="rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] p-4">
+            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
               <Vote className="h-4 w-4" aria-hidden="true" />
             </div>
             <p className="text-xs text-[#939597]">{labels.active}</p>
@@ -47,8 +47,8 @@ export function VoicePowerCard({ voicePower, locale, labels }: VoicePowerCardPro
               {formatNumber(voicePower.active, locale)}
             </p>
           </div>
-          <div className="rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-4">
-            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+          <div className="rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] p-4">
+            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <TrendingUp className="h-4 w-4" aria-hidden="true" />
             </div>
             <p className="text-xs text-[#939597]">{labels.pending}</p>
@@ -58,7 +58,7 @@ export function VoicePowerCard({ voicePower, locale, labels }: VoicePowerCardPro
           </div>
         </div>
 
-        <p className="mt-5 rounded-lg border border-[#F0F0F0] bg-[#FAFAFA] p-4 text-sm text-[#525252]">
+        <p className="mt-5 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] p-4 text-sm text-[#525252]">
           {labels.earnedThisMonth}
         </p>
       </div>

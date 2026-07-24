@@ -102,6 +102,16 @@
       "viewMyRecord": "查看我的记录",
       "recentActivity": "最近动态"
     },
+    "event": {
+      "title": "活动详情",
+      "description": "确认参加，并随时查看活动时间和地点。",
+      "startsAt": "开始时间",
+      "location": "地点",
+      "join": "参加活动",
+      "joined": "已参加",
+      "joinedBody": "本次演示已保存你的参加状态。这个设备上会继续显示已参加。",
+      "backHome": "返回首页"
+    },
     "activity": {
       "title": "动态",
       "description": "这个社群最近的贡献、投票和可信记录。"
@@ -121,8 +131,10 @@
       "send": "发送",
       "online": "{count} 人在线",
       "reactions": "{count} 个回应",
+      "reactionSuffix": " 个回应",
       "groupChats": "群聊",
       "searchChats": "搜索群聊",
+      "noChatsFound": "没有找到相关群聊。",
       "unread": "{count} 条未读",
       "members": "{count} 位成员",
       "pinned": "已置顶",
@@ -139,9 +151,13 @@
       "inviteMembers": "邀请成员",
       "inviteLink": "邀请链接",
       "copyInvite": "复制邀请链接",
+      "copied": "已复制",
       "membersTitle": "群成员",
       "sharedMedia": "共享图片和文件",
       "publicInviteNote": "分享群聊邀请",
+      "invitePanelTitle": "邀请已准备好",
+      "invitePanelBody": "复制这个邀请链接，发给需要加入该群聊的成员。",
+      "imageShared": "分享了图片：",
       "operator": "运营者",
       "onlineStatus": "在线",
       "lastSeen": "上次在线 {time}"
@@ -165,7 +181,11 @@
       "contributions": "我的贡献",
       "pendingVoicePower": "待确认发言权",
       "trustedRecords": "相关可信记录",
-      "submitContribution": "提交贡献"
+      "submitContribution": "提交贡献",
+      "viewPublicCommunity": "查看社群公开页",
+      "shareContributions": "分享我的贡献",
+      "shareCopied": "贡献链接已复制",
+      "submittedAt": "提交时间"
     },
     "contribute": {
       "title": "提交贡献",
@@ -216,6 +236,18 @@
       "viewExplorer": "查看浏览器",
       "emptyTitle": "还没有凭证",
       "emptyBody": "重要记录保存后会显示在这里。"
+    },
+    "public": {
+      "label": "社群公开页",
+      "backToMe": "返回我的",
+      "contributors": "核心贡献者",
+      "contributorsBody": "这些成员为社群做出了可见贡献。",
+      "records": "可信记录",
+      "stats": "社群数据",
+      "members": "成员",
+      "voicePower": "总发言权",
+      "contributions": "本周贡献",
+      "trustedRecords": "可信记录"
     }
   },
   "admin": {

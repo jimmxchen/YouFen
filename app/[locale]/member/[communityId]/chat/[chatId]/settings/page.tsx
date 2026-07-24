@@ -54,6 +54,9 @@ export default async function MemberChatSettingsPage({ params }: MemberChatSetti
           membersTitle: t('chat.membersTitle'),
           sharedMedia: t('chat.sharedMedia'),
           publicInviteNote: t('chat.publicInviteNote'),
+          invitePanelTitle: t('chat.invitePanelTitle'),
+          invitePanelBody: t('chat.invitePanelBody'),
+          copied: t('chat.copied'),
           operator: t('chat.operator'),
           participantStatusById,
         }}

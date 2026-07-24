@@ -10,6 +10,7 @@ import {
   memberPrimaryButton,
   memberSubtle,
 } from '@/components/member/ui'
+import { pendingContributionStorageKey } from '@/components/member/pending-contribution-list'
 
 export interface ContributionTypeOption {
   id: string
@@ -17,6 +18,7 @@ export interface ContributionTypeOption {
 }
 
 interface ContributionSubmitFormProps {
+  communityId: string
   meHref: string
   types: ContributionTypeOption[]
   labels: {
@@ -41,12 +43,13 @@ interface ContributionSubmitFormProps {
 }
 
 const fieldClass =
-  'mt-2 w-full min-h-11 rounded-lg border border-[#F0F0F0] bg-white px-4 text-sm text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15'
+  'mt-2 w-full min-h-11 rounded-xl border border-[#F0F0F0] bg-white px-4 text-sm text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15'
 
 const textareaClass =
-  'mt-2 w-full min-h-[120px] resize-none rounded-lg border border-[#F0F0F0] bg-white px-4 py-3 text-sm leading-6 text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15'
+  'mt-2 w-full min-h-[120px] resize-none rounded-xl border border-[#F0F0F0] bg-white px-4 py-3 text-sm leading-6 text-[#131517] outline-none transition placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15'
 
 export function ContributionSubmitForm({
+  communityId,
   meHref,
   types,
   labels,
@@ -67,6 +70,41 @@ export function ContributionSubmitForm({
       setShowErrors(true)
       return
     }
+
+    const typeLabel = types.find((type) => type.id === typeId)?.label ?? typeId
+    const storageKey = pendingContributionStorageKey(communityId)
+    const raw = window.localStorage.getItem(storageKey)
+    let existing: unknown = []
+
+    try {
+      existing = raw ? JSON.parse(raw) : []
+    } catch {
+      existing = []
+    }
+
+    const next = Array.isArray(existing) ? existing : []
+
+    window.localStorage.setItem(
+      storageKey,
+      JSON.stringify([
+        {
+          id: `pending-${Date.now()}`,
+          title: title.trim(),
+          typeLabel,
+          details: details.trim(),
+          proofLink: proofLink.trim() || undefined,
+          evidenceName: evidenceName || undefined,
+          createdAt: new Intl.DateTimeFormat(undefined, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+          }).format(new Date()),
+        },
+        ...next,
+      ])
+    )
 
     setSubmitted(true)
   }
