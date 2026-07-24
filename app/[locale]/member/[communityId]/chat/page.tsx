@@ -1,5 +1,6 @@
 import { MessageCircle } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import type { ChatParticipant } from '@/types/member'
 import { ChatRoomBrowser } from '@/components/member/chat-room-browser'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
@@ -18,7 +19,27 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
   const t = await getTranslations('member')
   const member = getDemoMember(communityId)
   const baseHref = `/${locale}/member/${communityId}`
-  const unreadCount = member.chatRooms.reduce((total, room) => total + room.unreadCount, 0)
+
+  // Identify "you" from the demo data, then build a de-duplicated contact pool
+  // of everyone else who could be messaged directly.
+  const selfMessage = member.chatRooms
+    .flatMap((room) => room.messages)
+    .find((message) => message.isCurrentMember)
+  const currentMember: ChatParticipant = {
+    id: 'you',
+    name: selfMessage?.author ?? member.name,
+    role: selfMessage?.role ?? member.role,
+    avatarInitials: selfMessage?.avatarInitials ?? member.avatarInitials,
+    status: 'online',
+  }
+  const contactMap = new Map<string, ChatParticipant>()
+  for (const room of member.chatRooms) {
+    for (const participant of room.participants) {
+      if (participant.name === currentMember.name) continue
+      if (!contactMap.has(participant.id)) contactMap.set(participant.id, participant)
+    }
+  }
+  const contacts = [...contactMap.values()]
 
   return (
     <MemberShell member={member}>
@@ -42,14 +63,30 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
         <ChatRoomBrowser
           rooms={member.chatRooms}
           baseHref={baseHref}
+          locale={locale}
+          communityId={communityId}
+          contacts={contacts}
+          currentMember={currentMember}
+          directMessageCategory={t('chat.directMessage')}
           labels={{
             searchChats: t('chat.searchChats'),
-            groupChats: t('chat.groupChats'),
-            unread: t('chat.unread', { count: unreadCount }),
             pinned: t('chat.pinned'),
             muted: t('chat.muted'),
             empty: t('chat.noChatsFound'),
             members: t('chat.members', { count: '__COUNT__' }),
+            newMessage: t('chat.newMessage'),
+            compose: {
+              title: t('chat.composeTitle'),
+              to: t('chat.composeTo'),
+              searchPlaceholder: t('chat.composeSearchPlaceholder'),
+              messagePlaceholder: t('chat.composeMessagePlaceholder'),
+              start: t('chat.composeStart'),
+              empty: t('chat.composeEmpty'),
+              selectHint: t('chat.composeSelectHint'),
+              noSelection: t('chat.composeNoSelection'),
+              cancel: t('chat.cancel'),
+              close: t('chat.composeClose'),
+            },
           }}
         />
       </div>

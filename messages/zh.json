@@ -431,7 +431,20 @@
       "imageShared": "分享了图片：",
       "operator": "运营者",
       "onlineStatus": "在线",
-      "lastSeen": "上次在线 {time}"
+      "lastSeen": "上次在线 {time}",
+      "newMessage": "发起新消息",
+      "directMessage": "私信",
+      "chatNotFound": "该聊天已不可用。",
+      "cancel": "取消",
+      "composeTitle": "发起新消息",
+      "composeTo": "发送给",
+      "composeSearchPlaceholder": "搜索成员",
+      "composeMessagePlaceholder": "写下你的消息...",
+      "composeStart": "开始聊天",
+      "composeEmpty": "没有找到相关成员。",
+      "composeSelectHint": "选择要私信的成员",
+      "composeNoSelection": "请至少选择一位成员并写下消息。",
+      "composeClose": "关闭"
     },
     "vote": {
       "title": "投票",
