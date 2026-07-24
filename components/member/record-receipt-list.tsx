@@ -1,6 +1,12 @@
-import Link from 'next/link'
 import { CheckCircle2, Clock3, ExternalLink, RotateCcw } from 'lucide-react'
 import type { ReceiptStatus, TokenReceipt } from '@/types/token'
+import {
+  memberCard,
+  memberInset,
+  memberMuted,
+  memberPrimaryButton,
+  memberSubtle,
+} from '@/components/member/ui'
 
 interface RecordReceiptListProps {
   receipts: TokenReceipt[]
@@ -19,7 +25,7 @@ interface RecordReceiptListProps {
 
 function statusClasses(status: ReceiptStatus) {
   if (status === 'verified') return 'bg-emerald-50 text-emerald-700'
-  if (status === 'failed') return 'bg-rose-50 text-rose-700'
+  if (status === 'failed') return 'bg-red-50 text-red-600'
   return 'bg-amber-50 text-amber-700'
 }
 
@@ -45,9 +51,9 @@ function statusLabel(
 export function RecordReceiptList({ receipts, labels }: RecordReceiptListProps) {
   if (receipts.length === 0) {
     return (
-      <div className="rounded-[24px] bg-white p-5 shadow-sm">
-        <h2 className="text-base font-semibold">{labels.emptyTitle}</h2>
-        <p className="mt-2 text-sm leading-6 text-[#6f7174]">{labels.emptyBody}</p>
+      <div className={memberCard}>
+        <h2 className="text-xl font-semibold text-[#131517]">{labels.emptyTitle}</h2>
+        <p className={`mt-2 text-sm leading-6 ${memberMuted}`}>{labels.emptyBody}</p>
       </div>
     )
   }
@@ -55,11 +61,13 @@ export function RecordReceiptList({ receipts, labels }: RecordReceiptListProps) 
   return (
     <section className="space-y-4">
       {receipts.map((receipt) => (
-        <article key={receipt.id} className="rounded-[24px] bg-white p-5 shadow-sm">
+        <article key={receipt.id} className={memberCard}>
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <h2 className="text-base font-semibold leading-6">{receipt.title}</h2>
-              <p className="mt-1 truncate text-sm text-[#6f7174]">
+              <h2 className="text-base font-semibold leading-6 text-[#131517]">
+                {receipt.title}
+              </h2>
+              <p className={`mt-1 truncate text-sm ${memberMuted}`}>
                 {receipt.network} · {receipt.createdAt}
               </p>
             </div>
@@ -71,36 +79,40 @@ export function RecordReceiptList({ receipts, labels }: RecordReceiptListProps) 
             </span>
           </div>
 
-          <div className="mt-4 space-y-3">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {receipt.blockHeight ? (
-              <div className="rounded-2xl bg-[#f8f7f4] p-3">
-                <p className="text-xs text-[#939597]">{labels.blockHeight}</p>
-                <p className="mt-1 break-all text-sm font-medium">{receipt.blockHeight}</p>
+              <div className={memberInset}>
+                <p className={`text-xs ${memberSubtle}`}>{labels.blockHeight}</p>
+                <p className="mt-1 break-all text-sm font-medium text-[#131517]">
+                  {receipt.blockHeight}
+                </p>
               </div>
             ) : null}
 
             {receipt.txHash ? (
-              <div className="rounded-2xl bg-[#f8f7f4] p-3">
-                <p className="text-xs text-[#939597]">{labels.receiptHash}</p>
-                <p className="mt-1 truncate text-sm font-medium">{receipt.txHash}</p>
+              <div className={memberInset}>
+                <p className={`text-xs ${memberSubtle}`}>{labels.receiptHash}</p>
+                <p className="mt-1 truncate font-mono text-sm font-medium text-[#131517]" title={receipt.txHash}>
+                  {receipt.txHash}
+                </p>
               </div>
             ) : (
-              <div className="rounded-2xl bg-[#f8f7f4] p-3 text-sm leading-6 text-[#6f7174]">
+              <div className={`${memberInset} text-sm leading-6 ${memberMuted} sm:col-span-2`}>
                 {labels.waiting}
               </div>
             )}
           </div>
 
           {receipt.explorerUrl ? (
-            <Link
+            <a
               href={receipt.explorerUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl bg-[#131517] px-4 text-sm font-medium text-white"
+              className={`mt-4 ${memberPrimaryButton}`}
             >
               {labels.viewExplorer}
               <ExternalLink className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </a>
           ) : null}
         </article>
       ))}

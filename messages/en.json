@@ -76,61 +76,116 @@
   "member": {
     "nav": {
       "home": "Home",
-      "history": "History",
-      "records": "Receipts"
+      "chat": "Chat",
+      "vote": "Vote",
+      "me": "Me"
     },
     "status": {
       "verified": "Verified",
       "failed": "Needs retry",
-      "pending": "Pending"
+      "pending": "Pending",
+      "active": "Active",
+      "upcoming": "Upcoming",
+      "ended": "Ended",
+      "approved": "Approved",
+      "joined": "Joined"
     },
     "dashboard": {
       "greeting": "Hi, {name}",
-      "token": {
-        "title": "Your community ownership",
-        "active": "Active for votes",
-        "pending": "Pending until next month",
-        "ownershipShare": "Ownership share",
-        "ownershipHint": "Your share of all community tokens.",
-        "voteShare": "Current vote share"
-      },
-      "ownershipTrend": {
-        "title": "Ownership trend",
-        "description": "You earned {earned} this month. The community created {minted}, so your share moved from {from} to {to}."
-      },
-      "pending": {
-        "eyebrow": "Pending tokens",
-        "activates": "Activates",
-        "emptyTitle": "No pending tokens",
-        "emptyBody": "Everything you have earned is already active for voting."
-      },
-      "votes": {
-        "title": "Available votes",
-        "snapshotWeight": "Your voting weight",
-        "emptyTitle": "No open votes",
-        "emptyBody": "New community decisions will show up here when they are ready.",
-        "status": {
-          "active": "Active",
-          "upcoming": "Upcoming",
-          "ended": "Ended"
-        }
+      "today": "Today",
+      "latestUpdate": "Latest update",
+      "nextEvent": "Next event",
+      "joinEvent": "Join event",
+      "activeVote": "Active vote",
+      "voteNow": "Vote now",
+      "myVoice": "My voice",
+      "viewMyRecord": "View my record",
+      "recentActivity": "Recent activity"
+    },
+    "activity": {
+      "title": "Activity",
+      "description": "Recent contributions, votes, and verified records in this community."
+    },
+    "voicePower": {
+      "title": "Your voice power",
+      "active": "Can vote now",
+      "pending": "Waiting approval",
+      "rank": "Top {rank}% in this community",
+      "earnedThisMonth": "+{amount} this month"
+    },
+    "chat": {
+      "title": "Chat",
+      "description": "Talk with the community, coordinate help, and react to operator prompts.",
+      "operatorPrompt": "Pinned by operator",
+      "composer": "Write a message...",
+      "send": "Send",
+      "online": "{count} online",
+      "reactions": "{count} reactions"
+    },
+    "vote": {
+      "title": "Vote",
+      "description": "Decisions where members use voice power to shape the community.",
+      "active": "Active",
+      "upcoming": "Upcoming",
+      "ended": "Ended",
+      "yourVoicePower": "Your voice power",
+      "voters": "{count} voters",
+      "trustedRecord": "Trusted record ready",
+      "openVote": "Open vote"
+    },
+    "me": {
+      "title": "Me",
+      "description": "Your role, voice power, contributions, and trusted records in this community.",
+      "role": "Role",
+      "tags": "Tags",
+      "contributions": "My contributions",
+      "pendingVoicePower": "Pending voice power",
+      "trustedRecords": "Related trusted records",
+      "submitContribution": "Submit contribution"
+    },
+    "contribute": {
+      "title": "Submit contribution",
+      "description": "Share something you did for the community that was not recorded automatically.",
+      "titleField": "Contribution title",
+      "type": "Contribution type",
+      "details": "What did you do?",
+      "detailsPlaceholder": "Briefly explain what you did, who it helped, and why it matters.",
+      "evidence": "Evidence",
+      "evidenceHint": "Upload a screenshot or file as evidence (demo)",
+      "evidenceChosen": "File selected",
+      "proofLink": "Proof link",
+      "proofLinkPlaceholder": "https://...",
+      "reviewTitle": "Operator review",
+      "reviewNote": "An operator will review this before 发言权 is added. If approved, this may add 发言权.",
+      "placeholderTitle": "Social post, recap, mentoring, sponsor intro...",
+      "successTitle": "Submitted for review",
+      "successBody": "If approved, this may add 发言权.",
+      "backToMe": "Back to Me",
+      "required": "Please fill in this field",
+      "types": {
+        "socialPost": "Social media post",
+        "eventRecap": "Event recap",
+        "mentoring": "Offline mentoring",
+        "sponsorIntro": "Sponsor intro",
+        "helpTeam": "Helping another team",
+        "other": "Other"
       }
     },
     "history": {
-      "title": "Token history",
-      "description": "Every token should have a clear source. This page shows what changed, who approved it, and whether a public receipt exists.",
+      "title": "Voice power history",
+      "description": "Every voice power change should have a clear source. This page shows what changed, who approved it, and whether a public receipt exists.",
       "approvedBy": "Approved by",
-      "tokenStatus": "Token status",
+      "statusLabel": "Status",
       "activeNow": "Active now",
       "pending": "Pending",
       "receiptVerified": "Public receipt verified",
       "noReceipt": "No public receipt attached yet.",
-      "emptyTitle": "No token history yet",
-      "emptyBody": "Approved contributions will appear here with their token source."
+      "emptyTitle": "No voice power history yet",
+      "emptyBody": "Approved contributions will appear here."
     },
     "records": {
       "title": "Public receipts",
-      "description": "These receipts prove important community records were not quietly changed. Members do not need a wallet to verify them.",
+      "description": "These receipts prove important community records were not quietly changed. Members can verify them from this page.",
       "blockHeight": "Block height",
       "receiptHash": "Receipt hash",
       "waiting": "This receipt is waiting for confirmation.",

@@ -50,7 +50,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={`${customFont.variable} font-sans`}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
       </body>
