@@ -66,3 +66,12 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+next-env.d.ts
+
+# Agent instruction files (local only)
+CLAUDE.md
+AGENTS.md
+
+# pnpm (repo standardized on npm — see package-lock.json)
+pnpm-lock.yaml
+pnpm-workspace.yaml

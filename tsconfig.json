@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
     "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "strict": true,
     "skipLibCheck": true,
+    "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -17,14 +18,13 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
       ]
     },
-    "allowJs": true,
     "plugins": [
       {
         "name": "next"
@@ -34,24 +34,19 @@
   },
   "include": [
     "next-env.d.ts",
-    "lib",
-    "app",
-    "components",
-    "scripts",
-    "tests",
-    "contracts/test",
-    "i18n.ts",
-    "middleware.ts",
-    "hardhat.config.ts",
-    ".next/types/**/*.ts"
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "hardhat.config.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",
       "moduleResolution": "node"
     }
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }
