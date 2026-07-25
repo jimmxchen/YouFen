@@ -5,6 +5,9 @@ import { eq } from 'drizzle-orm'
 import { getSession } from '@/lib/auth'
 import { getPrisma } from '@/lib/db/client'
 
+/** PRD §13: 初始总供应量默认 10,000 */
+const DEFAULT_INITIAL_SUPPLY = 10_000
+
 export async function POST(req: NextRequest) {
   const userId = await getSession()
   if (!userId) {
@@ -14,6 +17,7 @@ export async function POST(req: NextRequest) {
   let body: {
     name?: string; slug?: string; description?: string; goal?: string
     inflationRateBps?: number; advanceRateBps?: number; memberCapRateBps?: number
+    initialSupply?: number
   }
   try {
     body = await req.json()
@@ -32,6 +36,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'INVALID_SLUG' }, { status: 400 })
   }
 
+  const initialSupply = Math.max(1, body.initialSupply ?? DEFAULT_INITIAL_SUPPLY)
+  const inflationRateBps = body.inflationRateBps ?? 500   // 5%
+  const advanceRateBps = body.advanceRateBps ?? 2500       // 25%
+  const memberCapRateBps = body.memberCapRateBps ?? 1000   // 10%
+
   try {
     const prisma = getPrisma()
 
@@ -43,51 +52,136 @@ export async function POST(req: NextRequest) {
       .limit(1)
     const displayName = userRows[0]?.name || userId
 
-    const community = await prisma.community.create({
-      data: {
-        name,
-        slug,
-        description: body.description?.trim() || null,
-        goal: body.goal?.trim() || null,
-        ownerId: userId,
-      },
-      select: { id: true, slug: true, name: true },
+    /**
+     * PRD §7.2 初始 Token 分配:
+     * 社区创建时必须:
+     *   - 明确每位成员获得数量
+     *   - 生成初始分配记录 (TokenMintEvent / INITIAL_ALLOCATION)
+     *   - 创建初始 Epoch
+     *
+     * 整个创建流程放在一个事务内原子完成。
+     */
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. 创建社区
+      const community = await tx.community.create({
+        data: {
+          name,
+          slug,
+          description: body.description?.trim() || null,
+          goal: body.goal?.trim() || null,
+          ownerId: userId,
+        },
+        select: { id: true, slug: true, name: true },
+      })
+
+      // 2. 创建创建者为 owner 成员
+      const member = await tx.member.create({
+        data: {
+          communityId: community.id,
+          userId,
+          displayName,
+          role: 'owner',
+        },
+      })
+
+      // 3. 创建 Token 政策 (PRD §13.1)
+      await tx.communityTokenPolicy.create({
+        data: {
+          communityId: community.id,
+          tokenName: `${name} Token`,
+          tokenSymbol: slug.toUpperCase().slice(0, 8),
+          initialSupply: BigInt(initialSupply),
+          currentTotalSupply: BigInt(initialSupply),
+          epochDurationDays: 30,
+          monthlyInflationRateBps: inflationRateBps,
+          maxAdvanceRateBps: advanceRateBps,
+          memberMintCapRateBps: memberCapRateBps,
+          policyVersion: 1,
+          effectiveEpoch: 1,
+        },
+      })
+
+      // 4. 创建供应量状态行 (规则与状态分离, ARCHITECTURE.md §3.2)
+      await tx.communityTokenState.create({
+        data: {
+          communityId: community.id,
+          currentTotalSupply: BigInt(initialSupply),
+          ledgerSeq: 1n, // 初始分配占序号 1
+        },
+      })
+
+      // 5. 计算 Epoch 1 预算 (PRD §25.1-25.3)
+      const openingSupply = BigInt(initialSupply)
+      const baseMintBudget = BigInt(
+        Math.floor(initialSupply * inflationRateBps / 10_000)
+      )
+      const maxAdvanceAmount = BigInt(
+        Math.floor(Number(baseMintBudget) * advanceRateBps / 10_000)
+      )
+
+      // 6. 创建 Epoch 1 (ACTIVE)
+      const now = new Date()
+      const epochEnd = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+      const epoch = await tx.tokenEpoch.create({
+        data: {
+          communityId: community.id,
+          epochNumber: 1,
+          openingSupply,
+          inflationRateBps,
+          baseMintBudget,
+          advanceDebtFromPreviousEpoch: 0n,
+          effectiveRegularBudget: baseMintBudget,
+          maxAdvanceAmount,
+          regularMintedAmount: 0n,
+          advancedMintedAmount: 0n,
+          unusedRegularBudget: 0n,
+          status: 'active',
+          startTime: now,
+          endTime: epochEnd,
+        },
+      })
+
+      // 7. 创建创建者的 Token 余额 (PRD §24.3)
+      await tx.memberTokenBalance.create({
+        data: {
+          communityId: community.id,
+          memberId: member.id,
+          totalBalance: openingSupply,
+          activeGovernanceBalance: openingSupply,
+          pendingGovernanceBalance: 0n,
+          tokensEarnedCurrentEpoch: openingSupply,
+          tokensEarnedLifetime: openingSupply,
+          tokensReversedLifetime: 0n,
+          lastMintAt: now,
+        },
+      })
+
+      // 8. 创建初始分配账本事件 (PRD §7.2, §24.4)
+      await tx.tokenMintEvent.create({
+        data: {
+          communityId: community.id,
+          memberId: member.id,
+          epochId: epoch.id,
+          epochNumber: 1,
+          mintType: 'initial_allocation',
+          budgetSource: 'current_epoch',
+          amount: openingSupply,
+          governanceStatus: 'active',
+          memberBalanceBefore: 0n,
+          memberBalanceAfter: openingSupply,
+          totalSupplyBefore: 0n,
+          totalSupplyAfter: openingSupply,
+          tokenPolicyVersion: 1,
+          reason: 'Initial community allocation',
+          approvedBy: userId,
+          ledgerSeq: 1,
+        },
+      })
+
+      return community
     })
 
-    await prisma.member.create({
-      data: {
-        communityId: community.id,
-        userId,
-        displayName,
-        role: 'owner',
-      },
-    })
-
-    await prisma.communityTokenPolicy.create({
-      data: {
-        communityId: community.id,
-        tokenName: `${name} Token`,
-        tokenSymbol: slug.toUpperCase().slice(0, 8),
-        initialSupply: 0n,
-        currentTotalSupply: 0n,
-        epochDurationDays: 30,
-        monthlyInflationRateBps: body.inflationRateBps ?? 500,
-        maxAdvanceRateBps: body.advanceRateBps ?? 2500,
-        memberMintCapRateBps: body.memberCapRateBps ?? 1000,
-        policyVersion: 1,
-        effectiveEpoch: 1,
-      },
-    })
-
-    await prisma.communityTokenState.create({
-      data: {
-        communityId: community.id,
-        currentTotalSupply: 0n,
-        ledgerSeq: 0n,
-      },
-    })
-
-    return NextResponse.json({ community }, { status: 201 })
+    return NextResponse.json({ community: result }, { status: 201 })
   } catch (e: any) {
     if (e?.code === 'P2002' || e?.code === '23505') {
       return NextResponse.json({ error: 'SLUG_TAKEN' }, { status: 409 })

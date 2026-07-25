@@ -54,6 +54,7 @@ export async function getMemberProfile(userId: string, communityId: string): Pro
     .where(eq(users.id, userId))
     .limit(1)
   const realName = userRows[0]?.name || member.displayName
+  const email = userRows[0]?.email || ''
 
   const totalBalance = realBalance ? Number(realBalance.totalBalance) : 0
   const activeBalance = realBalance ? Number(realBalance.activeGovernanceBalance) : 0
@@ -197,6 +198,7 @@ export async function getMemberProfile(userId: string, communityId: string): Pro
   return {
     id: member.id,
     name: realName,
+    email,
     role: member.role,
     tags: member.tags || [],
     avatarInitials: initials || '?',

@@ -133,6 +133,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
           chat: t('nav.chat'),
           vote: t('nav.vote'),
           me: t('nav.me'),
+          contribute: t('nav.contribute'),
         }}
       />
     </MemberShell>

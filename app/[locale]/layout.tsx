@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
@@ -11,8 +11,8 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
-const inter = Inter({
-  subsets: ['latin'],
+const localSans = localFont({
+  src: '../../public/font/ITOtz0GJh0f4Y4Fu3osXqgXYuAw.woff2',
   variable: '--font-custom',
   display: 'swap',
 })
@@ -49,7 +49,7 @@ export default async function LocaleLayout({
           attributes like data-gr-ext-installed onto <body> before React
           hydrates, causing a benign attribute mismatch. This suppresses that
           one element's warning only — it does not affect children. */}
-      <body className={`${inter.variable} font-sans`} suppressHydrationWarning>
+      <body className={`${localSans.variable} font-sans`} suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
             {children}

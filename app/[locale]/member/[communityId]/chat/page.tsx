@@ -6,6 +6,7 @@ import { getMemberProfile } from '@/lib/api/member/queries'
 import { ChatRoomBrowser } from '@/components/member/chat-room-browser'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
+import { NewChatButton } from '@/components/member/new-chat-button'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
 
 interface MemberChatPageProps {
@@ -36,6 +37,21 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
             <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>
               {t('chat.description')}
             </p>
+            <div className="mt-4">
+              <NewChatButton
+                communityId={communityId}
+                labels={{
+                  newChat: t('chat.newChat'),
+                  newChatTitle: t('chat.newChatTitle'),
+                  selectMembers: t('chat.selectMembers'),
+                  startChat: t('chat.startChat'),
+                  composeSearchPlaceholder: t('chat.composeSearchPlaceholder'),
+                  composeMessagePlaceholder: t('chat.composeMessagePlaceholder'),
+                  close: t('chat.close'),
+                  cancel: t('chat.cancel'),
+                }}
+              />
+            </div>
           </div>
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#131517] text-white">
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
@@ -68,6 +84,7 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
           chat: t('nav.chat'),
           vote: t('nav.vote'),
           me: t('nav.me'),
+          contribute: t('nav.contribute'),
         }}
       />
     </MemberShell>

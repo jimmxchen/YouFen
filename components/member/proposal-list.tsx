@@ -28,6 +28,12 @@ function statusLabel(status: MemberProposal['status'], labels: ProposalListProps
   return labels.ended
 }
 
+function statusColor(status: MemberProposal['status']) {
+  if (status === 'active') return 'text-emerald-600'
+  if (status === 'upcoming') return 'text-amber-600'
+  return 'text-red-600'
+}
+
 function formatNumber(value: number, locale: string) {
   return new Intl.NumberFormat(locale).format(value)
 }
@@ -48,7 +54,7 @@ export function ProposalList({ proposals, locale, communityId, voicePower, label
         <article key={proposal.id} className={`${memberCard} flex flex-col`}>
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-xs font-medium uppercase tracking-wide text-emerald-600">
+              <p className={`text-xs font-medium uppercase tracking-wide ${statusColor(proposal.status)}`}>
                 {statusLabel(proposal.status, labels)}
               </p>
               <h2 className="mt-1 text-lg font-semibold leading-6 text-[#131517]">

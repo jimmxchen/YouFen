@@ -239,8 +239,8 @@ export default function ProposalDetailPage() {
 
       {/* Delete Confirmation */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowDeleteConfirm(false)} />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/30" onClick={() => setShowDeleteConfirm(false)} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-md mx-4 p-6 space-y-4">
             <h3 className="text-lg font-semibold text-[#131517]">
               {t('deleteProposalConfirm')}

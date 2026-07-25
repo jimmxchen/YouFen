@@ -87,3 +87,10 @@ export const chatMessages = pgTable("chat_messages", {
   content: text("content").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 })
+
+export const chatParticipants = pgTable("chat_participants", {
+  id: text("id").primaryKey(),
+  conversationId: text("conversation_id").notNull(),
+  memberId: text("member_id").notNull(),
+  joinedAt: timestamp("joined_at").defaultNow().notNull(),
+})

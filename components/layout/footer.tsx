@@ -7,7 +7,7 @@ export function Footer() {
   const t = useTranslations('footer')
 
   return (
-    <footer className="relative border-t border-gray-200 bg-white py-12 px-6">
+    <footer className="relative border-t border-gray-200 bg-[#FAFAFA] py-12 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* 品牌信息 */}

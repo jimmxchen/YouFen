@@ -58,19 +58,17 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
 
       <div className="grid gap-5 px-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:px-0 mt-5">
         <aside className="space-y-4 lg:sticky lg:top-24">
-          <section className={memberCard}>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
-                {member.avatarInitials}
-              </div>
-              <div className="min-w-0">
-                <h2 className="text-xl font-semibold text-[#131517]">{member.name}</h2>
-                <p className={`mt-1 text-sm ${memberSubtle}`}>
-                  {t('me.role')}: {member.role}
-                </p>
-              </div>
+          <section className={`${memberCard} flex flex-col items-center text-center`}>
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#F0F0F0] bg-white text-sm font-semibold text-[#131517]">
+              {member.avatarInitials}
             </div>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-3 min-w-0">
+              <h2 className="text-xl font-semibold text-[#131517]">{member.name}</h2>
+              <p className={`mt-1 text-sm ${memberSubtle}`}>
+                {t('me.role')}: {member.role}
+              </p>
+            </div>
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
               {member.tags.map((tag) => (
                 <span key={tag} className="rounded-full bg-[#FAFAFA] px-3 py-1 text-xs text-[#525252]">
                   {tag}
@@ -151,6 +149,7 @@ export default async function MemberMePage({ params }: MemberMePageProps) {
           chat: t('nav.chat'),
           vote: t('nav.vote'),
           me: t('nav.me'),
+          contribute: t('nav.contribute'),
         }}
       />
     </MemberShell>

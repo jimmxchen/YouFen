@@ -25,7 +25,7 @@ export function Features() {
   ]
 
   return (
-    <section className="relative py-32 px-6 bg-white rounded-t-[2rem]">
+    <section className="relative py-32 px-6 bg-[#FAFAFA] rounded-t-[2rem]">
       <div className="max-w-6xl mx-auto">
         {/* 标题 */}
         <div className="text-center mb-20">

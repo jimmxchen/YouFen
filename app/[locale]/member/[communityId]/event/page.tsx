@@ -66,6 +66,7 @@ export default async function MemberEventPage({ params }: MemberEventPageProps) 
           chat: t('nav.chat'),
           vote: t('nav.vote'),
           me: t('nav.me'),
+          contribute: t('nav.contribute'),
         }}
       />
     </MemberShell>
