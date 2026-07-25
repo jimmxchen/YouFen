@@ -12,6 +12,7 @@ const VIEW_LABELS: Record<AdminView, string> = {
   chat: 'chat',
   management: 'management',
   members: 'members',
+  contributions: 'contributions',
   records: 'trustedRecords',
 }
 
