@@ -1,183 +1,182 @@
-# YouFen.io
+# YouFen
 
 > Let every participant genuinely have a stake in their community.
 
-A no-code community co-governance platform that helps community operators convert member participation and contributions into "voice power," enabling members to collectively participate in community voting, rule co-creation, and important decision-making.
+A no-code community co-governance platform that converts member participation into Ownership power with on-chain governance for voting, rule co-creation, and decision-making.
 
-## 🎯 Project Overview
+## Status
 
-**Version**: v0.1 Hackathon MVP
-**Track**: Injective Blockchain x AI / Build in Public
-**Demo Community**: AdventureX Community
+**Live**: [www.youfen.app](https://www.youfen.app)
+**Version**: v0.7
+**Track**: Injective Blockchain × AI / Build in Public
 
-### Core Features
+## Core Features
 
-- ✅ **No-Code Community Creation** - Fill in the info, AI auto-generates participation rules
-- ✅ **Voice Power System** - Members earn voice power through contributions for community decisions
-- ✅ **AI-Assisted Review** - AI identifies contribution types, suggests voice power values
-- ✅ **Weighted Voting** - Community voting weighted by voice power
-- ✅ **Trusted Records** - Key decisions generate public trusted records via Injective
-- ✅ **Mobile First** - H5 website, works inside WeChat
+- **No-Code Community Creation** — Fill in details, AI auto-generates contribution rules
+- **Ownership System** — Contributions → Ownership → governance weight; monthly Epoch inflation budget + advance mechanism
+- **AI-Assisted Review** — DeepSeek / Claude identify contribution types and suggest Ownership values
+- **Weighted Voting** — Ownership-weighted + EIP-712 on-chain signatures + multi-sig approval
+- **Task System** — Operators publish tasks, members submit evidence, auto-mint Ownership on approval
+- **Activity System** — Create activities, member registration, check-in management
+- **On-Chain Records** — All mint / reversal / epoch / proposal operations recorded as verifiable PublicRecords
+- **Mobile First** — H5 website, works inside WeChat
 
-## 📚 Documentation
+## Documentation
 
 | Document | Description |
 | -------- | ----------- |
-| [PRD.md](docs/PRD.md) | Full Product Requirements Document (Chinese) |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Technical Architecture Design (Chinese) |
-| [PRD.en.md](docs/PRD.en.md) | English translation of PRD (reference only) |
-| [ARCHITECTURE.en.md](docs/ARCHITECTURE.en.md) | English translation of Architecture (reference only) |
+| [PRD.md](docs/PRD.md) | Product Requirements (Chinese) |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture Design (Chinese) |
+| [PRD.en.md](docs/PRD.en.md) | PRD English |
+| [ARCHITECTURE.en.md](docs/ARCHITECTURE.en.md) | Architecture English |
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 ### Frontend
-- **Framework**: Next.js 14 (App Router + React Server Components)
+- **Framework**: Next.js 16 (App Router + Turbopack)
 - **Language**: TypeScript 5+
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Mobile**: PWA + WeChat JSSDK
+- **Styling**: Tailwind CSS
+- **i18n**: next-intl (zh/en)
+- **Animation**: Framer Motion
 
 ### Backend
-- **Runtime**: Node.js 20+
-- **API**: Next.js API Routes / tRPC
-- **ORM**: Prisma
-- **Auth**: NextAuth.js
+- **API**: Next.js API Routes (89 endpoints)
+- **ORM**: Prisma + Drizzle ORM (dual-track)
+- **Database**: Neon PostgreSQL (Serverless)
+- **Queue**: BullMQ (on-chain confirmation worker)
+- **Cron**: Vercel Cron (every-minute chain sync + submit + confirm)
 
-### Database
-- **Primary**: PostgreSQL 15+
-- **Cache**: Redis 7+
-
-### AI Integration
-- **Models**: OpenAI GPT-4 / Claude 3
-- Generate participation rules
-- Identify contribution types
-- Generate community reports
+### AI
+- **Models**: DeepSeek / Claude
+- Contribution analysis & rule suggestions
+- Auto-matching contribution types
 
 ### Blockchain
-- **Network**: Injective Testnet
-- **Interaction**: ethers.js / Injective SDK
-- **Wallet**: Backend managed wallet (user-transparent)
+- **Network**: Injective Testnet (chainId 1439)
+- **Contracts**: YouFenGovernance v0.7 + YouFenRecords (Solidity)
+- **SDK**: ethers.js v6
+- **Signatures**: EIP-712 typed data (approver multi-sig)
+- **Wallet**: Backend-managed (transparent to users)
+- **Design**: Non-token economy — Ownership is non-tradable, non-transferable
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
 - Node.js 20+
-- pnpm 8+
-- PostgreSQL 15+
-- Redis 7+
+- npm 9+
 
-### Install Dependencies
+### Install
 
 ```bash
-pnpm install
+npm install
+cp .env.example .env  # edit with your values
 ```
 
 ### Environment Variables
 
-Copy `.env.example` to `.env` and fill in:
-
 ```env
-# Database
+# Database (Neon PostgreSQL)
 DATABASE_URL=postgresql://...
-
-# Redis
-REDIS_URL=redis://...
-
-# AI
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-...
+DIRECT_URL=postgresql://...
 
 # Blockchain
-INJECTIVE_RPC_URL=https://...
-INJECTIVE_CONTRACT_ADDRESS=0x...
+INJECTIVE_RPC_URL=https://k8s.testnet.json-rpc.injective.network/
+CHAIN_ID=1439
+CONTRACT_ADDRESS=0x...
+CONTRACT_DEPLOY_BLOCK=...
 BLOCKCHAIN_PRIVATE_KEY=0x...
 
+# Internal API
+CRON_SECRET=...
+INTERNAL_API_TOKEN=...
+RECORD_HASH_PEPPER=...
+
+# AI
+ANTHROPIC_API_KEY=sk-...
+DEEPSEEK_API_KEY=sk-...
+
 # Auth
-NEXTAUTH_SECRET=...
-NEXTAUTH_URL=http://localhost:3000
+JWT_SECRET=...
 ```
 
-### Initialize Database
+### Init Database
 
 ```bash
-pnpm prisma generate
-pnpm prisma db push
-pnpm prisma db seed
+npx prisma generate
+npx prisma db push
+npx tsx db/seed.ts
 ```
 
-### Start Dev Server
+### Start
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 Visit http://localhost:3000
 
-## 📱 Page Structure
+### Deploy Contracts
+
+```bash
+npx hardhat compile
+npx hardhat run scripts/deploy-contract.ts --network injectiveTestnet
+npx hardhat run scripts/deploy-governance.ts --network injectiveTestnet
+npx tsx scripts/seed-governance-community.ts
+```
+
+## Page Structure
 
 ```
-YouFen.io
-├── Landing Page (/)
-├── Create Community (/create)
-├── Community Admin (/admin/:id) - Desktop First
+YouFen
+├── Landing (/)
+├── Feature Pages
+│   ├── AI Review (/features/ai)
+│   ├── Ownership (/features/voting-power)
+│   ├── Contributions (/features/contribution)
+│   └── Voting (/features/voting)
+├── Admin (/admin) — Desktop
 │   ├── Dashboard
-│   ├── Member Management
+│   ├── Management (Polls / Activities / Tasks)
+│   ├── Members
 │   ├── Contribution Review
-│   ├── Proposal Management
-│   └── Trusted Records
-├── Member Page (/dashboard/:id) - Mobile First
-├── Vote Page (/vote/:id) - Mobile First
-├── Public Community Page (/community/:id)
-└── Build in Public (/bip)
+│   ├── Proposals
+│   ├── AI Chat
+│   └── Records
+├── Member (/member/[communityId]) — Mobile First
+│   ├── Home
+│   ├── Voting
+│   ├── Contribute
+│   ├── Tasks
+│   ├── Activities
+│   ├── Chat
+│   ├── On-Chain Records
+│   ├── Public Page
+│   └── Profile
+├── Public Community (/communities/[slug])
+├── Record Verification (/records)
+└── Docs (/docs)
 ```
 
-## 🎨 Design Principles
+## Known Issues
 
-| Principle | Description |
-| --------- | ----------- |
-| **Mobile First** | Member experience prioritized for mobile |
-| **Seamless Integration** | Blockchain invisible to users, handled automatically in background |
-| **AI Assisted** | AI only suggests; human makes the final decision |
-| **Progressive Enhancement** | Basic functionality works without JS |
+### Injective Testnet RPC
 
-## 📊 Demo Data
+The public RPC (`k8s.testnet.json-rpc.injective.network`) may return null indefinitely for `eth_getTransactionReceipt` even after transactions are mined. The project handles this via:
+- Event indexing via `getLogs` (unaffected)
+- Confirmer null-receipt fast path: after 5 consecutive nulls, reads `recordExists()` directly from the contract
 
-The project includes preset demo data:
+## Demo Data
+
 - Community: AdventureX Community
-- 25 members, total voice power: 5,280
-- 8 contribution records
-- 2 voting proposals
-- 4 trusted records
+- 25 members
+- Initial supply: 100,000 Ownership
+- Monthly inflation: 5%, max advance: 25%, per-member cap: 10%
 
-## 🔐 Security
-
-- Voice power cannot be traded, withdrawn, or transferred
-- Contributions require operator review
-- IP tracking to prevent abuse
-- Backend managed wallet; users don't need to connect a wallet
-
-## 📝 Development Plan
-
-- [x] Day 1-2: Foundation setup
-- [ ] Day 3-4: Core features
-- [ ] Day 5-6: Blockchain integration
-- [ ] Day 7: Optimization and deployment
-
-## 🎯 MVP Success Criteria
-
-- ✅ Landing page accessible
-- ✅ Communities can be created + AI generates rules
-- ✅ Members can be added + voice power distributed
-- ✅ Proposals can be created + voting completed
-- ✅ At least 1 Injective trusted record generated
-- ✅ Build in Public page displayed
-- ✅ Mobile experience complete
-
-## 📄 License
+## License
 
 MIT
 
 ---
 
-**Team** | 2026 Hackathon
-**Contact** | youfen@example.com
+**YouFen Team** | 2026
