@@ -375,7 +375,9 @@
       "voteNow": "去投票",
       "myVoice": "我的发言权",
       "viewMyRecord": "查看我的记录",
-      "recentActivity": "最近动态"
+      "recentActivity": "最近动态",
+      "activityEmptyTitle": "暂无动态",
+      "activityEmptyBody": "贡献、投票和已验证记录将显示在这里。"
     },
     "event": {
       "title": "活动详情",

@@ -353,7 +353,9 @@
       "voteNow": "Vote now",
       "myVoice": "My voice",
       "viewMyRecord": "View my record",
-      "recentActivity": "Recent activity"
+      "recentActivity": "Recent activity",
+      "activityEmptyTitle": "No recent activity",
+      "activityEmptyBody": "Contributions, votes, and verified records will appear here."
     },
     "event": {
       "title": "Event details",
