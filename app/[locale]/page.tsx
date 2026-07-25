@@ -4,12 +4,10 @@ import ScrollMorphHero from '@/components/ui/scroll-morph-hero'
 import { Features } from '@/components/landing/features'
 import { AdvancedFeatures } from '@/components/landing/advanced-features'
 import { ValueCards } from '@/components/landing/value-cards'
-import { Testimonials } from '@/components/landing/testimonials'
-import GradualBlur from '@/components/ui/GradualBlur'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-black relative">
+    <main className="min-h-screen relative">
       <Navbar />
       <div className="sticky top-0 h-screen pt-16 z-0">
         <ScrollMorphHero />
@@ -18,7 +16,6 @@ export default function HomePage() {
         <Features />
         <AdvancedFeatures />
         <ValueCards />
-        <Testimonials />
         <Footer />
       </div>
     </main>

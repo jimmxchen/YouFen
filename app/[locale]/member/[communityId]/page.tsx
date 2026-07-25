@@ -63,12 +63,18 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                 </div>
                 <div className="min-w-0">
                   <p className={`text-sm ${memberSubtle}`}>{t('dashboard.latestUpdate')}</p>
-                  <h3 className="mt-1 text-lg font-semibold leading-6 text-[#131517]">
-                    {member.announcement.title}
-                  </h3>
-                  <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
-                    {member.announcement.body}
-                  </p>
+                  {member.announcement.title ? (
+                    <>
+                      <h3 className="mt-1 text-lg font-semibold leading-6 text-[#131517]">
+                        {member.announcement.title}
+                      </h3>
+                      <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
+                        {member.announcement.body}
+                      </p>
+                    </>
+                  ) : (
+                    <p className={`mt-1 text-sm ${memberSubtle}`}>{t('dashboard.noAnnouncement')}</p>
+                  )}
                 </div>
               </div>
 
@@ -80,20 +86,26 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                   />
                   <div className="min-w-0 flex-1">
                     <p className={`text-sm ${memberSubtle}`}>{t('dashboard.nextEvent')}</p>
-                    <h3 className="mt-1 text-base font-semibold leading-6 text-[#131517]">
-                      {member.nextEvent.title}
-                    </h3>
-                    <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
-                      {member.nextEvent.startsAt} · {member.nextEvent.location}
-                    </p>
-                    <div className="mt-3 flex justify-center">
-                      <Link
-                        href={`${baseHref}/event`}
-                        className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-[#131517] px-4 text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] active:translate-y-0"
-                      >
-                        {t('dashboard.joinEvent')}
-                      </Link>
-                    </div>
+                    {member.nextEvent.title ? (
+                      <>
+                        <h3 className="mt-1 text-base font-semibold leading-6 text-[#131517]">
+                          {member.nextEvent.title}
+                        </h3>
+                        <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
+                          {member.nextEvent.startsAt} · {member.nextEvent.location}
+                        </p>
+                        <div className="mt-3 flex justify-center">
+                          <Link
+                            href={`${baseHref}/event`}
+                            className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-[#131517] px-4 text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] active:translate-y-0"
+                          >
+                            {t('dashboard.joinEvent')}
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <p className={`mt-1 text-sm ${memberSubtle}`}>{t('dashboard.noEvent')}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -176,6 +188,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
           chat: t('nav.chat'),
           vote: t('nav.vote'),
           me: t('nav.me'),
+          contribute: t('nav.contribute'),
         }}
       />
     </MemberShell>

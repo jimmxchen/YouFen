@@ -71,7 +71,7 @@ export default function DashboardPage() {
           <h2 className="text-xl font-semibold text-[#131517]">
             {t('recentContributions')}
           </h2>
-          <Link href="/contributions" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+          <Link href="/admin/management" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
             {t('viewAll')}
           </Link>
         </div>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
           <h2 className="text-xl font-semibold text-[#131517]">
             {t('activeProposals')}
           </h2>
-          <Link href="/proposals" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+          <Link href="/admin/management" className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
             {t('viewAll')}
           </Link>
         </div>
@@ -147,7 +147,7 @@ export default function DashboardPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#F0F0F0]">
-              {proposals.map((p, i) => (
+              {proposals.filter(p => p.status === 'active').map((p, i) => (
                 <tr key={p.id} className={i % 2 === 1 ? 'bg-[#FAFAFA]' : ''}>
                   <td className="px-6 py-3.5 text-sm font-medium text-[#131517]">{p.title}</td>
                   <td className="px-6 py-3.5">

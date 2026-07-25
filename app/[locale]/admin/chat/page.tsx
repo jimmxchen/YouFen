@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { useTranslations } from 'next-intl'
-import { Plus, Search, Send, X } from 'lucide-react'
+import { useTranslations, useLocale } from 'next-intl'
+import { Info, Plus, Search, Send, X } from 'lucide-react'
+import Link from 'next/link'
 import { type ChatConversation, type ChatMessage } from '@/types/admin'
 import { useCommunity } from '@/lib/hooks/use-community'
 import { cn } from '@/lib/utils'
@@ -59,6 +60,7 @@ interface MemberItem {
 
 export default function ChatPage() {
   const t = useTranslations('admin')
+  const locale = useLocale()
   const { communityId } = useCommunity()
 
   const [conversations, setConversations] = useState<ChatConversation[]>([])
@@ -340,12 +342,19 @@ export default function ChatPage() {
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 flex items-center justify-center text-white text-sm font-semibold shadow-sm">
                   {memberInitial.toUpperCase()}
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold text-[#131517]">
                     {activeConversation.memberName || activeConversation.title || 'Chat'}
                   </p>
                   <p className="text-xs text-emerald-600 font-medium">{t('online')}</p>
                 </div>
+                <Link
+                  href={`/${locale}/admin/chat/${activeConversation.id}/settings`}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-[#525252] transition-all hover:bg-[#FAFAFA]"
+                  aria-label="Chat settings"
+                >
+                  <Info className="h-5 w-5" aria-hidden="true" />
+                </Link>
               </div>
 
               {/* messages */}

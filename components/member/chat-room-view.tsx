@@ -14,6 +14,7 @@ interface ChatRoomViewProps {
   communityId: string
   currentUserId?: string
   currentMemberName?: string
+  onMessagesChange?: (messages: MemberChatMessage[]) => void
   labels: {
     back: string
     online: string
@@ -34,7 +35,7 @@ interface ChatRoomViewProps {
   }
 }
 
-export function ChatRoomView({ room, locale, communityId, currentUserId, currentMemberName, labels }: ChatRoomViewProps) {
+export function ChatRoomView({ room, locale, communityId, currentUserId, currentMemberName, labels, onMessagesChange }: ChatRoomViewProps) {
   const [showSearch, setShowSearch] = useState(false)
   const [query, setQuery] = useState('')
   const [messages, setMessages] = useState<MemberChatMessage[]>([])
@@ -92,6 +93,10 @@ export function ChatRoomView({ room, locale, communityId, currentUserId, current
       if (pollRef.current) clearInterval(pollRef.current)
     }
   }, [fetchMessages])
+
+  useEffect(() => {
+    onMessagesChange?.(messages)
+  }, [messages, onMessagesChange])
 
   const normalizedQuery = query.trim().toLowerCase()
   const matches = useMemo(() => {

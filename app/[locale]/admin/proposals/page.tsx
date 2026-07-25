@@ -123,8 +123,8 @@ export default function ProposalsPage() {
 
       {/* Create Proposal Dialog */}
       {showCreate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={closeCreate} />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/30" onClick={closeCreate} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-lg mx-4 p-8 space-y-6">
             <h2 className="text-xl font-semibold text-[#131517]">
               {t('createProposal')}

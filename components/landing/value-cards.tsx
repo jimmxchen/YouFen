@@ -22,7 +22,7 @@ export function ValueCards() {
   ]
 
   return (
-    <section className="relative py-20 px-6 bg-white">
+    <section className="relative py-20 px-6 bg-[#FAFAFA]">
       <div className="max-w-6xl mx-auto">
         {/* 区块标题 */}
         <div className="text-center mb-16">

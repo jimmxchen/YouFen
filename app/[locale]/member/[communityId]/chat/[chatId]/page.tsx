@@ -92,6 +92,7 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
           chat: t('nav.chat'),
           vote: t('nav.vote'),
           me: t('nav.me'),
+          contribute: t('nav.contribute'),
         }}
       />
     </MemberShell>

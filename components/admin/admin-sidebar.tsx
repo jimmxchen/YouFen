@@ -9,14 +9,13 @@ import { type AdminView } from '@/types/admin'
 
 const VIEW_LABELS: Record<AdminView, string> = {
   dashboard: 'dashboard',
-  members: 'members',
-  contributions: 'contributions',
-  records: 'trustedRecords',
-  management: 'management',
   chat: 'chat',
+  management: 'management',
+  members: 'members',
+  records: 'trustedRecords',
 }
 
-const ADMIN_VIEWS: AdminView[] = ['dashboard', 'members', 'contributions', 'records', 'management', 'chat']
+const ADMIN_VIEWS: AdminView[] = ['dashboard', 'chat', 'management', 'members', 'records']
 
 function ViewIcon({ view }: { view: AdminView }) {
   switch (view) {

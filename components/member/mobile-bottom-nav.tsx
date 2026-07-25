@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { CircleUserRound, ChevronRight, Home, Languages, MessageCircle, Vote } from 'lucide-react'
+import { CircleUserRound, ChevronRight, FileText, Home, Languages, MessageCircle, Vote } from 'lucide-react'
 import { YouFenLogo } from '@/components/brand/youfen-logo'
 import { SideSwitcher } from '@/components/admin/side-switcher'
 import { useTranslations, useLocale } from 'next-intl'
@@ -9,10 +9,11 @@ import { useRouter, usePathname } from '@/i18n/navigation'
 interface MobileBottomNavProps {
   locale: string
   communityId: string
-  active: 'home' | 'chat' | 'vote' | 'me'
+  active: 'home' | 'chat' | 'contribute' | 'vote' | 'me'
   labels: {
     home: string
     chat: string
+    contribute: string
     vote: string
     me: string
   }
@@ -28,6 +29,11 @@ const items = [
     id: 'chat',
     href: '/chat',
     icon: MessageCircle,
+  },
+  {
+    id: 'contribute',
+    href: '/contribute',
+    icon: FileText,
   },
   {
     id: 'vote',
@@ -56,7 +62,7 @@ export function MobileBottomNav({ locale, communityId, active, labels }: MobileB
 
   return (
     <>
-      <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-md -translate-x-1/2 grid-cols-4 border-t border-black/[0.08] bg-white/80 px-3 py-2 backdrop-blur-[20px] lg:hidden">
+      <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-md -translate-x-1/2 grid-cols-5 border-t border-black/[0.08] bg-white/80 px-3 py-2 backdrop-blur-[20px] lg:hidden">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = active === item.id

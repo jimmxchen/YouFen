@@ -300,7 +300,7 @@ export default function IntroAnimation() {
                         initial={{ opacity: 0 }}
                         animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className="mt-4 text-xs font-bold tracking-[0.2em] text-gray-300"
+                        className="mt-4 text-xs font-bold tracking-[0.2em] text-gray-400"
                     >
                         {t('subtitle')}
                     </motion.p>
@@ -314,7 +314,7 @@ export default function IntroAnimation() {
                     <h2 className="text-3xl md:text-5xl font-normal text-white tracking-tight mb-4">
                         {t('mainTitle')}
                     </h2>
-                    <p className="text-sm md:text-base text-gray-300 max-w-lg leading-relaxed">
+                    <p className="text-sm md:text-base text-gray-400 leading-relaxed">
                         {t('description')}
                     </p>
                 </motion.div>

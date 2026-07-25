@@ -24,6 +24,7 @@ export function CreateCommunityModal({ open, onClose }: Props) {
   const [loading, setLoading] = useState(false)
 
   // Token policy defaults
+  const [initialSupply, setInitialSupply] = useState(10000)
   const [inflationRate, setInflationRate] = useState(5)
   const [advanceRate, setAdvanceRate] = useState(25)
   const [memberCapRate, setMemberCapRate] = useState(10)
@@ -52,6 +53,7 @@ export function CreateCommunityModal({ open, onClose }: Props) {
           slug: slug.trim(),
           description: description.trim() || undefined,
           goal: goal.trim() || undefined,
+          initialSupply,
           inflationRateBps: inflationRate * 100,
           advanceRateBps: advanceRate * 100,
           memberCapRateBps: memberCapRate * 100,
@@ -85,11 +87,11 @@ export function CreateCommunityModal({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto"
       onClick={handleBackdropClick}
     >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-      <div className="relative w-full max-w-lg rounded-3xl bg-white shadow-xl border border-[#F0F0F0] p-8">
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" />
+      <div className="relative w-full max-w-lg my-8 rounded-3xl bg-white shadow-xl border border-[#F0F0F0] p-8">
         <button
           onClick={onClose}
           className="absolute right-6 top-6 p-1.5 rounded-xl text-[#939597] hover:bg-[#FAFAFA] hover:text-[#131517] transition-colors"
@@ -175,6 +177,26 @@ export function CreateCommunityModal({ open, onClose }: Props) {
                 ? "这些参数决定社区 Token 的增发速度和分配规则，创建后可通过治理提案修改。"
                 : "These control how fast new tokens are minted and distributed. They can be changed later via governance proposals."}
             </p>
+
+            <div>
+              <label className="block text-sm font-medium text-[#131517] mb-1.5">
+                {isZh ? "初始投票权数量" : "Initial voting power"}
+              </label>
+              <input
+                type="number"
+                min={100}
+                max={1000000}
+                step={100}
+                value={initialSupply}
+                onChange={(e) => setInitialSupply(Math.max(100, Number(e.target.value)))}
+                className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+              />
+              <p className="text-xs text-[#939597] mt-1">
+                {isZh
+                  ? `创建者将自动获得全部 ${initialSupply.toLocaleString()} 初始投票权`
+                  : `Creator automatically receives all ${initialSupply.toLocaleString()} initial voting power`}
+              </p>
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-[#131517] mb-1.5">
