@@ -2,180 +2,181 @@
 
 > 让每个参与者，在社区里真的有份。
 
-无代码社群共治网站，帮助社群运营者把成员的参与和贡献转化为"发言权"，让成员可以共同参与社区投票、规则共创和重要决策。
+无代码社群共治平台，帮助运营者将成员参与转化为 Ownership，通过链上治理实现投票、规则共创和重要决策。
 
-## 🎯 项目概述
+## 项目状态
 
-**版本**: v0.1 Hackathon MVP  
-**赛道**: Injective Blockchain x AI / Build in Public  
-**Demo 社区**: AdventureX Community
+**线上地址**: [www.youfen.app](https://www.youfen.app)
+**版本**: v0.7
+**赛道**: Injective Blockchain × AI / Build in Public
 
-### 核心功能
+## 核心功能
 
-- ✅ **无代码创建社群** - 填写信息，AI 自动生成参与规则
-- ✅ **发言权系统** - 成员通过贡献获得发言权，用于社区决策
-- ✅ **AI 辅助审核** - AI 识别贡献类型，建议发言权数值
-- ✅ **加权投票** - 按发言权加权的社区投票系统
-- ✅ **可信记录** - 关键决策通过 Injective 生成公开可信记录
-- ✅ **移动端优先** - H5 网站，可在微信内打开
+- **无代码创建社群** — 填写信息即可启动，AI 自动生成贡献规则
+- **Ownership 系统** — 贡献→Ownership→治理权，每月 Epoch 通胀预算 + 预支机制
+- **AI 辅助审核** — DeepSeek / Claude 识别贡献类型，建议 Ownership 数值
+- **加权投票** — Ownership 加权 + EIP-712 链上签名 + 多签审批
+- **任务系统** — 运营者发布任务，成员提交凭证，审批后自动发放 Ownership
+- **活动系统** — 创建活动、成员报名、签到管理
+- **链上存证** — 所有 mint / reversal / epoch / proposal 操作上链为 PublicRecord，可公开验证
+- **移动端优先** — H5 网站，微信内可用
 
-## 📚 文档
+## 文档
 
 | 文档 | 说明 |
 |-----|------|
-| [PRD.md](docs/PRD.md) | 完整的产品需求文档 |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 技术架构设计文档 |
+| [PRD.md](docs/PRD.md) | 产品需求文档 |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 技术架构设计 |
+| [PRD.en.md](docs/PRD.en.md) | PRD 英文版 |
+| [ARCHITECTURE.en.md](docs/ARCHITECTURE.en.md) | 架构英文版 |
 
-## 🏗️ 技术栈
+## 技术栈
 
 ### 前端
-- **框架**: Next.js 14 (App Router + React Server Components)
+- **框架**: Next.js 16 (App Router + Turbopack)
 - **语言**: TypeScript 5+
-- **样式**: Tailwind CSS + shadcn/ui
-- **移动端**: PWA + 微信 JSSDK
+- **样式**: Tailwind CSS
+- **国际化**: next-intl（中/英）
+- **动画**: Framer Motion
 
 ### 后端
-- **运行时**: Node.js 20+
-- **API**: Next.js API Routes / tRPC
-- **ORM**: Prisma
-- **认证**: NextAuth.js
+- **API**: Next.js API Routes（89 个端点）
+- **ORM**: Prisma + Drizzle ORM 双轨
+- **数据库**: Neon PostgreSQL（Serverless）
+- **队列**: BullMQ（链上确认 worker）
+- **Cron**: Vercel Cron（每分钟链同步 + 提交 + 确认）
 
-### 数据库
-- **主数据库**: PostgreSQL 15+
-- **缓存**: Redis 7+
-
-### AI 集成
-- **模型**: OpenAI GPT-4 / Claude 3
-- 生成参与规则
-- 识别贡献类型
-- 生成社群报告
+### AI
+- **模型**: DeepSeek / Claude
+- 贡献分析与规则建议
+- 自动匹配贡献类型
 
 ### 区块链
-- **网络**: Injective Testnet
-- **交互**: ethers.js / Injective SDK
-- **钱包**: 后台托管钱包（用户无感）
+- **网络**: Injective Testnet (chainId 1439)
+- **合约**: YouFenGovernance v0.7 + YouFenRecords（Solidity）
+- **交互**: ethers.js v6
+- **签名**: EIP-712 类型化数据签名（approver 多签）
+- **钱包**: 后台托管（用户无感）
+- **特点**: 非 token 经济，Ownership 不可交易/不可转移
 
-## 🚀 快速开始
+## 快速开始
 
 ### 环境要求
 
 - Node.js 20+
-- pnpm 8+
-- PostgreSQL 15+
-- Redis 7+
+- npm 9+
 
-### 安装依赖
+### 安装
 
 ```bash
-pnpm install
+npm install
+cp .env.example .env  # 编辑填写环境变量
 ```
 
 ### 环境变量
 
-复制 `.env.example` 到 `.env` 并填写：
-
 ```env
-# Database
+# 数据库 (Neon PostgreSQL)
 DATABASE_URL=postgresql://...
+DIRECT_URL=postgresql://...
 
-# Redis
-REDIS_URL=redis://...
-
-# AI
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-...
-
-# Blockchain
-INJECTIVE_RPC_URL=https://...
-INJECTIVE_CONTRACT_ADDRESS=0x...
+# 区块链
+INJECTIVE_RPC_URL=https://k8s.testnet.json-rpc.injective.network/
+CHAIN_ID=1439
+CONTRACT_ADDRESS=0x...
+CONTRACT_DEPLOY_BLOCK=...
 BLOCKCHAIN_PRIVATE_KEY=0x...
 
+# 内部 API
+CRON_SECRET=...
+INTERNAL_API_TOKEN=...
+RECORD_HASH_PEPPER=...
+
+# AI
+ANTHROPIC_API_KEY=sk-...
+DEEPSEEK_API_KEY=sk-...
+
 # Auth
-NEXTAUTH_SECRET=...
-NEXTAUTH_URL=http://localhost:3000
+JWT_SECRET=...
 ```
 
 ### 初始化数据库
 
 ```bash
-pnpm prisma generate
-pnpm prisma db push
-pnpm prisma db seed
+npx prisma generate
+npx prisma db push
+npx tsx db/seed.ts
 ```
 
-### 启动开发服务器
+### 启动
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 访问 http://localhost:3000
 
-## 📱 页面结构
+### 部署合约
+
+```bash
+npx hardhat compile
+npx hardhat run scripts/deploy-contract.ts --network injectiveTestnet
+npx hardhat run scripts/deploy-governance.ts --network injectiveTestnet
+npx tsx scripts/seed-governance-community.ts
+```
+
+## 页面结构
 
 ```
 有份 YouFen
 ├── 首页 (/)
-├── 创建社群 (/create)
-├── 社群后台 (/admin/:id) - 桌面端优先
+├── 功能页
+│   ├── AI 辅助审核 (/features/ai)
+│   ├── Ownership 系统 (/features/voting-power)
+│   ├── 贡献系统 (/features/contribution)
+│   └── 加权投票 (/features/voting)
+├── 管理后台 (/admin) — 桌面端
 │   ├── 概览
+│   ├── 管理 (投票 / 活动 / 任务)
 │   ├── 成员管理
 │   ├── 贡献审核
-│   ├── 议题管理
-│   └── 可信记录
-├── 成员页 (/dashboard/:id) - 移动端优先
-├── 投票页 (/vote/:id) - 移动端优先
-├── 公开社群页 (/community/:id)
-└── Build in Public (/bip)
+│   ├── 提案管理
+│   ├── AI 对话
+│   └── 存证记录
+├── 成员端 (/member/[communityId]) — 移动端优先
+│   ├── 首页
+│   ├── 提案投票
+│   ├── 贡献提交
+│   ├── 任务
+│   ├── 活动
+│   ├── 社区聊天
+│   ├── 链上存证
+│   ├── 社群公开页
+│   └── 个人中心
+├── 公开社群页 (/communities/[slug])
+├── 存证验证 (/records)
+└── 文档 (/docs)
 ```
 
-## 🎨 设计原则
+## 已知注意事项
 
-| 原则 | 说明 |
-|-----|------|
-| **移动端优先** | 成员端体验优先移动设备 |
-| **无感集成** | 区块链对用户透明，后台自动处理 |
-| **AI 辅助** | AI 只建议，人工最终决策 |
-| **渐进增强** | 基础功能无 JS 也能用 |
+### Injective 测试网 RPC
 
-## 📊 Demo 数据
+公共 RPC (`k8s.testnet.json-rpc.injective.network`) 的 `eth_getTransactionReceipt` 会长期返回 null，即使交易已上链。项目已通过以下方式绕过：
+- 用 `getLogs` 做事件索引（不受影响）
+- Confirmer 内置 null-receipt 快速通道：连续 5 次 null 后直接读合约 `recordExists()` 确认
 
-项目包含预设的 Demo 数据：
+## Demo 数据
+
 - 社群：AdventureX Community
-- 25 名成员，总发言权 5,280
-- 8 条贡献记录
-- 2 个投票议题
-- 4 条可信记录
+- 25 名成员
+- 初始供应 100,000 Ownership
+- 月通胀率 5%，预支上限 25%，单人上限 10%
 
-## 🔐 安全性
-
-- 发言权不可交易、不能提现
-- 贡献需要运营者审核
-- IP 地址记录防刷
-- 后台托管钱包，用户无需连接钱包
-
-## 📝 开发计划
-
-- [x] Day 1-2: 基础搭建
-- [ ] Day 3-4: 核心功能
-- [ ] Day 5-6: 区块链集成
-- [ ] Day 7: 优化和部署
-
-## 🎯 MVP 成功标准
-
-- ✅ 首页可访问
-- ✅ 可创建社群 + AI 生成规则
-- ✅ 可添加成员 + 发放发言权
-- ✅ 可创建议题 + 完成投票
-- ✅ 可生成至少 1 条 Injective 可信记录
-- ✅ 可展示 Build in Public 页面
-- ✅ 手机端体验完整
-
-## 📄 许可证
+## 许可证
 
 MIT
 
 ---
 
-**开发团队** | 2026 Hackathon  
-**联系方式** | youfen@example.com
+**有份团队** | 2026
