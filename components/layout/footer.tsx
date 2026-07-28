@@ -2,6 +2,7 @@
 
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
 export function Footer() {
   const t = useTranslations('footer')
@@ -83,6 +84,7 @@ export function Footer() {
               {t('copyright')}
             </p>
             <div className="flex items-center space-x-6">
+              <LanguageSwitcher />
               <Link href="/privacy" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
                 {t('privacy')}
               </Link>

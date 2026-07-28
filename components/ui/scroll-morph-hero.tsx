@@ -72,15 +72,16 @@ function FlipCard({
                     <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
                 </div>
 
-                {/* Back Face */}
+                {/* Back Face — mirrored image */}
                 <div
-                    className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-gray-900 flex flex-col items-center justify-center p-4 border border-gray-700"
+                    className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-gray-200"
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
-                    <div className="text-center">
-                        <p className="text-[8px] font-bold text-blue-400 uppercase tracking-widest mb-1">View</p>
-                        <p className="text-xs font-medium text-white">Details</p>
-                    </div>
+                    <img
+                        src={src}
+                        alt={`hero-${index}`}
+                        className="h-full w-full object-cover scale-x-[-1]"
+                    />
                 </div>
             </motion.div>
         </motion.div>
@@ -91,35 +92,36 @@ function FlipCard({
 const TOTAL_IMAGES = 20;
 const MAX_SCROLL = 3000; // Virtual scroll range
 
-// Unsplash Images
-const IMAGES = [
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&q=80",
-    "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=300&q=80",
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&q=80",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&q=80",
-    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&q=80",
-    "https://images.unsplash.com/photo-1506765515384-028b60a970df?w=300&q=80",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&q=80",
-    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&q=80",
-    "https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?w=300&q=80",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&q=80",
-    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&q=80",
-    "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=300&q=80",
-    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&q=80",
-    "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=300&q=80",
-    "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=300&q=80",
-    "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=300&q=80",
-    "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=300&q=80",
-    "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=300&q=80",
-    "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=300&q=80",
-    "https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=300&q=80",
-];
-
 // Helper for linear interpolation
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t;
 
 export default function IntroAnimation() {
     const t = useTranslations('hero');
+
+    // Unsplash portrait/face images
+    const IMAGES = useMemo(() => [
+        "https://images.unsplash.com/photo-1504593811423-6dd665756598?w=300&q=80",
+        "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&q=80",
+        "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?w=300&q=80",
+        "https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?w=300&q=80",
+        "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=300&q=80",
+        "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=300&q=80",
+        "https://images.unsplash.com/photo-1464863979621-258859e62245?w=300&q=80",
+        "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&q=80",
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
+        "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=300&q=80",
+        "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=300&q=80",
+        "https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?w=300&q=80",
+        "https://images.unsplash.com/photo-1463453091185-61582044d556?w=300&q=80",
+        "https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?w=300&q=80",
+        "https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?w=300&q=80",
+        "https://images.unsplash.com/photo-1474176857210-7287d38d27c6?w=300&q=80",
+        "https://images.unsplash.com/photo-1491349174775-aaafddd81942?w=300&q=80",
+        "https://images.unsplash.com/photo-1509460913899-515f1df34fea?w=300&q=80",
+        "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=300&q=80",
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&q=80",
+    ], []);
+
     const [introPhase, setIntroPhase] = useState<AnimationPhase>("scatter");
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
