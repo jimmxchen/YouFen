@@ -9,12 +9,12 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const statusConfig: Record<ChainRecord['status'], { labelKey: string; icon: typeof CheckCircle2; color: string; bg: string }> = {
-  verified: { labelKey: 'verified', icon: CheckCircle2, color: 'text-emerald-700', bg: 'bg-emerald-50' },
-  pending: { labelKey: 'pending', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
-  submitting: { labelKey: 'submitting', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
-  confirming: { labelKey: 'confirming', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
-  failed: { labelKey: 'failed', icon: XCircle, color: 'text-red-700', bg: 'bg-red-50' },
-  superseded: { labelKey: 'superseded', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
+  verified: { labelKey: 'status.verified', icon: CheckCircle2, color: 'text-emerald-700', bg: 'bg-emerald-50' },
+  pending: { labelKey: 'status.pending', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
+  submitting: { labelKey: 'status.submitting', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
+  confirming: { labelKey: 'status.confirming', icon: Clock, color: 'text-blue-700', bg: 'bg-blue-50' },
+  failed: { labelKey: 'status.failed', icon: XCircle, color: 'text-red-700', bg: 'bg-red-50' },
+  superseded: { labelKey: 'status.superseded', icon: Clock, color: 'text-amber-700', bg: 'bg-amber-50' },
 }
 
 const typeFilters = ['all', 'token', 'votes', 'rules', 'epoch'] as const

@@ -1,6 +1,9 @@
+'use client'
 import Link from 'next/link'
-import { CircleUserRound, Home, MessageCircle, Vote } from 'lucide-react'
+import { CircleUserRound, ChevronRight, Home, Languages, MessageCircle, Vote } from 'lucide-react'
 import { YouFenLogo } from '@/components/brand/youfen-logo'
+import { useTranslations, useLocale } from 'next-intl'
+import { useRouter, usePathname } from '@/i18n/navigation'
 
 interface MobileBottomNavProps {
   locale: string
@@ -38,6 +41,18 @@ const items = [
 ] as const
 
 export function MobileBottomNav({ locale, communityId, active, labels }: MobileBottomNavProps) {
+  const t = useTranslations('member')
+  const currentLocale = useLocale()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const otherLocale = currentLocale === 'zh' ? 'en' : 'zh'
+  const localeLabel = otherLocale === 'en' ? 'English' : '中文'
+
+  const switchLanguage = () => {
+    router.replace(pathname, { locale: otherLocale })
+  }
+
   return (
     <>
       <nav className="fixed bottom-0 left-1/2 z-30 grid w-full max-w-md -translate-x-1/2 grid-cols-4 border-t border-black/[0.08] bg-white/80 px-3 py-2 backdrop-blur-[20px] lg:hidden">
@@ -92,6 +107,23 @@ export function MobileBottomNav({ locale, communityId, active, labels }: MobileB
               </Link>
             )
           })}
+        </div>
+
+        <div className="p-4 border-t border-[#F0F0F0] space-y-2">
+          <Link
+            href={`/${locale}/`}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-[#939597] hover:text-[#131517] transition-colors rounded-lg hover:bg-white/60"
+          >
+            <ChevronRight className="w-4 h-4 rotate-180" />
+            {t('backToLanding')}
+          </Link>
+          <button
+            onClick={switchLanguage}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-[#939597] hover:text-[#131517] transition-colors rounded-lg hover:bg-white/60 w-full"
+          >
+            <Languages className="w-4 h-4" />
+            {localeLabel}
+          </button>
         </div>
       </nav>
     </>
