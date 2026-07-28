@@ -23,7 +23,7 @@ export default async function RecordsPage() {
     <main className="min-h-screen bg-white">
       {/* 浅色毛玻璃页头（UIUX_Rules §4.2） */}
       <header className="sticky top-0 z-50 h-14 border-b border-black/[0.06] bg-white/80 backdrop-blur-[20px]">
-        <div className="mx-auto flex h-full max-w-3xl items-center justify-between px-5 sm:px-8">
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-900"

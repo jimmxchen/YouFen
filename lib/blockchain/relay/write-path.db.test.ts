@@ -114,7 +114,11 @@ describe.skipIf(!RUN)('v0.7 write path (integration)', () => {
       communityId: CID, kind: 'execute_mint', callData: mintCall(rec), recordHash: rec, initialStatus: 'ready_to_submit',
     });
     const summary = await submitReady({ prisma, sender: sender(null) });
-    expect(summary.submitted).to.equal(1);
+    // submitReady is a GLOBAL sweep (no community filter — by design, the cron
+    // drains every ready_to_submit row). Concurrent DB test files may leave other
+    // ready actions in the shared Postgres, so assert on THIS action, not an exact
+    // global count.
+    expect(summary.submitted).to.be.at.least(1);
 
     const action = await prisma.chainAction.findUnique({ where: { recordHash: rec }, include: { transactions: true } });
     expect(action?.status).to.equal('submitted');
@@ -127,7 +131,8 @@ describe.skipIf(!RUN)('v0.7 write path (integration)', () => {
     await createChainAction(prisma, { communityId: CID, kind: 'execute_mint', callData: mintCall(rec), recordHash: rec, initialStatus: 'ready_to_submit' });
     await submitReady({ prisma, sender: sender(null) });
     const summary = await confirmPending({ prisma, sender: sender({ status: 1, blockNumber: 100 }) });
-    expect(summary.confirmedOnChain).to.equal(1);
+    // Global sweep — assert on THIS action, not an exact global count (see submitReady note above).
+    expect(summary.confirmedOnChain).to.be.at.least(1);
     const action = await prisma.chainAction.findUnique({ where: { recordHash: rec } });
     expect(action?.status).to.equal('confirming');
   });
@@ -137,7 +142,8 @@ describe.skipIf(!RUN)('v0.7 write path (integration)', () => {
     await createChainAction(prisma, { communityId: CID, kind: 'execute_mint', callData: mintCall(rec), recordHash: rec, initialStatus: 'ready_to_submit' });
     await submitReady({ prisma, sender: sender(null) });
     const summary = await confirmPending({ prisma, sender: sender({ status: 0, blockNumber: 101 }) });
-    expect(summary.reverted).to.equal(1);
+    // Global sweep — assert on THIS action, not an exact global count (see submitReady note above).
+    expect(summary.reverted).to.be.at.least(1);
     const action = await prisma.chainAction.findUnique({ where: { recordHash: rec } });
     expect(action?.status).to.equal('reverted');
     expect(action?.lastError).to.equal('TX_REVERTED');
