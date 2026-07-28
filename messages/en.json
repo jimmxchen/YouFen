@@ -74,13 +74,6 @@
       "anonymous": "Anonymous Voting"
     }
   },
-  "member": {
-    "nav": {
-      "home": "Home",
-      "chat": "Chat",
-      "vote": "Vote",
-      "me": "Me"
-    },
     "backToLanding": "Back to Landing",
     "status": {
       "verified": "Verified",
@@ -251,7 +244,7 @@
       "contributions": "Contributions this week",
       "trustedRecords": "Trusted records"
     }
-  },
+  ,
   "footer": {
     "brand": "YouFen",
     "description": "No-code community governance platform — letting every participant truly have a stake.",
@@ -419,6 +412,7 @@
       "vote": "Vote",
       "me": "Me"
     },
+    "backToLanding": "Back to Landing",
     "dashboard": {
       "greeting": "Hi, {name}",
       "today": "Today",
