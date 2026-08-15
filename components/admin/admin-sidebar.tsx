@@ -1,7 +1,7 @@
 'use client'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link, useRouter, usePathname } from '@/i18n/navigation'
-import { LayoutDashboard, Users, ClipboardCheck, Vote, ShieldCheck, ChevronRight, Languages, ClipboardList, MessageCircle } from 'lucide-react'
+import { LayoutDashboard, Users, ClipboardCheck, ShieldCheck, ChevronRight, Languages, ClipboardList, MessageCircle } from 'lucide-react'
 import { YouFenLogo } from '@/components/brand/youfen-logo'
 import { cn } from '@/lib/utils'
 import { type AdminView } from '@/types/admin'
@@ -10,20 +10,18 @@ const VIEW_LABELS: Record<AdminView, string> = {
   dashboard: 'dashboard',
   members: 'members',
   contributions: 'contributions',
-  proposals: 'proposals',
   records: 'trustedRecords',
   management: 'management',
   chat: 'chat',
 }
 
-const ADMIN_VIEWS: AdminView[] = ['dashboard', 'members', 'contributions', 'proposals', 'records', 'management', 'chat']
+const ADMIN_VIEWS: AdminView[] = ['dashboard', 'members', 'contributions', 'records', 'management', 'chat']
 
 function ViewIcon({ view }: { view: AdminView }) {
   switch (view) {
     case 'dashboard': return <LayoutDashboard className="w-[18px] h-[18px]" />
     case 'members': return <Users className="w-[18px] h-[18px]" />
     case 'contributions': return <ClipboardCheck className="w-[18px] h-[18px]" />
-    case 'proposals': return <Vote className="w-[18px] h-[18px]" />
     case 'records': return <ShieldCheck className="w-[18px] h-[18px]" />
     case 'management': return <ClipboardList className="w-[18px] h-[18px]" />
     case 'chat': return <MessageCircle className="w-[18px] h-[18px]" />
@@ -54,14 +52,10 @@ export function AdminSidebar({ communityName }: AdminSidebarProps) {
 
   return (
     <aside className="w-64 min-h-screen bg-[#FAFAFA] border-r border-[#F0F0F0] flex flex-col fixed left-0 top-0 z-40">
-      <div className="h-16 flex items-center px-6 border-b border-[#F0F0F0]">
-        <Link href="/" className="text-[#131517] hover:text-[#10B981] transition-colors" aria-label="YouFen">
+      <div className="h-16 border-b border-[#F0F0F0]">
+        <Link href="/" className="flex h-16 items-center px-6 text-[#131517] transition-colors hover:text-[#10B981]" aria-label="YouFen">
           <YouFenLogo markClassName="h-9 w-9" textClassName="text-lg" />
         </Link>
-      </div>
-      <div className="px-6 py-4 border-b border-[#F0F0F0]">
-        <p className="text-xs text-[#939597] mb-1">{t('community')}</p>
-        <p className="text-sm font-medium text-[#131517] truncate">{communityName}</p>
       </div>
       <nav className="flex-1 py-4 px-3">
         <ul className="space-y-1">

@@ -18,9 +18,9 @@ export default async function MemberVotePage({ params }: MemberVotePageProps) {
   const member = getDemoMember(communityId)
 
   return (
-    <MemberShell>
+    <MemberShell member={member}>
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
-        <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
+        <p className={`truncate text-base ${memberSubtle}`}>{member.communityName}</p>
         <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
           {t('vote.title')}
         </h1>
