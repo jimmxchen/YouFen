@@ -21,11 +21,11 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
   const unreadCount = member.chatRooms.reduce((total, room) => total + room.unreadCount, 0)
 
   return (
-    <MemberShell>
+    <MemberShell member={member}>
       <header className="px-5 pb-4 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className={`truncate text-sm ${memberSubtle}`}>{member.communityName}</p>
+            <p className={`truncate text-base ${memberSubtle}`}>{member.communityName}</p>
             <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
               {t('chat.title')}
             </h1>

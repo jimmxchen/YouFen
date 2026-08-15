@@ -25,7 +25,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
   const meHref = `/${locale}/member/${communityId}/me`
 
   return (
-    <MemberShell>
+    <MemberShell member={member}>
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <Link
           href={meHref}

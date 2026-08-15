@@ -31,7 +31,7 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
   )
 
   return (
-    <MemberShell>
+    <MemberShell member={member}>
       <ChatRoomView
         room={room}
         locale={locale}

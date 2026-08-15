@@ -94,7 +94,7 @@ export interface DashboardStats {
   upcomingActivities: number
 }
 
-export type AdminView = 'dashboard' | 'members' | 'contributions' | 'proposals' | 'records' | 'management' | 'chat'
+export type AdminView = 'dashboard' | 'members' | 'contributions' | 'records' | 'management' | 'chat'
 
 export interface Task {
   id: string

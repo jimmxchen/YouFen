@@ -146,7 +146,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
       .slice(0, 5)
       .map((p) => ({
         id: `proposal-${p.id}`,
-        category: t("proposals"),
+        category: t("polls"),
         label: p.title,
         sublabel: p.description,
         href: `/admin/proposals/${p.id}`,
@@ -185,12 +185,14 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
   return (
     <header className="h-16 bg-white border-b border-[#F0F0F0] flex items-center justify-between px-8 sticky top-0 z-30">
       <div className="flex items-center gap-3">
-        {title && (
+        {title ? (
           <>
-            <span className="text-sm text-[#939597]">{communityName}</span>
+            <h1 className="text-base font-medium text-[#131517]">{communityName}</h1>
             <span className="text-sm text-[#D4D4D4]">/</span>
-            <h1 className="text-base font-medium text-[#131517]">{title}</h1>
+            <span className="text-sm text-[#939597]">{title}</span>
           </>
+        ) : (
+          <h1 className="text-base font-medium text-[#131517]">{communityName}</h1>
         )}
       </div>
       <div className="flex items-center gap-4">
