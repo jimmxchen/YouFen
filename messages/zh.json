@@ -74,6 +74,455 @@
       "anonymous": "匿名投票"
     }
   },
+  "admin": {
+    "community": "社群",
+    "backToLanding": "返回首页",
+    "search": "搜索",
+    "dashboard": "总览",
+    "dashboardSubtitle": "AdventureX Community 运营概览",
+    "members": "成员管理",
+    "membersSubtitle": "管理社群成员及其发言权",
+    "contributionsSubtitle": "审核成员贡献并分配发言权",
+    "proposals": "投票管理",
+    "proposalsSubtitle": "创建和管理社群投票",
+    "trustedRecords": "可信记录",
+    "trustedRecordsSubtitle": "查看链上公开可信记录",
+    "management": "管理",
+    "chat": "聊天",
+    "chatSubtitle": "与社群成员聊天",
+    "conversations": "会话",
+    "online": "在线",
+    "typeMessage": "输入消息...",
+    "send": "发送",
+    "addMember": "添加成员",
+    "distributeVP": "分配发言权",
+    "createProposal": "创建投票",
+    "generateReport": "生成报告",
+    "quickActions": "快捷操作",
+    "recentContributions": "最近贡献",
+    "viewAll": "查看全部",
+    "member": "成员",
+    "contribution": "贡献",
+    "status": "状态",
+    "voicePower": "发言权",
+    "proposalTitle": "投票标题",
+    "voters": "投票人数",
+    "deadline": "截止时间",
+    "totalVoicePower": "总发言权",
+    "activeProposals": "进行中投票",
+    "todayContributions": "今日贡献",
+    "searchMembers": "搜索成员...",
+    "memberName": "姓名",
+    "role": "角色",
+    "contributions": "贡献数",
+    "tags": "标签",
+    "joinedAt": "加入时间",
+    "actions": "操作",
+    "type": "类型",
+    "aiSuggestion": "AI 建议",
+    "date": "日期",
+    "viewDetails": "查看详情",
+    "approve": "批准",
+    "reject": "驳回",
+    "aiAnalysis": "AI 分析",
+    "all": "全部",
+    "pending": "待审核",
+    "approved": "已批准",
+    "rejected": "已驳回",
+    "proposalTitlePlaceholder": "请输入投票问题",
+    "description": "描述",
+    "descriptionPlaceholder": "请描述投票背景",
+    "options": "选项",
+    "create": "创建",
+    "cancel": "取消",
+    "endVote": "结束投票",
+    "viewOnChain": "查看链上",
+    "delete": "删除",
+    "draft": "草稿",
+    "active": "进行中",
+    "ended": "已结束",
+    "recorded": "已记录",
+    "weighted": "按权重",
+    "onePersonOneVote": "一人一票",
+    "backToMembers": "返回成员列表",
+    "backToProposals": "返回投票列表",
+    "changeRole": "变更角色",
+    "addContribution": "添加贡献",
+    "memberInfo": "成员信息",
+    "contributionHistory": "贡献历史",
+    "totalContributions": "总贡献",
+    "earnedVP": "已获得发言权",
+    "joined": "加入",
+    "lastActive": "最近活跃",
+    "started": "开始时间",
+    "voteResults": "投票结果",
+    "winning": "领先",
+    "trustedRecord": "可信记录",
+    "generateTrustedRecord": "生成可信记录",
+    "aiSummary": "AI 摘要",
+    "deleteProposalConfirm": "删除投票?",
+    "deleteProposalWarning": "此操作无法撤销。该投票及所有投票将被永久删除。",
+    "contributionCount": "贡献数",
+    "roleOwner": "所有者",
+    "roleManager": "管理员",
+    "roleMember": "成员",
+    "memberNotFound": "未找到成员",
+    "invalidVoicePower": "请输入有效的发言权数值。",
+    "voicePowerUpdated": "发言权已更新为 {{value}}",
+    "roleChangedTo": "角色已更改为 {{role}}",
+    "changeToRole": "更改为 {{role}}",
+    "save": "保存",
+    "noContributionsYet": "暂无贡献",
+    "contributionApproved": "贡献已批准。发言权已分配给成员。",
+    "contributionRejected": "贡献已驳回。",
+    "voteEnded": "投票已结束。将生成可信记录。",
+    "proposalDeleted": "投票已删除。",
+    "proposalNotFound": "未找到投票",
+    "generatingRecord": "正在生成可信记录...",
+    "totalVP": "总发言权",
+    "dataHash": "数据哈希",
+    "txHash": "交易哈希",
+    "recordTypeCommunity": "社群",
+    "recordTypeRule": "规则版本",
+    "recordTypeVpBatch": "发言权批次",
+    "recordTypeProposal": "投票",
+    "recordTypeVoteResult": "投票结果",
+    "recordStatusPending": "待处理",
+    "recordStatusRecording": "记录中",
+    "recordStatusRecorded": "已记录",
+    "recordStatusFailed": "失败",
+    "recordFieldCommunity": "社群",
+    "recordFieldNetwork": "网络",
+    "recordFieldCreated": "创建时间",
+    "recordFieldRecordedOnChain": "链上记录时间",
+    "optionA": "选项 A",
+    "optionB": "选项 B",
+    "optionC": "选项 C"
+  },
+  "testimonials": {
+    "title": "用户评价",
+    "subtitle": "看看用户怎么说",
+    "items": [
+      {
+        "name": "张伟",
+        "handle": "@zhangwei_dev",
+        "content": "有份真的解决了我们社群的痛点！成员的贡献终于能被量化，大家参与的积极性明显提高了 🎉"
+      },
+      {
+        "name": "李明",
+        "handle": "@liming_community",
+        "content": "无代码就能搞定社群治理，这个产品太适合我们这种非技术背景的社群组织者了！AI生成规则功能超好用 👍"
+      },
+      {
+        "name": "王芳",
+        "handle": "@wangfang_dao",
+        "content": "投票系统特别透明，按贡献加权的机制很公平。我们社群用了两周，成员满意度大幅提升！"
+      },
+      {
+        "name": "陈晨",
+        "handle": "@chenchen_web3",
+        "content": "时间线功能让社群历史一目了然，新成员能快速了解社群发展脉络。产品体验很棒！"
+      },
+      {
+        "name": "刘洋",
+        "handle": "@liuyang_nft",
+        "content": "有份的AI推荐功能真的很智能，能根据成员的历史贡献推荐合适的任务，提高了参与效率。"
+      },
+      {
+        "name": "赵静",
+        "handle": "@zhaojing_design",
+        "content": "界面设计简洁优雅，用户体验非常流畅。作为设计师，我很欣赏这种注重细节的产品！"
+      },
+      {
+        "name": "孙浩",
+        "handle": "@sunhao_tech",
+        "content": "发言权管理让社群更加民主，每个人都有话语权。贡献越多，影响力越大，这很合理！"
+      },
+      {
+        "name": "周琳",
+        "handle": "@zhoulin_dao",
+        "content": "社群成员参与度明显提高了，大家都很积极。任务分配也变得更加高效了 💪"
+      },
+      {
+        "name": "吴强",
+        "handle": "@wuqiang_web3",
+        "content": "投票结果公开透明，增强了成员之间的信任。这是我用过最好的社群治理工具！"
+      },
+      {
+        "name": "郑雪",
+        "handle": "@zhengxue_crypto",
+        "content": "从零开始搭建社群治理体系，有份让这一切变得简单。强烈推荐！✨"
+      },
+      {
+        "name": "马超",
+        "handle": "@machao_builder",
+        "content": "真的很棒！"
+      },
+      {
+        "name": "林静",
+        "handle": "@linjing_dao",
+        "content": "我们社群使用有份后，成员之间的协作效率提升了至少30%。任务分配更加合理，每个人都能发挥自己的长处。特别是AI推荐系统，真的很智能！"
+      }
+    ]
+  },
+  "footer": {
+    "brand": "有份",
+    "description": "无代码社群共治平台 —— 让每个参与者真正有份。",
+    "poweredBy": "由",
+    "injective": "Injective",
+    "ai": "AI",
+    "products": {
+      "title": "产品",
+      "createCommunity": "创建社群",
+      "viewDemo": "查看 Demo",
+      "docs": "使用文档"
+    },
+    "about": {
+      "title": "关于",
+      "buildInPublic": "Build in Public",
+      "aboutUs": "关于我们",
+      "github": "GitHub"
+    },
+    "copyright": "© 2026 YouFen. 保留所有权利。",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
+  },
+  "records": {
+    "back": "返回首页",
+    "eyebrow": "AdventureX Community · 公开档案",
+    "title": "可信记录",
+    "subtitle": "社群里发生的每一件大事——发了多少 Token、投票结果如何、规则改成什么样——都公开存档在这里，盖上无法涂改的“公证章”；而任何越过预算或投票规则的操作，账本会当场拒绝。",
+    "tagline": "—— 基于 Injective 区块链技术",
+    "ownership": {
+      "title": "所有权分布",
+      "intro": "贡献变成不可交易的社区 Token，Token 占比就是相对所有权。这里一眼看清谁拥有社区多少——广泛分布，而非少数人独大。",
+      "others": "其他 {count} 位成员",
+      "dilutionNote": "相对所有权随新贡献自然变化：持续建设的人占比上升，停止贡献的人会被新贡献者稀释。"
+    },
+    "proposals": {
+      "title": "治理进行时",
+      "intro": "正在投票的提案。票权按提案发起那一刻的持有量冻结——之后的增发影响不了这场投票。",
+      "approval": "赞同",
+      "turnout": "{voters}/{total} 人已投",
+      "quorumMet": "已达法定人数（{quorum}）",
+      "quorumShort": "还需 {need} 人达法定",
+      "endsInHours": "还剩 {hours} 小时",
+      "endsInDays": "还剩 {days} 天",
+      "items": {
+        "treasury": "投票：本季度活动预算 8,000 AXO",
+        "newRule": "投票：新增「代码审查」贡献规则"
+      }
+    },
+    "verifyCenter": {
+      "title": "自助验证中心",
+      "intro": "不用相信我们——粘贴任意一条记录的数字指纹（recordHash），页面会当场复算指纹、核对链上存在、并检查这笔操作是否合规放行。",
+      "placeholder": "粘贴 recordHash（0x 开头）…",
+      "button": "验证",
+      "trySample": "用一条示例试试（{hash}）",
+      "step1": "读取这条记录的内容",
+      "step2": "现场复算数字指纹",
+      "step3": "核对链上存在 + 合规放行",
+      "notFoundStep": "在公开记录里没找到这条指纹",
+      "okTitle": "验证通过",
+      "okDesc": "指纹一致、已在 Injective 链上、且当初经合约合规放行——这条记录从盖章起没被动过。",
+      "notFoundDesc": "没找到匹配的记录。请检查 recordHash 是否完整（0x 开头的 64 位十六进制），或从上面的大事记复制一条。"
+    },
+    "ownershipShift": {
+      "title": "对相对所有权的影响",
+      "desc": "这笔发放后，TA 在社区的相对所有权占比"
+    },
+    "explainer": {
+      "aria": "可信记录是怎么工作的",
+      "write": {
+        "title": "记下来",
+        "desc": "谁、因为什么贡献、获得了多少，一笔一笔记录在案。"
+      },
+      "stamp": {
+        "title": "盖个章",
+        "desc": "每条记录生成一枚独一无二的“数字指纹”，送到公共账本上盖章存档。"
+      },
+      "lock": {
+        "title": "改不了",
+        "desc": "章一旦盖下，任何人——包括我们自己——都无法悄悄修改历史。"
+      },
+      "whyToggle": "为什么可以相信这个页面？",
+      "why1": "区块链就像一座全世界共用的公证处：档案一旦存进去，就永远无法涂改、无法销毁。我们把每条记录的“数字指纹”存进了 Injective 这条区块链。",
+      "why2": "数字指纹的特点是：记录内容哪怕只改动一个标点，指纹都会变得完全不同。所以只要页面上的记录和链上的指纹对得上，就证明它从盖章那一刻起从未被动过。",
+      "why3": "我们只把指纹和数字存上链，不存任何姓名、联系方式等个人信息。想深究的话，每条记录都附有“技术细节”，可以去公共账本网站亲自查证。"
+    },
+    "timelineTitle": "大事记",
+    "timelineHint": "点开任意记录查看它的溯源过程",
+    "timelineAria": "社群可信记录时间线",
+    "status": {
+      "verified": "已盖章确认",
+      "pending": "排队等待盖章",
+      "submitting": "正在送去盖章",
+      "confirming": "盖章确认中",
+      "failed": "盖章遇到问题",
+      "superseded": "已被更正"
+    },
+    "kind": {
+      "tokenMint": "发放 Token",
+      "advanceMint": "预支发放",
+      "tokenReversal": "更正冲销",
+      "epochSummary": "月度结算",
+      "policyVersion": "规则更新",
+      "proposalResult": "投票结果"
+    },
+    "journey": {
+      "recorded": {
+        "title": "记录在案",
+        "desc": "这件事的经过完整登记进社群账本。"
+      },
+      "fingerprint": {
+        "title": "生成指纹",
+        "desc": "由记录内容算出一枚独一无二的数字指纹。"
+      },
+      "stamped": {
+        "title": "送去盖章",
+        "desc": "指纹提交到 Injective 公共账本，盖章存档。"
+      },
+      "checkable": {
+        "title": "人人可验",
+        "desc": "任何人随时可以核对指纹，确认记录没被改过。"
+      },
+      "supersededNote": "这条记录后来被发现有误。按规则，原记录不删除、不覆盖，而是保留原样并追加一条更正记录——你现在看到的就是被更正前的原始版本。"
+    },
+    "verify": {
+      "invite": "不需要相信我们的口头承诺——点击按钮，亲自核对这条记录的指纹和链上存档是否一致。",
+      "button": "亲自验一验",
+      "steps": {
+        "reading": "重新读取记录内容",
+        "hashing": "现场计算数字指纹",
+        "comparing": "与链上存档的指纹比对"
+      },
+      "matchTitle": "指纹一致",
+      "matchDesc": "这条记录自盖章以来，没有被任何人改动过一个字。"
+    },
+    "privacyNote": "链上只存数字指纹与数额，不含任何姓名、邮箱等个人信息。本页当前展示 AdventureX 社群的演示数据。",
+    "demo": {
+      "r6": {
+        "title": "小鹿 获得 200 AXO",
+        "summary": "组织了本月的新人见面会，经管理员审核通过，Token 正在盖章确认中。"
+      },
+      "r5": {
+        "title": "投票结果：社区周会改到周四晚上",
+        "summary": "18 位成员参与投票，按 Token 加权计票，“周四晚”以 62% 的权重胜出。"
+      },
+      "r4": {
+        "title": "7 月结算：本月共发放 5,300 AXO",
+        "summary": "本月正常发放 4,900，预支 400；下月预算将自动扣除这笔预支。"
+      },
+      "r3": {
+        "title": "Carol 获得 500 AXO（含 400 预支）",
+        "summary": "完成了重大社区基础设施建设。本月正常额度只剩 100，其余 400 从下月预算预支，经两位管理员共同批准。"
+      },
+      "r2": {
+        "title": "Liam 获得 500 AXO",
+        "summary": "帮助三位新成员完成 Injective 测试网部署，经管理员审核确认。"
+      },
+      "r1": {
+        "title": "Liam 获得 800 AXO（已更正）",
+        "summary": "这条记录因数量录入错误（多记 300）被更正。按规则原记录不删除、永久保留；冲销与重新发放见 7 月 13 日和 7 月 15 日。"
+      },
+      "r0": {
+        "title": "社群规则 v2 生效：每月增发 5%",
+        "summary": "经社区投票通过，Token 月度增发比例定为 5%，自 7 月起生效。"
+      },
+      "r9": {
+        "title": "更正：冲销 Liam 的 800 AXO",
+        "summary": "7 月 12 日那笔发放数量录入有误，按规则整笔冲销。原错误记录永久保留在下方，正确的发放见 7 月 15 日。"
+      },
+      "r7": {
+        "title": "投票结果：社区新徽标采用方案 B",
+        "summary": "21 位成员参与投票，方案 B 以 58% 的权重当选，已交设计组落地。"
+      },
+      "r8": {
+        "title": "社群规则 v1 生效：创始规则上线",
+        "summary": "AdventureX 创始规则经全体共识生效：初始 100,000 AXO，贡献审核发放，投票按 Token 加权。"
+      },
+      "r10": {
+        "title": "Maya 获得 200 AXO",
+        "summary": "整理了社区 onboarding 文档与 FAQ，经管理员审核发放。"
+      },
+      "r11": {
+        "title": "投票结果：季度活动预算方案通过",
+        "summary": "20 位成员参与投票，按 Token 加权计票，方案以 71% 的赞同通过。"
+      },
+      "r12": {
+        "title": "特批增发：核心成员 Nadia 获得 1,200 AXO",
+        "summary": "承担了跨月的基础设施重构，超出常规单期上限——经社区提案特批、两位管理员共同签名后账本才放行。"
+      },
+      "r13": {
+        "title": "Sky 获得 400 AXO（含 300 预支）",
+        "summary": "提前交付了发布物料。本月正常额度不足，300 从下月预算预支，经两位管理员共同批准。"
+      },
+      "r14": {
+        "title": "6 月结算：本月共发放 4,600 AXO",
+        "summary": "本月正常发放 4,600，无预支；治理供应量随之更新。"
+      },
+      "r15": {
+        "title": "投票结果：社区公约修订采纳",
+        "summary": "19 位成员参与投票，修订版公约以 66% 的赞同通过，已交治理组落地。"
+      }
+    },
+    "filter": {
+      "searchPlaceholder": "搜索记录：人名、事件、关键词…",
+      "clear": "清空搜索",
+      "all": "全部",
+      "token": "Token 发放",
+      "votes": "投票结果",
+      "rules": "规则更新",
+      "epoch": "月度结算",
+      "resultsCount": "找到 {count} 条记录",
+      "emptyTitle": "没有找到匹配的记录",
+      "emptyDesc": "换个关键词试试（比如成员名字、“预支”、“投票”），或者切换上面的分区看看。",
+      "reset": "清除条件，看全部记录"
+    },
+    "vote": {
+      "approval": "赞同",
+      "turnout": "{voters}/{total} 人参与（{pct}%）"
+    },
+    "archive": {
+      "title": "链上存档原文",
+      "fingerprint": "数字指纹（recordHash）",
+      "txRef": "公证编号（交易哈希）",
+      "block": "存档位置",
+      "blockValue": "账本第 {page} 页（区块高度）",
+      "sealedAt": "盖章时间",
+      "network": "所在账本",
+      "networkValue": "Injective 测试网",
+      "pendingValue": "确认完成后写入",
+      "copy": "复制",
+      "copied": "已复制",
+      "authTitle": "批准与放行",
+      "authApprovers": "{count} 位管理员各自用私钥签名批准",
+      "authChecks": "账本放行前核对了：",
+      "authNoChecks": "账本核对原始记录引用无误后放行",
+      "checkLabel": {
+        "budget": "本月预算",
+        "memberCap": "成员单期上限",
+        "advance": "预支比例"
+      },
+      "demoNote": "当前为演示数据，暂无真实链上交易；正式上线后，这里就是可以去公证处网站逐段核对的真实档案。"
+    },
+    "guide": {
+      "toggle": "如何去公证处网站亲自核对？",
+      "intro": "公证处网站（区块链浏览器）是面向工程师的英文工具，但你只需要核对三样东西，其余内容都可以不看：",
+      "s1": "① 页面顶部那串 0x 开头的编号，应与上面的「公证编号」一致；",
+      "s2": "② 状态一栏应显示 Success（成功）；",
+      "s3": "③ 时间应与上面的「盖章时间」对得上。",
+      "open": "打开公证处网站核对这条记录"
+    },
+    "chain": {
+      "title": "Injective 公共账本",
+      "liveTag": "实时",
+      "live": "这本公共账本此刻已写到第 {pages} 页，大约每 {seconds} 秒翻新一页——由全球节点共同维护，无人能单独涂改。本页每条已盖章的记录，都永久存档在其中某一页上。",
+      "fallback": "这本公共账本由全球节点共同维护、持续翻页，无人能单独涂改。本页每条已盖章的记录都永久存档其中。",
+      "open": "打开公证处网站",
+      "engineerNote": "工程师工具 · 英文界面——看不懂内容没关系，用上面每条记录里的「查证指南」即可"
+    }
+  },
   "member": {
     "nav": {
       "home": "首页",
@@ -252,149 +701,6 @@
       "trustedRecords": "可信记录"
     }
   },
-  "admin": {
-    "community": "社群",
-    "backToLanding": "返回首页",
-    "search": "搜索",
-    "dashboard": "总览",
-    "dashboardSubtitle": "AdventureX Community 运营概览",
-    "members": "成员管理",
-    "membersSubtitle": "管理社群成员及其发言权",
-    "contributionsSubtitle": "审核成员贡献并分配发言权",
-    "proposals": "投票管理",
-    "proposalsSubtitle": "创建和管理社群投票",
-    "trustedRecords": "可信记录",
-    "trustedRecordsSubtitle": "查看链上公开可信记录",
-    "management": "管理",
-    "chat": "聊天",
-    "chatSubtitle": "与社群成员聊天",
-    "conversations": "会话",
-    "online": "在线",
-    "typeMessage": "输入消息...",
-    "send": "发送",
-    "addMember": "添加成员",
-    "distributeVP": "分配发言权",
-    "createProposal": "创建投票",
-    "generateReport": "生成报告",
-    "quickActions": "快捷操作",
-    "recentContributions": "最近贡献",
-    "viewAll": "查看全部",
-    "member": "成员",
-    "contribution": "贡献",
-    "status": "状态",
-    "voicePower": "发言权",
-    "proposalTitle": "投票标题",
-    "voters": "投票人数",
-    "deadline": "截止时间",
-    "totalVoicePower": "总发言权",
-    "activeProposals": "进行中投票",
-    "todayContributions": "今日贡献",
-    "searchMembers": "搜索成员...",
-    "memberName": "姓名",
-    "role": "角色",
-    "contributions": "贡献数",
-    "tags": "标签",
-    "joinedAt": "加入时间",
-    "actions": "操作",
-    "type": "类型",
-    "aiSuggestion": "AI 建议",
-    "date": "日期",
-    "viewDetails": "查看详情",
-    "approve": "批准",
-    "reject": "驳回",
-    "aiAnalysis": "AI 分析",
-    "all": "全部",
-    "pending": "待审核",
-    "approved": "已批准",
-    "rejected": "已驳回",
-    "proposalTitlePlaceholder": "请输入投票问题",
-    "description": "描述",
-    "descriptionPlaceholder": "请描述投票背景",
-    "options": "选项",
-    "create": "创建",
-    "cancel": "取消",
-    "endVote": "结束投票",
-    "viewOnChain": "查看链上",
-    "delete": "删除",
-    "draft": "草稿",
-    "active": "进行中",
-    "ended": "已结束",
-    "recorded": "已记录",
-    "weighted": "按权重",
-    "onePersonOneVote": "一人一票",
-    "backToMembers": "返回成员列表",
-    "backToProposals": "返回投票列表",
-    "changeRole": "变更角色",
-    "addContribution": "添加贡献",
-    "memberInfo": "成员信息",
-    "contributionHistory": "贡献历史",
-    "totalContributions": "总贡献",
-    "earnedVP": "已获得发言权",
-    "joined": "加入",
-    "lastActive": "最近活跃",
-    "started": "开始时间",
-    "voteResults": "投票结果",
-    "winning": "领先",
-    "trustedRecord": "可信记录",
-    "generateTrustedRecord": "生成可信记录",
-    "aiSummary": "AI 摘要",
-    "deleteProposalConfirm": "删除投票?",
-    "deleteProposalWarning": "此操作无法撤销。该投票及所有投票将被永久删除。",
-    "contributionCount": "贡献数",
-    "roleOwner": "所有者",
-    "roleManager": "管理员",
-    "roleMember": "成员",
-    "memberNotFound": "未找到成员",
-    "invalidVoicePower": "请输入有效的发言权数值。",
-    "voicePowerUpdated": "发言权已更新为 {{value}}",
-    "roleChangedTo": "角色已更改为 {{role}}",
-    "changeToRole": "更改为 {{role}}",
-    "save": "保存",
-    "noContributionsYet": "暂无贡献",
-    "contributionApproved": "贡献已批准。发言权已分配给成员。",
-    "contributionRejected": "贡献已驳回。",
-    "voteEnded": "投票已结束。将生成可信记录。",
-    "proposalDeleted": "投票已删除。",
-    "proposalNotFound": "未找到投票",
-    "generatingRecord": "正在生成可信记录...",
-    "totalVP": "总发言权",
-    "dataHash": "数据哈希",
-    "txHash": "交易哈希",
-    "recordTypeCommunity": "社群",
-    "recordTypeRule": "规则版本",
-    "recordTypeVpBatch": "发言权批次",
-    "recordTypeProposal": "投票",
-    "recordTypeVoteResult": "投票结果",
-    "recordStatusPending": "待处理",
-    "recordStatusRecording": "记录中",
-    "recordStatusRecorded": "已记录",
-    "recordStatusFailed": "失败",
-    "recordFieldCommunity": "社群",
-    "recordFieldNetwork": "网络",
-    "recordFieldCreated": "创建时间",
-    "recordFieldRecordedOnChain": "链上记录时间",
-    "optionA": "选项 A",
-    "optionB": "选项 B",
-    "optionC": "选项 C"
-  },
-  "testimonials": {
-    "title": "用户评价",
-    "subtitle": "看看用户怎么说",
-    "items": [
-      {"name": "张伟", "handle": "@zhangwei_dev", "content": "有份真的解决了我们社群的痛点！成员的贡献终于能被量化，大家参与的积极性明显提高了 🎉"},
-      {"name": "李明", "handle": "@liming_community", "content": "无代码就能搞定社群治理，这个产品太适合我们这种非技术背景的社群组织者了！AI生成规则功能超好用 👍"},
-      {"name": "王芳", "handle": "@wangfang_dao", "content": "投票系统特别透明，按贡献加权的机制很公平。我们社群用了两周，成员满意度大幅提升！"},
-      {"name": "陈晨", "handle": "@chenchen_web3", "content": "时间线功能让社群历史一目了然，新成员能快速了解社群发展脉络。产品体验很棒！"},
-      {"name": "刘洋", "handle": "@liuyang_nft", "content": "有份的AI推荐功能真的很智能，能根据成员的历史贡献推荐合适的任务，提高了参与效率。"},
-      {"name": "赵静", "handle": "@zhaojing_design", "content": "界面设计简洁优雅，用户体验非常流畅。作为设计师，我很欣赏这种注重细节的产品！"},
-      {"name": "孙浩", "handle": "@sunhao_tech", "content": "发言权管理让社群更加民主，每个人都有话语权。贡献越多，影响力越大，这很合理！"},
-      {"name": "周琳", "handle": "@zhoulin_dao", "content": "社群成员参与度明显提高了，大家都很积极。任务分配也变得更加高效了 💪"},
-      {"name": "吴强", "handle": "@wuqiang_web3", "content": "投票结果公开透明，增强了成员之间的信任。这是我用过最好的社群治理工具！"},
-      {"name": "郑雪", "handle": "@zhengxue_crypto", "content": "从零开始搭建社群治理体系，有份让这一切变得简单。强烈推荐！✨"},
-      {"name": "马超", "handle": "@machao_builder", "content": "真的很棒！"},
-      {"name": "林静", "handle": "@linjing_dao", "content": "我们社群使用有份后，成员之间的协作效率提升了至少30%。任务分配更加合理，每个人都能发挥自己的长处。特别是AI推荐系统，真的很智能！"}
-    ]
-  },
   "auth": {
     "signIn": "登录",
     "signUp": "注册",
@@ -421,79 +727,6 @@
     "and": "和",
     "privacyPolicy": "隐私政策"
   },
-  "footer": {
-    "brand": "有份",
-    "description": "无代码社群共治平台 —— 让每个参与者真正有份。",
-    "poweredBy": "由",
-    "injective": "Injective",
-    "ai": "AI",
-    "products": {
-      "title": "产品",
-      "createCommunity": "创建社群",
-      "viewDemo": "查看 Demo",
-      "docs": "使用文档"
-    },
-    "about": {
-      "title": "关于",
-      "buildInPublic": "Build in Public",
-      "aboutUs": "关于我们",
-      "github": "GitHub"
-    },
-    "copyright": "© 2026 YouFen. 保留所有权利。",
-    "privacy": "隐私政策",
-    "terms": "服务条款"
-  },
-<<<<<<< HEAD
-  "records": {
-    "back": "返回首页",
-    "eyebrow": "AdventureX Community · 公开档案",
-    "title": "可信记录",
-    "subtitle": "社群里发生的每一件大事——发了多少 Token、投票结果如何、规则改成什么样——都公开存档在这里，盖上无法涂改的“公证章”；而任何越过预算或投票规则的操作，账本会当场拒绝。",
-    "tagline": "—— 基于 Injective 区块链技术",
-    "ownership": {
-      "title": "所有权分布",
-      "intro": "贡献变成不可交易的社区 Token，Token 占比就是相对所有权。这里一眼看清谁拥有社区多少——广泛分布，而非少数人独大。",
-      "others": "其他 {count} 位成员",
-      "dilutionNote": "相对所有权随新贡献自然变化：持续建设的人占比上升，停止贡献的人会被新贡献者稀释。"
-    },
-    "proposals": {
-      "title": "治理进行时",
-      "intro": "正在投票的提案。票权按提案发起那一刻的持有量冻结——之后的增发影响不了这场投票。",
-      "approval": "赞同",
-      "turnout": "{voters}/{total} 人已投",
-      "quorumMet": "已达法定人数（{quorum}）",
-      "quorumShort": "还需 {need} 人达法定",
-      "endsInHours": "还剩 {hours} 小时",
-      "endsInDays": "还剩 {days} 天",
-      "items": {
-        "treasury": "投票：本季度活动预算 8,000 AXO",
-        "newRule": "投票：新增「代码审查」贡献规则"
-      }
-    },
-    "verifyCenter": {
-      "title": "自助验证中心",
-      "intro": "不用相信我们——粘贴任意一条记录的数字指纹（recordHash），页面会当场复算指纹、核对链上存在、并检查这笔操作是否合规放行。",
-      "placeholder": "粘贴 recordHash（0x 开头）…",
-      "button": "验证",
-      "trySample": "用一条示例试试（{hash}）",
-      "step1": "读取这条记录的内容",
-      "step2": "现场复算数字指纹",
-      "step3": "核对链上存在 + 合规放行",
-      "notFoundStep": "在公开记录里没找到这条指纹",
-      "okTitle": "验证通过",
-      "okDesc": "指纹一致、已在 Injective 链上、且当初经合约合规放行——这条记录从盖章起没被动过。",
-      "notFoundDesc": "没找到匹配的记录。请检查 recordHash 是否完整（0x 开头的 64 位十六进制），或从上面的大事记复制一条。"
-    },
-    "ownershipShift": {
-      "title": "对相对所有权的影响",
-      "desc": "这笔发放后，TA 在社区的相对所有权占比"
-    },
-    "explainer": {
-      "aria": "可信记录是怎么工作的",
-      "write": {
-        "title": "记下来",
-        "desc": "谁、因为什么贡献、获得了多少，一笔一笔记录在案。"
-=======
   "termsPage": {
     "title": "服务条款",
     "lastUpdated": "最后更新：2026年7月24日",
@@ -502,7 +735,6 @@
       {
         "heading": "1. 服务说明",
         "body": "有份是一个无代码社群共治平台，帮助社群运营者创建和管理社群参与规则、追踪成员贡献、组织投票决策，并为重要决策生成公开可信记录。我们利用人工智能辅助规则生成和贡献分析，并选择性使用 Injective 区块链为关键操作提供公开可验证记录。"
->>>>>>> origin/develop
       },
       {
         "heading": "2. 账户与注册",
@@ -512,36 +744,6 @@
         "heading": "3. 社群创建与管理",
         "body": "社群运营者（Owner/Manager）创建社群时，可自定义参与规则、管理成员、审核贡献和发起投票。社群运营者有责任确保社群活动合法合规。我们保留移除违反本条款的社群的权利。"
       },
-<<<<<<< HEAD
-      "whyToggle": "为什么可以相信这个页面？",
-      "why1": "区块链就像一座全世界共用的公证处：档案一旦存进去，就永远无法涂改、无法销毁。我们把每条记录的“数字指纹”存进了 Injective 这条区块链。",
-      "why2": "数字指纹的特点是：记录内容哪怕只改动一个标点，指纹都会变得完全不同。所以只要页面上的记录和链上的指纹对得上，就证明它从盖章那一刻起从未被动过。",
-      "why3": "我们只把指纹和数字存上链，不存任何姓名、联系方式等个人信息。想深究的话，每条记录都附有“技术细节”，可以去公共账本网站亲自查证。"
-    },
-    "timelineTitle": "大事记",
-    "timelineHint": "点开任意记录查看它的溯源过程",
-    "timelineAria": "社群可信记录时间线",
-    "status": {
-      "verified": "已盖章确认",
-      "pending": "排队等待盖章",
-      "submitting": "正在送去盖章",
-      "confirming": "盖章确认中",
-      "failed": "盖章遇到问题",
-      "superseded": "已被更正"
-    },
-    "kind": {
-      "tokenMint": "发放 Token",
-      "advanceMint": "预支发放",
-      "tokenReversal": "更正冲销",
-      "epochSummary": "月度结算",
-      "policyVersion": "规则更新",
-      "proposalResult": "投票结果"
-    },
-    "journey": {
-      "recorded": {
-        "title": "记录在案",
-        "desc": "这件事的经过完整登记进社群账本。"
-=======
       {
         "heading": "4. 发言权与贡献",
         "body": "发言权（Voice Power）是社群内部的参与权重，不代表任何货币价值、金融资产或可交易权利。发言权不可转让、不可提现、不可兑换为法定货币或加密货币。社群运营者对其社群内的发言权分配和使用规则拥有最终决定权。"
@@ -561,7 +763,6 @@
       {
         "heading": "8. 禁止行为",
         "body": "您不得：（a）上传或传播违法、侵权、诽谤、淫秽、骚扰或其他不当内容；（b）冒充他人或提供虚假信息；（c）干扰或破坏我们的服务；（d）试图未经授权访问我们的系统；（e）滥用发言权系统进行欺诈或操纵；（f）使用自动化工具进行刷票、刷贡献等作弊行为；（g）将本服务用于任何违法或未经授权的目的。"
->>>>>>> origin/develop
       },
       {
         "heading": "9. 知识产权",
@@ -579,80 +780,9 @@
         "heading": "12. 条款变更",
         "body": "我们可能不时更新本条款。重大变更将通过网站通知或电子邮件告知。继续使用本服务即表示您接受修订后的条款。"
       },
-<<<<<<< HEAD
-      "matchTitle": "指纹一致",
-      "matchDesc": "这条记录自盖章以来，没有被任何人改动过一个字。"
-    },
-    "privacyNote": "链上只存数字指纹与数额，不含任何姓名、邮箱等个人信息。本页当前展示 AdventureX 社群的演示数据。",
-    "demo": {
-      "r6": {
-        "title": "小鹿 获得 200 AXO",
-        "summary": "组织了本月的新人见面会，经管理员审核通过，Token 正在盖章确认中。"
-      },
-      "r5": {
-        "title": "投票结果：社区周会改到周四晚上",
-        "summary": "18 位成员参与投票，按 Token 加权计票，“周四晚”以 62% 的权重胜出。"
-      },
-      "r4": {
-        "title": "7 月结算：本月共发放 5,300 AXO",
-        "summary": "本月正常发放 4,900，预支 400；下月预算将自动扣除这笔预支。"
-      },
-      "r3": {
-        "title": "Carol 获得 500 AXO（含 400 预支）",
-        "summary": "完成了重大社区基础设施建设。本月正常额度只剩 100，其余 400 从下月预算预支，经两位管理员共同批准。"
-      },
-      "r2": {
-        "title": "Liam 获得 500 AXO",
-        "summary": "帮助三位新成员完成 Injective 测试网部署，经管理员审核确认。"
-      },
-      "r1": {
-        "title": "Liam 获得 800 AXO（已更正）",
-        "summary": "这条记录因数量录入错误（多记 300）被更正。按规则原记录不删除、永久保留；冲销与重新发放见 7 月 13 日和 7 月 15 日。"
-      },
-      "r0": {
-        "title": "社群规则 v2 生效：每月增发 5%",
-        "summary": "经社区投票通过，Token 月度增发比例定为 5%，自 7 月起生效。"
-      },
-      "r9": {
-        "title": "更正：冲销 Liam 的 800 AXO",
-        "summary": "7 月 12 日那笔发放数量录入有误，按规则整笔冲销。原错误记录永久保留在下方，正确的发放见 7 月 15 日。"
-      },
-      "r7": {
-        "title": "投票结果：社区新徽标采用方案 B",
-        "summary": "21 位成员参与投票，方案 B 以 58% 的权重当选，已交设计组落地。"
-      },
-      "r8": {
-        "title": "社群规则 v1 生效：创始规则上线",
-        "summary": "AdventureX 创始规则经全体共识生效：初始 100,000 AXO，贡献审核发放，投票按 Token 加权。"
-      },
-      "r10": {
-        "title": "Maya 获得 200 AXO",
-        "summary": "整理了社区 onboarding 文档与 FAQ，经管理员审核发放。"
-      },
-      "r11": {
-        "title": "投票结果：季度活动预算方案通过",
-        "summary": "20 位成员参与投票，按 Token 加权计票，方案以 71% 的赞同通过。"
-      },
-      "r12": {
-        "title": "特批增发：核心成员 Nadia 获得 1,200 AXO",
-        "summary": "承担了跨月的基础设施重构，超出常规单期上限——经社区提案特批、两位管理员共同签名后账本才放行。"
-      },
-      "r13": {
-        "title": "Sky 获得 400 AXO（含 300 预支）",
-        "summary": "提前交付了发布物料。本月正常额度不足，300 从下月预算预支，经两位管理员共同批准。"
-      },
-      "r14": {
-        "title": "6 月结算：本月共发放 4,600 AXO",
-        "summary": "本月正常发放 4,600，无预支；治理供应量随之更新。"
-      },
-      "r15": {
-        "title": "投票结果：社区公约修订采纳",
-        "summary": "19 位成员参与投票，修订版公约以 66% 的赞同通过，已交治理组落地。"
-=======
       {
         "heading": "13. 联系我们",
         "body": "如对本条款有任何疑问，请通过 GitHub Issues 联系我们：github.com/Simon-Snow/YouFen，或发送邮件至项目维护者邮箱。"
->>>>>>> origin/develop
       }
     ]
   },
