@@ -33,7 +33,7 @@ export default async function MemberChatPage({ params }: MemberChatPageProps) {
               {t('chat.description')}
             </p>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#131517] text-white">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#131517] text-white">
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
           </div>
         </div>

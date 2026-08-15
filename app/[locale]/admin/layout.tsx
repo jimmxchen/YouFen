@@ -55,7 +55,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           currentUser={currentUser}
           memberships={data.memberships}
         />
-        <main className="p-8">
+        <main className="px-6 py-10 lg:p-12">
           {children}
         </main>
       </div>

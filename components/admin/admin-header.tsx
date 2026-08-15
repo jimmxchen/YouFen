@@ -279,7 +279,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
         <div className="relative flex items-center gap-3 pl-4 border-l border-[#F0F0F0]" ref={menuRef}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex items-center gap-3 hover:bg-[#FAFAFA] rounded-lg px-2 py-1 transition-colors"
+            className="flex items-center gap-3 hover:bg-[#FAFAFA] rounded-2xl px-2 py-1 transition-colors"
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 flex items-center justify-center text-white text-sm font-medium">
               {currentUser.name[0]}
@@ -291,7 +291,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
           </button>
 
           {menuOpen && (
-            <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-[#F0F0F0] rounded-xl shadow-lg z-50 py-1">
+            <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-[#F0F0F0] rounded-2xl z-50 py-1">
               <div className="px-4 py-3 border-b border-[#F0F0F0]">
                 <p className="text-sm font-medium text-[#131517]">{currentUser.name}</p>
                 <p className="text-xs text-[#939597]">{currentUser.email}</p>

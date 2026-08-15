@@ -60,7 +60,7 @@ export default function ChatPage() {
         </p>
       </div>
 
-      <div className="flex h-[640px] rounded-xl border border-[#F0F0F0] bg-white overflow-hidden">
+      <div className="flex h-[640px] rounded-2xl border border-[#F0F0F0] bg-white overflow-hidden">
         {/* Conversation list */}
         <div className="w-80 border-r border-[#F0F0F0] flex flex-col">
           <div className="px-5 py-4 border-b border-[#F0F0F0]">
@@ -118,7 +118,7 @@ export default function ChatPage() {
                         className={cn(
                           'px-4 py-2.5 rounded-2xl text-sm leading-relaxed',
                           msg.isAdmin
-                            ? 'bg-[#0A0A0A] text-white rounded-br-sm'
+                            ? 'bg-[#131517] text-white rounded-br-sm'
                             : 'bg-[#FAFAFA] text-[#131517] rounded-bl-sm'
                         )}
                       >
@@ -139,12 +139,12 @@ export default function ChatPage() {
                   onChange={(e) => setDraft(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') sendMessage() }}
                   placeholder={t('typeMessage')}
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                  className="flex-1 px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                 />
                 <button
                   onClick={sendMessage}
                   disabled={!draft.trim()}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0A0A] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200 shadow-sm disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:bg-[#0A0A0A]"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:bg-[#131517]"
                 >
                   <Send className="w-4 h-4" />
                   {t('send')}

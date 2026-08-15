@@ -77,7 +77,7 @@ function ChainArchiveCard({ record }: { record: ChainRecord }) {
     : null
 
   return (
-    <div className="mt-5 rounded-xl border border-blue-100/70 bg-blue-50/30 p-4 sm:p-5">
+    <div className="mt-5 rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] p-4 sm:p-5">
       <div className="flex items-center gap-2">
         <Landmark className="w-4 h-4 text-blue-500" />
         <h4 className="text-sm font-semibold text-neutral-900">{t('title')}</h4>
@@ -169,7 +169,7 @@ function VerifyGuide({ record }: { record: ChainRecord }) {
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="overflow-hidden"
           >
-            <div className="mt-2 rounded-lg border border-neutral-100 bg-white p-4 text-[13px] leading-relaxed text-neutral-600">
+            <div className="mt-2 rounded-2xl border border-[#F0F0F0] bg-white p-4 text-[13px] leading-relaxed text-[#525252]">
               <p>{t('guide.intro')}</p>
               <ol className="mt-2 space-y-1 text-neutral-500">
                 <li>{t('guide.s1')}</li>
@@ -184,7 +184,7 @@ function VerifyGuide({ record }: { record: ChainRecord }) {
                     href={explorerTxUrl(record.txHash)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 px-3 py-1.5 text-[13px] font-medium text-blue-600 transition-colors hover:bg-blue-50"
+                    className="mt-3 inline-flex items-center gap-1.5 rounded-2xl border border-[#F0F0F0] px-3 py-1.5 text-[13px] font-medium text-blue-600 transition-colors hover:bg-blue-50"
                   >
                     {t('guide.open')}
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -289,7 +289,7 @@ export function ProvenanceJourney({ record }: { record: ChainRecord }) {
 
       {/* superseded 的更正说明 */}
       {record.status === 'superseded' && (
-        <p className="mt-4 text-[13px] leading-relaxed text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3.5 py-2.5">
+        <p className="mt-4 text-[13px] leading-relaxed text-amber-700 bg-amber-50 border border-amber-100 rounded-2xl px-3.5 py-2.5">
           {t('journey.supersededNote')}
         </p>
       )}
@@ -315,7 +315,7 @@ export function ProvenanceJourney({ record }: { record: ChainRecord }) {
 
       {/* 亲自验一验 */}
       {record.status === 'verified' || record.status === 'superseded' ? (
-        <div className="mt-4 rounded-xl border border-neutral-100 bg-neutral-50/60 p-4">
+        <div className="mt-4 rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] p-4">
           {phase === 'idle' ? (
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-[13px] text-neutral-500 max-w-sm leading-relaxed">
@@ -323,7 +323,7 @@ export function ProvenanceJourney({ record }: { record: ChainRecord }) {
               </p>
               <button
                 onClick={runVerify}
-                className="inline-flex items-center gap-2 rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-neutral-700 hover:-translate-y-px hover:shadow-md"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#131517] px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-[#262626] hover:-translate-y-0.5"
               >
                 <Search className="w-4 h-4" />
                 {t('verify.button')}
@@ -358,7 +358,7 @@ export function ProvenanceJourney({ record }: { record: ChainRecord }) {
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}
-                    className="mt-3.5 flex items-start gap-2.5 rounded-lg bg-emerald-50 border border-emerald-100 px-3.5 py-3"
+                    className="mt-3.5 flex items-start gap-2.5 rounded-2xl bg-emerald-50 border border-emerald-100 px-3.5 py-3"
                   >
                     <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
