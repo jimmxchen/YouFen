@@ -197,7 +197,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
       </div>
       <div className="flex items-center gap-4">
         <div className="relative hidden md:block" ref={searchRef}>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] focus-within:border-[#D4D4D4] transition-colors">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-[#F0F0F0] bg-[#FAFAFA] focus-within:border-[#D4D4D4] transition-colors">
             <Search className="w-4 h-4 text-[#939597] shrink-0" />
             <input
               type="text"
@@ -213,7 +213,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
           </div>
 
           {searchOpen && query.trim() && (
-            <div className="absolute top-full left-0 mt-2 w-96 bg-white border border-[#F0F0F0] rounded-xl shadow-lg z-50 py-1 max-h-96 overflow-y-auto">
+            <div className="absolute top-full left-0 mt-2 w-96 bg-white border border-[#F0F0F0] rounded-2xl z-50 py-1 max-h-96 overflow-y-auto">
               {groupedResults.length === 0 ? (
                 <p className="px-4 py-3 text-sm text-[#939597]">{t("noResultsFound")}</p>
               ) : (
@@ -242,7 +242,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
         <div className="relative" ref={notifRef}>
           <button
             onClick={() => setNotifOpen(!notifOpen)}
-            className="relative p-2 rounded-lg hover:bg-[#FAFAFA] transition-colors"
+            className="relative p-2 rounded-2xl hover:bg-[#FAFAFA] transition-colors"
           >
             <Bell className="w-5 h-5 text-[#525252]" />
             {hasUnread && (
@@ -251,7 +251,7 @@ export function AdminHeader({ communityName, currentUser, title, memberships }: 
           </button>
 
           {notifOpen && (
-            <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-[#F0F0F0] rounded-xl shadow-lg z-50 py-1 max-h-96 overflow-y-auto">
+            <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-[#F0F0F0] rounded-2xl z-50 py-1 max-h-96 overflow-y-auto">
               <div className="px-4 py-2.5 border-b border-[#F0F0F0]">
                 <p className="text-sm font-medium text-[#131517]">{t("notifications")}</p>
               </div>
