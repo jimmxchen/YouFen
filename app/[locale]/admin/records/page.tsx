@@ -51,7 +51,7 @@ export default function AdminRecordsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-[40px] font-medium text-[#131517] leading-[48px]">

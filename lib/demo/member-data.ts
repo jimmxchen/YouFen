@@ -489,6 +489,12 @@ export const demoMember: CommunityMember = {
       snapshotWeight: 900,
       voterCount: 12,
       href: '/vote/next-event-topic',
+      options: [
+        { id: 'opt-ai-track', text: 'AI x Blockchain Track', votes: 450 },
+        { id: 'opt-office-hour', text: 'Founder Office Hour', votes: 300 },
+        { id: 'opt-demo-day', text: 'Demo Day', votes: 280 },
+        { id: 'opt-build-public', text: 'Build in Public Exhibition', votes: 260 },
+      ],
     },
     {
       id: 'mentor-reward-rule',
@@ -499,6 +505,11 @@ export const demoMember: CommunityMember = {
       snapshotWeight: 1000,
       voterCount: 0,
       href: '/vote/mentor-reward-rule',
+      options: [
+        { id: 'opt-plus-80', text: 'Yes, +80 voice power', votes: 0 },
+        { id: 'opt-plus-50', text: 'Yes, +50 voice power', votes: 0 },
+        { id: 'opt-no-change', text: 'No change', votes: 0 },
+      ],
     },
     {
       id: 'showcase-layout',
@@ -510,6 +521,12 @@ export const demoMember: CommunityMember = {
       voterCount: 18,
       trustedRecordStatus: 'verified',
       href: '/vote/showcase-layout',
+      options: [
+        { id: 'opt-grid', text: 'Grid showcase wall', votes: 620 },
+        { id: 'opt-stage', text: 'Rotating stage demos', votes: 410 },
+        { id: 'opt-hybrid', text: 'Hybrid: grid + stage', votes: 260 },
+      ],
+      votedOptionId: 'opt-grid',
     },
   ],
   receipts: [
