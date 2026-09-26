@@ -17,6 +17,8 @@ interface ProposalListProps {
     voters: (count: number) => string
     trustedRecord: string
     openVote: string
+    emptyTitle: string
+    emptyBody: string
   }
 }
 
@@ -31,6 +33,15 @@ function formatNumber(value: number, locale: string) {
 }
 
 export function ProposalList({ proposals, locale, communityId, voicePower, labels }: ProposalListProps) {
+  if (proposals.length === 0) {
+    return (
+      <div className={memberCard}>
+        <h2 className="text-xl font-semibold text-[#131517]">{labels.emptyTitle}</h2>
+        <p className={`mt-2 text-sm leading-6 ${memberMuted}`}>{labels.emptyBody}</p>
+      </div>
+    )
+  }
+
   return (
     <section className="grid gap-4 lg:grid-cols-2">
       {proposals.map((proposal) => (

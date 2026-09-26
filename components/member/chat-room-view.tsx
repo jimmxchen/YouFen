@@ -5,6 +5,7 @@ import { ArrowLeft, BellOff, ImagePlus, Info, Search, SendHorizonal, X } from 'l
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChatMessage, ChatRoom } from '@/types/member'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
+import { getChatMuted, subscribeChatMutes } from '@/lib/member/local-mutes'
 
 interface ChatRoomViewProps {
   room: ChatRoom
@@ -33,8 +34,15 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
   const [query, setQuery] = useState('')
   const [messages, setMessages] = useState(room.messages)
   const [draft, setDraft] = useState('')
+  const [isMuted, setIsMuted] = useState(room.muted)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const didMountRef = useRef(false)
+
+  useEffect(() => {
+    const sync = () => setIsMuted(getChatMuted(communityId, room.id, room.muted))
+    sync()
+    return subscribeChatMutes(sync)
+  }, [communityId, room.id, room.muted])
 
   useEffect(() => {
     // Skip the initial render so we only persist changes the user makes here.
@@ -171,7 +179,7 @@ export function ChatRoomView({ room, locale, communityId, onMessagesChange, labe
           </section>
         ) : null}
 
-        {room.muted ? (
+        {isMuted ? (
           <div className="flex items-center gap-2 rounded-xl border border-[#F0F0F0] bg-white px-4 py-3 text-sm text-[#525252]">
             <BellOff className="h-4 w-4 shrink-0" aria-hidden="true" />
             {labels.muted}

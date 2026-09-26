@@ -43,6 +43,8 @@ export default async function MemberVotePage({ params }: MemberVotePageProps) {
             voters: (count) => t('vote.voters', { count }),
             trustedRecord: t('vote.trustedRecord'),
             openVote: t('vote.openVote'),
+            emptyTitle: t('vote.emptyTitle'),
+            emptyBody: t('vote.emptyBody'),
           }}
         />
       </div>

@@ -8,7 +8,6 @@ import {
   memberCard,
   memberIconWell,
   memberMuted,
-  memberPrimaryButton,
   memberSubtle,
 } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
@@ -83,7 +82,10 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
                     <p className={`mt-1 text-sm leading-6 ${memberMuted}`}>
                       {member.nextEvent.startsAt} · {member.nextEvent.location}
                     </p>
-                    <Link href={`${baseHref}/event`} className={`mt-3 ${memberPrimaryButton}`}>
+                    <Link
+                      href={`${baseHref}/event`}
+                      className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-2xl bg-[#131517] px-4 text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#262626] active:translate-y-0"
+                    >
                       {t('dashboard.joinEvent')}
                     </Link>
                   </div>
@@ -147,7 +149,13 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
               {t('dashboard.recentActivity')}
             </h2>
             <div className="mt-4">
-              <ActivityFeed items={recentActivity} />
+              <ActivityFeed
+                items={recentActivity}
+                labels={{
+                  emptyTitle: t('dashboard.activityEmptyTitle'),
+                  emptyBody: t('dashboard.activityEmptyBody'),
+                }}
+              />
             </div>
           </section>
         </aside>
