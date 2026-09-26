@@ -35,7 +35,7 @@ export default async function MemberPublicPage({ params }: MemberPublicPageProps
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
         </Link>
         <p className={`truncate text-sm ${memberSubtle}`}>{t('public.label')}</p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
+        <h1 className="text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
           {member.communityName}
         </h1>
         <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>

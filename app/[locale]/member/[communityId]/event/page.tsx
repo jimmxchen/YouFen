@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { EventJoinPanel } from '@/components/member/event-join-panel'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
-import { memberMuted, memberSubtle } from '@/components/member/ui'
+import { memberMuted } from '@/components/member/ui'
 import { getDemoMember } from '@/lib/demo/member-data'
 
 interface MemberEventPageProps {
@@ -30,8 +30,7 @@ export default async function MemberEventPage({ params }: MemberEventPageProps) 
         >
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
         </Link>
-        <p className={`truncate text-base ${memberSubtle}`}>{member.communityName}</p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
+        <h1 className="text-3xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
           {t('event.title')}
         </h1>
         <p className={`mt-3 max-w-2xl text-sm leading-6 ${memberMuted} lg:text-base`}>

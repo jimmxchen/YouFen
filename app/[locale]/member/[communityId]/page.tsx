@@ -39,8 +39,7 @@ export default async function MemberCommunityPage({ params }: MemberPageProps) {
       <header className="px-5 pb-5 pt-6 lg:px-0 lg:pb-8 lg:pt-0">
         <div className="flex items-center gap-3">
           <div className="min-w-0">
-            <p className={`truncate text-base ${memberSubtle}`}>{member.communityName}</p>
-            <h1 className="mt-1 truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
+            <h1 className="truncate text-2xl font-semibold tracking-normal text-[#131517] lg:text-[40px] lg:font-medium lg:leading-[48px]">
               {t('dashboard.greeting', { name: member.name })}
             </h1>
           </div>

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
-import { Bell, Search, LogOut, User, Users } from "lucide-react"
+import { Bell, Search, LogOut, User } from "lucide-react"
 import { VoicePowerBadge } from "@/components/admin/voice-power-badge"
 import { type CommunityMember } from "@/types/member"
 
@@ -279,7 +279,8 @@ export function MemberHeader({ member }: MemberHeaderProps) {
             <div className="absolute top-full right-0 z-50 mt-2 w-56 rounded-xl border border-[#F0F0F0] bg-white py-1 shadow-lg">
               <div className="border-b border-[#F0F0F0] px-4 py-3">
                 <p className="text-sm font-medium text-[#131517]">{member.name}</p>
-                <p className="text-xs text-[#939597] capitalize">{member.role}</p>
+                <p className="text-xs text-[#939597] capitalize mt-0.5">{member.role}</p>
+                <p className="text-xs text-[#939597] mt-0.5">{member.email}</p>
                 <div className="mt-1.5">
                   <VoicePowerBadge value={member.voicePower.total} size="sm" />
                 </div>
@@ -294,16 +295,6 @@ export function MemberHeader({ member }: MemberHeaderProps) {
               >
                 <User className="h-4 w-4" />
                 {t("header.myProfile")}
-              </button>
-              <button
-                onClick={() => {
-                  setMenuOpen(false)
-                  router.push(`/member`)
-                }}
-                className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-[#525252] hover:bg-[#FAFAFA] transition-colors"
-              >
-                <Users className="h-4 w-4" />
-                {t("header.allCommunities")}
               </button>
               <button
                 onClick={() => router.push("/sign-in")}

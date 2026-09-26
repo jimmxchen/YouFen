@@ -236,7 +236,10 @@
     "activityTypeSocial": "社交",
     "activityTypeOther": "其他",
     "upcoming": "即将开始",
-    "ongoing": "进行中"
+    "ongoing": "进行中",
+    "myProfile": "我的资料",
+    "myDashboard": "我的总览",
+    "signOut": "退出登录"
   },
   "testimonials": {
     "title": "用户评价",
@@ -345,7 +348,6 @@
       "categoryVotes": "投票",
       "categoryChats": "聊天",
       "myProfile": "我的资料",
-      "allCommunities": "全部社群",
       "signOut": "退出登录"
     },
     "backToLanding": "返回首页",

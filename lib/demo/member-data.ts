@@ -3,6 +3,7 @@ import type { CommunityMember } from '@/types/member'
 export const demoMember: CommunityMember = {
   id: 'alice',
   name: 'Alice Chen',
+  email: 'alice@example.com',
   role: 'Builder',
   tags: ['Participant', 'Helper'],
   avatarInitials: 'AC',
