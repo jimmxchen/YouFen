@@ -15,7 +15,7 @@ export default function DashboardPage() {
   const recentContributions = demoContributions.slice(0, 5)
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="space-y-8">
       {/* Page title */}
       <div>
         <h1 className="text-[40px] font-medium text-[#131517] leading-[48px]">

@@ -3,10 +3,11 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
-import { Plus, Square, ExternalLink, Trash2 } from 'lucide-react'
+import { Plus, Square, ExternalLink, Trash2, X } from 'lucide-react'
 import { demoProposals } from '@/lib/demo-data'
 import { type Proposal, ProposalStatus } from '@/types/admin'
 import { cn } from '@/lib/utils'
+import { PollOptionBar } from '@/components/ui/poll-option-bar'
 
 const statusColors: Record<ProposalStatus, string> = {
   draft: 'bg-gray-100 text-gray-700',
@@ -15,9 +16,29 @@ const statusColors: Record<ProposalStatus, string> = {
   recorded: 'bg-blue-50 text-blue-700',
 }
 
+const MIN_OPTIONS = 2
+
 export default function ProposalsPage() {
   const t = useTranslations('admin')
   const [showCreate, setShowCreate] = useState(false)
+  const [options, setOptions] = useState<string[]>([t('optionA'), t('optionB')])
+
+  const handleAddOption = () => {
+    setOptions((prev) => [...prev, ''])
+  }
+
+  const handleRemoveOption = (index: number) => {
+    setOptions((prev) => (prev.length > MIN_OPTIONS ? prev.filter((_, i) => i !== index) : prev))
+  }
+
+  const handleOptionChange = (index: number, value: string) => {
+    setOptions((prev) => prev.map((opt, i) => (i === index ? value : opt)))
+  }
+
+  const closeCreate = () => {
+    setShowCreate(false)
+    setOptions([t('optionA'), t('optionB')])
+  }
 
   const handleEndVote = (id: string) => {
     alert(t('voteEnded'))
@@ -28,7 +49,7 @@ export default function ProposalsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -63,7 +84,7 @@ export default function ProposalsPage() {
       {/* Create Proposal Dialog */}
       {showCreate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowCreate(false)} />
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={closeCreate} />
           <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-lg mx-4 p-8 space-y-6">
             <h2 className="text-xl font-semibold text-[#131517]">
               {t('createPoll')}
@@ -94,15 +115,35 @@ export default function ProposalsPage() {
                   {t('options')}
                 </label>
                 <div className="space-y-2">
-                  {['optionA', 'optionB', 'optionC'].map((opt, i) => (
-                    <input
-                      key={i}
-                      type="text"
-                      defaultValue={t(opt)}
-                      className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
-                    />
+                  {options.map((opt, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={opt}
+                        onChange={(e) => handleOptionChange(i, e.target.value)}
+                        placeholder={t('optionPlaceholder')}
+                        className="w-full px-4 py-2.5 rounded-2xl border border-[#F0F0F0] bg-white text-sm text-[#131517] placeholder:text-[#A3A3A3] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveOption(i)}
+                        disabled={options.length <= MIN_OPTIONS}
+                        title={t('removeOption')}
+                        className="shrink-0 p-2 rounded-xl text-[#939597] hover:bg-red-50 hover:text-red-500 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-[#939597]"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
                   ))}
                 </div>
+                <button
+                  type="button"
+                  onClick={handleAddOption}
+                  className="mt-2 flex items-center gap-1.5 text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  {t('addOption')}
+                </button>
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#525252] mb-1.5">
@@ -116,13 +157,13 @@ export default function ProposalsPage() {
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button
-                onClick={() => setShowCreate(false)}
+                onClick={closeCreate}
                 className="px-4 py-2.5 rounded-2xl border border-[#F0F0F0] text-sm font-medium text-[#525252] hover:bg-[#FAFAFA] hover:text-[#131517] transition-all"
               >
                 {t('cancel')}
               </button>
               <button
-                onClick={() => setShowCreate(false)}
+                onClick={closeCreate}
                 className="px-4 py-2.5 rounded-2xl bg-[#131517] text-white text-sm font-medium hover:bg-[#262626] hover:-translate-y-0.5 transition-all"
               >
                 {t('create')}
@@ -179,23 +220,13 @@ function ProposalCard({ proposal, onEndVote, onDelete }: { proposal: Proposal; o
             const pct = totalVP > 0 ? Math.round((opt.votes / totalVP) * 100) : 0
             const isWinning = opt.votes === maxVP && opt.votes > 0
             return (
-              <div key={opt.id} className="space-y-1">
-                <div className="flex items-center justify-between text-sm">
-                  <span className={cn('text-[#131517]', isWinning && 'font-medium')}>{opt.text}</span>
-                  <span className="text-xs text-[#939597]">
-                    {opt.votes} VP ({pct}%)
-                  </span>
-                </div>
-                <div className="h-1.5 bg-[#FAFAFA] rounded-full overflow-hidden">
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all duration-500',
-                      isWinning ? 'bg-gradient-to-r from-emerald-500 to-green-400' : 'bg-[#E5E5E5]'
-                    )}
-                    style={{ width: `${pct}%` }}
-                  />
-                </div>
-              </div>
+              <PollOptionBar
+                key={opt.id}
+                text={opt.text}
+                pct={pct}
+                meta={`${opt.votes} VP`}
+                isWinning={isWinning}
+              />
             )
           })}
         </div>
