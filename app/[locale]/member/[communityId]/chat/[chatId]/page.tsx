@@ -1,6 +1,5 @@
-import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import { ChatRoomView } from '@/components/member/chat-room-view'
+import { ChatRoomLoader } from '@/components/member/chat-room-loader'
 import { MemberShell } from '@/components/member/member-shell'
 import { MobileBottomNav } from '@/components/member/mobile-bottom-nav'
 import { getDemoMember } from '@/lib/demo/member-data'
@@ -17,29 +16,21 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
   const { locale, communityId, chatId } = await params
   const t = await getTranslations('member')
   const member = getDemoMember(communityId)
-  const room = member.chatRooms.find((chatRoom) => chatRoom.id === chatId)
-
-  if (!room) {
-    notFound()
-  }
-
-  const onlineCount = room.participants.filter((participant) => participant.status === 'online').length
-  const reactionsByMessageId = Object.fromEntries(
-    room.messages
-      .filter((message) => message.reactions)
-      .map((message) => [message.id, t('chat.reactions', { count: message.reactions ?? 0 })])
-  )
+  const baseHref = `/${locale}/member/${communityId}`
+  const room = member.chatRooms.find((chatRoom) => chatRoom.id === chatId) ?? null
 
   return (
     <MemberShell member={member}>
-      <ChatRoomView
-        room={room}
+      <ChatRoomLoader
+        serverRoom={room}
         locale={locale}
         communityId={communityId}
+        chatId={chatId}
+        baseHref={baseHref}
+        onlineTemplate={t('chat.online', { count: '__COUNT__' })}
+        membersTemplate={t('chat.members', { count: '__COUNT__' })}
         labels={{
           back: t('chat.backToChats'),
-          online: t('chat.online', { count: onlineCount }),
-          members: t('chat.members', { count: room.participants.length }),
           pinned: t('chat.operatorPrompt'),
           search: t('chat.search'),
           searchPlaceholder: t('chat.searchPlaceholder'),
@@ -47,12 +38,13 @@ export default async function MemberChatRoomPage({ params }: MemberChatRoomPageP
           muted: t('chat.muted'),
           composer: t('chat.composer'),
           send: t('chat.send'),
-          reactionsByMessageId,
           addImage: t('chat.addImage'),
-          addReaction: t('chat.addReaction'),
           settings: t('chat.settings'),
           imageShared: t('chat.imageShared'),
-          reactionSuffix: t('chat.reactionSuffix'),
+        }}
+        notFound={{
+          title: t('chat.chatNotFound'),
+          back: t('chat.backToChats'),
         }}
       />
 

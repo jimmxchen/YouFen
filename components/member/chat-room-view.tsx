@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, BellOff, ImagePlus, Info, Search, SendHorizonal, Smile, X } from 'lucide-react'
-import { useMemo, useRef, useState } from 'react'
+import { ArrowLeft, BellOff, ImagePlus, Info, Search, SendHorizonal, X } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChatMessage, ChatRoom } from '@/types/member'
 import { memberMuted, memberSubtle } from '@/components/member/ui'
 
@@ -10,6 +10,7 @@ interface ChatRoomViewProps {
   room: ChatRoom
   locale: string
   communityId: string
+  onMessagesChange?: (messages: ChatMessage[]) => void
   labels: {
     back: string
     online: string
@@ -21,21 +22,28 @@ interface ChatRoomViewProps {
     muted: string
     composer: string
     send: string
-    reactionsByMessageId: Record<string, string>
     addImage: string
-    addReaction: string
     settings: string
     imageShared: string
-    reactionSuffix: string
   }
 }
 
-export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomViewProps) {
+export function ChatRoomView({ room, locale, communityId, onMessagesChange, labels }: ChatRoomViewProps) {
   const [showSearch, setShowSearch] = useState(false)
   const [query, setQuery] = useState('')
   const [messages, setMessages] = useState(room.messages)
   const [draft, setDraft] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const didMountRef = useRef(false)
+
+  useEffect(() => {
+    // Skip the initial render so we only persist changes the user makes here.
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      return
+    }
+    onMessagesChange?.(messages)
+  }, [messages, onMessagesChange])
   const normalizedQuery = query.trim().toLowerCase()
   const matches = useMemo(() => {
     if (!normalizedQuery) return []
@@ -82,18 +90,6 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
       ...current,
       createCurrentMemberMessage(`${labels.imageShared} ${fileName}`),
     ])
-  }
-
-  function addReaction() {
-    setMessages((current) => {
-      if (current.length === 0) return current
-
-      return current.map((message, index) =>
-        index === current.length - 1
-          ? { ...message, reactions: (message.reactions ?? 0) + 1 }
-          : message
-      )
-    })
   }
 
   return (
@@ -229,12 +225,6 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
                   }`}
                 >
                   <span>{message.createdAt}</span>
-                  {message.reactions ? (
-                    <span>
-                      {labels.reactionsByMessageId[message.id] ??
-                        `${message.reactions}${labels.reactionSuffix}`}
-                    </span>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -279,14 +269,6 @@ export function ChatRoomView({ room, locale, communityId, labels }: ChatRoomView
             placeholder={labels.composer}
             className="min-h-11 min-w-0 flex-1 rounded-xl border border-[#F0F0F0] bg-[#FAFAFA] px-4 text-sm text-[#131517] outline-none placeholder:text-[#939597] focus:border-[#E5E5E5] focus:ring-2 focus:ring-emerald-500/15"
           />
-          <button
-            type="button"
-            onClick={addReaction}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#F0F0F0] text-[#525252] transition-all hover:border-[#E5E5E5] hover:bg-[#FAFAFA]"
-            aria-label={labels.addReaction}
-          >
-            <Smile className="h-5 w-5" aria-hidden="true" />
-          </button>
           <button
             type="button"
             onClick={sendMessage}
